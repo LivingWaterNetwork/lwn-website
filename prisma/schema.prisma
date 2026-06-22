@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Lead {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  source    String   @default("website")
+  createdAt DateTime @default(now())
+
+  @@map("leads")
+}
+
+model CohortApplication {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  phone       String?
+  city        String?
+  state       String?
+  role        String?
+  ministry    String?
+  whyJoin     String
+  referral    String?
+  status      String   @default("pending")
+  createdAt   DateTime @default(now())
+
+  @@map("cohort_applications")
+}
+
+model Donation {
+  id                String   @id @default(cuid())
+  stripePaymentId   String   @unique
+  stripeCustomerId  String?
+  amount            Int      // in cents
+  currency          String   @default("usd")
+  frequency         String   // one-time | monthly | yearly
+  name              String?
+  email             String
+  comment           String?
+  status            String   @default("pending")
+  receiptSent       Boolean  @default(false)
+  createdAt         DateTime @default(now())
+
+  @@map("donations")
+}
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+
+  @@map("contact_submissions")
+}

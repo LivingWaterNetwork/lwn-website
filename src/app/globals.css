@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-stone-50 text-charcoal font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+
+  ::selection {
+    @apply bg-gold/30 text-charcoal;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-md bg-teal text-white font-semibold font-sans text-sm tracking-wide transition-colors hover:bg-teal-light active:bg-teal-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-md border-2 border-teal text-teal font-semibold font-sans text-sm tracking-wide transition-colors hover:bg-teal hover:text-white active:bg-teal-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2;
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-md bg-gold text-white font-semibold font-sans text-sm tracking-wide transition-colors hover:bg-gold-dark active:bg-gold-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2;
+  }
+
+  .section-heading {
+    @apply text-3xl md:text-4xl font-serif text-teal font-semibold leading-tight;
+  }
+
+  .section-subheading {
+    @apply text-lg text-charcoal/70 font-sans leading-relaxed mt-4 max-w-2xl;
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-stone-100 p-6;
+  }
+
+  .form-label {
+    @apply block text-sm font-semibold text-charcoal mb-1.5;
+  }
+
+  .form-input {
+    @apply w-full px-4 py-2.5 rounded-md border border-stone-100 bg-white text-charcoal text-sm focus:outline-none focus:ring-2 focus:ring-teal focus:border-transparent transition-shadow;
+  }
+
+  .form-textarea {
+    @apply w-full px-4 py-2.5 rounded-md border border-stone-100 bg-white text-charcoal text-sm focus:outline-none focus:ring-2 focus:ring-teal focus:border-transparent transition-shadow resize-y;
+  }
+
+  .form-error {
+    @apply text-red-600 text-xs mt-1;
+  }
+}
