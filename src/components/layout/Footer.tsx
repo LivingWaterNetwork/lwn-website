@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export function Footer() {
   return (
@@ -7,13 +8,19 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Brand */}
           <div>
-            <p className="font-sans font-extrabold text-sm uppercase tracking-widest text-white mb-3">
-              Living Water Network
-            </p>
+            <div className="inline-flex items-center bg-white rounded-xl px-3 py-2 mb-4">
+              <Image
+                src="/images/logo-mark.png"
+                alt="Living Water Network"
+                width={48}
+                height={48}
+                className="h-10 w-auto object-contain"
+              />
+            </div>
             <p className="text-white/60 text-sm leading-relaxed font-sans">
               Equipping Kingdom leaders to disrupt darkness and disciple nations.
             </p>
-            <p className="mt-2 font-serif italic text-spring text-sm">Be a river.</p>
+            <p className="mt-2 font-serif italic text-spring text-sm">Rooted in truth. Sent to lead.</p>
           </div>
 
           {/* Quick links */}

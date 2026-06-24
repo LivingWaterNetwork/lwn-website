@@ -105,8 +105,8 @@ export default function AboutPage() {
       {/* ── CTA ── */}
       <section className="py-16 bg-navy text-white text-center">
         <div className="max-w-xl mx-auto px-4">
-          <h2 className="font-serif text-3xl font-semibold mb-2">Join the Movement</h2>
-          <p className="font-serif italic text-spring text-xl mb-4">Be a river.</p>
+          <h2 className="font-serif text-3xl font-semibold mb-2">Ready to lead?</h2>
+          <p className="font-serif italic text-spring text-xl mb-4">Rooted in truth. Sent to lead.</p>
           <p className="text-white/65 mb-8 font-sans">
             Ready to be equipped, restored, and sent out to lead with Kingdom purpose?
           </p>

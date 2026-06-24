@@ -27,10 +27,19 @@ export const metadata: Metadata = {
   description:
     "Equipping Kingdom leaders to disrupt darkness and disciple nations. Transformative spiritual formation, discipleship, and leadership development.",
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://lwnetwork.org"),
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon-192.png", type: "image/png", sizes: "192x192" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
   openGraph: {
     siteName: "Living Water Network",
     locale: "en_US",
     type: "website",
+    images: [{ url: "/images/logo.png", width: 512, height: 512, alt: "Living Water Network" }],
   },
 };
 

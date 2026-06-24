@@ -60,7 +60,7 @@ export default function HomePage() {
             those called to lead — in ministry and the marketplace.
           </p>
           <p className="mt-4 font-serif italic text-spring text-xl md:text-2xl">
-            Be a river.
+            Rooted in truth. Sent to lead.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/cohort" className="btn-copper text-base px-8 py-3.5">

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
@@ -20,13 +21,15 @@ export function Navbar() {
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-mist shadow-sm">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 shrink-0">
-          <div className="w-8 h-8 rounded-full bg-navy flex items-center justify-center">
-            <span className="text-white text-xs font-extrabold font-sans tracking-wide">LW</span>
-          </div>
-          <span className="font-sans font-extrabold text-navy text-sm tracking-widest uppercase hidden sm:inline">
-            Living Water Network
-          </span>
+        <Link href="/" className="flex items-center shrink-0">
+          <Image
+            src="/images/logo.png"
+            alt="Living Water Network"
+            width={160}
+            height={70}
+            className="h-11 w-auto object-contain"
+            priority
+          />
         </Link>
 
         {/* Desktop nav */}

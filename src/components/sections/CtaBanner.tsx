@@ -7,7 +7,7 @@ export function CtaBanner() {
         {/* Join CTA */}
         <div className="rounded-2xl bg-navy px-8 py-10 flex flex-col gap-4">
           <h3 className="font-serif text-2xl font-semibold text-white">
-            Ready to be a river?
+            Ready to lead?
           </h3>
           <p className="text-white/65 text-sm leading-relaxed font-sans">
             Applications for the next cohort are open. Take the first step toward
