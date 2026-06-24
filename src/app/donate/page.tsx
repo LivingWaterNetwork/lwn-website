@@ -11,15 +11,13 @@ export default function DonatePage() {
   return (
     <>
       {/* Header */}
-      <section className="bg-teal py-20 text-white text-center">
+      <section className="bg-navy py-20 text-white text-center">
         <div className="max-w-3xl mx-auto px-4">
-          <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-3">
-            Support the Mission
-          </p>
-          <h1 className="font-serif text-4xl md:text-5xl font-bold leading-tight">
+          <p className="section-label text-spring mb-3">Support the Mission</p>
+          <h1 className="font-serif text-4xl md:text-5xl font-semibold leading-tight">
             Your Generosity Ignites Transformation
           </h1>
-          <p className="mt-4 text-white/70 text-lg max-w-xl mx-auto">
+          <p className="mt-4 text-white/65 text-lg max-w-xl mx-auto font-sans">
             Join the Circle — funding the launch of the first Living Water Network cohort
             and the leaders it will release into the world.
           </p>
@@ -35,18 +33,18 @@ export default function DonatePage() {
             { stat: "501(c)(3)", label: "All donations are tax-deductible" },
           ].map(({ stat, label }) => (
             <div key={stat}>
-              <p className="font-serif text-3xl font-bold text-teal">{stat}</p>
-              <p className="text-sm text-charcoal/60 mt-1">{label}</p>
+              <p className="font-serif text-3xl font-semibold text-navy">{stat}</p>
+              <p className="text-sm text-slate mt-1 font-sans">{label}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Donation form */}
-      <section className="py-16 bg-stone-50">
+      <section className="py-16 bg-mist">
         <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
           <DonateForm />
-          <p className="mt-6 text-center text-xs text-charcoal/50 leading-relaxed">
+          <p className="mt-6 text-center text-xs text-slate/60 leading-relaxed font-sans">
             Living Water Network Inc. is a 501(c)(3) nonprofit organization. All
             donations are tax-deductible to the extent allowed by law. You will
             receive an email receipt after your gift is processed.

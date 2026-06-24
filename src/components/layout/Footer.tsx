@@ -2,22 +2,23 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="bg-teal text-white">
+    <footer className="bg-navy text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Brand */}
           <div>
-            <p className="font-serif text-xl font-semibold text-white mb-3">
+            <p className="font-sans font-extrabold text-sm uppercase tracking-widest text-white mb-3">
               Living Water Network
             </p>
-            <p className="text-white/70 text-sm leading-relaxed">
+            <p className="text-white/60 text-sm leading-relaxed font-sans">
               Equipping Kingdom leaders to disrupt darkness and disciple nations.
             </p>
+            <p className="mt-2 font-serif italic text-spring text-sm">Be a river.</p>
           </div>
 
           {/* Quick links */}
           <div>
-            <p className="font-semibold text-sm uppercase tracking-wider text-gold mb-3">
+            <p className="section-label text-spring mb-3">
               Quick Links
             </p>
             <ul className="space-y-2 text-sm">
@@ -43,24 +44,24 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <p className="font-semibold text-sm uppercase tracking-wider text-gold mb-3">
+            <p className="section-label text-spring mb-3">
               Get in Touch
             </p>
             <a
               href="mailto:info@lwnetwork.org"
-              className="text-white/70 hover:text-white transition-colors text-sm"
+              className="text-white/60 hover:text-white transition-colors text-sm font-sans"
             >
               info@lwnetwork.org
             </a>
             <div className="mt-6">
-              <Link href="/donate" className="btn-gold text-sm">
+              <Link href="/donate" className="btn-copper text-sm">
                 Support the Movement
               </Link>
             </div>
           </div>
         </div>
 
-        <div className="mt-10 pt-6 border-t border-white/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/50">
+        <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/40 font-sans">
           <p>
             &copy; {new Date().getFullYear()} Living Water Network Inc. All rights reserved.
           </p>

@@ -1,19 +1,22 @@
 import type { Metadata } from "next";
-import { Inter, Lora } from "next/font/google";
+import { Newsreader, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 
-const inter = Inter({
+const hanken = Hanken_Grotesk({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-hanken",
   display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const lora = Lora({
+const newsreader = Newsreader({
   subsets: ["latin"],
-  variable: "--font-lora",
+  variable: "--font-newsreader",
   display: "swap",
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
@@ -37,7 +40,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${lora.variable}`}>
+    <html lang="en" className={`${hanken.variable} ${newsreader.variable}`}>
       <body>
         <Navbar />
         <main>{children}</main>

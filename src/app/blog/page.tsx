@@ -13,29 +13,23 @@ export default function BlogPage() {
 
   return (
     <>
-      <section className="bg-teal py-20 text-white text-center">
+      <section className="bg-navy py-20 text-white text-center">
         <div className="max-w-3xl mx-auto px-4">
-          <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-3">
-            Insights & Encouragement
-          </p>
-          <h1 className="font-serif text-4xl md:text-5xl font-bold leading-tight">
-            The Living Water Blog
-          </h1>
-          <p className="mt-4 text-white/70">
+          <p className="section-label text-spring mb-3">Insights &amp; Encouragement</p>
+          <h1 className="font-serif text-4xl md:text-5xl font-semibold leading-tight">The Living Water Blog</h1>
+          <p className="mt-4 text-white/65 font-sans">
             Reflections on spiritual formation, Kingdom leadership, and discipleship.
           </p>
         </div>
       </section>
 
-      <section className="py-20 bg-stone-50">
+      <section className="py-20 bg-mist">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {posts.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-4xl mb-4">✍️</p>
-              <h2 className="font-serif text-2xl font-bold text-teal mb-3">
-                Posts Coming Soon
-              </h2>
-              <p className="text-charcoal/60 text-sm">
+              <h2 className="font-serif text-2xl font-semibold text-navy mb-3">Posts Coming Soon</h2>
+              <p className="text-slate text-sm font-sans">
                 We&apos;re preparing articles on spiritual formation and Kingdom leadership.
                 Check back soon.
               </p>
@@ -50,7 +44,7 @@ export default function BlogPage() {
                         {post.tags.map((tag) => (
                           <span
                             key={tag}
-                            className="text-xs font-semibold uppercase tracking-wider text-gold bg-gold/10 px-2.5 py-0.5 rounded-full"
+                            className="text-xs font-extrabold uppercase tracking-wider text-[#0A77BC] bg-[#0A77BC]/10 px-2.5 py-0.5 rounded-full font-sans"
                           >
                             {tag}
                           </span>
@@ -58,17 +52,15 @@ export default function BlogPage() {
                       </div>
                     )}
                     <Link href={`/blog/${post.slug}`}>
-                      <h2 className="font-serif text-2xl font-bold text-teal hover:text-teal-light transition-colors leading-tight">
+                      <h2 className="font-serif text-2xl font-semibold text-navy hover:text-[#0A77BC] transition-colors leading-tight">
                         {post.title}
                       </h2>
                     </Link>
                     {post.excerpt && (
-                      <p className="text-charcoal/70 text-sm leading-relaxed">
-                        {post.excerpt}
-                      </p>
+                      <p className="text-slate text-sm leading-relaxed font-sans">{post.excerpt}</p>
                     )}
-                    <div className="flex items-center justify-between pt-2 border-t border-stone-100">
-                      <div className="text-xs text-charcoal/50">
+                    <div className="flex items-center justify-between pt-2 border-t border-mist">
+                      <div className="text-xs text-slate/60 font-sans">
                         <span className="font-medium">{post.author}</span>
                         {post.date && (
                           <>
@@ -81,10 +73,7 @@ export default function BlogPage() {
                           </>
                         )}
                       </div>
-                      <Link
-                        href={`/blog/${post.slug}`}
-                        className="text-teal text-sm font-semibold hover:underline"
-                      >
+                      <Link href={`/blog/${post.slug}`} className="text-[#0A77BC] text-sm font-semibold hover:underline font-sans">
                         Read more →
                       </Link>
                     </div>

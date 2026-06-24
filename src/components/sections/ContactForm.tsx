@@ -34,8 +34,8 @@ export function ContactForm() {
     return (
       <div className="card text-center py-10">
         <div className="text-4xl mb-3">✉️</div>
-        <h3 className="font-serif text-xl font-bold text-teal mb-2">Message Sent!</h3>
-        <p className="text-charcoal/70 text-sm">
+        <h3 className="font-serif text-xl font-semibold text-navy mb-2">Message Sent!</h3>
+        <p className="text-slate text-sm font-sans">
           Thank you for reaching out. We&apos;ll be in touch soon.
         </p>
       </div>

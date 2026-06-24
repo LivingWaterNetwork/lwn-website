@@ -8,18 +8,16 @@ export const metadata: Metadata = {
 
 export default function DonateSuccessPage() {
   return (
-    <section className="min-h-[70vh] flex items-center justify-center bg-stone-50">
+    <section className="min-h-[70vh] flex items-center justify-center bg-mist">
       <div className="max-w-lg mx-auto px-4 text-center">
         <div className="text-6xl mb-6">🌊</div>
-        <h1 className="font-serif text-4xl font-bold text-teal mb-4">
-          Thank You!
-        </h1>
-        <p className="text-charcoal/70 leading-relaxed mb-6">
+        <h1 className="font-serif text-4xl font-semibold text-navy mb-4">Thank You!</h1>
+        <p className="text-slate leading-relaxed mb-6 font-sans">
           Your generous gift has been received. You'll receive a tax receipt at
           the email address you provided. Your support helps us equip Kingdom
           leaders to disrupt darkness and disciple nations.
         </p>
-        <p className="text-xs text-charcoal/50 mb-8">
+        <p className="text-xs text-slate/55 mb-8 font-sans">
           Living Water Network Inc. is a 501(c)(3) nonprofit organization. All
           donations are tax-deductible to the extent allowed by law.
         </p>

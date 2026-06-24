@@ -9,25 +9,36 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        teal: {
-          DEFAULT: "#0F4C5C",
-          light: "#1a6070",
-          dark: "#0a3540",
+        navy: {
+          DEFAULT: "#0A2A47",
+          light: "#0D3459",
+          dark: "#071e32",
         },
-        gold: {
-          DEFAULT: "#D4A24C",
-          light: "#e0b86a",
-          dark: "#b8882e",
+        "deep-sea": {
+          DEFAULT: "#00466F",
+          light: "#005585",
         },
-        stone: {
-          50: "#F7F5F0",
-          100: "#EDE9E0",
+        lw: {
+          blue: "#0A77BC",
+          "blue-light": "#1a87cc",
+          "blue-dark": "#0862a0",
         },
-        charcoal: "#222222",
+        current: {
+          DEFAULT: "#1FA6D6",
+          light: "#36b5e2",
+        },
+        copper: {
+          DEFAULT: "#C05A12",
+          light: "#d4701e",
+          dark: "#a34a0e",
+        },
+        spring: "#7CCBE6",
+        mist: "#EAF1F6",
+        slate: "#445563",
       },
       fontFamily: {
-        serif: ["var(--font-lora)", "Georgia", "serif"],
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        serif: ["var(--font-newsreader)", "Georgia", "serif"],
+        sans: ["var(--font-hanken)", "system-ui", "sans-serif"],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

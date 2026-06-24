@@ -39,9 +39,9 @@ export default function HomePage() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="relative bg-teal overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-teal-dark via-teal to-teal-light opacity-90" />
-        {/* decorative water ripple rings */}
+      <section className="relative bg-navy overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-navy-dark via-navy to-[#00466F] opacity-95" />
+        {/* water ripple rings */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="w-[600px] h-[600px] rounded-full border border-white/5 absolute" />
           <div className="w-[900px] h-[900px] rounded-full border border-white/5 absolute" />
@@ -49,23 +49,26 @@ export default function HomePage() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 md:py-40 text-center">
-          <p className="text-gold font-semibold text-sm uppercase tracking-widest mb-4">
+          <p className="section-label text-spring mb-4">
             Living Water Network
           </p>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white leading-tight max-w-3xl mx-auto">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-semibold text-white leading-tight max-w-3xl mx-auto">
             Equipping Kingdom leaders to disrupt darkness and disciple nations.
           </h1>
-          <p className="mt-6 text-white/75 text-lg max-w-xl mx-auto leading-relaxed">
+          <p className="mt-6 text-white/70 text-lg max-w-xl mx-auto leading-relaxed font-sans">
             Spiritual formation, discipleship, and leadership development for
             those called to lead — in ministry and the marketplace.
           </p>
+          <p className="mt-4 font-serif italic text-spring text-xl md:text-2xl">
+            Be a river.
+          </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/cohort" className="btn-gold text-base px-8 py-3.5">
+            <Link href="/cohort" className="btn-copper text-base px-8 py-3.5">
               Join the Network
             </Link>
             <Link
               href="/about"
-              className="inline-flex items-center justify-center px-8 py-3.5 rounded-md border-2 border-white/50 text-white font-semibold text-base transition-colors hover:border-white hover:bg-white/10"
+              className="inline-flex items-center justify-center px-8 py-3.5 rounded-md border-2 border-white/40 text-white font-semibold font-sans text-base transition-colors hover:border-white hover:bg-white/10"
             >
               Learn More
             </Link>
@@ -76,11 +79,9 @@ export default function HomePage() {
       {/* ── Mission ── */}
       <section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-gold font-semibold text-sm uppercase tracking-widest mb-3">
-            Our Mission
-          </p>
+          <p className="section-label mb-3">Our Mission</p>
           <h2 className="section-heading mb-8">Impacting 100,000 Kingdom Leaders</h2>
-          <div className="prose prose-lg text-charcoal/80 font-sans leading-relaxed mx-auto text-left space-y-4">
+          <div className="prose prose-lg text-slate font-sans leading-relaxed mx-auto text-left space-y-4">
             <p>
               At Living Water Network, our mission is to impact 100,000 Kingdom leaders
               over the next five years by providing transformative spiritual formation,
@@ -104,12 +105,10 @@ export default function HomePage() {
       </section>
 
       {/* ── Programs overview ── */}
-      <section className="py-20 bg-stone-50">
+      <section className="py-20 bg-mist">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <p className="text-gold font-semibold text-sm uppercase tracking-widest mb-3">
-              What We Offer
-            </p>
+            <p className="section-label mb-3">What We Offer</p>
             <h2 className="section-heading">Programs Built to Transform</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -125,19 +124,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Social proof / placeholder photo section ── */}
-      <section className="py-20 bg-teal text-white">
+      {/* ── Testimonial ── */}
+      <section className="py-20 bg-[#00466F] text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-gold font-semibold text-sm uppercase tracking-widest mb-4">
-            Testimonials
-          </p>
+          <p className="section-label text-spring mb-4">Testimonials</p>
           <blockquote className="font-serif text-2xl md:text-3xl italic leading-relaxed text-white/90 mb-6">
             &ldquo;Living Water Network gave me the space to be reformed before I could
             ever hope to reform others.&rdquo;
           </blockquote>
-          <p className="text-white/60 text-sm">
+          <p className="text-white/50 text-sm font-sans">
             — Cohort Participant{" "}
-            <span className="text-white/40 italic">(placeholder — swap with real testimonial)</span>
+            <span className="text-white/30 italic">(placeholder — swap with real testimonial)</span>
           </p>
         </div>
       </section>

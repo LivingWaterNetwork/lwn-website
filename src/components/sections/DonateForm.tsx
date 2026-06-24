@@ -66,16 +66,16 @@ export function DonateForm() {
       {/* Frequency toggle */}
       <div>
         <p className="form-label">Donation Frequency</p>
-        <div className="flex rounded-lg border border-stone-100 overflow-hidden">
+        <div className="flex rounded-lg border border-mist overflow-hidden">
           {(["one-time", "monthly", "yearly"] as Frequency[]).map((f) => (
             <button
               key={f}
               type="button"
               onClick={() => setFrequency(f)}
-              className={`flex-1 py-2.5 text-sm font-semibold transition-colors capitalize ${
+              className={`flex-1 py-2.5 text-sm font-semibold font-sans transition-colors capitalize ${
                 frequency === f
-                  ? "bg-teal text-white"
-                  : "bg-white text-charcoal/60 hover:bg-stone-50"
+                  ? "bg-navy text-white"
+                  : "bg-white text-slate/70 hover:bg-mist"
               }`}
             >
               {f === "one-time" ? "One-Time" : f.charAt(0).toUpperCase() + f.slice(1)}
@@ -93,10 +93,10 @@ export function DonateForm() {
               key={a}
               type="button"
               onClick={() => setAmount(a)}
-              className={`py-2.5 rounded-md text-sm font-semibold border transition-colors ${
+              className={`py-2.5 rounded-md text-sm font-semibold font-sans border transition-colors ${
                 amount === a
-                  ? "bg-teal text-white border-teal"
-                  : "bg-white text-charcoal border-stone-100 hover:border-teal/50"
+                  ? "bg-navy text-white border-navy"
+                  : "bg-white text-slate border-mist hover:border-[#0A77BC]/40"
               }`}
             >
               ${a >= 1000 ? `${a / 1000}k` : a}
@@ -105,10 +105,10 @@ export function DonateForm() {
           <button
             type="button"
             onClick={() => setAmount("custom")}
-            className={`py-2.5 rounded-md text-sm font-semibold border transition-colors ${
+            className={`py-2.5 rounded-md text-sm font-semibold font-sans border transition-colors ${
               amount === "custom"
-                ? "bg-teal text-white border-teal"
-                : "bg-white text-charcoal border-stone-100 hover:border-teal/50"
+                ? "bg-navy text-white border-navy"
+                : "bg-white text-slate border-mist hover:border-[#0A77BC]/40"
             }`}
           >
             Custom
@@ -117,7 +117,7 @@ export function DonateForm() {
 
         {amount === "custom" && (
           <div className="mt-3 relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-charcoal/50 text-sm">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate/50 text-sm font-sans">
               $
             </span>
             <input
@@ -169,7 +169,7 @@ export function DonateForm() {
       <div>
         <label htmlFor="donor-comment" className="form-label">
           Comment{" "}
-          <span className="text-charcoal/40 font-normal">
+          <span className="text-slate/40 font-normal">
             (optional, max 100 chars)
           </span>
         </label>
@@ -182,7 +182,7 @@ export function DonateForm() {
           className="form-input"
           placeholder="A note with your gift…"
         />
-        <p className="text-xs text-charcoal/40 mt-1 text-right">
+        <p className="text-xs text-slate/40 mt-1 text-right font-sans">
           {comment.length}/100
         </p>
       </div>
@@ -192,7 +192,7 @@ export function DonateForm() {
       <button
         type="submit"
         disabled={loading}
-        className="btn-gold w-full text-base py-3.5 disabled:opacity-60 disabled:cursor-not-allowed"
+        className="btn-copper w-full text-base py-3.5 disabled:opacity-60 disabled:cursor-not-allowed"
       >
         {loading
           ? "Redirecting to checkout…"

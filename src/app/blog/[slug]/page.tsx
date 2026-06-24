@@ -29,24 +29,22 @@ export default function BlogPostPage({ params }: Props) {
 
   return (
     <>
-      <section className="bg-teal py-20 text-white text-center">
+      <section className="bg-navy py-20 text-white text-center">
         <div className="max-w-3xl mx-auto px-4">
           {meta.tags && meta.tags.length > 0 && (
             <div className="flex flex-wrap gap-2 justify-center mb-4">
               {meta.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="text-xs font-semibold uppercase tracking-wider text-gold bg-gold/20 px-2.5 py-0.5 rounded-full"
+                  className="text-xs font-extrabold uppercase tracking-wider text-spring bg-white/10 px-2.5 py-0.5 rounded-full font-sans"
                 >
                   {tag}
                 </span>
               ))}
             </div>
           )}
-          <h1 className="font-serif text-4xl md:text-5xl font-bold leading-tight">
-            {meta.title}
-          </h1>
-          <div className="mt-4 text-white/60 text-sm">
+          <h1 className="font-serif text-4xl md:text-5xl font-semibold leading-tight">{meta.title}</h1>
+          <div className="mt-4 text-white/55 text-sm font-sans">
             {meta.author}
             {meta.date && (
               <>
@@ -63,19 +61,17 @@ export default function BlogPostPage({ params }: Props) {
       </section>
 
       <section className="py-16 bg-white">
-        <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 prose prose-lg prose-headings:font-serif prose-headings:text-teal prose-a:text-teal prose-blockquote:border-gold prose-blockquote:text-charcoal/70 max-w-none">
+        <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 prose prose-lg prose-headings:font-serif prose-headings:text-navy prose-a:text-[#0A77BC] prose-blockquote:border-copper prose-blockquote:text-slate max-w-none">
           <MDXRemote source={content} />
         </article>
       </section>
 
-      <section className="py-10 bg-stone-50 border-t border-stone-100">
+      <section className="py-10 bg-mist border-t border-mist">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          <Link href="/blog" className="text-sm text-charcoal/60 hover:text-teal transition-colors">
+          <Link href="/blog" className="text-sm text-slate hover:text-[#0A77BC] transition-colors font-sans">
             ← Back to Blog
           </Link>
-          <Link href="/cohort" className="btn-gold text-sm">
-            Join the Network
-          </Link>
+          <Link href="/cohort" className="btn-copper text-sm">Join the Network</Link>
         </div>
       </section>
     </>

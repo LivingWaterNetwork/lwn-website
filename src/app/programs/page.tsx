@@ -73,15 +73,13 @@ export default function ProgramsPage() {
   return (
     <>
       {/* Header */}
-      <section className="bg-teal py-20 text-white text-center">
+      <section className="bg-navy py-20 text-white text-center">
         <div className="max-w-3xl mx-auto px-4">
-          <p className="text-gold text-sm font-semibold uppercase tracking-widest mb-3">
-            What We Offer
-          </p>
-          <h1 className="font-serif text-4xl md:text-5xl font-bold leading-tight">
+          <p className="section-label text-spring mb-3">What We Offer</p>
+          <h1 className="font-serif text-4xl md:text-5xl font-semibold leading-tight">
             Programs Built to Transform
           </h1>
-          <p className="mt-4 text-white/70 text-lg">
+          <p className="mt-4 text-white/65 text-lg font-sans">
             Every program at Living Water Network is designed to restore, equip, and
             release Kingdom leaders into greater impact.
           </p>
@@ -100,7 +98,7 @@ export default function ProgramsPage() {
             >
               {/* Icon / visual side */}
               <div
-                className={`rounded-2xl bg-stone-50 border border-stone-100 flex items-center justify-center aspect-video text-6xl ${
+                className={`rounded-2xl bg-mist border border-mist flex items-center justify-center aspect-video text-6xl ${
                   i % 2 === 1 ? "md:order-2" : ""
                 }`}
               >
@@ -109,16 +107,10 @@ export default function ProgramsPage() {
 
               {/* Content */}
               <div className={i % 2 === 1 ? "md:order-1" : ""}>
-                <p className="text-gold font-semibold text-sm uppercase tracking-widest mb-2">
-                  {p.tagline}
-                </p>
-                <h2 className="font-serif text-3xl font-bold text-teal mb-4">
-                  {p.title}
-                </h2>
-                <p className="text-charcoal/70 leading-relaxed text-sm mb-6">{p.body}</p>
-                <Link href={p.cta.href} className="btn-primary">
-                  {p.cta.label}
-                </Link>
+                <p className="section-label mb-2">{p.tagline}</p>
+                <h2 className="font-serif text-3xl font-semibold text-navy mb-4">{p.title}</h2>
+                <p className="text-slate leading-relaxed text-sm mb-6 font-sans">{p.body}</p>
+                <Link href={p.cta.href} className="btn-primary">{p.cta.label}</Link>
               </div>
             </div>
           ))}
@@ -126,18 +118,14 @@ export default function ProgramsPage() {
       </section>
 
       {/* Bottom CTA */}
-      <section className="py-16 bg-stone-50 text-center">
+      <section className="py-16 bg-mist text-center">
         <div className="max-w-xl mx-auto px-4">
-          <h2 className="font-serif text-3xl font-bold text-teal mb-4">
-            Not sure where to start?
-          </h2>
-          <p className="text-charcoal/70 mb-8">
+          <h2 className="font-serif text-3xl font-semibold text-navy mb-4">Not sure where to start?</h2>
+          <p className="text-slate mb-8 font-sans">
             Reach out and tell us about your leadership journey — we&apos;ll point you to the
             right next step.
           </p>
-          <Link href="/contact" className="btn-primary">
-            Contact Us
-          </Link>
+          <Link href="/contact" className="btn-primary">Contact Us</Link>
         </div>
       </section>
     </>

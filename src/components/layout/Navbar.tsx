@@ -17,15 +17,14 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-stone-100 shadow-sm">
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-mist shadow-sm">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 shrink-0">
-          {/* PLACEHOLDER: replace with <Image> once logo file provided */}
-          <div className="w-8 h-8 rounded-full bg-teal flex items-center justify-center">
-            <span className="text-white text-xs font-bold font-serif">LW</span>
+          <div className="w-8 h-8 rounded-full bg-navy flex items-center justify-center">
+            <span className="text-white text-xs font-extrabold font-sans tracking-wide">LW</span>
           </div>
-          <span className="font-serif font-semibold text-teal text-lg hidden sm:inline">
+          <span className="font-sans font-extrabold text-navy text-sm tracking-widest uppercase hidden sm:inline">
             Living Water Network
           </span>
         </Link>
@@ -36,21 +35,21 @@ export function Navbar() {
             <Link
               key={href}
               href={href}
-              className={`text-sm font-medium transition-colors hover:text-teal ${
-                pathname === href ? "text-teal" : "text-charcoal/70"
+              className={`text-sm font-medium font-sans transition-colors hover:text-[#0A77BC] ${
+                pathname === href ? "text-[#0A77BC]" : "text-slate"
               }`}
             >
               {label}
             </Link>
           ))}
-          <Link href="/donate" className="btn-gold ml-2">
+          <Link href="/donate" className="btn-copper ml-2">
             Donate
           </Link>
         </div>
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden p-2 rounded-md text-charcoal hover:bg-stone-100 transition-colors"
+          className="md:hidden p-2 rounded-md text-slate hover:bg-mist transition-colors"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
         >
@@ -68,14 +67,14 @@ export function Navbar() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-stone-100 bg-white px-4 pb-4 pt-2 space-y-1">
+        <div className="md:hidden border-t border-mist bg-white px-4 pb-4 pt-2 space-y-1">
           {navLinks.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
               onClick={() => setMobileOpen(false)}
-              className={`block px-3 py-2 rounded-md text-sm font-medium transition-colors hover:bg-stone-50 hover:text-teal ${
-                pathname === href ? "text-teal bg-stone-50" : "text-charcoal"
+              className={`block px-3 py-2 rounded-md text-sm font-medium font-sans transition-colors hover:bg-mist hover:text-[#0A77BC] ${
+                pathname === href ? "text-[#0A77BC] bg-mist" : "text-slate"
               }`}
             >
               {label}
@@ -84,7 +83,7 @@ export function Navbar() {
           <Link
             href="/donate"
             onClick={() => setMobileOpen(false)}
-            className="btn-gold w-full mt-2 text-center"
+            className="btn-copper w-full mt-2 text-center"
           >
             Donate
           </Link>
