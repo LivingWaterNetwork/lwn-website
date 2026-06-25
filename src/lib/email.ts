@@ -20,7 +20,11 @@ export async function sendNotificationEmail({
     console.warn("[email] RESEND_API_KEY not set — skipping notification email");
     return;
   }
-  await resend.emails.send({ from: FROM, to: NOTIFY_TO, subject, text });
+    const { error } = await resend.emails.send({ from: FROM, to: NOTIFY_TO, subject, text });
+    if (error) {
+          console.error("[email] Resend failed to send notification email:", error);
+          throw new Error(`Resend error: ${error.message}`);
+    }
 }
 
 /** Donor-facing receipt email */
@@ -49,13 +53,13 @@ export async function sendDonationReceipt({
       ? "annual recurring"
       : "one-time";
 
-  await resend.emails.send({
+  const { error: sendError } = await resend.emails.send({
     from: FROM,
     to,
     subject: `Thank you for your ${freqLabel} gift — Living Water Network`,
     text: `
 Dear ${name},
-
+  
 Thank you for your generous ${freqLabel} gift of ${formatAmount(amount)} to Living Water Network!
 
 Your generosity helps us equip Kingdom leaders to disrupt darkness and disciple nations. We are deeply grateful for your partnership in this mission.
@@ -71,4 +75,8 @@ Living Water Network
 info@lwnetwork.org
     `.trim(),
   });
+  if (sendError) {
+        console.error("[email] Resend failed to send donation receipt:", sendError);
+        throw new Error(`Resend error: ${sendError.message}`);
+  }
 }
