@@ -51,31 +51,40 @@ export default function AboutPage() {
               <p>
                 Omar Fandino was born in Colombia and raised in New York by a single mother who
                 gave him everything she had. His father was absent. The streets were not. By his
-                early years he was already making the wrong choices for the right-seeming reasons —
+                early years he was already making the wrong choices for the right-seeming reasons,
                 and those choices eventually led him to prison.
               </p>
               <p>
                 It was there, stripped of performance and pretense, that Jesus found him. What
                 happened next is what Living Water Network exists to replicate. Omar did not simply
-                convert — he was <em>formed</em>. Scripture became breath. The Holy Spirit became
+                convert; he was <em>formed</em>. Scripture became breath. The Holy Spirit became
                 teacher. And as Omar began to grow, he could not keep it to himself. He started
-                gathering men. Talking about Jesus. Studying together. Praying. What began as a
-                small group grew into a congregation of over 100 men meeting weekly inside the
-                facility — being discipled, counseled, and walked through the deep work of
+                gathering men, talking about Jesus, studying together, praying. What began as a
+                small group inside a correctional facility grew into a congregation of over 100 men
+                meeting weekly, being discipled, counseled, and walked through the deep work of
                 becoming someone new.
               </p>
               <p>
-                During those years, Omar was shaped by the writings of Dallas Willard, Pete
-                Scazzero, John Mark Comer, Dave Ferguson, William Gurnall, and Augustine — thinkers
-                who taught him that the goal of the Christian life is not greater performance but
-                deeper formation. That conviction never left him.
+                Released in 2021 and back in Atlanta, Omar joined Victory Church. He started as an
+                administrative assistant, choosing to serve with his hands before leading with his
+                voice. That humility opened doors, and he grew into a Guest Experience Coordinator
+                role before his work expanded into the broader leadership arena. Through consulting
+                engagements with Rizewell and Grow Stack Drive, he delivered executive leadership
+                development, designed organizational strategy, and demonstrated that formation and
+                strategic execution are not opposites; they are inseparable.
               </p>
               <p>
-                Today, Omar carries those years as a gift, not a scar. He is pursuing a
-                Bachelor&apos;s degree in Leadership Development and Nonprofit Management at
-                Liberty University, is an active member of his local church, and is the founder
-                of Living Water Network — a movement built on the conviction that leaders cannot
-                sustainably take others where they have not gone themselves.
+                During those years, Omar was shaped by the writings of Dallas Willard, Pete
+                Scazzero, John Mark Comer, Dave Ferguson, William Gurnall, and Augustine, thinkers
+                who taught him that the goal of the Christian life is not greater performance but
+                deeper formation. That conviction became the foundation of Living Water Network,
+                which he founded in 2023.
+              </p>
+              <p>
+                Today, Omar is pursuing a Bachelor&apos;s degree in Leadership Development and
+                Nonprofit Management at Liberty University, is an active member of his local
+                church, and is building LWN into a movement grounded in one conviction: leaders
+                cannot sustainably take others where they have not gone themselves.
               </p>
             </div>
             <a
