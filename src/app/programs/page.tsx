@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
 const programs = [
   {
     id: "cohorts",
-    icon: "🌊",
+    image: "/images/prayer-ministry.jpg",
+    imageAlt: "Leaders in ministry together",
     title: "Immersive Cohorts",
     tagline: "Transformed together.",
     body: `Our signature cohort experience is a multi-week journey in spiritual formation,
@@ -23,7 +25,8 @@ const programs = [
   },
   {
     id: "counseling",
-    icon: "🧭",
+    image: "/images/prayer-circle.jpg",
+    imageAlt: "Pastoral prayer and care",
     title: "Personalized Counseling",
     tagline: "Healing that empowers.",
     body: `Great leaders need great care. Our personalized counseling sessions go beyond
@@ -35,7 +38,8 @@ const programs = [
   },
   {
     id: "mentorship",
-    icon: "🤝",
+    image: "/images/omar-with-colleague.jpg",
+    imageAlt: "Leaders mentoring together",
     title: "Strategic Mentorships",
     tagline: "Iron sharpening iron.",
     body: `We believe every leader needs a Paul and a Timothy — someone ahead of them on
@@ -46,7 +50,8 @@ const programs = [
   },
   {
     id: "speaking",
-    icon: "🎤",
+    image: "/images/omar-speaking-stage.jpg",
+    imageAlt: "Omar speaking at a large leadership event",
     title: "Public Speaking Engagements",
     tagline: "Bringing the message to you.",
     body: `Living Water Network offers dynamic speaking engagements for churches,
@@ -58,7 +63,8 @@ const programs = [
   },
   {
     id: "missions",
-    icon: "✈️",
+    image: "/images/mission-trip-bus.jpg",
+    imageAlt: "LWN team on an international mission trip",
     title: "International Mission Trips",
     tagline: "Broadened perspective, deepened calling.",
     body: `There is nothing like crossing a border to reshape a leader's worldview.
@@ -96,13 +102,18 @@ export default function ProgramsPage() {
                 i % 2 === 1 ? "md:flex-row-reverse" : ""
               }`}
             >
-              {/* Icon / visual side */}
+              {/* Photo */}
               <div
-                className={`rounded-2xl bg-mist border border-mist flex items-center justify-center aspect-video text-6xl ${
+                className={`rounded-2xl overflow-hidden aspect-video relative shadow-md ${
                   i % 2 === 1 ? "md:order-2" : ""
                 }`}
               >
-                {p.icon}
+                <Image
+                  src={p.image}
+                  alt={p.imageAlt}
+                  fill
+                  className="object-cover"
+                />
               </div>
 
               {/* Content */}

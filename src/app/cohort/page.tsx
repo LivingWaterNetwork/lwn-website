@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { CohortForm } from "@/components/sections/CohortForm";
 
 export const metadata: Metadata = {
@@ -11,8 +12,17 @@ export default function CohortPage() {
   return (
     <>
       {/* Header */}
-      <section className="bg-navy py-20 text-white text-center">
-        <div className="max-w-3xl mx-auto px-4">
+      <section className="relative bg-navy py-20 text-white text-center overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/prayer-ministry.jpg"
+            alt="Cohort community in ministry"
+            fill
+            className="object-cover object-center opacity-25"
+            priority
+          />
+        </div>
+        <div className="relative max-w-3xl mx-auto px-4">
           <p className="section-label text-spring mb-3">Join the Network</p>
           <h1 className="font-serif text-4xl md:text-5xl font-semibold leading-tight">Cohort Application</h1>
           <p className="mt-4 text-white/65 text-lg font-sans">
@@ -41,8 +51,18 @@ export default function CohortPage() {
 
       {/* What to expect */}
       <section className="py-16 bg-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="section-heading mb-6 text-center">What to Expect</h2>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-start">
+          {/* Photo */}
+          <div className="relative rounded-2xl overflow-hidden aspect-[4/5] shadow-md">
+            <Image
+              src="/images/mission-trip-bus.jpg"
+              alt="LWN cohort community"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div>
+          <h2 className="section-heading mb-6">What to Expect</h2>
           <div className="space-y-4 text-slate leading-relaxed text-sm font-sans">
             <p>
               The Living Water Network cohort is not a conference or a weekend seminar.
@@ -77,6 +97,7 @@ export default function CohortPage() {
                 {item}
               </div>
             ))}
+          </div>
           </div>
         </div>
       </section>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -11,8 +12,17 @@ export default function AboutPage() {
   return (
     <>
       {/* ── Page header ── */}
-      <section className="bg-navy py-20 text-white text-center">
-        <div className="max-w-3xl mx-auto px-4">
+      <section className="relative bg-navy py-20 text-white text-center overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/omar-speaking-stage.jpg"
+            alt="Omar speaking at a leadership event"
+            fill
+            className="object-cover object-center opacity-20"
+            priority
+          />
+        </div>
+        <div className="relative max-w-3xl mx-auto px-4">
           <p className="section-label text-spring mb-3">Our Story</p>
           <h1 className="font-serif text-4xl md:text-5xl font-semibold leading-tight">
             About Living Water Network
@@ -23,10 +33,14 @@ export default function AboutPage() {
       {/* ── Founder story ── */}
       <section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
-          {/* Photo placeholder */}
-          <div className="rounded-2xl bg-mist aspect-square flex items-center justify-center text-slate/40 text-sm font-sans">
-            {/* PLACEHOLDER: replace with <Image src="/images/founder.jpg" ... /> */}
-            Founder photo coming soon
+          {/* Founder photo */}
+          <div className="rounded-2xl overflow-hidden aspect-[3/4] relative shadow-lg">
+            <Image
+              src="/images/founder-headshot.jpg"
+              alt="Founder of Living Water Network"
+              fill
+              className="object-cover object-top"
+            />
           </div>
 
           <div>
@@ -80,6 +94,34 @@ export default function AboutPage() {
               church volunteers, lay leaders, and marketplace influencers — anyone called
               to lead with purpose and integrity.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Ministry in action photo grid ── */}
+      <section className="py-16 bg-mist">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="section-label mb-3 text-center">Ministry in Action</p>
+          <h2 className="section-heading mb-10 text-center">Equipping Leaders Everywhere</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="relative rounded-xl overflow-hidden aspect-video">
+              <Image src="/images/prayer-circle.jpg" alt="Leaders praying together" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="relative rounded-xl overflow-hidden aspect-video">
+              <Image src="/images/omar-speaking-vip.jpg" alt="Omar speaking at an event" fill className="object-cover object-top hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="relative rounded-xl overflow-hidden aspect-video">
+              <Image src="/images/baptism-pool.jpg" alt="Baptism ministry" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="relative rounded-xl overflow-hidden aspect-video">
+              <Image src="/images/prayer-ministry.jpg" alt="Ministry prayer circle" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="relative rounded-xl overflow-hidden aspect-video">
+              <Image src="/images/omar-with-colleague.jpg" alt="Omar with ministry partner" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="relative rounded-xl overflow-hidden aspect-video">
+              <Image src="/images/baptism-closeup.jpg" alt="Water baptism" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
           </div>
         </div>
       </section>

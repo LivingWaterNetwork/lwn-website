@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ProgramCard } from "@/components/sections/ProgramCard";
 import { CtaBanner } from "@/components/sections/CtaBanner";
@@ -120,6 +121,37 @@ export default function HomePage() {
             <Link href="/programs" className="btn-secondary">
               Explore All Programs
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Impact photo strip ── */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="section-label mb-3 text-center">See the Impact</p>
+          <h2 className="section-heading mb-10 text-center">Transformation Happens Here</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="relative rounded-xl overflow-hidden aspect-square">
+              <Image src="/images/baptism-pool.jpg" alt="Baptism ministry" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="relative rounded-xl overflow-hidden aspect-square md:col-span-2">
+              <Image src="/images/omar-speaking-stage.jpg" alt="Omar speaking at a major event" fill className="object-cover object-center hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="relative rounded-xl overflow-hidden aspect-square">
+              <Image src="/images/prayer-ministry.jpg" alt="Prayer ministry" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="relative rounded-xl overflow-hidden aspect-square">
+              <Image src="/images/mission-trip-bus.jpg" alt="International mission trip" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="relative rounded-xl overflow-hidden aspect-square">
+              <Image src="/images/prayer-circle.jpg" alt="Leaders praying together" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="relative rounded-xl overflow-hidden aspect-square">
+              <Image src="/images/baptism-closeup.jpg" alt="Water baptism" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="relative rounded-xl overflow-hidden aspect-square">
+              <Image src="/images/omar-speaking-vip.jpg" alt="Omar speaking at a VIP event" fill className="object-cover object-top hover:scale-105 transition-transform duration-300" />
+            </div>
           </div>
         </div>
       </section>
