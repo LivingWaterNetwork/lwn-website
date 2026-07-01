@@ -165,8 +165,7 @@ export default function HomePage() {
             ever hope to reform others.&rdquo;
           </blockquote>
           <p className="text-white/50 text-sm font-sans">
-            — Cohort Participant{" "}
-            <span className="text-white/30 italic">(placeholder — swap with real testimonial)</span>
+            — Cohort Participant
           </p>
         </div>
       </section>
