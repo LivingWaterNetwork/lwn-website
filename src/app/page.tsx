@@ -134,23 +134,26 @@ export default function HomePage() {
             <div className="relative rounded-xl overflow-hidden aspect-square">
               <Image src="/images/baptism-pool.jpg" alt="Baptism ministry" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
-            <div className="relative rounded-xl overflow-hidden aspect-square md:col-span-2">
-              <Image src="/images/omar-speaking-stage.jpg" alt="Omar speaking at a major event" fill className="object-cover object-center hover:scale-105 transition-transform duration-300" />
+            <div className="relative rounded-xl overflow-hidden aspect-square">
+              <Image src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=800&q=80&fit=crop" alt="Community worship" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="relative rounded-xl overflow-hidden aspect-square">
               <Image src="/images/prayer-ministry.jpg" alt="Prayer ministry" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="relative rounded-xl overflow-hidden aspect-square">
+              <Image src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80&fit=crop" alt="Community outreach and service" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="relative rounded-xl overflow-hidden aspect-square">
               <Image src="/images/mission-trip-bus.jpg" alt="International mission trip" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+            </div>
+            <div className="relative rounded-xl overflow-hidden aspect-square">
+              <Image src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80&fit=crop" alt="Mentorship and discipleship" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="relative rounded-xl overflow-hidden aspect-square">
               <Image src="/images/prayer-circle.jpg" alt="Leaders praying together" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="relative rounded-xl overflow-hidden aspect-square">
-              <Image src="/images/baptism-closeup.jpg" alt="Water baptism" fill className="object-cover hover:scale-105 transition-transform duration-300" />
-            </div>
-            <div className="relative rounded-xl overflow-hidden aspect-square">
-              <Image src="/images/omar-speaking-vip.jpg" alt="Omar speaking at a VIP event" fill className="object-cover object-top hover:scale-105 transition-transform duration-300" />
+              <Image src="https://images.unsplash.com/photo-1478147427282-58a87a120781?w=800&q=80&fit=crop" alt="Church gathering" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
           </div>
         </div>
