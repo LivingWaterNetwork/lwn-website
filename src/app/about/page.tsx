@@ -37,7 +37,7 @@ export default function AboutPage() {
           <div className="rounded-2xl overflow-hidden aspect-[3/4] relative shadow-lg">
             <Image
               src="/images/founder-headshot.jpg"
-              alt="Founder of Living Water Network"
+              alt="Omar Fandino, Founder of Living Water Network"
               fill
               className="object-cover object-top"
             />
@@ -45,21 +45,50 @@ export default function AboutPage() {
 
           <div>
             <p className="section-label mb-3">Our Founder</p>
-            <h2 className="section-heading mb-4">
-              {/* PLACEHOLDER: Founder name */}
-              [Founder Name]
-            </h2>
-            {/* PLACEHOLDER: Replace with Omar's bio once provided */}
+            <h2 className="section-heading mb-1">Omar Fandino</h2>
+            <p className="text-xs text-slate/60 font-sans mb-4 uppercase tracking-wide">Founder, Living Water Network</p>
             <div className="space-y-4 text-slate leading-relaxed text-sm font-sans">
               <p>
-                [Founder bio placeholder — Omar to provide full biographical content
-                describing his journey, calling, and the vision behind Living Water Network.]
+                Omar Fandino was born in Colombia and raised in New York by a single mother who
+                gave him everything she had. His father was absent. The streets were not. By his
+                early years he was already making the wrong choices for the right-seeming reasons —
+                and those choices eventually led him to prison.
               </p>
               <p>
-                [Include: ministry background, what led to founding LWN, key turning
-                points, and the heart behind the 100,000-leader mission.]
+                It was there, stripped of performance and pretense, that Jesus found him. What
+                happened next is what Living Water Network exists to replicate. Omar did not simply
+                convert — he was <em>formed</em>. Scripture became breath. The Holy Spirit became
+                teacher. And as Omar began to grow, he could not keep it to himself. He started
+                gathering men. Talking about Jesus. Studying together. Praying. What began as a
+                small group grew into a congregation of over 100 men meeting weekly inside the
+                facility — being discipled, counseled, and walked through the deep work of
+                becoming someone new.
+              </p>
+              <p>
+                During those years, Omar was shaped by the writings of Dallas Willard, Pete
+                Scazzero, John Mark Comer, Dave Ferguson, William Gurnall, and Augustine — thinkers
+                who taught him that the goal of the Christian life is not greater performance but
+                deeper formation. That conviction never left him.
+              </p>
+              <p>
+                Today, Omar carries those years as a gift, not a scar. He is pursuing a
+                Bachelor&apos;s degree in Leadership Development and Nonprofit Management at
+                Liberty University, is an active member of his local church, and is the founder
+                of Living Water Network — a movement built on the conviction that leaders cannot
+                sustainably take others where they have not gone themselves.
               </p>
             </div>
+            <a
+              href="https://www.linkedin.com/in/ofandino/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mt-6 text-xs font-semibold font-sans text-[#0A77BC] hover:underline"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+              Connect on LinkedIn
+            </a>
           </div>
         </div>
       </section>
