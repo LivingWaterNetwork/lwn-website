@@ -36,9 +36,9 @@ export default function CohortPage() {
       <section className="py-16 bg-mist">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-3 gap-6">
           {[
-            { label: "Dates", value: "[PLACEHOLDER — cohort dates coming soon]", icon: "📅" },
-            { label: "Location", value: "[PLACEHOLDER — location / format coming soon]", icon: "📍" },
-            { label: "Investment", value: "[PLACEHOLDER — cost details coming soon]", icon: "💰" },
+            { label: "Dates", value: "Cohort dates announced soon — apply now to reserve your spot.", icon: "📅" },
+            { label: "Location", value: "Metro Atlanta (in-person launch) · continuing virtually", icon: "📍" },
+            { label: "Investment", value: "Investment details announced with cohort dates. Need-based support available.", icon: "💰" },
           ].map(({ label, value, icon }) => (
             <div key={label} className="card text-center">
               <div className="text-3xl mb-3">{icon}</div>

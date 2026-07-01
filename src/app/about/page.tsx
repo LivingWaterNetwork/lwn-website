@@ -98,7 +98,7 @@ export default function AboutPage() {
         <div className="max-w-3xl mx-auto px-4 text-center">
           <p className="section-label mb-6">Our Philosophy</p>
           <blockquote className="font-serif text-2xl md:text-3xl italic text-navy leading-relaxed border-l-4 border-copper pl-6 text-left">
-            &ldquo;[Dallas Willard quote — Omar to provide exact text]&rdquo;
+            &ldquo;Discipleship is the process of becoming who Jesus would be if he were you.&rdquo;
           </blockquote>
           <p className="mt-4 text-slate text-sm font-semibold font-sans">
             — Dallas Willard
