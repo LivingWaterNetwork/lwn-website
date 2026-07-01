@@ -156,17 +156,21 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Testimonial ── */}
+      {/* ── First Cohort Launch ── */}
       <section className="py-20 bg-[#00466F] text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="section-label text-spring mb-4">Testimonials</p>
-          <blockquote className="font-serif text-2xl md:text-3xl italic leading-relaxed text-white/90 mb-6">
-            &ldquo;Living Water Network gave me the space to be reformed before I could
-            ever hope to reform others.&rdquo;
-          </blockquote>
-          <p className="text-white/50 text-sm font-sans">
-            — Cohort Participant
+          <p className="section-label text-spring mb-4">First Cohort</p>
+          <h2 className="font-serif text-3xl md:text-4xl font-semibold leading-tight mb-4">
+            Launching Spring 2027
+          </h2>
+          <p className="text-white/75 text-lg font-sans max-w-2xl mx-auto mb-8 leading-relaxed">
+            The Living Water Network inaugural cohort is forming now. An immersive journey in
+            spiritual formation, discipleship, and Kingdom leadership — built for leaders who
+            are ready to go deep before they go far.
           </p>
+          <Link href="/cohort" className="btn-copper">
+            Apply Now
+          </Link>
         </div>
       </section>
 

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { loadStripe } from "@stripe/stripe-js";
+import { useState, useEffect, useRef } from "react";
+import { loadStripe, Stripe, StripeElements } from "@stripe/stripe-js";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? ""
@@ -10,6 +10,111 @@ const stripePromise = loadStripe(
 const PRESET_AMOUNTS = [50, 100, 200, 500, 1000, 5000, 10000];
 type Frequency = "one-time" | "monthly" | "yearly";
 
+// ─── Step 2: Payment Element ──────────────────────────────────────────────────
+interface PaymentStepProps {
+  clientSecret: string;
+  amount: number;
+  frequency: Frequency;
+  onBack: () => void;
+}
+
+function PaymentStep({ clientSecret, amount, frequency, onBack }: PaymentStepProps) {
+  const mountRef = useRef<HTMLDivElement>(null);
+  const stripeRef = useRef<Stripe | null>(null);
+  const elementsRef = useRef<StripeElements | null>(null);
+  const [ready, setReady] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    // Guard against React Strict Mode double-invoke and re-runs
+    if (!clientSecret || elementsRef.current) return;
+
+    stripePromise.then((stripe) => {
+      if (!stripe || !mountRef.current || elementsRef.current) return;
+      stripeRef.current = stripe;
+      const elements = stripe.elements({
+        clientSecret,
+        appearance: { theme: "stripe" },
+      });
+      elementsRef.current = elements;
+      const paymentEl = elements.create("payment");
+      paymentEl.mount(mountRef.current);
+      paymentEl.on("ready", () => setReady(true));
+    });
+    // No cleanup — Stripe manages its own iframe lifecycle
+  }, [clientSecret]);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!stripeRef.current || !elementsRef.current) return;
+    setLoading(true);
+    setError("");
+    const { error: stripeError } = await stripeRef.current.confirmPayment({
+      elements: elementsRef.current,
+      confirmParams: {
+        return_url: `${window.location.origin}/donate/success`,
+      },
+    });
+    if (stripeError) {
+      setError(stripeError.message ?? "Payment failed. Please try again.");
+      setLoading(false);
+    }
+    // On success Stripe handles the redirect automatically
+  }
+
+  const displayAmount =
+    amount >= 100000 ? `$${amount / 100000}k` : `$${amount / 100}`;
+  const displayFreq =
+    frequency === "monthly" ? "/month" : frequency === "yearly" ? "/year" : "";
+
+  return (
+    <form onSubmit={handleSubmit} className="card space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-sm text-slate/60 font-sans">Completing your gift</p>
+          <p className="text-2xl font-bold font-sans text-navy">
+            {displayAmount}
+            <span className="text-sm font-normal text-slate/60 ml-1">{displayFreq}</span>
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={onBack}
+          className="text-sm text-slate/50 hover:text-navy transition-colors font-sans underline"
+        >
+          ← Change amount
+        </button>
+      </div>
+
+      {/* Stripe Payment Element mounts here — div must always be visible and empty */}
+      <div className="relative min-h-[200px]">
+        {!ready && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-slate/40 text-sm font-sans animate-pulse">Loading payment form…</div>
+          </div>
+        )}
+        <div ref={mountRef} />
+      </div>
+
+      {error && <p className="text-red-600 text-sm font-sans">{error}</p>}
+
+      <button
+        type="submit"
+        disabled={loading || !ready}
+        className="btn-copper w-full text-base py-3.5 disabled:opacity-60 disabled:cursor-not-allowed"
+      >
+        {loading ? "Processing…" : `Complete ${displayAmount}${displayFreq} Gift`}
+      </button>
+
+      <p className="text-center text-xs text-slate/40 font-sans">
+        Secured by Stripe · SSL encrypted
+      </p>
+    </form>
+  );
+}
+
+// ─── Step 1: Donation Form ────────────────────────────────────────────────────
 export function DonateForm() {
   const [amount, setAmount] = useState<number | "custom">(100);
   const [customAmount, setCustomAmount] = useState("");
@@ -19,6 +124,7 @@ export function DonateForm() {
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
 
   const resolvedAmount =
     amount === "custom" ? parseFloat(customAmount) * 100 : amount * 100;
@@ -38,7 +144,6 @@ export function DonateForm() {
     }
 
     setLoading(true);
-
     try {
       const res = await fetch("/api/donate", {
         method: "POST",
@@ -46,19 +151,24 @@ export function DonateForm() {
         body: JSON.stringify({ amount: cents, frequency, name, email, comment }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? "Failed to start checkout.");
-
-      const stripe = await stripePromise;
-      if (!stripe) throw new Error("Stripe failed to load.");
-
-      const { error: stripeError } = await stripe.redirectToCheckout({
-        sessionId: data.sessionId,
-      });
-      if (stripeError) throw new Error(stripeError.message);
+      if (!res.ok) throw new Error(data.error ?? "Failed to start payment.");
+      setClientSecret(data.clientSecret);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
+    } finally {
       setLoading(false);
     }
+  }
+
+  if (clientSecret) {
+    return (
+      <PaymentStep
+        clientSecret={clientSecret}
+        amount={resolvedAmount}
+        frequency={frequency}
+        onBack={() => setClientSecret(null)}
+      />
+    );
   }
 
   return (
@@ -169,9 +279,7 @@ export function DonateForm() {
       <div>
         <label htmlFor="donor-comment" className="form-label">
           Comment{" "}
-          <span className="text-slate/40 font-normal">
-            (optional, max 100 chars)
-          </span>
+          <span className="text-slate/40 font-normal">(optional, max 100 chars)</span>
         </label>
         <input
           id="donor-comment"
@@ -195,7 +303,7 @@ export function DonateForm() {
         className="btn-copper w-full text-base py-3.5 disabled:opacity-60 disabled:cursor-not-allowed"
       >
         {loading
-          ? "Redirecting to checkout…"
+          ? "Preparing checkout…"
           : `Give ${frequency !== "one-time" ? frequency : ""} ${
               amount !== "custom"
                 ? `$${amount >= 1000 ? `${amount / 1000}k` : amount}`

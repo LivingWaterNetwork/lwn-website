@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sendNotificationEmail } from "@/lib/email";
+import { pushContactSubmission } from "@/lib/airtable";
 
 export async function POST(req: NextRequest) {
   try {
@@ -18,7 +19,12 @@ export async function POST(req: NextRequest) {
       data: { name, email, message },
     });
 
-    await sendNotificationEmail({
+    // Push to Airtable for follow-up tracking (fire-and-forget)
+    pushContactSubmission({ name, email, message })
+      .catch((err) => console.error("[contact/route] Airtable sync failed:", err));
+
+    // Send notification email (fire-and-forget — don't fail the request if email errors)
+    sendNotificationEmail({
       subject: `New Contact Message — ${name}`,
       text: `
 New contact form submission:
@@ -28,8 +34,10 @@ Email: ${email}
 
 Message:
 ${message}
+
+→ View in Airtable to track follow-up status.
       `.trim(),
-    });
+    }).catch((err) => console.error("[contact/route] Email notification failed:", err));
 
     return NextResponse.json({ success: true, id: submission.id });
   } catch (err) {

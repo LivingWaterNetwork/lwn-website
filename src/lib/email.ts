@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY ?? "");
-const FROM = "Living Water Network <noreply@lwnetwork.org>";
+const FROM = "Living Water Network <info@lwnetwork.org>";
 const NOTIFY_TO = process.env.NOTIFY_EMAIL ?? "info@lwnetwork.org";
 
 function formatAmount(cents: number): string {

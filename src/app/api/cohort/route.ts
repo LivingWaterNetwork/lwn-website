@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sendNotificationEmail } from "@/lib/email";
+import { pushCohortApplication } from "@/lib/airtable";
 
 export async function POST(req: NextRequest) {
   try {
@@ -18,7 +19,12 @@ export async function POST(req: NextRequest) {
       data: { name, email, phone, city, state, role, ministry, whyJoin, referral },
     });
 
-    await sendNotificationEmail({
+    // Push to Airtable for pipeline management (fire-and-forget — don't fail the request)
+    pushCohortApplication({ name, email, phone, city, state, role, ministry, whyJoin, referral })
+      .catch((err) => console.error("[cohort/route] Airtable sync failed:", err));
+
+    // Send notification email (fire-and-forget — don't fail the request if email errors)
+    sendNotificationEmail({
       subject: `New Cohort Application — ${name}`,
       text: `
 New cohort application received:
@@ -34,9 +40,9 @@ Referral: ${referral ?? "—"}
 Why they want to join:
 ${whyJoin}
 
-View all applications: ${process.env.NEXT_PUBLIC_SITE_URL}/api/admin (DB)
+→ View in Airtable to manage pipeline status.
       `.trim(),
-    });
+    }).catch((err) => console.error("[cohort/route] Email notification failed:", err));
 
     return NextResponse.json({ success: true, id: application.id });
   } catch (err) {
