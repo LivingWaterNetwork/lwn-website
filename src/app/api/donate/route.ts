@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
         currency: "usd",
         receipt_email: email,
         metadata: meta,
-        automatic_payment_methods: { enabled: true },
+        payment_method_types: ["card"],
       });
       return NextResponse.json({ clientSecret: intent.client_secret });
     }
