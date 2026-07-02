@@ -39,8 +39,7 @@ async function createRecord(table: string, fields: Record<string, unknown>) {
 
   if (!res.ok) {
     const err = await res.text();
-    console.error(`[airtable] Failed to create record in "${table}":`, err);
-    return null;
+    throw new Error(`[airtable] Failed to create record in "${table}": ${err}`);
   }
 
   return res.json();
