@@ -34,7 +34,7 @@ async function createRecord(table: string, fields: Record<string, unknown>) {
       Authorization: `Bearer ${AIRTABLE_API_KEY}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ fields }),
+    body: JSON.stringify({ fields, typecast: true }),
   });
 
   if (!res.ok) {
