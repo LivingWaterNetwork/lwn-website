@@ -1,7 +1,10 @@
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY ?? "");
-const FROM = "Living Water Network <info@lwnetwork.org>";
+// Temporary: using Resend shared domain until lwnetwork.org MX DNS record is added.
+// To fix permanently: migrate DNS from Wix to Cloudflare, add send.lwnetwork.org MX record,
+// re-verify domain in Resend, then change back to: "Living Water Network <info@lwnetwork.org>"
+const FROM = process.env.RESEND_FROM_EMAIL ?? "Living Water Network <onboarding@resend.dev>";
 const NOTIFY_TO = process.env.NOTIFY_EMAIL ?? "info@lwnetwork.org";
 
 function formatAmount(cents: number): string {
