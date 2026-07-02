@@ -19,14 +19,19 @@ export async function POST(req: NextRequest) {
       data: { name, email, message },
     });
 
-    // Push to Airtable for follow-up tracking (fire-and-forget)
-    pushContactSubmission({ name, email, message })
-      .catch((err) => console.error("[contact/route] Airtable sync failed:", err));
+    // Push to Airtable — awaited so errors appear in Vercel function logs
+    try {
+      await pushContactSubmission({ name, email, message });
+      console.log("[contact/route] Airtable record created successfully");
+    } catch (err) {
+      console.error("[contact/route] Airtable sync failed:", err);
+    }
 
-    // Send notification email (fire-and-forget — don't fail the request if email errors)
-    sendNotificationEmail({
-      subject: `New Contact Message — ${name}`,
-      text: `
+    // Send notification email — awaited so errors appear in Vercel function logs
+    try {
+      await sendNotificationEmail({
+        subject: `New Contact Message — ${name}`,
+        text: `
 New contact form submission:
 
 Name: ${name}
@@ -36,8 +41,12 @@ Message:
 ${message}
 
 → View in Airtable to track follow-up status.
-      `.trim(),
-    }).catch((err) => console.error("[contact/route] Email notification failed:", err));
+        `.trim(),
+      });
+      console.log("[contact/route] Notification email sent successfully");
+    } catch (err) {
+      console.error("[contact/route] Email notification failed:", err);
+    }
 
     return NextResponse.json({ success: true, id: submission.id });
   } catch (err) {

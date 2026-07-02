@@ -19,14 +19,19 @@ export async function POST(req: NextRequest) {
       data: { name, email, phone, city, state, role, ministry, whyJoin, referral },
     });
 
-    // Push to Airtable for pipeline management (fire-and-forget — don't fail the request)
-    pushCohortApplication({ name, email, phone, city, state, role, ministry, whyJoin, referral })
-      .catch((err) => console.error("[cohort/route] Airtable sync failed:", err));
+    // Push to Airtable — awaited so errors appear in Vercel function logs
+    try {
+      await pushCohortApplication({ name, email, phone, city, state, role, ministry, whyJoin, referral });
+      console.log("[cohort/route] Airtable record created successfully");
+    } catch (err) {
+      console.error("[cohort/route] Airtable sync failed:", err);
+    }
 
-    // Send notification email (fire-and-forget — don't fail the request if email errors)
-    sendNotificationEmail({
-      subject: `New Cohort Application — ${name}`,
-      text: `
+    // Send notification email — awaited so errors appear in Vercel function logs
+    try {
+      await sendNotificationEmail({
+        subject: `New Cohort Application — ${name}`,
+        text: `
 New cohort application received:
 
 Name: ${name}
@@ -41,8 +46,12 @@ Why they want to join:
 ${whyJoin}
 
 → View in Airtable to manage pipeline status.
-      `.trim(),
-    }).catch((err) => console.error("[cohort/route] Email notification failed:", err));
+        `.trim(),
+      });
+      console.log("[cohort/route] Notification email sent successfully");
+    } catch (err) {
+      console.error("[cohort/route] Email notification failed:", err);
+    }
 
     return NextResponse.json({ success: true, id: application.id });
   } catch (err) {
