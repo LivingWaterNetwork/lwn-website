@@ -97,8 +97,9 @@ export async function GET() {
     try {
       const resend = new Resend(process.env.RESEND_API_KEY);
       const notifyTo = process.env.NOTIFY_EMAIL ?? "info@lwnetwork.org";
+      const fromAddr = process.env.RESEND_FROM_EMAIL ?? "Living Water Network <onboarding@resend.dev>";
       const { error } = await resend.emails.send({
-        from: "Living Water Network <info@lwnetwork.org>",
+        from: fromAddr,
         to: notifyTo,
         subject: "✅ LWN Integration Test",
         text: "This is a test email from the /api/test-integrations diagnostic endpoint. If you received this, Resend is working correctly.",
