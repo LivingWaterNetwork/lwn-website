@@ -45,7 +45,28 @@ function PaymentStep({ clientSecret, amount, frequency, onBack }: PaymentStepPro
         elementsRef.current = elements;
         const paymentEl = elements.create("payment");
         paymentEl.mount(mountRef.current);
-        paymentEl.on("ready", () => setReady(true));
+
+        // Timeout: if Stripe doesn't fire ready in 12s, show a useful error
+        let loadTimeout: ReturnType<typeof setTimeout> | null = setTimeout(() => {
+          setError("Payment form timed out. Please refresh or contact info@lwnetwork.org.");
+        }, 12000);
+
+        paymentEl.on("ready", () => {
+          if (loadTimeout) { clearTimeout(loadTimeout); loadTimeout = null; }
+          setReady(true);
+        });
+
+        // Surface Stripe load errors (account not activated, key mismatch, etc.)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (paymentEl as any).on("loaderror", (e: any) => {
+          console.error("[Stripe loaderror]", e);
+          if (loadTimeout) { clearTimeout(loadTimeout); loadTimeout = null; }
+          setError(
+            e?.error?.message
+              ? `Payment form error: ${e.error.message}`
+              : "Payment form failed to load. Please contact info@lwnetwork.org."
+          );
+        });
       })
       .catch(() => {
         setError("Failed to load payment form. Please refresh and try again.");
@@ -122,7 +143,7 @@ function PaymentStep({ clientSecret, amount, frequency, onBack }: PaymentStepPro
   );
 }
 
-// ─── Step 1: Donation Form ──────────────────────────────────────────────────────
+// ─── Step 1: Donation Form ────────────────────────────────────────────────────
 export function DonateForm() {
   const [amount, setAmount] = useState<number | "custom">(100);
   const [customAmount, setCustomAmount] = useState("");
@@ -217,7 +238,7 @@ export function DonateForm() {
                   : "bg-white text-slate border-mist hover:border-[#0A77BC]/40"
               }`}
             >
-              ${`${a >= 1000 ? `${a / 1000}k` : a}`}
+              ${a >= 1000 ? `${a / 1000}k` : a}
             </button>
           ))}
           <button
