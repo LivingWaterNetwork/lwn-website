@@ -29,7 +29,7 @@ const tracks = [
     accentColor: "text-navy",
     borderColor: "border-navy",
     phase2: "Discovering your pastoral gifts, prophetic calling, and ministry lane. Healing the places where religious performance has replaced genuine communion with God.",
-    phase3: "Local serving in church and ministry settings. International missions trip focused on evangelism, discipleship, and church support.",
+    phase3: "Local serving in church and ministry settings. International missions trip serving as Jesus served — proclaiming the gospel, making disciples, and strengthening the local church.",
     forWho: "For those called to full-time ministry, church planting, pastoral leadership, or international missions work.",
   },
   {
@@ -42,7 +42,7 @@ const tracks = [
     accentColor: "text-copper",
     borderColor: "border-copper",
     phase2: "Discovering your gifts in leadership and business. Aligning your professional calling with Kingdom purpose and learning to operate as a Kingdom agent in the marketplace.",
-    phase3: "Internships and serving with Kingdom-minded investors and businesses in the LWN partner network. International missions trip engaging business-as-mission in your gifting.",
+    phase3: "Internships and serving with Kingdom-minded businesses in the LWN partner network. International missions trip serving as Jesus served — bringing Kingdom resources and presence where they are most needed.",
     forWho: "For those called to climb the corporate ladder, launch companies, or operate as Kingdom agents in the marketplace.",
   },
   {
@@ -55,7 +55,7 @@ const tracks = [
     accentColor: "text-deep-sea",
     borderColor: "border-deep-sea",
     phase2: "Discovering how your creative gift serves the Kingdom. Healing the wounds that have silenced or distorted your voice. Surrendering your art to God's authorship.",
-    phase3: "Local serving through creative outreach, worship, and arts ministry. International missions trip bringing your gifts to the field — storytelling, music, and creative expression.",
+    phase3: "Local serving through creative outreach, worship, and arts ministry. International missions trip serving as Jesus served — using story, music, and creative expression to carry the gospel.",
     forWho: "For artists, musicians, content creators, influencers, and storytellers who carry the Kingdom through their creative gift.",
   },
 ];
@@ -104,6 +104,21 @@ export default function CohortPage() {
         </div>
       </section>
 
+      {/* ── Photo Strip ── */}
+      <section className="grid grid-cols-2 md:grid-cols-4 h-48 md:h-56">
+        {[
+          { src: "/images/prayer-circle.jpg", alt: "Formation community" },
+          { src: "/images/baptism-pool.jpg", alt: "Spiritual transformation" },
+          { src: "/images/mission-trip-bus.jpg", alt: "International missions" },
+          { src: "/images/prayer-ministry.jpg", alt: "Leaders gathering" },
+        ].map(({ src, alt }) => (
+          <div key={src} className="relative overflow-hidden">
+            <Image src={src} alt={alt} fill className="object-cover hover:scale-105 transition-transform duration-500" />
+            <div className="absolute inset-0 bg-navy/30" />
+          </div>
+        ))}
+      </section>
+
       {/* ── Why Groundwork Exists ── */}
       <section className="py-16 bg-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -119,7 +134,7 @@ export default function CohortPage() {
             </p>
             <p className="text-center font-serif text-xl text-navy py-4 border-l-4 border-copper pl-6 text-left">
               &ldquo;The crisis is not a content crisis. It is a formation crisis. We are training leaders
-              we have not yet formed — and sending leaders we have not yet healed.&rdquo;
+              we have not yet formed — and sending leaders who have not yet been brought to the Healer.&rdquo;
             </p>
             <p>
               Groundwork exists to interrupt that pattern. Before the water flows through you, the ground
@@ -206,9 +221,9 @@ export default function CohortPage() {
               </div>
               <div className="px-6 py-5 flex-1 flex flex-col">
                 <p className="text-slate text-sm font-sans leading-relaxed mb-4">
-                  The work goes deeper. Facilitated by pastors and licensed therapists in the LWN
-                  network, Phase 2 uncovers calling, identifies gifts, and brings healing to the
-                  places that have been hidden.
+                  The work goes deeper. Groups are led by seasoned, formed leaders from local churches
+                  and organizations — with the support of pastors and licensed therapists — to uncover
+                  calling, identify gifts, and open the hidden places to healing.
                 </p>
                 <ul className="space-y-1.5 mb-4">
                   {[
@@ -226,7 +241,7 @@ export default function CohortPage() {
                   ))}
                 </ul>
                 <div className="mt-auto bg-mist rounded-lg px-3 py-2 text-xs font-sans text-slate/70 italic">
-                  Each track focuses discovery within their specific vocation lane.
+                  Each group is led by a seasoned leader within that vocation — supported by pastoral and therapeutic care.
                 </div>
               </div>
             </div>
@@ -244,7 +259,7 @@ export default function CohortPage() {
                 <p className="text-slate text-sm font-sans leading-relaxed mb-4">
                   Formation meets the field. Phase 3 moves you from preparation into Kingdom action —
                   local serving, missions fundraising, and an international missions trip where you
-                  serve in your gifting lane.
+                  go where Jesus goes and give what He has given you.
                 </p>
                 <ul className="space-y-1.5 mb-4">
                   {[
@@ -262,10 +277,38 @@ export default function CohortPage() {
                   ))}
                 </ul>
                 <div className="mt-auto bg-mist rounded-lg px-3 py-2 text-xs font-sans text-slate/70 italic">
-                  All tracks go on the same international trip, each serving in their lane.
+                  All tracks go on the same international trip, serving together as the body of Christ.
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Community Photos ── */}
+      <section className="py-16 bg-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <p className="section-label mb-3">The Community</p>
+            <h2 className="section-heading">Formation Happens Together</h2>
+            <p className="mt-3 text-slate font-sans text-sm max-w-xl mx-auto">
+              You will not walk this alone. Groundwork is designed around the conviction that
+              formation happens in community — at the table, in the neighborhood, and on the field.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {[
+              { src: "/images/prayer-circle.jpg", alt: "Leaders praying together" },
+              { src: "/images/baptism-pool.jpg", alt: "Baptism and spiritual transformation" },
+              { src: "/images/omar-with-colleague.jpg", alt: "Mentoring and discipleship" },
+              { src: "/images/mission-trip-bus.jpg", alt: "International missions" },
+              { src: "/images/prayer-ministry.jpg", alt: "Ministry prayer" },
+              { src: "/images/omar-speaking-vip.jpg", alt: "Kingdom leadership" },
+            ].map(({ src, alt }) => (
+              <div key={src} className="relative aspect-square rounded-xl overflow-hidden">
+                <Image src={src} alt={alt} fill className="object-cover hover:scale-105 transition-transform duration-500" />
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -432,6 +475,12 @@ export default function CohortPage() {
             </p>
           </div>
           <CohortForm />
+          <p className="text-center mt-6 text-sm font-sans text-slate/60">
+            Have questions first?{" "}
+            <Link href="/faq" className="text-copper hover:underline">
+              Read our FAQ
+            </Link>
+          </p>
         </div>
       </section>
     </>

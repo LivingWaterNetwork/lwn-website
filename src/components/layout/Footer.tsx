@@ -33,6 +33,7 @@ export function Footer() {
                 { href: "/about", label: "About" },
                 { href: "/programs", label: "Programs" },
                 { href: "/cohort", label: "Cohort" },
+                { href: "/faq", label: "FAQ" },
                 { href: "/blog", label: "Blog" },
                 { href: "/contact", label: "Contact" },
                 { href: "/donate", label: "Donate" },
