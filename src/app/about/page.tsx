@@ -15,7 +15,7 @@ export default function AboutPage() {
       <section className="relative bg-navy py-20 text-white text-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/images/omar-speaking-stage.jpg"
+            src="/images/omar-speaking-main-stage.jpg"
             alt="Omar speaking at a leadership event"
             fill
             className="object-cover object-center opacity-20"
@@ -36,7 +36,7 @@ export default function AboutPage() {
           {/* Founder photo */}
           <div className="rounded-2xl overflow-hidden aspect-[3/4] relative shadow-lg">
             <Image
-              src="/images/founder-headshot.jpg"
+              src="/images/omar-headshot-pro.jpg"
               alt="Omar Fandino, Founder of Living Water Network"
               fill
               className="object-cover object-top"
@@ -143,22 +143,22 @@ export default function AboutPage() {
           <h2 className="section-heading mb-10 text-center">Equipping Leaders Everywhere</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             <div className="relative rounded-xl overflow-hidden aspect-video">
-              <Image src="/images/prayer-circle.jpg" alt="Leaders praying together" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+              <Image src="/images/prayer-restaurant.jpg" alt="Leaders praying together" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="relative rounded-xl overflow-hidden aspect-video">
-              <Image src="/images/omar-speaking-vip.jpg" alt="Omar speaking at an event" fill className="object-cover object-top hover:scale-105 transition-transform duration-300" />
+              <Image src="/images/omar-speaking-vip2.jpg" alt="Omar speaking at an event" fill className="object-cover object-top hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="relative rounded-xl overflow-hidden aspect-video">
-              <Image src="/images/baptism-pool.jpg" alt="Baptism ministry" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+              <Image src="/images/baptism-pool2.jpg" alt="Baptism ministry" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="relative rounded-xl overflow-hidden aspect-video">
-              <Image src="/images/prayer-ministry.jpg" alt="Ministry prayer circle" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+              <Image src="/images/prayer-small-group.jpg" alt="Formation small group" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="relative rounded-xl overflow-hidden aspect-video">
-              <Image src="/images/omar-with-colleague.jpg" alt="Omar with ministry partner" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+              <Image src="/images/omar-with-partner.jpg" alt="Omar with ministry partner" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="relative rounded-xl overflow-hidden aspect-video">
-              <Image src="/images/baptism-closeup.jpg" alt="Water baptism" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+              <Image src="/images/baptism-closeup2.jpg" alt="Water baptism" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
           </div>
         </div>

@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 const programs = [
   {
     id: "cohorts",
-    image: "/images/prayer-ministry.jpg",
-    imageAlt: "Leaders in ministry together",
+    image: "/images/prayer-small-group.jpg",
+    imageAlt: "Leaders in formation together",
     title: "Immersive Cohorts",
     tagline: "Transformed together.",
     body: `Our signature cohort experience is a multi-week journey in spiritual formation,
@@ -38,7 +38,7 @@ const programs = [
   },
   {
     id: "mentorship",
-    image: "/images/omar-with-colleague.jpg",
+    image: "/images/omar-with-partner.jpg",
     imageAlt: "Leaders mentoring together",
     title: "Strategic Mentorships",
     tagline: "Iron sharpening iron.",
@@ -50,7 +50,7 @@ const programs = [
   },
   {
     id: "speaking",
-    image: "/images/omar-speaking-stage.jpg",
+    image: "/images/omar-speaking-main-stage.jpg",
     imageAlt: "Omar speaking at a large leadership event",
     title: "Public Speaking Engagements",
     tagline: "Bringing the message to you.",
@@ -63,7 +63,7 @@ const programs = [
   },
   {
     id: "missions",
-    image: "/images/mission-trip-bus.jpg",
+    image: "/images/missions-trip-group.jpg",
     imageAlt: "LWN team on an international mission trip",
     title: "International Mission Trips",
     tagline: "Broadened perspective, deepened calling.",
