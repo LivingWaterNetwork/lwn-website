@@ -17,7 +17,8 @@ const tiers = [
     accentColor: "text-spring",
     benefits: [
       "Named co-founder recognition on all LWN publications and site",
-      "Reserved seating at all LWN events including the annual Gala",
+      "Dedicated speaking segment at the annual Gala — share your story, your why, and your ministry or business with 150 of Atlanta's top CEOs and executive pastors",
+      "Reserved VIP table (8 seats) at the annual Black Tie Gala",
       "Quarterly impact meetings with the Executive Director",
       "Logo placement on website, materials, and cohort curriculum",
       "Annual impact report with full program metrics",
@@ -33,7 +34,8 @@ const tiers = [
     accentColor: "text-spring",
     benefits: [
       "Named recognition on website partner page and annual report",
-      "Invited to annual Gala with two reserved seats",
+      "Featured acknowledgment at the annual Gala in front of 150 CEOs and executive pastors",
+      "Reserved table (4 seats) at the annual Black Tie Gala",
       "Bi-annual impact briefings with the LWN leadership team",
       "Logo placement on cohort materials and website",
       "Certificate of partnership and tax receipt",
@@ -263,6 +265,119 @@ export default function PartnershipPage() {
           <Link href="/contact" className="btn-copper">
             Discuss a Multi-Year Pledge
           </Link>
+        </div>
+      </section>
+
+      {/* ── Gala Production ── */}
+      <section className="py-20 bg-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <p className="section-label mb-3">The Annual Gala</p>
+            <h2 className="section-heading">Help Us Build the Room</h2>
+            <p className="text-slate font-sans text-sm max-w-2xl mx-auto mt-3 leading-relaxed">
+              The LWN Black Tie Gala is our primary annual fundraising event — 150 CEOs and executive pastors,
+              Black Tie, Atlanta. A high-scale vision night and Kingdom networking experience that
+              launches each year of ministry. We need partners to help make it possible.
+            </p>
+          </div>
+
+          {/* Event specs */}
+          <div className="grid sm:grid-cols-3 gap-4 mb-12">
+            {[
+              { icon: "🏛️", label: "150 Guests", desc: "CEOs, executive pastors, and high-influence Kingdom leaders — curated, not open-access" },
+              { icon: "🎩", label: "Black Tie", desc: "Atlanta-area ballroom venue — Winter 2026, formal atmosphere, professional production" },
+              { icon: "🎯", label: "Vision Night", desc: "Part celebration, part launch — this is the annual moment LWN casts vision and invites partners in" },
+            ].map(({ icon, label, desc }) => (
+              <div key={label} className="bg-mist rounded-xl p-6 text-center">
+                <div className="text-3xl mb-3">{icon}</div>
+                <p className="font-sans font-bold text-navy text-sm uppercase tracking-widest mb-2">{label}</p>
+                <p className="text-slate text-xs font-sans leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Budget breakdown */}
+          <div className="bg-navy rounded-2xl p-8 text-white mb-10">
+            <p className="text-xs font-extrabold font-sans uppercase tracking-widest text-spring mb-2">Production Budget</p>
+            <h3 className="font-serif text-2xl font-semibold mb-6">What It Takes to Produce This Night</h3>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {[
+                { line: "Venue (Atlanta ballroom, 150-person capacity)", low: "$4,000", high: "$12,000" },
+                { line: "Catering — plated dinner + bar service", low: "$24,000", high: "$37,500" },
+                { line: "AV / lighting / production", low: "$8,000", high: "$18,000" },
+                { line: "Décor, florals & staging", low: "$3,500", high: "$10,000" },
+                { line: "Live music / entertainment", low: "$1,500", high: "$7,000" },
+                { line: "Event coordination & logistics", low: "$5,000", high: "$12,000" },
+              ].map(({ line, low, high }) => (
+                <div key={line} className="flex items-start justify-between gap-4 border-b border-white/10 pb-3">
+                  <p className="text-white/70 text-xs font-sans leading-relaxed flex-1">{line}</p>
+                  <p className="text-spring text-xs font-bold font-sans whitespace-nowrap shrink-0">{low} – {high}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 pt-4 border-t border-white/20 flex items-center justify-between">
+              <p className="font-sans font-bold text-white text-sm">Total Gala Production Budget</p>
+              <p className="font-serif text-2xl font-semibold text-spring">$46,000 – $97,000</p>
+            </div>
+            <p className="mt-2 text-white/40 text-xs font-sans italic">
+              Estimates based on 2025–2026 Atlanta venue and catering rates. Actual costs vary by vendor and date.
+            </p>
+          </div>
+
+          {/* Revenue model */}
+          <div className="grid md:grid-cols-2 gap-6 mb-10">
+            <div className="bg-mist rounded-xl p-6">
+              <p className="text-xs font-extrabold font-sans uppercase tracking-widest text-[#0A77BC] mb-3">Revenue Potential</p>
+              <h4 className="font-serif text-xl font-semibold text-navy mb-4">How the Gala Pays for Itself</h4>
+              <ul className="space-y-3 text-sm font-sans text-slate">
+                <li className="flex justify-between border-b border-white pb-2">
+                  <span>Ticket sales (150 × $250)</span>
+                  <span className="font-bold text-navy">$37,500</span>
+                </li>
+                <li className="flex justify-between border-b border-white pb-2">
+                  <span>Corporate / ministry sponsorships</span>
+                  <span className="font-bold text-navy">$25,000 – $60,000</span>
+                </li>
+                <li className="flex justify-between border-b border-white pb-2">
+                  <span>Live paddle raise / auctioneer</span>
+                  <span className="font-bold text-navy">$15,000 – $60,000</span>
+                </li>
+                <li className="flex justify-between pt-1">
+                  <span className="font-bold">Estimated net (after production)</span>
+                  <span className="font-bold text-[#0A77BC]">$40,000 – $100,000+</span>
+                </li>
+              </ul>
+            </div>
+            <div className="bg-mist rounded-xl p-6">
+              <p className="text-xs font-extrabold font-sans uppercase tracking-widest text-copper mb-3">Gala Sponsorship Tables</p>
+              <h4 className="font-serif text-xl font-semibold text-navy mb-4">Reserve a Table</h4>
+              <ul className="space-y-3 text-sm font-sans text-slate">
+                {[
+                  { label: "Presenting Table (10 seats)", price: "$10,000", note: "Stage recognition + speaking moment" },
+                  { label: "Gold Table (10 seats)", price: "$5,000", note: "Logo on table + program recognition" },
+                  { label: "Silver Table (10 seats)", price: "$2,500", note: "Program recognition" },
+                  { label: "Individual Ticket", price: "$250", note: "Single seat, general admission" },
+                ].map(({ label, price, note }) => (
+                  <li key={label} className="flex items-start justify-between gap-3 border-b border-white pb-2">
+                    <div>
+                      <p className="font-semibold text-navy text-xs">{label}</p>
+                      <p className="text-slate/70 text-xs">{note}</p>
+                    </div>
+                    <span className="font-bold text-copper text-sm shrink-0">{price}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <Link href="/contact" className="btn-copper">
+              Sponsor the Gala
+            </Link>
+            <p className="mt-3 text-xs text-slate/50 font-sans">
+              Gala date and venue TBD — Winter 2026. Reach out to reserve your table early.
+            </p>
+          </div>
         </div>
       </section>
 
