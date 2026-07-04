@@ -34,6 +34,7 @@ export function Footer() {
                 { href: "/programs", label: "Programs" },
                 { href: "/cohort", label: "Cohort" },
                 { href: "/events", label: "Events" },
+                { href: "/partnership", label: "Partner With Us" },
                 { href: "/faq", label: "FAQ" },
                 { href: "/blog", label: "Blog" },
                 { href: "/contact", label: "Contact" },

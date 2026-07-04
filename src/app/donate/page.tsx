@@ -29,19 +29,19 @@ const tiers = [
   {
     amount: "$250",
     label: "Phase Builder",
-    covers: "Complete Phase 1 (At the Table) for one cohort participant — 12 weeks of whole-person formation",
+    covers: "A meaningful contribution toward one of three formation phases — moving a leader deeper into their 9-month journey",
     icon: "🔥",
   },
   {
     amount: "$500",
     label: "Missions Sender",
-    covers: "International missions trip support for one participant — going where Jesus goes",
+    covers: "Helps fund international missions trip costs for one participant — going where Jesus goes",
     icon: "✈️",
   },
   {
     amount: "$1,000+",
     label: "Scholarship Partner",
-    covers: "A full Groundwork scholarship — covering all three phases of one leader's 9-month formation journey",
+    covers: "A major step toward a full Groundwork scholarship — the complete program is $3,000–$5,000 per leader for the full 9-month journey",
     icon: "👑",
   },
 ];

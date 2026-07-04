@@ -132,28 +132,28 @@ export default function HomePage() {
           <h2 className="section-heading mb-10 text-center">Transformation Happens Here</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <div className="relative rounded-xl overflow-hidden aspect-square">
-              <Image src="/images/baptism-pool.jpg" alt="Baptism ministry" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+              <Image src="/images/baptism-pool2.jpg" alt="Baptism ministry" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="relative rounded-xl overflow-hidden aspect-square">
-              <Image src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=800&q=80&fit=crop" alt="Community worship" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+              <Image src="/images/youth-prayer-poolside.jpg" alt="Community in prayer" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="relative rounded-xl overflow-hidden aspect-square">
-              <Image src="/images/prayer-ministry.jpg" alt="Prayer ministry" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+              <Image src="/images/men-ministry-group.jpg" alt="Men's ministry gathering" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="relative rounded-xl overflow-hidden aspect-square">
-              <Image src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80&fit=crop" alt="Community outreach and service" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+              <Image src="/images/outreach-group.jpg" alt="Community outreach" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="relative rounded-xl overflow-hidden aspect-square">
-              <Image src="/images/mission-trip-bus.jpg" alt="International mission trip" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+              <Image src="/images/missions-kids-ministry.jpg" alt="International mission trip" fill className="object-cover object-top hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="relative rounded-xl overflow-hidden aspect-square">
-              <Image src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80&fit=crop" alt="Mentorship and discipleship" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+              <Image src="/images/radical-mentoring-group.jpg" alt="Mentorship and discipleship" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="relative rounded-xl overflow-hidden aspect-square">
-              <Image src="/images/prayer-circle.jpg" alt="Leaders praying together" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+              <Image src="/images/prayer-restaurant.jpg" alt="Leaders praying together" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="relative rounded-xl overflow-hidden aspect-square">
-              <Image src="https://images.unsplash.com/photo-1478147427282-58a87a120781?w=800&q=80&fit=crop" alt="Church gathering" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+              <Image src="/images/outdoor-night-gathering.jpg" alt="Community gathering" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
           </div>
         </div>
