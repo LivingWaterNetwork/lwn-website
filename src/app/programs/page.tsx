@@ -38,8 +38,8 @@ const programs = [
   },
   {
     id: "mentorship",
-    image: "/images/omar-with-partner.jpg",
-    imageAlt: "Leaders mentoring together",
+    image: "/images/radical-mentoring-group.jpg",
+    imageAlt: "Men in a Radical Mentoring group",
     title: "Strategic Mentorships",
     tagline: "Iron sharpening iron.",
     body: `We believe every leader needs a Paul and a Timothy — someone ahead of them on
@@ -63,8 +63,8 @@ const programs = [
   },
   {
     id: "missions",
-    image: "/images/missions-trip-group.jpg",
-    imageAlt: "LWN team on an international mission trip",
+    image: "/images/missions-kids-ministry.jpg",
+    imageAlt: "LWN team serving children on an international mission trip",
     title: "International Mission Trips",
     tagline: "Broadened perspective, deepened calling.",
     body: `There is nothing like crossing a border to reshape a leader's worldview.

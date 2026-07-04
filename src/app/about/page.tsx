@@ -146,19 +146,19 @@ export default function AboutPage() {
               <Image src="/images/prayer-restaurant.jpg" alt="Leaders praying together" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="relative rounded-xl overflow-hidden aspect-video">
-              <Image src="/images/omar-speaking-vip2.jpg" alt="Omar speaking at an event" fill className="object-cover object-top hover:scale-105 transition-transform duration-300" />
+              <Image src="/images/omar-community-event.jpg" alt="Omar at a community event" fill className="object-cover object-top hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="relative rounded-xl overflow-hidden aspect-video">
               <Image src="/images/baptism-pool2.jpg" alt="Baptism ministry" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="relative rounded-xl overflow-hidden aspect-video">
-              <Image src="/images/prayer-small-group.jpg" alt="Formation small group" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+              <Image src="/images/men-ministry-group.jpg" alt="Men's ministry gathering" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="relative rounded-xl overflow-hidden aspect-video">
               <Image src="/images/omar-with-partner.jpg" alt="Omar with ministry partner" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="relative rounded-xl overflow-hidden aspect-video">
-              <Image src="/images/baptism-closeup2.jpg" alt="Water baptism" fill className="object-cover hover:scale-105 transition-transform duration-300" />
+              <Image src="/images/leadership-group-backstage.jpg" alt="Leadership community" fill className="object-cover hover:scale-105 transition-transform duration-300" />
             </div>
           </div>
         </div>

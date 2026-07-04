@@ -67,8 +67,8 @@ export default function CohortPage() {
       <section className="relative bg-navy py-24 text-white text-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/images/prayer-ministry.jpg"
-            alt="Groundwork cohort community"
+            src="/images/youth-prayer-poolside.jpg"
+            alt="Groundwork cohort community in prayer"
             fill
             className="object-cover object-center opacity-20"
             priority
@@ -107,10 +107,10 @@ export default function CohortPage() {
       {/* ── Photo Strip ── */}
       <section className="grid grid-cols-2 md:grid-cols-4 h-48 md:h-56">
         {[
-          { src: "/images/prayer-restaurant.jpg", alt: "Leaders praying together" },
-          { src: "/images/prayer-small-group.jpg", alt: "Formation in community" },
+          { src: "/images/outdoor-night-gathering.jpg", alt: "Formation gathering" },
+          { src: "/images/cohort-group-activity.jpg", alt: "Formation in community" },
           { src: "/images/missions-trip-group.jpg", alt: "International missions" },
-          { src: "/images/omar-speaking-main-stage.jpg", alt: "Kingdom leadership" },
+          { src: "/images/missions-kids-group.jpg", alt: "Serving on the field" },
         ].map(({ src, alt }) => (
           <div key={src} className="relative overflow-hidden">
             <Image src={src} alt={alt} fill className="object-cover hover:scale-105 transition-transform duration-500" />
@@ -298,12 +298,12 @@ export default function CohortPage() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {[
-              { src: "/images/prayer-restaurant.jpg", alt: "Leaders praying together" },
+              { src: "/images/youth-prayer-poolside.jpg", alt: "Community in prayer" },
               { src: "/images/baptism-pool2.jpg", alt: "Baptism and spiritual transformation" },
-              { src: "/images/prayer-small-group.jpg", alt: "Formation small group" },
-              { src: "/images/missions-trip-group.jpg", alt: "International missions trip" },
+              { src: "/images/cohort-group-activity.jpg", alt: "Formation group activity" },
+              { src: "/images/missions-kids-ministry.jpg", alt: "Serving on the international missions trip" },
               { src: "/images/omar-with-partner.jpg", alt: "Mentoring and discipleship" },
-              { src: "/images/baptism-closeup2.jpg", alt: "Water baptism" },
+              { src: "/images/outreach-group.jpg", alt: "Community outreach" },
             ].map(({ src, alt }) => (
               <div key={src} className="relative aspect-square rounded-xl overflow-hidden">
                 <Image src={src} alt={alt} fill className="object-cover hover:scale-105 transition-transform duration-500" />
