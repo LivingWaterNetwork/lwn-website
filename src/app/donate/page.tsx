@@ -7,6 +7,72 @@ export const metadata: Metadata = {
     "Support Living Water Network. Your generosity ignites transformation. Join the Circle and help launch the first cohort.",
 };
 
+const tiers = [
+  {
+    amount: "$25",
+    label: "Formation Seed",
+    covers: "Curriculum materials for one participant for a week of formation",
+    icon: "🌱",
+  },
+  {
+    amount: "$50",
+    label: "Session Sponsor",
+    covers: "One full group formation session — facilitated by a seasoned leader",
+    icon: "🤝",
+  },
+  {
+    amount: "$100",
+    label: "Monthly Sustainer",
+    covers: "One full month of a leader's Groundwork journey — formation, coaching, and community",
+    icon: "📖",
+  },
+  {
+    amount: "$250",
+    label: "Phase Builder",
+    covers: "Complete Phase 1 (At the Table) for one cohort participant — 12 weeks of whole-person formation",
+    icon: "🔥",
+  },
+  {
+    amount: "$500",
+    label: "Missions Sender",
+    covers: "International missions trip support for one participant — going where Jesus goes",
+    icon: "✈️",
+  },
+  {
+    amount: "$1,000+",
+    label: "Scholarship Partner",
+    covers: "A full Groundwork scholarship — covering all three phases of one leader's 9-month formation journey",
+    icon: "👑",
+  },
+];
+
+const programs = [
+  {
+    name: "Groundwork Formation Cohorts",
+    desc: "Our flagship 9-month formation journey. Scholarships are funded by ministry partners so no leader is turned away for financial need.",
+    pct: 55,
+    color: "bg-navy",
+  },
+  {
+    name: "Pastoral & Therapeutic Support",
+    desc: "Licensed therapists and pastoral coaches embedded in every cohort — ensuring leaders receive real care, not just training.",
+    pct: 20,
+    color: "bg-[#00466F]",
+  },
+  {
+    name: "International Missions",
+    desc: "Every cohort sends every participant on an international missions trip. Your gift helps us cover costs for those who cannot.",
+    pct: 15,
+    color: "bg-copper",
+  },
+  {
+    name: "Resources & Operations",
+    desc: "Curriculum development, leadership resources, and the infrastructure that keeps the network running.",
+    pct: 10,
+    color: "bg-[#445563]",
+  },
+];
+
 export default function DonatePage() {
   return (
     <>
@@ -25,7 +91,7 @@ export default function DonatePage() {
       </section>
 
       {/* Impact stats */}
-      <section className="bg-white py-12">
+      <section className="bg-white py-12 border-b border-mist">
         <div className="max-w-4xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
           {[
             { stat: "100,000", label: "Kingdom leaders we aim to impact" },
@@ -40,9 +106,78 @@ export default function DonatePage() {
         </div>
       </section>
 
+      {/* What You're Funding */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="section-label mb-3">Your Impact</p>
+            <h2 className="section-heading">What You&apos;re Funding</h2>
+            <p className="text-slate font-sans text-sm max-w-xl mx-auto mt-3 leading-relaxed">
+              Every dollar goes directly to forming and releasing Kingdom leaders.
+              Here&apos;s what that looks like in practice.
+            </p>
+          </div>
+
+          {/* Dollar tier cards */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-16">
+            {tiers.map(({ amount, label, covers, icon }) => (
+              <div
+                key={amount}
+                className="bg-mist rounded-xl p-5 border border-white hover:border-[#0A77BC]/30 hover:shadow-sm transition-all"
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <p className="font-serif text-2xl font-semibold text-navy">{amount}</p>
+                  <span className="text-xl">{icon}</span>
+                </div>
+                <p className="text-xs font-extrabold font-sans uppercase tracking-widest text-[#0A77BC] mb-2">
+                  {label}
+                </p>
+                <p className="text-slate text-sm font-sans leading-relaxed">{covers}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Program breakdown */}
+          <div className="bg-mist rounded-2xl p-8">
+            <p className="section-label mb-2">Where It Goes</p>
+            <h3 className="font-serif text-2xl text-navy font-semibold mb-6">
+              How We Steward Every Dollar
+            </h3>
+            <div className="space-y-5">
+              {programs.map(({ name, desc, pct, color }) => (
+                <div key={name}>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <p className="font-sans font-semibold text-navy text-sm">{name}</p>
+                    <p className="font-sans font-bold text-sm text-[#0A77BC]">{pct}%</p>
+                  </div>
+                  <div className="h-2 bg-white rounded-full overflow-hidden">
+                    <div
+                      className={`h-full rounded-full ${color}`}
+                      style={{ width: `${pct}%` }}
+                    />
+                  </div>
+                  <p className="text-slate text-xs font-sans mt-1.5 leading-relaxed">{desc}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 text-xs text-slate/60 font-sans italic">
+              Percentages represent approximate allocation targets. LWN is committed to full
+              stewardship transparency. Financial reports are available upon request.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Donation form */}
       <section className="py-16 bg-mist">
         <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <p className="section-label mb-2">Give Now</p>
+            <h2 className="section-heading">Join the Circle</h2>
+            <p className="text-slate font-sans text-sm mt-2">
+              Secure giving powered by Stripe. One-time or recurring.
+            </p>
+          </div>
           <DonateForm />
           <p className="mt-6 text-center text-xs text-slate/60 leading-relaxed font-sans">
             Living Water Network Inc. is a 501(c)(3) nonprofit organization. All
