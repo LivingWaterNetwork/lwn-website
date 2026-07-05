@@ -1,10 +1,21 @@
 import Link from "next/link";
 import Image from "next/image";
+import { NewsletterSignup } from "@/components/sections/NewsletterSignup";
 
 export function Footer() {
   return (
     <footer className="bg-navy text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-10 mb-10 border-b border-white/10">
+          <div>
+            <p className="section-label text-spring mb-2">Stay Connected</p>
+            <h3 className="font-serif text-xl font-semibold text-white">
+              Get formation insights in your inbox.
+            </h3>
+          </div>
+          <NewsletterSignup dark />
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Brand */}
           <div>
@@ -35,6 +46,7 @@ export function Footer() {
                 { href: "/cohort", label: "Cohort" },
                 { href: "/events", label: "Events" },
                 { href: "/partnership", label: "Partner With Us" },
+                { href: "/theory-of-change", label: "Theory of Change" },
                 { href: "/faq", label: "FAQ" },
                 { href: "/blog", label: "Blog" },
                 { href: "/contact", label: "Contact" },
@@ -76,7 +88,7 @@ export function Footer() {
             &copy; {new Date().getFullYear()} Living Water Network Inc. All rights reserved.
           </p>
           <p>
-            Living Water Network Inc. is a registered 501(c)(3) nonprofit organization.
+            Living Water Network Inc. is a registered 501(c)(3) nonprofit organization &middot; EIN 93-1859873
           </p>
         </div>
       </div>

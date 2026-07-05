@@ -162,6 +162,12 @@ export default function PartnershipPage() {
               </div>
             ))}
           </div>
+          <p className="text-center mt-8 text-sm font-sans text-slate">
+            Want to see exactly how a dollar becomes a formed leader?{" "}
+            <Link href="/theory-of-change" className="text-copper font-semibold hover:underline">
+              Read our full theory of change &rarr;
+            </Link>
+          </p>
         </div>
       </section>
 
@@ -411,10 +417,21 @@ export default function PartnershipPage() {
               Give Now
             </Link>
           </div>
-          <p className="mt-6 text-xs text-slate/60 font-sans">
-            Living Water Network Inc. is a registered 501(c)(3) nonprofit.
-            All gifts are tax-deductible to the extent allowed by law.
-          </p>
+          <div className="mt-8 inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-6 bg-white rounded-xl border border-mist px-6 py-4 text-left">
+            <div className="text-xs font-sans text-slate leading-relaxed">
+              <p className="font-semibold text-navy">Living Water Network Inc.</p>
+              <p>Registered 501(c)(3) nonprofit &middot; EIN 93-1859873</p>
+              <p>Gifts are tax-deductible to the extent allowed by law.</p>
+            </div>
+            <a
+              href="https://www.guidestar.org/profile/93-1859873"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-semibold text-copper hover:underline whitespace-nowrap"
+            >
+              View on GuideStar/Candid &rarr;
+            </a>
+          </div>
         </div>
       </section>
     </>

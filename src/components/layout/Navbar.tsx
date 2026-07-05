@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/cohort", label: "Cohort" },
   { href: "/events", label: "Events" },
   { href: "/partnership", label: "Partner" },
+  { href: "/theory-of-change", label: "Impact" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ];

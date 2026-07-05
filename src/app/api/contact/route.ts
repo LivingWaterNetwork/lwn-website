@@ -6,7 +6,7 @@ import { pushContactSubmission } from "@/lib/airtable";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { name, email, message } = body;
+    const { name, email, message, subject } = body;
 
     if (!name || !email || !message) {
       return NextResponse.json(
@@ -14,6 +14,8 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
+
+    const inquiryLabel = typeof subject === "string" && subject.trim() ? subject.trim() : null;
 
     const submission = await prisma.contactSubmission.create({
       data: { name, email, message },
@@ -30,9 +32,9 @@ export async function POST(req: NextRequest) {
     // Send notification email — awaited so errors appear in Vercel function logs
     try {
       await sendNotificationEmail({
-        subject: `New Contact Message — ${name}`,
+        subject: inquiryLabel ? `${inquiryLabel} — ${name}` : `New Contact Message — ${name}`,
         text: `
-New contact form submission:
+New contact form submission${inquiryLabel ? ` (${inquiryLabel})` : ""}:
 
 Name: ${name}
 Email: ${email}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllPosts } from "@/lib/blog";
+import { NewsletterSignup } from "@/components/sections/NewsletterSignup";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -82,6 +83,18 @@ export default function BlogPage() {
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      <section className="py-16 bg-navy text-white text-center">
+        <div className="max-w-xl mx-auto px-4">
+          <p className="section-label text-spring mb-3">Don&apos;t Miss a Post</p>
+          <h2 className="font-serif text-2xl md:text-3xl font-semibold mb-4">
+            Get Formation Insights in Your Inbox
+          </h2>
+          <div className="flex justify-center">
+            <NewsletterSignup dark />
+          </div>
         </div>
       </section>
     </>

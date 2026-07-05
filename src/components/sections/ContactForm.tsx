@@ -4,7 +4,21 @@ import { useState } from "react";
 
 type FormState = "idle" | "submitting" | "success" | "error";
 
-export function ContactForm() {
+type ContactFormProps = {
+  subject?: string;
+  messagePlaceholder?: string;
+  submitLabel?: string;
+  successTitle?: string;
+  successBody?: string;
+};
+
+export function ContactForm({
+  subject,
+  messagePlaceholder = "How can we help you?",
+  submitLabel = "Send Message",
+  successTitle = "Message Sent!",
+  successBody = "Thank you for reaching out. We'll be in touch soon.",
+}: ContactFormProps = {}) {
   const [state, setState] = useState<FormState>("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -34,16 +48,15 @@ export function ContactForm() {
     return (
       <div className="card text-center py-10">
         <div className="text-4xl mb-3">✉️</div>
-        <h3 className="font-serif text-xl font-semibold text-navy mb-2">Message Sent!</h3>
-        <p className="text-slate text-sm font-sans">
-          Thank you for reaching out. We&apos;ll be in touch soon.
-        </p>
+        <h3 className="font-serif text-xl font-semibold text-navy mb-2">{successTitle}</h3>
+        <p className="text-slate text-sm font-sans">{successBody}</p>
       </div>
     );
   }
 
   return (
     <form onSubmit={handleSubmit} className="card space-y-5">
+      {subject && <input type="hidden" name="subject" value={subject} />}
       <div>
         <label htmlFor="name" className="form-label">
           Name <span className="text-red-500">*</span>
@@ -80,7 +93,7 @@ export function ContactForm() {
           rows={5}
           required
           className="form-textarea"
-          placeholder="How can we help you?"
+          placeholder={messagePlaceholder}
         />
       </div>
 
@@ -93,7 +106,7 @@ export function ContactForm() {
         disabled={state === "submitting"}
         className="btn-primary w-full disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        {state === "submitting" ? "Sending…" : "Send Message"}
+        {state === "submitting" ? "Sending…" : submitLabel}
       </button>
     </form>
   );

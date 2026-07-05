@@ -107,3 +107,45 @@ export async function addDonorToKit(data: {
 
   return subData;
 }
+
+/**
+ * Subscribes someone to the general LWN newsletter (not a donor).
+ * Tags them "newsletter" so they can be targeted separately from donor flows.
+ */
+export async function subscribeToNewsletter(email: string, firstName?: string) {
+  if (!KIT_API_KEY) {
+    console.warn("[kit] KIT_API_KEY not set — skipping newsletter sync");
+    return null;
+  }
+
+  const subRes = await fetch(`${KIT_API_BASE}/subscribers`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      api_secret: KIT_API_KEY,
+      email,
+      first_name: firstName || undefined,
+    }),
+  });
+
+  if (!subRes.ok) {
+    const err = await subRes.text();
+    console.error("[kit] Failed to upsert newsletter subscriber:", err);
+    throw new Error("Failed to subscribe");
+  }
+
+  const subData = await subRes.json();
+  const subscriberId: number = subData.subscriber?.id;
+  if (subscriberId) {
+    const tagId = await ensureTag("newsletter");
+    if (tagId) {
+      await fetch(`${KIT_API_BASE}/subscribers/${subscriberId}/tags`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ api_secret: KIT_API_KEY, tag: { id: tagId } }),
+      });
+    }
+  }
+
+  return subData;
+}
