@@ -50,25 +50,25 @@ const programs = [
   {
     name: "Groundwork Formation Cohorts",
     desc: "Our flagship 9-month formation journey. Scholarships are funded by ministry partners so no leader is turned away for financial need.",
-    pct: 55,
+    pct: 45,
     color: "bg-navy",
   },
   {
     name: "Pastoral & Therapeutic Support",
     desc: "Licensed therapists and pastoral coaches embedded in every cohort — ensuring leaders receive real care, not just training.",
-    pct: 20,
+    pct: 15,
     color: "bg-[#00466F]",
   },
   {
     name: "International Missions",
     desc: "Every cohort sends every participant on an international missions trip. Your gift helps us cover costs for those who cannot.",
-    pct: 15,
+    pct: 12,
     color: "bg-copper",
   },
   {
-    name: "Resources & Operations",
-    desc: "Curriculum development, leadership resources, and the infrastructure that keeps the network running.",
-    pct: 10,
+    name: "Staffing, Operations & Development",
+    desc: "Full-time and part-time staff leading programs, partnerships, and the annual Gala — plus the infrastructure, insurance, and administration that keeps the network running sustainably.",
+    pct: 28,
     color: "bg-[#445563]",
   },
 ];
@@ -161,8 +161,11 @@ export default function DonatePage() {
               ))}
             </div>
             <p className="mt-6 text-xs text-slate/60 font-sans italic">
-              Percentages represent approximate allocation targets. LWN is committed to full
-              stewardship transparency. Financial reports are available upon request.
+              Percentages represent approximate allocation targets. LWN is led by a founding
+              full-time Executive Director and a part-time Director of Events &amp; Partnerships —
+              real staffing costs are reflected honestly above, not hidden in &ldquo;overhead.&rdquo;
+              LWN is committed to full stewardship transparency. Financial reports are available
+              upon request.
             </p>
           </div>
         </div>

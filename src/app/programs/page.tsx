@@ -50,7 +50,7 @@ const programs = [
   },
   {
     id: "speaking",
-    image: "/images/omar-speaking-main-stage.jpg",
+    image: "/images/omar-speaking-stage.jpg",
     imageAlt: "Omar speaking at a large leadership event",
     title: "Public Speaking Engagements",
     tagline: "Bringing the message to you.",

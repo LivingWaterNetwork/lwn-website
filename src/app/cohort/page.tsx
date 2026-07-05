@@ -298,12 +298,12 @@ export default function CohortPage() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {[
-              { src: "/images/youth-prayer-poolside.jpg", alt: "Community in prayer" },
-              { src: "/images/baptism-pool2.jpg", alt: "Baptism and spiritual transformation" },
-              { src: "/images/cohort-group-activity.jpg", alt: "Formation group activity" },
-              { src: "/images/missions-kids-ministry.jpg", alt: "Serving on the international missions trip" },
-              { src: "/images/omar-with-partner.jpg", alt: "Mentoring and discipleship" },
-              { src: "/images/outreach-group.jpg", alt: "Community outreach" },
+              { src: "/images/team-elevator-selfie.jpg", alt: "Team fellowship and joy" },
+              { src: "/images/baptism-pool.jpg", alt: "Baptism and spiritual transformation" },
+              { src: "/images/mission-trip-bus.jpg", alt: "Traveling together in missions" },
+              { src: "/images/omar-missions-llama.jpg", alt: "Serving on international missions" },
+              { src: "/images/omar-with-colleague.jpg", alt: "Mentoring and discipleship" },
+              { src: "/images/baptism-closeup2.jpg", alt: "Serving in ministry together" },
             ].map(({ src, alt }) => (
               <div key={src} className="relative aspect-square rounded-xl overflow-hidden">
                 <Image src={src} alt={alt} fill className="object-cover hover:scale-105 transition-transform duration-500" />

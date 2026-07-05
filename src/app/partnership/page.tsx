@@ -80,18 +80,18 @@ const monthlyTiers = [
 const roadmap = [
   {
     phase: "Year 1 (2026–2027)",
-    goal: "$50,000",
-    focus: "Launch inaugural cohort, establish curriculum and pastoral team",
+    goal: "$145,000",
+    focus: "Launch inaugural cohort, fund founding staff leadership, establish curriculum and pastoral team",
   },
   {
     phase: "Year 2 (2027–2028)",
-    goal: "$100,000",
-    focus: "Scale to two cohorts, expand missions program",
+    goal: "$190,000",
+    focus: "Scale to two cohorts, expand missions program, sustain founding staff",
   },
   {
     phase: "Year 3–5 (2028–2031)",
-    goal: "$150,000/yr",
-    focus: "Full operational capacity — 3–5 cohorts annually, national reach",
+    goal: "$275,000+/yr",
+    focus: "Full operational capacity — 3–5 cohorts annually, national reach, expanded staff team",
   },
 ];
 
