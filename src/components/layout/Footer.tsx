@@ -87,6 +87,14 @@ export function Footer() {
           <p>
             &copy; {new Date().getFullYear()} Living Water Network Inc. All rights reserved.
           </p>
+          <div className="flex items-center gap-4">
+            <Link href="/privacy" className="hover:text-white transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="hover:text-white transition-colors">
+              Terms of Use
+            </Link>
+          </div>
           <p>
             Living Water Network Inc. is a registered 501(c)(3) nonprofit organization &middot; EIN 93-1859873
           </p>
