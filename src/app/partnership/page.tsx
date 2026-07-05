@@ -432,6 +432,23 @@ export default function PartnershipPage() {
               View on GuideStar/Candid &rarr;
             </a>
           </div>
+
+          {/* Financial transparency roadmap — honest about startup stage, states commitments ahead */}
+          <div className="mt-4 max-w-2xl mx-auto bg-white rounded-xl border border-mist px-6 py-5 text-left">
+            <p className="text-xs font-extrabold uppercase tracking-widest text-[#0A77BC] mb-2">
+              Our Transparency Commitment
+            </p>
+            <p className="text-xs font-sans text-slate leading-relaxed">
+              LWN is a startup-stage nonprofit — we have not yet completed a full fiscal
+              year, so no Form 990 has been filed yet. Here is our accountability
+              roadmap as we launch: our first Annual Report will publish after our first
+              fiscal year closes; we will register for Candid&apos;s free Seal of
+              Transparency once we have a year of financials to report; and we intend to
+              pursue ECFA accreditation once our founding board is seated. We&apos;d
+              rather tell you honestly where we are than overstate where we&apos;re not
+              yet.
+            </p>
+          </div>
         </div>
       </section>
     </>

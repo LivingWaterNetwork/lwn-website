@@ -13,6 +13,7 @@ const programs = [
     id: "cohorts",
     image: "/images/prayer-small-group.jpg",
     imageAlt: "Leaders in formation together",
+    imagePosition: "50% 50%",
     title: "Immersive Cohorts",
     tagline: "Transformed together.",
     body: `Our signature cohort experience is a multi-week journey in spiritual formation,
@@ -27,6 +28,7 @@ const programs = [
     id: "counseling",
     image: "/images/prayer-circle.jpg",
     imageAlt: "Pastoral prayer and care",
+    imagePosition: "50% 30%",
     title: "Personalized Counseling",
     tagline: "Healing that empowers.",
     body: `Great leaders need great care. Our personalized counseling sessions go beyond
@@ -40,6 +42,7 @@ const programs = [
     id: "mentorship",
     image: "/images/radical-mentoring-group.jpg",
     imageAlt: "Men in a Radical Mentoring group",
+    imagePosition: "50% 50%",
     title: "Strategic Mentorships",
     tagline: "Iron sharpening iron.",
     body: `We believe every leader needs a Paul and a Timothy — someone ahead of them on
@@ -52,6 +55,7 @@ const programs = [
     id: "speaking",
     image: "/images/omar-speaking-stage.jpg",
     imageAlt: "Omar speaking at a large leadership event",
+    imagePosition: "50% 50%",
     title: "Public Speaking Engagements",
     tagline: "Bringing the message to you.",
     body: `Living Water Network offers dynamic speaking engagements for churches,
@@ -65,6 +69,7 @@ const programs = [
     id: "missions",
     image: "/images/missions-kids-ministry.jpg",
     imageAlt: "LWN team serving children on an international mission trip",
+    imagePosition: "50% 20%",
     title: "International Mission Trips",
     tagline: "Broadened perspective, deepened calling.",
     body: `There is nothing like crossing a border to reshape a leader's worldview.
@@ -113,6 +118,7 @@ export default function ProgramsPage() {
                   alt={p.imageAlt}
                   fill
                   className="object-cover"
+                  style={{ objectPosition: p.imagePosition }}
                 />
               </div>
 

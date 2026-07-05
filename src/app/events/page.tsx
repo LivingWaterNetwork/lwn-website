@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -33,16 +32,31 @@ export default function EventsPage() {
     <>
       {/* ── Hero ── */}
       <section className="relative min-h-[92vh] flex items-center justify-center bg-[#060F1A] overflow-hidden">
-        {/* Background photo */}
+        {/* Elegant black-tie ambiance — abstract, not a literal photo (no casual event photo fit the tone) */}
         <div className="absolute inset-0">
-          <Image
-            src="/images/outdoor-night-gathering.jpg"
-            alt="An evening gathering"
-            fill
-            className="object-cover object-center opacity-30"
-            priority
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `
+                radial-gradient(circle at 20% 20%, rgba(192,90,18,0.16), transparent 45%),
+                radial-gradient(circle at 80% 15%, rgba(124,203,230,0.12), transparent 40%),
+                radial-gradient(circle at 50% 85%, rgba(192,90,18,0.10), transparent 50%),
+                linear-gradient(180deg, #060F1A 0%, #0A1B2E 45%, #060F1A 100%)
+              `,
+            }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#060F1A]/60 via-transparent to-[#060F1A]/90" />
+          {/* Soft bokeh dots, evoking string lights at an evening gala */}
+          <div
+            className="absolute inset-0 opacity-40"
+            style={{
+              backgroundImage: `
+                radial-gradient(circle, rgba(255,214,165,0.9) 1.5px, transparent 1.5px)
+              `,
+              backgroundSize: "48px 48px",
+              maskImage: "radial-gradient(ellipse 80% 60% at 50% 30%, black, transparent 70%)",
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#060F1A]/40 via-transparent to-[#060F1A]/95" />
         </div>
 
         <div className="relative max-w-3xl mx-auto px-4 text-center text-white">
