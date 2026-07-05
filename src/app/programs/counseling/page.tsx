@@ -2,6 +2,15 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { ProgramInquiryForm, type ProgramField } from "@/components/sections/ProgramInquiryForm";
 
+// Force dynamic rendering — this route was hitting Next's 60s static
+// generation timeout on Vercel's build machine (3/3 attempts failed,
+// blocking the whole deployment). The page has no expensive data
+// fetching, so this is a build-time worker/concurrency issue, not a
+// content issue. Rendering per-request costs nothing meaningful for a
+// low-traffic intake form page and fully removes it from the static
+// export step. See CLAUDE_HANDOFF.txt Section 7 for details.
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Personalized Counseling",
   description:

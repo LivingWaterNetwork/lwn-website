@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { ProgramInquiryForm, type ProgramField } from "@/components/sections/ProgramInquiryForm";
 
+// See src/app/programs/counseling/page.tsx for why this is forced dynamic
+// (sibling route hit a static-generation build timeout; applied here too
+// defensively since this page is structurally identical).
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Request a Speaker",
   description:
