@@ -35,16 +35,34 @@ export type ProgramField = SelectField | TextField | TextareaField;
 type ProgramInquiryFormProps = {
   program: "counseling" | "mentorship" | "speaking" | "missions";
   fields: ProgramField[];
-  detailsBuilder: (values: Record<string, string>) => string;
   submitLabel?: string;
   successTitle?: string;
   successBody?: string;
 };
 
+// Builds a human-readable "details" block from the program's field
+// definitions and the submitted values. This used to be passed in as a
+// `detailsBuilder` function prop from each server-component page, but
+// functions can't be serialized across the server/client boundary in the
+// App Router — that caused every one of these pages to throw at request
+// time in production ("Functions cannot be passed directly to Client
+// Components"). Building the string here instead, from plain data, fixes
+// that for good.
+function buildDetails(fields: ProgramField[], values: Record<string, string>) {
+  return fields
+    .map((field) => {
+      if (field.type === "select") {
+        const selected = field.options.find((opt) => opt.value === values[field.id]);
+        return `${field.label}: ${selected?.label ?? values[field.id] ?? "—"}`;
+      }
+      return `${field.label}:\n${values[field.id] || "—"}`;
+    })
+    .join("\n\n");
+}
+
 export function ProgramInquiryForm({
   program,
   fields,
-  detailsBuilder,
   submitLabel = "Submit Inquiry",
   successTitle = "Thank You!",
   successBody = "We've received your inquiry and will be in touch soon.",
@@ -60,7 +78,7 @@ export function ProgramInquiryForm({
     const formData = new FormData(e.currentTarget);
     const values = Object.fromEntries(formData.entries()) as Record<string, string>;
 
-    const details = detailsBuilder(values);
+    const details = buildDetails(fields, values);
 
     const body = {
       program,

@@ -86,9 +86,6 @@ export default function SpeakingPage() {
             submitLabel="Request a Speaker"
             successTitle="Request Received"
             successBody="Thank you for the invitation — our team will follow up to confirm availability and details."
-            detailsBuilder={(v) =>
-              `Event: ${v.eventName}\nDate: ${v.eventDate || "—"}\nAudience size: ${v.audienceSize || "—"}\n\nTopic request:\n${v.topic}`
-            }
           />
         </div>
       </section>

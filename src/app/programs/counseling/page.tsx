@@ -73,7 +73,6 @@ export default function CounselingPage() {
             submitLabel="Request Counseling"
             successTitle="We've Received Your Request"
             successBody="Someone from our pastoral care team will reach out within 24-48 hours. Thank you for trusting us with this."
-            detailsBuilder={(v) => `What they'd like support with:\n${v.support}`}
           />
         </div>
       </section>

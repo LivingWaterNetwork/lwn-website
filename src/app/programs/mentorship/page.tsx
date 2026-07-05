@@ -80,7 +80,6 @@ export default function MentorshipPage() {
             submitLabel="Submit Interest"
             successTitle="Thank You"
             successBody="We've received your interest and will follow up to talk through the right fit."
-            detailsBuilder={(v) => `Looking to: ${v.role}\n\nTheir season & hopes:\n${v.season}`}
           />
         </div>
       </section>

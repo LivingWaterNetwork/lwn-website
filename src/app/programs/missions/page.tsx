@@ -79,7 +79,6 @@ export default function MissionsPage() {
             submitLabel="Inquire About Trips"
             successTitle="Thank You"
             successBody="Our missions team will follow up with upcoming trip dates and next steps."
-            detailsBuilder={(v) => `Prior missions experience: ${v.priorExperience}\n\nWhat draws them to this trip:\n${v.draw}`}
           />
         </div>
       </section>
