@@ -3,10 +3,16 @@
  * Adds donors to your Kit audience with tags after each successful donation,
  * so automated welcome/thank-you sequences fire automatically.
  *
+ * Uses Kit's API v4 (api.kit.com/v4), authenticated via the `X-Kit-Api-Key`
+ * header. Kit deprecated the old v3 API (api.convertkit.com/v3 with
+ * `api_secret` in the JSON body) — v4 requires a V4 API key, a different
+ * base URL, the header auth shown below, and `email_address` (not `email`)
+ * in the subscriber payload.
+ *
  * Setup (2 minutes):
  *  1. Go to kit.com → create a free account (no address required)
- *  2. Settings → Developer → API Keys → copy your API Key (v3)
- *  3. Add KIT_API_KEY to .env.local
+ *  2. Account Settings → Developer → API Keys → create a V4 API Key
+ *  3. Add KIT_API_KEY to .env.local (and to Vercel's production env vars)
  *  4. Build your automation: Automations → New automation
  *       Trigger: "Tag is added" → select "donor"
  *       Step 1: Send email — Welcome / Thank You (immediate)
@@ -18,7 +24,14 @@
 
 const KIT_API_KEY = process.env.KIT_API_KEY ?? "";
 
-const KIT_API_BASE = "https://api.convertkit.com/v3";
+const KIT_API_BASE = "https://api.kit.com/v4";
+
+function kitHeaders(): Record<string, string> {
+  return {
+    "Content-Type": "application/json",
+    "X-Kit-Api-Key": KIT_API_KEY,
+  };
+}
 
 function donationTier(cents: number): string {
   const dollars = cents / 100;
@@ -30,15 +43,19 @@ function donationTier(cents: number): string {
 }
 
 async function ensureTag(tagName: string): Promise<number | null> {
-  // Create tag (Kit returns existing tag if name already exists)
+  // Create tag (Kit returns the existing tag if the name already exists)
   const res = await fetch(`${KIT_API_BASE}/tags`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ api_secret: KIT_API_KEY, tag: { name: tagName } }),
+    headers: kitHeaders(),
+    body: JSON.stringify({ name: tagName }),
   });
-  if (!res.ok) return null;
+  if (!res.ok) {
+    const err = await res.text();
+    console.error(`[kit] Failed to create/find tag "${tagName}" (${res.status}):`, err);
+    return null;
+  }
   const data = await res.json();
-  return data.id ?? null;
+  return data.tag?.id ?? null;
 }
 
 /**
@@ -68,10 +85,9 @@ export async function addDonorToKit(data: {
   // Upsert subscriber
   const subRes = await fetch(`${KIT_API_BASE}/subscribers`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: kitHeaders(),
     body: JSON.stringify({
-      api_secret: KIT_API_KEY,
-      email: data.email,
+      email_address: data.email,
       first_name: firstName,
       fields: {
         last_name: lastName,
@@ -83,7 +99,7 @@ export async function addDonorToKit(data: {
 
   if (!subRes.ok) {
     const err = await subRes.text();
-    console.error("[kit] Failed to upsert subscriber:", err);
+    console.error(`[kit] Failed to upsert subscriber (${subRes.status}):`, err);
     return null;
   }
 
@@ -97,11 +113,15 @@ export async function addDonorToKit(data: {
     tagNames.map(async (tagName) => {
       const tagId = await ensureTag(tagName);
       if (!tagId) return;
-      await fetch(`${KIT_API_BASE}/subscribers/${subscriberId}/tags`, {
+      const tagRes = await fetch(`${KIT_API_BASE}/tags/${tagId}/subscribers/${subscriberId}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ api_secret: KIT_API_KEY, tag: { id: tagId } }),
+        headers: kitHeaders(),
+        body: JSON.stringify({}),
       });
+      if (!tagRes.ok) {
+        const err = await tagRes.text();
+        console.error(`[kit] Failed to apply tag "${tagName}" (${tagRes.status}):`, err);
+      }
     })
   );
 
@@ -114,24 +134,31 @@ export async function addDonorToKit(data: {
  */
 export async function subscribeToNewsletter(email: string, firstName?: string) {
   if (!KIT_API_KEY) {
-    console.warn("[kit] KIT_API_KEY not set — skipping newsletter sync");
-    return null;
+    console.error("[kit] KIT_API_KEY not set — cannot subscribe newsletter signup");
+    throw new Error("Newsletter signup is not configured (missing KIT_API_KEY)");
   }
 
   const subRes = await fetch(`${KIT_API_BASE}/subscribers`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: kitHeaders(),
     body: JSON.stringify({
-      api_secret: KIT_API_KEY,
-      email,
+      email_address: email,
       first_name: firstName || undefined,
     }),
   });
 
   if (!subRes.ok) {
-    const err = await subRes.text();
-    console.error("[kit] Failed to upsert newsletter subscriber:", err);
-    throw new Error("Failed to subscribe");
+    let err: string;
+    try {
+      err = await subRes.text();
+    } catch {
+      err = "<no response body>";
+    }
+    console.error(
+      `[kit] Failed to upsert newsletter subscriber. Status: ${subRes.status} ${subRes.statusText}. Body:`,
+      err
+    );
+    throw new Error(`Failed to subscribe (Kit responded ${subRes.status}): ${err}`);
   }
 
   const subData = await subRes.json();
@@ -139,11 +166,15 @@ export async function subscribeToNewsletter(email: string, firstName?: string) {
   if (subscriberId) {
     const tagId = await ensureTag("newsletter");
     if (tagId) {
-      await fetch(`${KIT_API_BASE}/subscribers/${subscriberId}/tags`, {
+      const tagRes = await fetch(`${KIT_API_BASE}/tags/${tagId}/subscribers/${subscriberId}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ api_secret: KIT_API_KEY, tag: { id: tagId } }),
+        headers: kitHeaders(),
+        body: JSON.stringify({}),
       });
+      if (!tagRes.ok) {
+        const err = await tagRes.text();
+        console.error(`[kit] Failed to apply "newsletter" tag (${tagRes.status}):`, err);
+      }
     }
   }
 

@@ -29,19 +29,19 @@ const tiers = [
   {
     amount: "$250",
     label: "Phase Builder",
-    covers: "A meaningful contribution toward one of three formation phases — moving a leader deeper into their 9-month journey",
+    covers: "A meaningful contribution toward one of three formation phases — moving a leader deeper into their 9-month journey. Includes one ticket to our annual Black Tie Gala.",
     icon: "🔥",
   },
   {
     amount: "$500",
     label: "Missions Sender",
-    covers: "Helps fund international missions trip costs for one participant — going where Jesus goes",
+    covers: "Helps fund international missions trip costs for one participant — going where Jesus goes. Includes one ticket to our annual Black Tie Gala.",
     icon: "✈️",
   },
   {
     amount: "$1,000+",
     label: "Scholarship Partner",
-    covers: "A major step toward a full Groundwork scholarship — the complete program is $3,000–$5,000 per leader for the full 9-month journey",
+    covers: "A major step toward a full Groundwork scholarship — the complete program is $3,000–$5,000 per leader for the full 9-month journey. Includes one ticket to our annual Black Tie Gala.",
     icon: "👑",
   },
 ];

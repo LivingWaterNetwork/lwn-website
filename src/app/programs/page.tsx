@@ -36,7 +36,7 @@ const programs = [
     Through one-on-one engagements tailored to your unique season and challenges, we help
     leaders process wounds, overcome burnout, and rediscover the joy of serving from a
     place of wholeness rather than depletion.`,
-    cta: { label: "Get in Touch", href: "/contact" },
+    cta: { label: "Get in Touch", href: "/programs/counseling" },
   },
   {
     id: "mentorship",
@@ -49,7 +49,7 @@ const programs = [
     the journey and someone they are helping along. Our strategic mentorship program pairs
     seasoned leaders with emerging ones for intentional, Spirit-led relationships built
     around accountability, wisdom transfer, and Kingdom vision alignment.`,
-    cta: { label: "Learn More", href: "/contact" },
+    cta: { label: "Learn More", href: "/programs/mentorship" },
   },
   {
     id: "speaking",
@@ -63,7 +63,7 @@ const programs = [
     Scripture, shaped by experience, and delivered to ignite Kingdom vision in whatever
     context we're invited into. If your organization is looking for a speaker who can
     bridge the ministry and marketplace gap, we'd love to connect.`,
-    cta: { label: "Request a Speaker", href: "/contact" },
+    cta: { label: "Request a Speaker", href: "/programs/speaking" },
   },
   {
     id: "missions",
@@ -76,7 +76,7 @@ const programs = [
     Our international mission trips are designed not just to serve global communities but
     to transform the leader who goes. Participants return with a widened Kingdom perspective,
     a global network of believers, and a sharpened sense of their own mandate in the earth.`,
-    cta: { label: "Inquire About Trips", href: "/contact" },
+    cta: { label: "Inquire About Trips", href: "/programs/missions" },
   },
 ];
 

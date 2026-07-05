@@ -49,19 +49,38 @@ async function getGraphToken(): Promise<string> {
   return cachedToken.token;
 }
 
+export type GraphAttachment = {
+  filename: string;
+  contentBytes: string; // base64
+  contentType: string;
+};
+
 export async function sendGraphMail({
   to,
   subject,
   text,
+  from,
+  attachments,
 }: {
   to: string;
   subject: string;
   text: string;
+  /**
+   * Optional sender mailbox override. The "LWN Website Mailer" Entra ID app
+   * has the Mail.Send APPLICATION permission, which grants it the ability to
+   * send as ANY mailbox in the tenant (not just SEND_AS) — this just changes
+   * which mailbox the API call targets. Used e.g. to send donation
+   * thank-you letters from ofandino@lwnetwork.org instead of info@.
+   */
+  from?: string;
+  /** Optional file attachments (e.g. a PDF thank-you letter). */
+  attachments?: GraphAttachment[];
 }): Promise<void> {
   const token = await getGraphToken();
+  const mailbox = from ?? SEND_AS;
 
   const res = await fetch(
-    `https://graph.microsoft.com/v1.0/users/${encodeURIComponent(SEND_AS)}/sendMail`,
+    `https://graph.microsoft.com/v1.0/users/${encodeURIComponent(mailbox)}/sendMail`,
     {
       method: "POST",
       headers: {
@@ -73,6 +92,16 @@ export async function sendGraphMail({
           subject,
           body: { contentType: "Text", content: text },
           toRecipients: [{ emailAddress: { address: to } }],
+          ...(attachments && attachments.length > 0
+            ? {
+                attachments: attachments.map((a) => ({
+                  "@odata.type": "#microsoft.graph.fileAttachment",
+                  name: a.filename,
+                  contentType: a.contentType,
+                  contentBytes: a.contentBytes,
+                })),
+              }
+            : {}),
         },
         saveToSentItems: true,
       }),

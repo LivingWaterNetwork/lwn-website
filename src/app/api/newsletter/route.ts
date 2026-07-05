@@ -13,7 +13,8 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (err) {
-    console.error("[newsletter/route]", err);
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("[newsletter/route] Newsletter signup failed:", message);
     return NextResponse.json({ error: "Failed to subscribe. Please try again." }, { status: 500 });
   }
 }

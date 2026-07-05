@@ -142,29 +142,6 @@ export default function CohortPage() {
             </p>
           </div>
 
-          {/* Trained vs. Formed callout */}
-          <div className="mt-10 grid sm:grid-cols-2 gap-4">
-            <div className="rounded-xl border border-red-100 bg-red-50 p-5">
-              <p className="text-xs font-semibold text-red-400 uppercase tracking-widest font-sans mb-2">What most programs offer</p>
-              <ul className="space-y-2 text-sm text-slate font-sans">
-                {["Training without formation", "Information without transformation", "Activity without healing", "A calendar without a soul"].map(i => (
-                  <li key={i} className="flex items-center gap-2">
-                    <span className="text-red-300">✕</span> {i}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="rounded-xl border border-green-100 bg-green-50 p-5">
-              <p className="text-xs font-semibold text-green-600 uppercase tracking-widest font-sans mb-2">What Groundwork builds</p>
-              <ul className="space-y-2 text-sm text-slate font-sans">
-                {["Formation before activation", "Healing before sending", "Identity before ministry", "Deep roots before wide reach"].map(i => (
-                  <li key={i} className="flex items-center gap-2">
-                    <span className="text-green-500">✓</span> {i}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
         </div>
       </section>
 

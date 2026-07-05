@@ -36,18 +36,19 @@ model CohortApplication {
 }
 
 model Donation {
-  id                String   @id @default(cuid())
-  stripePaymentId   String   @unique
-  stripeCustomerId  String?
-  amount            Int      // in cents
-  currency          String   @default("usd")
-  frequency         String   // one-time | monthly | yearly
-  name              String?
-  email             String
-  comment           String?
-  status            String   @default("pending")
-  receiptSent       Boolean  @default(false)
-  createdAt         DateTime @default(now())
+  id                   String    @id @default(cuid())
+  stripePaymentId      String    @unique
+  stripeCustomerId     String?
+  amount               Int       // in cents
+  currency             String    @default("usd")
+  frequency            String    // one-time | monthly | yearly
+  name                 String?
+  email                String
+  comment              String?
+  status               String    @default("pending")
+  receiptSent          Boolean   @default(false)
+  thankYouLetterSentAt DateTime?
+  createdAt            DateTime  @default(now())
 
   @@map("donations")
 }
@@ -60,4 +61,61 @@ model ContactSubmission {
   createdAt DateTime @default(now())
 
   @@map("contact_submissions")
+}
+
+model ProgramInquiry {
+  id        String   @id @default(cuid())
+  program   String   // counseling | mentorship | speaking | missions
+  name      String
+  email     String
+  phone     String?
+  details   String   // main free-text field, covers tailored per-program questions
+  status    String   @default("new")
+  createdAt DateTime @default(now())
+
+  @@map("program_inquiries")
+}
+
+model PartnershipInquiry {
+  id           String   @id @default(cuid())
+  name         String
+  email        String
+  phone        String?
+  organization String?
+  tier         String?  // Cornerstone Partner | Kingdom Builder | Formation Fellow | Community Sustainer | Not sure yet
+  message      String?
+  status       String   @default("new")
+  createdAt    DateTime @default(now())
+
+  @@map("partnership_inquiries")
+}
+
+model MultiYearPledgeInquiry {
+  id              String   @id @default(cuid())
+  name            String
+  email           String
+  phone           String?
+  organization    String?
+  pledgeLength    String?  // 3 years | 4 years | 5 years
+  estimatedAnnual String?
+  message         String?
+  status          String   @default("new")
+  createdAt       DateTime @default(now())
+
+  @@map("multi_year_pledge_inquiries")
+}
+
+model GalaSponsorshipInquiry {
+  id               String   @id @default(cuid())
+  name             String
+  email            String
+  phone            String?
+  organization     String?
+  sponsorshipLevel String?  // Presenting Table $10,000 | Gold Table $5,000 | Silver Table $2,500 | Individual Ticket(s) | Not sure yet
+  ticketCount      String?
+  message          String?
+  status           String   @default("new")
+  createdAt        DateTime @default(now())
+
+  @@map("gala_sponsorship_inquiries")
 }

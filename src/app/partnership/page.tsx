@@ -64,6 +64,7 @@ const tiers = [
     accentColor: "text-[#0A77BC]",
     benefits: [
       "Recognition on the LWN website community page",
+      "Includes one ticket to the annual Black Tie Gala",
       "Annual impact newsletter and program updates",
       "Certificate of appreciation and tax receipt",
     ],
@@ -74,7 +75,7 @@ const monthlyTiers = [
   { label: "Seed", amount: "$25/mo", desc: "Weekly curriculum materials for one participant" },
   { label: "Root", amount: "$50/mo", desc: "One facilitated group formation session per month" },
   { label: "Branch", amount: "$100/mo", desc: "Full month of coaching and community for one leader" },
-  { label: "Vine", amount: "$250/mo", desc: "Meaningful investment toward one leader's formation journey" },
+  { label: "Vine", amount: "$250/mo", desc: "Meaningful investment toward one leader's formation journey — includes one ticket to our annual Black Tie Gala" },
 ];
 
 const roadmap = [
@@ -119,7 +120,7 @@ export default function PartnershipPage() {
               View Partnership Tiers
             </a>
             <Link
-              href="/contact"
+              href="/partnership/inquire"
               className="inline-flex items-center justify-center px-8 py-3.5 border-2 border-white/40 hover:border-white text-white font-semibold font-sans text-sm rounded-md transition-colors hover:bg-white/10"
             >
               Talk to Our Team
@@ -268,7 +269,7 @@ export default function PartnershipPage() {
             ))}
           </div>
 
-          <Link href="/contact" className="btn-copper">
+          <Link href="/partnership/multi-year-pledge" className="btn-copper">
             Discuss a Multi-Year Pledge
           </Link>
         </div>
@@ -377,7 +378,7 @@ export default function PartnershipPage() {
           </div>
 
           <div className="text-center">
-            <Link href="/contact" className="btn-copper">
+            <Link href="/partnership/sponsor-the-gala" className="btn-copper">
               Sponsor the Gala
             </Link>
             <p className="mt-3 text-xs text-slate/50 font-sans">
@@ -410,7 +411,7 @@ export default function PartnershipPage() {
             team will respond within 24–48 hours.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact" className="btn-copper">
+            <Link href="/partnership/inquire" className="btn-copper">
               Contact Our Team
             </Link>
             <Link href="/donate" className="btn-secondary">
