@@ -48,8 +48,8 @@ export default function CounselingPage() {
           <div>
             <div className="rounded-2xl overflow-hidden aspect-video relative shadow-md mb-6">
               <Image
-                src="/images/prayer-circle.jpg"
-                alt="Pastoral prayer and care"
+                src="/images/prayer-small-group.jpg"
+                alt="A small group praying together quietly, hands on each other's shoulders"
                 fill
                 className="object-cover"
                 style={{ objectPosition: "50% 30%" }}
@@ -73,6 +73,7 @@ export default function CounselingPage() {
             submitLabel="Request Counseling"
             successTitle="We've Received Your Request"
             successBody="Someone from our pastoral care team will reach out within 24-48 hours. Thank you for trusting us with this."
+            disclaimer="Please note: our counseling is discipleship-based pastoral care, not therapy provided by licensed or certified counselors. If you're looking for licensed clinical care, we're glad to help you find additional resources."
           />
         </div>
       </section>

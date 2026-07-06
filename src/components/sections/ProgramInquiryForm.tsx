@@ -38,6 +38,7 @@ type ProgramInquiryFormProps = {
   submitLabel?: string;
   successTitle?: string;
   successBody?: string;
+  disclaimer?: string;
 };
 
 // Builds a human-readable "details" block from the program's field
@@ -66,6 +67,7 @@ export function ProgramInquiryForm({
   submitLabel = "Submit Inquiry",
   successTitle = "Thank You!",
   successBody = "We've received your inquiry and will be in touch soon.",
+  disclaimer,
 }: ProgramInquiryFormProps) {
   const [state, setState] = useState<FormState>("idle");
   const [errorMsg, setErrorMsg] = useState("");
@@ -114,6 +116,9 @@ export function ProgramInquiryForm({
 
   return (
     <form onSubmit={handleSubmit} className="card space-y-5">
+      {disclaimer && (
+        <p className="text-xs text-slate/55 text-center font-sans">{disclaimer}</p>
+      )}
       <div className="grid sm:grid-cols-2 gap-5">
         <div>
           <label htmlFor="name" className="form-label">

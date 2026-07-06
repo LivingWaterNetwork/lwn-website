@@ -56,8 +56,8 @@ export default function MentorshipPage() {
           <div>
             <div className="rounded-2xl overflow-hidden aspect-video relative shadow-md mb-6">
               <Image
-                src="/images/radical-mentoring-group.jpg"
-                alt="Men in a Radical Mentoring group"
+                src="/images/omar-mentorship-portrait.jpg"
+                alt="Omar Fandino with a ministry partner in a black blazer, arm around his shoulder in a playful, confident pose"
                 fill
                 className="object-cover"
               />
