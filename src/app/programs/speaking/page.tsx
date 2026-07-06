@@ -36,7 +36,7 @@ const fields: ProgramField[] = [
   {
     type: "textarea",
     id: "topic",
-    label: "What would you like Omar to speak on?",
+    label: "What would you like our speaker to speak on?",
     required: true,
     placeholder: "Share the theme, the audience, and anything else that would help us prepare the right message.",
     rows: 5,
@@ -64,7 +64,7 @@ export default function SpeakingPage() {
             <div className="rounded-2xl overflow-hidden aspect-video relative shadow-md mb-6">
               <Image
                 src="/images/omar-speaking-stage.jpg"
-                alt="Omar speaking at a large leadership event"
+                alt="One of our speakers addressing a large leadership event"
                 fill
                 className="object-cover"
               />
