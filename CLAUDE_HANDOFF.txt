@@ -1,0 +1,565 @@
+================================================================================
+LWN WEBSITE PROJECT — CLAUDE HANDOFF BRIEFING
+Last updated: July 5, 2026, ~10:10am ET (Session 4 — build-fix follow-up)
+================================================================================
+
+*** READ THIS BLOCK FIRST — DEPLOY IS LIVE, BUT 4 PAGES WERE CRASHING FOR
+    EVERY VISITOR. A REAL FIX IS COMMITTED LOCALLY AND NEEDS A PUSH. ***
+
+Status check at the top of this session found that Omar had ALREADY run
+`git push origin main` (at 9:48am ET, shortly after the previous session's
+handoff was written) — commit d337f67 is on GitHub and Vercel's
+Production Deployment is confirmed "Ready" (verified live in the Vercel
+dashboard). So the previous "site is running old code" emergency was
+already resolved before this session started.
+
+HOWEVER: verifying the site visually (per this file's own priority list)
+turned up a real, more serious bug that d337f67 did not actually fix —
+it just changed how it failed:
+
+  /programs/counseling, /programs/mentorship, /programs/speaking, and
+  /programs/missions were returning a BLANK WHITE PAGE to every single
+  visitor in production. Confirmed via Vercel Runtime Logs, exact error:
+
+    Error: Functions cannot be passed directly to Client Components
+    unless you explicitly expose it by marking it with "use server".
+    {..., detailsBuilder: function detailsBuilder}
+
+  Root cause: each of those 4 pages passed a `detailsBuilder` function
+  as a prop from a Server Component into <ProgramInquiryForm>, a
+  "use client" component. Functions can't cross the server/client
+  boundary in the Next.js App Router — this throws at request time,
+  every time. The previous session's "static-generation timeout" theory
+  was a misdiagnosis; `force-dynamic` just turned a build-time failure
+  into a runtime failure that was live and broken for real visitors.
+
+FIX ALREADY APPLIED (local commit, NOT yet pushed):
+  Commit 954e4a6, on top of d337f67 — moved the details-string-building
+  logic out of the page files and into ProgramInquiryForm itself (built
+  from the existing plain-data `fields` array instead of a passed-in
+  function), then removed the `detailsBuilder` prop everywhere:
+    src/components/sections/ProgramInquiryForm.tsx  (new buildDetails() helper)
+    src/app/programs/counseling/page.tsx
+    src/app/programs/mentorship/page.tsx
+    src/app/programs/speaking/page.tsx
+    src/app/programs/missions/page.tsx
+  Type-checked clean with `npx tsc --noEmit`. The 3 partnership intake
+  pages (inquire, multi-year-pledge, sponsor-the-gala) use a different
+  component (InquiryForm) that never had this function-prop pattern —
+  confirmed those load fine live already, no fix needed there.
+
+THIS FIX HAS NOT BEEN PUSHED — same sandbox limitation as before, no
+GitHub credentials here. Omar MUST run, from a real Mac Terminal:
+
+  cd ~/Desktop/"LWNETWORK CLAUDE"
+  git push origin main
+
+That pushes commit 954e4a6. Then re-check /programs/counseling,
+/programs/mentorship, /programs/speaking, and /programs/missions live —
+they should render normally instead of blank. Also worth submitting one
+test inquiry on each to confirm the Airtable/email notification still
+fires correctly now that `details` is built differently.
+
+RESOLVED THIS SESSION (2026-07-05, ~10:15am ET):
+  - Commit 954e4a6 (the detailsBuilder fix above) was pushed by Omar —
+    confirmed on GitHub (d337f67..954e4a6, main -> main).
+  - `npx prisma db push` was run from Omar's terminal and succeeded:
+    "The database is already in sync with the Prisma schema." The 4 new
+    intake models (ProgramInquiry, PartnershipInquiry,
+    MultiYearPledgeInquiry, GalaSponsorshipInquiry) are live in
+    production Neon. Item 3 in Section 7 is DONE — no longer needs
+    re-running unless the schema changes again.
+  - Note: along the way, Omar accidentally upgraded the `prisma` CLI
+    devDependency to ^7.8.0 via `npm i --save-dev prisma@latest`, which
+    is incompatible with this project's schema.prisma (Prisma 7 removed
+    the classic `url = env(...)` datasource syntax). This was caught
+    before it was ever committed/pushed — package.json was reverted to
+    "prisma": "^5.14.0" (matching @prisma/client) and `npm i` reinstalled
+    5.22.0, which is what actually ran `db push` successfully above.
+    If a future session wants to move to Prisma 7, that needs a
+    deliberate migration (prisma.config.ts + driver adapters), not a
+    `@latest` bump — flag this explicitly if Omar brings it up again.
+
+STILL OPEN, UNRELATED TO THE ABOVE:
+  - Vercel trial banner still reads "Ends Tomorrow" / "1 day remaining
+    of Pro trial" as of this session (10:00am ET) — a payment method
+    still has not been added. Claude cannot enter payment/card details
+    (this is a hard restriction, not a tooling gap) — Omar needs to add
+    a card in Vercel billing settings himself, ideally today.
+  - The "counseling section image on /programs" cosmetic issue flagged
+    by a prior session was checked visually this session — the photo
+    now displays correctly (group prayer photo, properly cropped). This
+    appears to already be resolved; no action needed unless Omar spots
+    something different.
+
+CONTEXT
+-------
+This file is a complete briefing for a new Claude session (or a different
+team member's Claude session) to pick up the Living Water Network (LWN)
+website project without losing context. Read everything before starting
+work. This supersedes the "Session 2" content that was previously in this
+file — that material is preserved below where still accurate, and replaced
+where the project has moved on.
+
+If you are a teammate other than Omar: Claude's persistent memory (the
+auto-memory system) is tied to Omar's account and will NOT carry over to
+your own session. This file is the portable substitute — everything you
+need should be here. If something seems missing, ask Omar rather than
+guessing, especially around legal/financial facts.
+
+NOTE ON PROJECT_BRIEF.md: there is an older PROJECT_BRIEF.md in this same
+folder from the very start of the project (original scope: Postgres-only,
+Resend for email, no Airtable, no Groundwork/Gala/partnership-tier detail).
+It is out of date and superseded by this file — don't treat it as current
+state, though the original mission statement and brand-color intent in
+it are still accurate.
+
+
+================================================================================
+1. PROJECT OVERVIEW
+================================================================================
+
+Organization : Living Water Network Inc. — 501(c)(3) nonprofit
+Website      : https://lwnetwork.org (live, deployed on Vercel)
+Repo         : GitHub → LivingWaterNetwork/lwn-website (branch: main)
+Tech stack   : Next.js 14 App Router, TypeScript, Tailwind CSS, Vercel,
+               Prisma + Postgres (Neon), Airtable (ops pipeline mirror)
+Email        : info@lwnetwork.org (Omar Fandino, founder)
+Omar email   : ofandino@lwnetwork.org — CONFIRMED live mailbox in the
+               M365 tenant as of 2026-07-05 (verified via Outlook web).
+
+Mission: Equip 100,000 Kingdom leaders over 5 years through spiritual
+formation, discipleship, and leadership development for ministry and
+marketplace leaders.
+
+Flagship program: "Groundwork" — a 9-month, 3-phase cohort journey.
+Cost: $3,000–$5,000 per participant per full session.
+First cohort launches: Spring 2027.
+
+LEGAL CONSTRAINT (CRITICAL — never violate this):
+Omar cannot legally name any correctional institution on the website.
+His story includes coming to faith while incarcerated, but the specific
+facility must NEVER be named anywhere on the site or in any deliverable.
+
+
+================================================================================
+2. TECH STACK DETAILS
+================================================================================
+
+Framework    : Next.js 14 App Router (TypeScript)
+Styling      : Tailwind CSS with custom brand color tokens
+Fonts        : Newsreader (serif display) + Hanken Grotesk (sans body)
+               — loaded via next/font/google in layout.tsx
+Deployment   : Vercel (Pro/trial plan, auto-deploy from main branch)
+               *** TRIAL WAS SHOWING "EXPIRES TOMORROW" AS OF 2026-07-05 ***
+               Check Vercel billing immediately in a new session — if the
+               trial lapsed without a payment method, the site may be
+               at risk of being taken down or downgraded. This is the
+               single highest-priority thing to verify first.
+Database     : Postgres via Neon, accessed through Prisma
+               (prisma/schema.prisma — see Section 4B for models)
+Ops mirror   : Airtable base "LWN Operations" (base ID apps76QUfU9Ff0hxo)
+               — every form submission also writes to Airtable so the
+               team can manage pipelines without a DB client. 6 tables:
+               Cohort Applications, Contact Submissions, Program
+               Inquiries, Partnership Inquiries, Multi-Year Pledge
+               Inquiries, Gala Sponsorship Inquiries — field schemas are
+               documented as comments directly above each push function
+               in src/lib/airtable.ts.
+Payments     : Stripe (production keys + webhook registered)
+Email (txn)  : Microsoft Graph (Microsoft 365 / info@lwnetwork.org) —
+               replaced the earlier Resend plan; MS_TENANT_ID,
+               MS_CLIENT_ID, MS_CLIENT_SECRET, MS_SEND_AS_EMAIL are all
+               set in Vercel. RESEND_API_KEY is still present in env but
+               effectively legacy — Graph is the live sending path.
+Email lists  : Kit (ConvertKit, v4 API) — newsletter signup, KIT_API_KEY set
+Cron         : vercel.json runs /api/cron/send-thank-you-letters daily
+               at 14:00 UTC. Protected by CRON_SECRET (set in Vercel
+               Production + Preview as of 2026-07-05, generated with
+               `openssl rand -hex 32`, value stored only in Vercel).
+
+Brand colors (exact hex, all wired as Tailwind tokens):
+  Navy       #0A2A47   (bg-navy)
+  Deep Sea   #00466F   (bg-[#00466F])
+  Living Blue #0A77BC  (text-[#0A77BC])
+  Copper     #C05A12   (bg-copper / text-copper)
+  Spring     #7CCBE6   (text-spring)
+  Mist       #EAF1F6   (bg-mist)
+  Slate      #445563   (text-slate)
+
+
+================================================================================
+3. GIT WORKFLOW — CRITICAL KNOWN ISSUE
+================================================================================
+
+The Linux container (Claude's shell) CANNOT delete git lock files on the
+Mac-mounted filesystem, and has no real network access to GitHub/Vercel/
+Airtable/Microsoft Graph APIs (all blocked by the sandbox's network
+allowlist). This means:
+  - `git commit` / `git push` from Claude's bash will often fail with
+    "unable to unlink '.git/index.lock': Operation not permitted"
+  - Any task requiring a live API call (Airtable writes, Vercel env var
+    changes, checking an Outlook mailbox) CANNOT be done from Claude's
+    bash tool at all — curl to those hosts returns
+    "403 Forbidden ... blocked-by-allowlist"
+
+SOLUTIONS IN USE:
+  1. For git: Omar runs git operations from his own Mac Terminal. Claude
+     can still edit files and stage a local commit in the mounted repo
+     folder (the commit exists on disk even if Claude can't push it) —
+     but the actual `git push` must happen on Omar's machine.
+  2. For live services (Airtable, Vercel, Outlook/M365): use Claude in
+     Chrome browser automation tools, since Omar's Chrome has active
+     logged-in sessions for all of these and runs on his real network.
+     This is how the 4 Airtable tables, the Vercel CRON_SECRET, and the
+     mailbox check were completed on 2026-07-05.
+
+Standard workflow after Claude makes code changes:
+  1. Open Terminal on Mac
+  2. cd ~/Desktop/"LWNETWORK CLAUDE"
+  3. rm -f .git/index.lock .git/HEAD.lock   (if needed)
+  4. git add src/ .gitignore prisma/   (or specific files — never `git add -A`)
+  5. git commit -m "your message"
+  6. git push
+
+WARNING: Never run `git add -A` — it will pick up .env, original photos
+in the root folder, deliverable docx/pptx files, and other files that
+should not be committed. Always stage only src/, prisma/, and specific
+files. See the current .gitignore for the full exclusion list (.env*,
+.next/, node_modules/, *.pem, .vercel, .agents/, tsconfig.tsbuildinfo,
+skills-lock.json, install.sh).
+
+CURRENT STATE (2026-07-05, updated): Local branch `main` is now ONE
+commit ahead of `origin/main` — 9da9537 was pushed and is on GitHub, but
+its Vercel deploy failed (see the block at the top of this file). A
+second local-only commit, d337f67, fixes that build failure and still
+needs `git push origin main` run from Omar's Terminal. This is now the
+single highest-priority outstanding action in the whole project — until
+it's pushed, the site is running hours-old code and none of the new
+work is live.
+
+STILL OUTSTANDING — LOCAL-ONLY STEP (needs Omar's terminal, real network):
+  cd ~/Desktop/"LWNETWORK CLAUDE"
+  npm install && npx prisma generate && npx prisma db push
+This syncs the 4 new Prisma models (ProgramInquiry, PartnershipInquiry,
+MultiYearPledgeInquiry, GalaSponsorshipInquiry — see Section 4B) into the
+production Neon database. Vercel's build command already runs
+`prisma generate` automatically on deploy, but it does NOT run
+`db push`, so until this is run manually, the new intake forms' API
+routes will fail at runtime with a missing-table error.
+
+
+================================================================================
+4A. SITE PAGES — CURRENT STATE
+================================================================================
+
+/                   Hero, mission statement, programs overview, real-photo
+                    grid, "First Cohort — Launching Spring 2027", CTA banner
+
+/about              Founder story (Omar's full bio), Ministry in Action
+                    photo gallery, values section, CTA
+
+/programs           5 program cards (Cohorts, Counseling, Mentorship,
+                    Speaking, Missions), each links to its own intake page:
+  /programs/counseling   — dedicated intake page + form
+  /programs/mentorship   — dedicated intake page + form
+  /programs/speaking     — dedicated intake page + form
+  /programs/missions     — dedicated intake page + form
+  (NOTE: task in progress as of 2026-07-05 — counseling section image on
+  the main /programs page needs a fix; not yet resolved.)
+
+/cohort             Full Groundwork breakdown (3 phases: At the Table,
+                    Into the Wild, Sent), application form → /api/cohort
+
+/donate             Impact stats, 6 dollar-tier cards, program allocation
+                    bars, Stripe donation form (DonateForm component)
+  /donate/success   Post-payment confirmation page
+
+/events             Black Tie Gala teaser (Winter 2026), interest form
+
+/partnership        4 annual sponsorship tiers, Monthly Formation Circle,
+                    multi-year roadmap, Gala production section. Full
+                    inquiry funnel (added 2026-07-05):
+  /partnership/inquire            — general partnership tier inquiry
+  /partnership/multi-year-pledge  — multi-year pledge inquiry
+  /partnership/sponsor-the-gala   — gala sponsorship inquiry
+  /partnership/thank-you          — shared thank-you/confirmation page
+
+/theory-of-change   Full logic model (inputs → activities → outputs →
+                    outcomes → impact), wired into Navbar ("Impact"),
+                    Footer, and linked from /partnership
+
+/faq                Accordion-style FAQ page
+
+/blog               Listing + /blog/[slug] detail pages. 3 posts written:
+                    "Trained vs. Formed", "Our Theory of Change" (site
+                    version), "Why I Started Living Water Network"
+                    (founder-voice; never names the correctional facility)
+
+/contact            General contact form + a distinct "Major Gifts &
+                    Institutional Partnerships" pathway (routes to Omar
+                    personally, links to theory-of-change + partnership
+                    tiers). ContactForm component supports a `subject`
+                    prop so specialized inquiry forms can reuse it.
+
+/privacy, /terms    Privacy Policy + Terms of Use (finalized docx content
+                    published as live pages, wired into Footer)
+
+
+================================================================================
+4B. API ROUTES + DATABASE MODELS
+================================================================================
+
+API routes (src/app/api/):
+  /api/contact                    POST — Resend/Graph email + Airtable
+  /api/cohort                     POST — notification email + Airtable
+  /api/donate                     POST — Stripe payment intent
+  /api/stripe/webhook             POST — handles Stripe events, writes
+                                   Donation rows, marks receiptSent
+  /api/newsletter                 POST — Kit (ConvertKit v4) subscribe
+  /api/programs/inquire           POST — writes ProgramInquiry (Prisma)
+                                   + Airtable "Program Inquiries"
+  /api/partnership/inquire        POST — writes PartnershipInquiry
+                                   + Airtable "Partnership Inquiries"
+  /api/partnership/pledge         POST — writes MultiYearPledgeInquiry
+                                   + Airtable "Multi-Year Pledge Inquiries"
+  /api/partnership/gala           POST — writes GalaSponsorshipInquiry
+                                   + Airtable "Gala Sponsorship Inquiries"
+  /api/cron/send-thank-you-letters GET/POST — daily cron (14:00 UTC),
+                                   protected by CRON_SECRET, sends
+                                   IRS-compliant donation thank-you
+                                   letters ~7 days after a donation
+  /api/cf-setup                   — Cloudflare-related setup helper
+                                   (from the earlier Resend DNS work)
+
+Prisma models (prisma/schema.prisma), Postgres via Neon:
+  Lead, CohortApplication, Donation, ContactSubmission,
+  ProgramInquiry, PartnershipInquiry, MultiYearPledgeInquiry,
+  GalaSponsorshipInquiry
+  — the last 4 were added 2026-07-05 and need `npx prisma db push`
+  run against production before they'll work (see Section 3).
+
+Airtable mirror (src/lib/airtable.ts) — table names must match exactly:
+  Cohort Applications, Contact Submissions, Program Inquiries,
+  Partnership Inquiries, Multi-Year Pledge Inquiries,
+  Gala Sponsorship Inquiries — all 6 built out in the Airtable UI as of
+  2026-07-05 with exact field schemas (see comments in airtable.ts).
+
+
+================================================================================
+5. NAVIGATION STATE
+================================================================================
+
+Navbar links (Navbar.tsx):
+  About | Programs | Cohort | Events | Partner | Impact | Blog | Contact
+  | [Donate btn]
+  ("Impact" added when /theory-of-change was wired in)
+
+Footer quick links (Footer.tsx):
+  About | Programs | Cohort | Events | Partner With Us | Impact | FAQ |
+  Blog | Contact | Donate | Privacy | Terms
+
+
+================================================================================
+6. PHOTOS IN public/images/
+================================================================================
+
+Real LWN photos (from Omar) — unchanged from prior session, still current:
+  apartment-prayer-circle.jpg, baptism-closeup.jpg, baptism-closeup2.jpg,
+  baptism-night-pool.jpg, baptism-outdoor-pool.jpg, baptism-pool.jpg,
+  baptism-pool2.jpg, baptism-red-shirt.jpg, cohort-group-activity.jpg,
+  founder-headshot.jpg, leadership-group-backstage.jpg,
+  men-ministry-group.jpg, men-neighborhood-prayer.jpg,
+  missions-kids-group.jpg, missions-kids-ministry.jpg,
+  missions-trip-group.jpg, omar-community-event.jpg,
+  omar-firecamp-certificate.jpg, omar-headshot-pro.jpg,
+  omar-marketplace-event.jpg (Rizewell backdrop — use carefully),
+  omar-missions-llama.jpg, omar-speaking-bw.jpg,
+  omar-speaking-main-stage.jpg, omar-speaking-stage.jpg,
+  omar-speaking-tech.jpg, omar-speaking-tech2.jpg,
+  omar-speaking-vip.jpg, omar-speaking-vip2.jpg, omar-speaking-vip3.jpg,
+  omar-with-colleague.jpg, omar-with-partner.jpg,
+  outdoor-night-gathering.jpg, outreach-group.jpg, prayer-circle.jpg,
+  prayer-ministry.jpg, prayer-restaurant.jpg, prayer-small-group.jpg,
+  radical-mentoring-group.jpg, team-elevator-selfie.jpg,
+  youth-prayer-poolside.jpg
+
+Branding: logo.png, logo-mark.png
+
+Old stock (still in folder, no longer used): stock-community.jpg,
+stock-gathering.jpg, stock-outreach.jpg, stock-worship.jpg,
+mission-trip-bus.jpg
+
+Duplicate-usage audit was completed in a prior session — photos were
+reassigned so no image repeats across pages. If a new page reuses a
+photo already placed elsewhere, check before committing.
+
+
+================================================================================
+7. INFRASTRUCTURE STATUS (as of 2026-07-05)
+================================================================================
+
+RESOLVED:
+  A. Resend DNS / Wix→Cloudflare nameserver cutover — DONE.
+  B. /api/test-integrations route — DELETED (confirmed gone from repo).
+  C. 6 Airtable tables built with correct schemas — DONE (2026-07-05).
+  D. CRON_SECRET set in Vercel (Production + Preview) — DONE (2026-07-05).
+  E. ofandino@lwnetwork.org mailbox confirmed live in M365 — DONE (2026-07-05).
+
+OPEN / NEEDS ATTENTION (in priority order):
+  1. *** Production deploy is broken/stale *** — see the block at the
+     very top of this file. `git push origin main` needs to run (pushes
+     the already-fixed commit d337f67) and the resulting Vercel
+     deployment needs to be confirmed "Ready", not "Error". Nothing
+     else in this file about "current" site state is trustworthy until
+     this is confirmed.
+  2. *** Vercel trial expiration *** — banner said "Your trial expires
+     tomorrow. Add a payment method to ensure uninterrupted service."
+     seen 2026-07-05 ~9:30am ET. Check this FIRST/ALONGSIDE #1 in any
+     new session — if the site is down or the project is inaccessible,
+     this is the likely cause, and it will also block any new
+     deployment from going out even if the build succeeds.
+  3. `npx prisma db push` has NOT been run against production yet — the
+     4 new intake-form tables don't exist in the live database until
+     Omar runs the command in Section 3. Do this AFTER confirming #1's
+     deploy succeeds, since the API routes that use these tables aren't
+     live until then anyway.
+  4. Counseling section image on /programs — a prior session flagged
+     this as in-progress. The build-breaking issue on this same route is
+     now fixed (see top of file), but that was a build-timeout problem,
+     not a visual one. Once redeployed, visually check /programs and
+     /programs/counseling to see if a real cosmetic image issue remains.
+  5. Gap-analysis follow-through — a "Fundraising-Readiness Gap
+     Analysis" was completed. Most items were addressed (media kit,
+     theory of change, EIN/GuideStar link, major-gifts pathway, blog
+     posts, board pitch deck, investor pitch deck), but three concrete
+     items from that analysis are explicitly NOT built yet:
+       a) A distinct "founding story / timeline" section (separate from
+          the founder bio on /about) — material already exists, just
+          not laid out as its own narrative.
+       b) A one-page financial transparency statement: EIN, fiscal year,
+          honest "first 990 will be filed for FY2026" language, and a
+          named Year 1 budget total ($145,000) alongside the existing
+          percentage-allocation bars on /donate.
+       c) A stated roadmap sentence for ECFA accreditation + GuideStar's
+          Seal of Transparency + a committed annual-report publish date
+          — framed as "here's our plan," not claiming these exist yet.
+     Full detail and sourcing: LWN_Fundraising_Readiness_Gap_Analysis.md
+     in the project root (untracked, not in git).
+  6. CRM recommendation was written up for Omar (GHL-style, embeddable
+     option) but no CRM has been selected/implemented yet — Airtable +
+     Prisma/Postgres is the current system of record.
+
+
+================================================================================
+8. LEGAL / GOVERNANCE / FUNDRAISING DELIVERABLES (outside the website)
+================================================================================
+
+All in /Users/omar/Desktop/LWNETWORK CLAUDE/ (root), NOT committed to git
+(docx/pptx/pdf are gitignored):
+
+  LWN_Amended_Restated_Articles_of_Incorporation.docx  — finalized for signature
+  LWN_Amended_Restated_Bylaws.docx                     — finalized
+  LWN_Governance_Risk_Policy_Manual.docx               — finalized
+  LWN_Board_Written_Consent_DRAFT.docx                 — board resolution draft
+  LWN_Website_Privacy_Policy_and_Terms_of_Use.docx      — source doc; content
+                                                          is now also live at
+                                                          /privacy and /terms
+  LWN_Georgia_Charity_Registration_Packet_DRAFT.docx    — GA charitable
+                                                          solicitation registration
+  LWN_Foundational_Documents_Checklist_CONFIDENTIAL.docx — master nonprofit doc checklist
+  LWN_Internal_Staffing_Financial_Plan_CONFIDENTIAL.docx — real staffing-cost model
+  LWN_Fundraising_Readiness_Gap_Analysis.md             — gap analysis vs comparable orgs
+  LWN_Media_Kit_One_Pager.pdf                           — on-brand donor/board one-pager
+  LWN_Sponsorship_Prospectus_2026.docx                  — sponsorship tiers, revenue model
+  LWN_Board_Prospectus.pdf                              — board recruitment pitch
+  LWN_Partner_Investment_Pitch_Deck.pptx                — tiered investor/donor deck
+  LWN_Pastor_Business_Referral_Pitch_Deck.pptx          — pastor/business referral deck
+  Living_Water_Network_-_Brand_Guidelines.pptx          — original brand reference
+  At_the_Table_Final.docx / At_the_Table_Rebranded.docx — Phase 1 cohort guide,
+                                                          rebranded to LWN design system
+
+Key facts confirmed via research (don't re-derive):
+  EIN: 93-1859873 (Living Water Network Inc., Atlanta GA)
+  GuideStar/Candid profile: https://www.guidestar.org/profile/93-1859873
+    (exists, unclaimed, $0 receipts — expected for a startup-stage org)
+  IRS Tax Exempt Org Search — record confirmed
+  Georgia Secretary of State corporate record — confirmed
+  Georgia charitable solicitation registration — status checked (see the
+    registration packet docx for current filing state)
+
+
+================================================================================
+9. GALA RESEARCH FINDINGS (Atlanta Black Tie Gala, Winter 2026, 150 guests)
+================================================================================
+
+Production budget range: $46,000 – $97,000
+  Venue (ballroom, 150-person)     $4,000 – $12,000
+  Catering (plated dinner + bar)   $24,000 – $37,500
+  AV / lighting / production       $8,000 – $18,000
+  Décor, florals & staging         $3,500 – $10,000
+  Live music / entertainment       $1,500 – $7,000
+  Event coordination               $5,000 – $12,000
+
+Revenue potential:
+  Ticket sales (150 × $250)        $37,500
+  Corporate/ministry sponsorships  $25,000 – $60,000
+  Live paddle raise (auctioneer)   $15,000 – $60,000
+  Estimated net after production   $40,000 – $100,000+
+
+Key insight: Lock a Presenting Sponsor before invites go out; hire a
+professional auctioneer for the paddle raise — the two highest-leverage
+moves for net revenue.
+
+Venue reference: Biltmore Ballrooms Atlanta (Imperial Room) — $5,000
+rental + $5,000 beverage minimum for Saturday December dates.
+
+Table pricing (live on /partnership and now in the Gala Sponsorship
+Inquiries intake form as the "Sponsorship Level" field options):
+  Presenting Table $10,000  (10 seats + speaking moment)
+  Gold Table $5,000         (10 seats + logo recognition)
+  Silver Table $2,500       (10 seats + program recognition)
+  Individual Ticket(s)      $250 each
+  Not sure yet
+
+
+================================================================================
+10. HOW TO CONTINUE IN A NEW SESSION
+================================================================================
+
+Paste this entire file into the new Claude chat as your first message, or
+say: "Read the file CLAUDE_HANDOFF.txt in my LWNETWORK CLAUDE folder and
+pick up from Section 7 — infrastructure status."
+
+Priority order for a new session:
+  1. Get Omar to run `git push origin main` from his Mac Terminal (pushes
+     commit d337f67, the build-timeout fix — see the top of this file).
+     Then check the Vercel deployment actually says "Ready". Do not trust
+     anything else in this file about current site behavior until this
+     is confirmed — the live site may still be hours-old code.
+  2. Check Vercel billing/trial status (Section 7, item 2) — this could
+     be a live-site emergency independent of #1.
+  3. Once #1's deploy is confirmed Ready, get Omar to run
+     `npm install && npx prisma generate && npx prisma db push`
+     (Section 3 / Section 7, item 3). Until this runs, the 4 new intake
+     forms will error at runtime even though the pages load fine.
+  4. Visually check /programs and /programs/counseling for the cosmetic
+     image issue a prior session flagged (Section 7, item 4) — separate
+     from the build fix already applied.
+  5. Pick off the 3 concrete gap-analysis items in Section 7, item 5
+     (founding-story section, financial-transparency one-pager, ECFA/
+     GuideStar-Seal/annual-report roadmap statement) — these are the
+     next real credibility upgrades, already researched and written up.
+  6. Decide on a CRM if the Airtable+Prisma combo stops scaling
+     (Section 7, item 6) — a recommendation write-up already exists,
+     ask Omar where he saved it if it's not in this folder.
+
+Remember the two hard constraints from Section 1 and Section 3:
+  - NEVER name the correctional facility from Omar's testimony, anywhere.
+  - Claude's sandbox cannot push to git or call Airtable/Vercel/Graph
+    APIs directly — use Omar's Terminal for git, and Claude in Chrome
+    (with Omar's logged-in sessions) for any live third-party service.
+
+================================================================================
+END OF HANDOFF DOCUMENT
+================================================================================

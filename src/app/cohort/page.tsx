@@ -4,9 +4,21 @@ import Link from "next/link";
 import { CohortForm } from "@/components/sections/CohortForm";
 
 export const metadata: Metadata = {
-  title: "Groundwork | Living Water Network",
+  title: "Groundwork Cohort Program",
   description:
-    "Groundwork is LWN's 9-month formation journey — three phases, three tracks, one purpose: to form you before sending you.",
+    "Groundwork is LWN's 9-month Christian leadership formation journey in Atlanta — three phases, three tracks, one purpose: to form Kingdom leaders before sending them.",
+  openGraph: {
+    title: "Groundwork Cohort Program | Living Water Network",
+    description:
+      "A 9-month discipleship-based formation journey for emerging Christian leaders — ministry, marketplace, and creative tracks.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Groundwork Cohort Program | Living Water Network",
+    description:
+      "A 9-month discipleship-based formation journey for emerging Christian leaders — ministry, marketplace, and creative tracks.",
+  },
 };
 
 const pillars = [

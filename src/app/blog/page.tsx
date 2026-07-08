@@ -6,7 +6,19 @@ import { NewsletterSignup } from "@/components/sections/NewsletterSignup";
 export const metadata: Metadata = {
   title: "Blog",
   description:
-    "Insights on spiritual formation, discipleship, and Kingdom leadership from Living Water Network.",
+    "Insights on spiritual formation, Christian leadership development, and discipleship-based mentorship from Living Water Network.",
+  openGraph: {
+    title: "Blog | Living Water Network",
+    description:
+      "Insights on spiritual formation, Christian leadership development, and discipleship-based mentorship.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blog | Living Water Network",
+    description:
+      "Insights on spiritual formation, Christian leadership development, and discipleship-based mentorship.",
+  },
 };
 
 export default function BlogPage() {

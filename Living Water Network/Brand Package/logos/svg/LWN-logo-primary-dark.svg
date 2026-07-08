@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="392" height="360" viewBox="0 0 392 360">
+  <defs>
+    <radialGradient id="sphere" cx="38%" cy="32%" r="78%">
+      <stop offset="0%"  stop-color="#63CCEC"/>
+      <stop offset="34%" stop-color="#229BD6"/>
+      <stop offset="70%" stop-color="#0A6491"/>
+      <stop offset="100%" stop-color="#063E61"/>
+    </radialGradient>
+    <linearGradient id="swell" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#23A9DA"/>
+      <stop offset="100%" stop-color="#0A5E83"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F8D38C"/>
+      <stop offset="55%" stop-color="#ED9F3C"/>
+      <stop offset="100%" stop-color="#DD8323"/>
+    </linearGradient>
+    <linearGradient id="aqua" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7FE0F2"/>
+      <stop offset="100%" stop-color="#1E9BD7"/>
+    </linearGradient>
+    <clipPath id="globeClip"><circle cx="120" cy="100" r="68"/></clipPath>
+  </defs>
+<rect x="-2000" y="-2000" width="6000" height="6000" fill="#07273B"/><g transform="translate(81.8,20) scale(0.95)">
+  <!-- ripples / living water spreading -->
+  <g>
+    <ellipse cx="120" cy="206" rx="98" ry="15.5" fill="none" stroke="url(#aqua)" stroke-width="2.2" opacity="0.20"/>
+    <ellipse cx="120" cy="204" rx="70" ry="11.5" fill="none" stroke="url(#aqua)" stroke-width="2.4" opacity="0.34"/>
+    <ellipse cx="120" cy="201" rx="44" ry="8"   fill="none" stroke="url(#aqua)" stroke-width="2.6" opacity="0.5"/>
+  </g>
+
+  <!-- water swell cradling the world -->
+  <path d="M40 150
+           C 40 120, 70 120, 86 142
+           C 100 162, 140 162, 154 142
+           C 170 120, 200 120, 200 150
+           C 200 184, 168 206, 120 206
+           C 72 206, 40 184, 40 150 Z"
+        fill="url(#swell)"/>
+  <!-- swell crest highlights -->
+  <path d="M48 150 C 50 130, 74 130, 86 148" fill="none" stroke="#BDEBF7" stroke-width="3" stroke-linecap="round" opacity="0.55"/>
+  <path d="M192 150 C 190 130, 166 130, 154 148" fill="none" stroke="#BDEBF7" stroke-width="3" stroke-linecap="round" opacity="0.55"/>
+
+  <!-- globe -->
+  <g clip-path="url(#globeClip)">
+    <circle cx="120" cy="100" r="68" fill="url(#sphere)"/>
+    <!-- abstract continents (living gold) -->
+    <path d="M96 52
+             C 84 60, 86 74, 78 82
+             C 71 89, 74 101, 82 104
+             C 86 112, 82 122, 90 128
+             C 99 134, 110 128, 108 116
+             C 107 106, 114 102, 113 92
+             C 112 82, 122 78, 118 66
+             C 115 56, 106 47, 96 52 Z"
+          fill="url(#gold)"/>
+    <path d="M150 74
+             C 140 76, 136 86, 142 94
+             C 147 101, 142 110, 150 116
+             C 158 122, 170 118, 170 108
+             C 170 98, 176 92, 170 82
+             C 165 73, 159 72, 150 74 Z"
+          fill="url(#gold)"/>
+    <!-- meridian grid (network feel) -->
+    <g stroke="#EAF8FF" fill="none" opacity="0.16">
+      <ellipse cx="120" cy="100" rx="68" ry="68"/>
+      <ellipse cx="120" cy="100" rx="30" ry="68"/>
+      <ellipse cx="120" cy="100" rx="56" ry="68"/>
+      <path d="M52 100 H188"/>
+      <path d="M60 64 H180"/>
+      <path d="M60 136 H180"/>
+    </g>
+    <!-- specular highlight -->
+    <ellipse cx="96" cy="74" rx="30" ry="22" fill="#EAFBFF" opacity="0.18"/>
+  </g>
+  <!-- globe rim -->
+  <circle cx="120" cy="100" r="68" fill="none" stroke="#BDEBF7" stroke-width="1.6" opacity="0.35"/>
+
+  <!-- network nodes -->
+  <g fill="#EAF8FF">
+    <circle cx="120" cy="32"  r="3.6"/>
+    <circle cx="176" cy="64"  r="3"/>
+    <circle cx="64"  cy="64"  r="3"/>
+    <circle cx="120" cy="100" r="3.2" opacity="0.9"/>
+  </g>
+  <g stroke="#EAF8FF" stroke-width="1.1" opacity="0.4">
+    <path d="M120 32 L176 64 M120 32 L64 64 M64 64 L120 100 M176 64 L120 100"/>
+  </g>
+
+  <!-- rising droplets -->
+  <path d="M196 96 C 190 104, 190 112, 196 112 C 202 112, 202 104, 196 96 Z" fill="url(#aqua)" opacity="0.85"/>
+  <path d="M44 110 C 39 117, 39 124, 44 124 C 49 124, 49 117, 44 110 Z" fill="url(#aqua)" opacity="0.7"/>
+  <circle cx="206" cy="78" r="3.4" fill="#36C5E0" opacity="0.6"/>
+  <circle cx="36" cy="92" r="2.8" fill="#36C5E0" opacity="0.5"/>
+</g><g transform="translate(20.0,300)"><g><g fill="#FFFFFF"><path transform="translate(0.00,0.00) scale(0.04784,-0.04784)" d="M233 132H457V0H62V702H233Z"/><path transform="translate(23.92,0.00) scale(0.04784,-0.04784)" d="M233 702V0H62V702Z"/><path transform="translate(39.14,0.00) scale(0.04784,-0.04784)" d="M721 702 472 0H258L9 702H191L365 172L540 702Z"/><path transform="translate(75.17,0.00) scale(0.04784,-0.04784)" d="M233 702V0H62V702Z"/><path transform="translate(90.38,0.00) scale(0.04784,-0.04784)" d="M690 0H519L233 433V0H62V702H233L519 267V702H690Z"/><path transform="translate(127.46,0.00) scale(0.04784,-0.04784)" d="M528 480Q509 515 473.5 533.5Q438 552 390 552Q307 552 257.0 497.5Q207 443 207 352Q207 255 259.5 200.5Q312 146 404 146Q467 146 510.5 178.0Q554 210 574 270H357V396H729V237Q710 173 664.5 118.0Q619 63 549.0 29.0Q479 -5 391 -5Q287 -5 205.5 40.5Q124 86 78.5 167.0Q33 248 33 352Q33 456 78.5 537.5Q124 619 205.0 664.5Q286 710 390 710Q516 710 602.5 649.0Q689 588 717 480Z"/><path transform="translate(176.27,0.00) scale(0.04784,-0.04784)" d="M1028 702 845 0H638L526 462L410 0H203L25 702H208L309 191L434 702H622L742 191L844 702Z"/><path transform="translate(227.70,0.00) scale(0.04784,-0.04784)" d="M499 124H237L195 0H16L270 702H468L722 0H541ZM455 256 368 513 282 256Z"/><path transform="translate(264.06,0.00) scale(0.04784,-0.04784)" d="M567 702V565H381V0H210V565H24V702Z"/><path transform="translate(293.44,0.00) scale(0.04784,-0.04784)" d="M233 565V423H462V291H233V137H492V0H62V702H492V565Z"/><path transform="translate(320.42,0.00) scale(0.04784,-0.04784)" d="M420 0 274 265H233V0H62V702H349Q432 702 490.5 673.0Q549 644 578.0 593.5Q607 543 607 481Q607 411 567.5 356.0Q528 301 451 278L613 0ZM233 386H339Q386 386 409.5 409.0Q433 432 433 474Q433 514 409.5 537.0Q386 560 339 560H233Z"/></g><g fill="#7FE0F2"><path transform="translate(1.84,27.60) scale(0.01794,-0.01794)" d="M646 0H532L189 519V0H75V696H189L532 178V696H646Z"/><path transform="translate(23.12,27.60) scale(0.01794,-0.01794)" d="M189 603V399H429V306H189V93H459V0H75V696H459V603Z"/><path transform="translate(40.86,27.60) scale(0.01794,-0.01794)" d="M524 695V602H339V0H225V602H39V695Z"/><path transform="translate(59.33,27.60) scale(0.01794,-0.01794)" d="M980 695 774 0H645L499 526L344 0L216 -1L19 695H140L284 129L440 695H568L713 132L858 695Z"/><path transform="translate(85.59,27.60) scale(0.01794,-0.01794)" d="M37 349Q37 451 84.5 532.0Q132 613 213.5 658.5Q295 704 392 704Q490 704 571.5 658.5Q653 613 700.0 532.0Q747 451 747 349Q747 247 700.0 165.5Q653 84 571.5 38.5Q490 -7 392 -7Q295 -7 213.5 38.5Q132 84 84.5 165.5Q37 247 37 349ZM630 349Q630 426 599.5 484.0Q569 542 515.0 573.0Q461 604 392 604Q323 604 269.0 573.0Q215 542 184.5 484.0Q154 426 154 349Q154 272 184.5 213.5Q215 155 269.0 123.5Q323 92 392 92Q461 92 515.0 123.5Q569 155 599.5 213.5Q630 272 630 349Z"/><path transform="translate(108.00,27.60) scale(0.01794,-0.01794)" d="M436 0 276 278H189V0H75V695H315Q395 695 450.5 667.0Q506 639 533.5 592.0Q561 545 561 487Q561 419 521.5 363.5Q482 308 400 288L572 0ZM189 369H315Q379 369 411.5 401.0Q444 433 444 487Q444 541 412.0 571.5Q380 602 315 602H189Z"/><path transform="translate(127.68,27.60) scale(0.01794,-0.01794)" d="M458 0 189 311V0H75V695H189V378L459 695H602L300 347L607 0Z"/></g></g></g></svg>

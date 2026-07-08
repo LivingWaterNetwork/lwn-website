@@ -3,9 +3,21 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Theory of Change",
+  title: "Our Theory of Change",
   description:
     "How Living Water Network turns spiritual formation into measurable Kingdom impact — our logic model from inputs to outcomes to lasting change.",
+  openGraph: {
+    title: "Our Theory of Change | Living Water Network",
+    description:
+      "How Living Water Network turns spiritual formation into measurable Kingdom impact.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Our Theory of Change | Living Water Network",
+    description:
+      "How Living Water Network turns spiritual formation into measurable Kingdom impact.",
+  },
 };
 
 const inputs = [

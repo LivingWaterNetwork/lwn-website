@@ -3,9 +3,21 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Programs",
+  title: "Christian Leadership Programs",
   description:
-    "Explore Living Water Network's programs: immersive cohorts, counseling, mentorship, speaking, and international mission trips.",
+    "Explore Living Water Network's Christian leadership development programs: the Groundwork cohort, discipleship-based counseling, mentorship, speaking, and international mission trips.",
+  openGraph: {
+    title: "Christian Leadership Programs | Living Water Network",
+    description:
+      "Immersive cohorts, counseling, mentorship, speaking, and mission trips — Christian leadership development programs.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Christian Leadership Programs | Living Water Network",
+    description:
+      "Immersive cohorts, counseling, mentorship, speaking, and mission trips — Christian leadership development programs.",
+  },
 };
 
 const programs = [

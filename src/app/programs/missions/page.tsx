@@ -10,7 +10,19 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "International Mission Trips",
   description:
-    "Inquire about Living Water Network's international mission trips — broadened perspective, deepened calling.",
+    "Inquire about Living Water Network's international mission trips for Christian leaders — broadened perspective, deepened calling, hands-on Kingdom service.",
+  openGraph: {
+    title: "International Mission Trips | Living Water Network",
+    description:
+      "International mission trips for Christian leaders — broadened perspective, deepened calling.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "International Mission Trips | Living Water Network",
+    description:
+      "International mission trips for Christian leaders — broadened perspective, deepened calling.",
+  },
 };
 
 const fields: ProgramField[] = [

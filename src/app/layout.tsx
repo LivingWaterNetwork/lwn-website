@@ -43,6 +43,38 @@ export const metadata: Metadata = {
   },
 };
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://lwnetwork.org";
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "NGO",
+  "@id": `${SITE_URL}/#organization`,
+  name: "Living Water Network",
+  alternateName: "LWN",
+  url: SITE_URL,
+  logo: `${SITE_URL}/images/logo.png`,
+  description:
+    "Living Water Network is a Christian leadership-development nonprofit equipping Kingdom leaders through discipleship-based mentorship, counseling, marketplace ministry, and the Groundwork cohort program.",
+  slogan: "Rooted in truth. Sent to lead.",
+  email: "info@lwnetwork.org",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Atlanta",
+    addressRegion: "GA",
+    addressCountry: "US",
+  },
+  areaServed: "US",
+  nonprofitStatus: "Nonprofit501c3",
+  taxID: "93-1859873",
+  knowsAbout: [
+    "Christian leadership development",
+    "Discipleship-based mentorship",
+    "Spiritual formation",
+    "Marketplace ministry",
+    "Pastoral counseling",
+  ],
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -51,6 +83,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${hanken.variable} ${newsreader.variable}`}>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <Navbar />
         <main>{children}</main>
         <Footer />

@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+  <defs>
+    <radialGradient id="sphere" cx="38%" cy="32%" r="78%">
+      <stop offset="0%"  stop-color="#63CCEC"/>
+      <stop offset="34%" stop-color="#229BD6"/>
+      <stop offset="70%" stop-color="#0A6491"/>
+      <stop offset="100%" stop-color="#063E61"/>
+    </radialGradient>
+    <linearGradient id="swell" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#23A9DA"/>
+      <stop offset="100%" stop-color="#0A5E83"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F8D38C"/>
+      <stop offset="55%" stop-color="#ED9F3C"/>
+      <stop offset="100%" stop-color="#DD8323"/>
+    </linearGradient>
+    <linearGradient id="aqua" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7FE0F2"/>
+      <stop offset="100%" stop-color="#1E9BD7"/>
+    </linearGradient>
+    <clipPath id="globeClip"><circle cx="120" cy="100" r="68"/></clipPath>
+  </defs>
+<rect x="-2000" y="-2000" width="6000" height="6000" fill="#07273B"/><g>
+  <!-- ripples / living water spreading -->
+  <g>
+    <ellipse cx="120" cy="206" rx="98" ry="15.5" fill="none" stroke="url(#aqua)" stroke-width="2.2" opacity="0.20"/>
+    <ellipse cx="120" cy="204" rx="70" ry="11.5" fill="none" stroke="url(#aqua)" stroke-width="2.4" opacity="0.34"/>
+    <ellipse cx="120" cy="201" rx="44" ry="8"   fill="none" stroke="url(#aqua)" stroke-width="2.6" opacity="0.5"/>
+  </g>
+
+  <!-- water swell cradling the world -->
+  <path d="M40 150
+           C 40 120, 70 120, 86 142
+           C 100 162, 140 162, 154 142
+           C 170 120, 200 120, 200 150
+           C 200 184, 168 206, 120 206
+           C 72 206, 40 184, 40 150 Z"
+        fill="url(#swell)"/>
+  <!-- swell crest highlights -->
+  <path d="M48 150 C 50 130, 74 130, 86 148" fill="none" stroke="#BDEBF7" stroke-width="3" stroke-linecap="round" opacity="0.55"/>
+  <path d="M192 150 C 190 130, 166 130, 154 148" fill="none" stroke="#BDEBF7" stroke-width="3" stroke-linecap="round" opacity="0.55"/>
+
+  <!-- globe -->
+  <g clip-path="url(#globeClip)">
+    <circle cx="120" cy="100" r="68" fill="url(#sphere)"/>
+    <!-- abstract continents (living gold) -->
+    <path d="M96 52
+             C 84 60, 86 74, 78 82
+             C 71 89, 74 101, 82 104
+             C 86 112, 82 122, 90 128
+             C 99 134, 110 128, 108 116
+             C 107 106, 114 102, 113 92
+             C 112 82, 122 78, 118 66
+             C 115 56, 106 47, 96 52 Z"
+          fill="url(#gold)"/>
+    <path d="M150 74
+             C 140 76, 136 86, 142 94
+             C 147 101, 142 110, 150 116
+             C 158 122, 170 118, 170 108
+             C 170 98, 176 92, 170 82
+             C 165 73, 159 72, 150 74 Z"
+          fill="url(#gold)"/>
+    <!-- meridian grid (network feel) -->
+    <g stroke="#EAF8FF" fill="none" opacity="0.16">
+      <ellipse cx="120" cy="100" rx="68" ry="68"/>
+      <ellipse cx="120" cy="100" rx="30" ry="68"/>
+      <ellipse cx="120" cy="100" rx="56" ry="68"/>
+      <path d="M52 100 H188"/>
+      <path d="M60 64 H180"/>
+      <path d="M60 136 H180"/>
+    </g>
+    <!-- specular highlight -->
+    <ellipse cx="96" cy="74" rx="30" ry="22" fill="#EAFBFF" opacity="0.18"/>
+  </g>
+  <!-- globe rim -->
+  <circle cx="120" cy="100" r="68" fill="none" stroke="#BDEBF7" stroke-width="1.6" opacity="0.35"/>
+
+  <!-- network nodes -->
+  <g fill="#EAF8FF">
+    <circle cx="120" cy="32"  r="3.6"/>
+    <circle cx="176" cy="64"  r="3"/>
+    <circle cx="64"  cy="64"  r="3"/>
+    <circle cx="120" cy="100" r="3.2" opacity="0.9"/>
+  </g>
+  <g stroke="#EAF8FF" stroke-width="1.1" opacity="0.4">
+    <path d="M120 32 L176 64 M120 32 L64 64 M64 64 L120 100 M176 64 L120 100"/>
+  </g>
+
+  <!-- rising droplets -->
+  <path d="M196 96 C 190 104, 190 112, 196 112 C 202 112, 202 104, 196 96 Z" fill="url(#aqua)" opacity="0.85"/>
+  <path d="M44 110 C 39 117, 39 124, 44 124 C 49 124, 49 117, 44 110 Z" fill="url(#aqua)" opacity="0.7"/>
+  <circle cx="206" cy="78" r="3.4" fill="#36C5E0" opacity="0.6"/>
+  <circle cx="36" cy="92" r="2.8" fill="#36C5E0" opacity="0.5"/>
+</g></svg>

@@ -8,9 +8,21 @@ import { ProgramInquiryForm, type ProgramField } from "@/components/sections/Pro
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Strategic Mentorship",
+  title: "Christian Leadership Mentorship",
   description:
-    "Strategic mentorship pairing seasoned leaders with emerging ones — iron sharpening iron, built around accountability and Kingdom vision.",
+    "Discipleship-based mentorship pairing seasoned Christian leaders with emerging ones — iron sharpening iron, built around accountability and Kingdom vision.",
+  openGraph: {
+    title: "Christian Leadership Mentorship | Living Water Network",
+    description:
+      "Discipleship-based mentorship pairing seasoned Christian leaders with emerging ones.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Christian Leadership Mentorship | Living Water Network",
+    description:
+      "Discipleship-based mentorship pairing seasoned Christian leaders with emerging ones.",
+  },
 };
 
 const fields: ProgramField[] = [

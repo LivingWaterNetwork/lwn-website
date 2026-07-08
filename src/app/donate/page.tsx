@@ -4,7 +4,19 @@ import { DonateForm } from "@/components/sections/DonateForm";
 export const metadata: Metadata = {
   title: "Donate",
   description:
-    "Support Living Water Network. Your generosity ignites transformation. Join the Circle and help launch the first cohort.",
+    "Support Living Water Network, a 501(c)(3) Christian leadership nonprofit. Your tax-deductible gift helps launch the Groundwork cohort and equip Kingdom leaders.",
+  openGraph: {
+    title: "Donate | Living Water Network",
+    description:
+      "Support a 501(c)(3) Christian leadership nonprofit. Your tax-deductible gift helps equip Kingdom leaders.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Donate | Living Water Network",
+    description:
+      "Support a 501(c)(3) Christian leadership nonprofit. Your tax-deductible gift helps equip Kingdom leaders.",
+  },
 };
 
 const tiers = [

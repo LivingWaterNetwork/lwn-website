@@ -2,9 +2,21 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "FAQ | Living Water Network",
+  title: "FAQ",
   description:
-    "Answers to common questions about Groundwork — LWN's 9-month formation journey.",
+    "Answers to common questions about Groundwork — LWN's 9-month Christian leadership formation journey, including cost, tracks, application steps, and program logistics.",
+  openGraph: {
+    title: "Frequently Asked Questions | Living Water Network",
+    description:
+      "Answers to common questions about Groundwork — LWN's 9-month Christian leadership formation journey.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Frequently Asked Questions | Living Water Network",
+    description:
+      "Answers to common questions about Groundwork — LWN's 9-month Christian leadership formation journey.",
+  },
 };
 
 const faqs = [
@@ -82,9 +94,28 @@ const faqs = [
   },
 ];
 
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.flatMap(({ items }) =>
+    items.map(({ q, a }) => ({
+      "@type": "Question",
+      name: q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: a,
+      },
+    }))
+  ),
+};
+
 export default function FAQPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       {/* Hero */}
       <section className="bg-navy py-20 text-white text-center">
         <div className="max-w-2xl mx-auto px-4">

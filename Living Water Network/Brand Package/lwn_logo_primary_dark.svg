@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 600" width="500" height="600">
+  <defs>
+
+    <!-- Ocean fill — warm deep blue, not cold -->
+    <radialGradient id="ocean" cx="42%" cy="38%" r="62%">
+      <stop offset="0%"   stop-color="#1E5080"/>
+      <stop offset="55%"  stop-color="#132E52"/>
+      <stop offset="100%" stop-color="#0C1E3C"/>
+    </radialGradient>
+
+    <!-- Background depth -->
+    <radialGradient id="bgDepth" cx="50%" cy="38%" r="55%">
+      <stop offset="0%"   stop-color="#1C3558" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#10203A" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Water pool gradient -->
+    <radialGradient id="poolGrad" cx="50%" cy="40%" r="55%">
+      <stop offset="0%"   stop-color="#2A9BAE"/>
+      <stop offset="100%" stop-color="#145E6E"/>
+    </radialGradient>
+
+    <!-- Globe clip -->
+    <clipPath id="gc">
+      <circle cx="250" cy="207" r="124"/>
+    </clipPath>
+
+  </defs>
+
+  <!-- ─── Background ─────────────────────────────────────────── -->
+  <rect width="500" height="600" fill="#10203A"/>
+  <rect width="500" height="600" fill="url(#bgDepth)"/>
+
+  <!-- ─── Water pool — globe sits IN this ───────────────────── -->
+  <ellipse cx="250" cy="320" rx="175" ry="56" fill="url(#poolGrad)" opacity="0.42"/>
+  <ellipse cx="250" cy="326" rx="138" ry="36" fill="#38AABA" opacity="0.28"/>
+
+  <!-- ─── Water arms rising beside globe ────────────────────── -->
+  <!-- Left outer depth -->
+  <path d="M218,316 C 162,304 106,280 78,248 C 54,220 62,183 84,157 C 97,141 115,134 128,132"
+    fill="none" stroke="#145E6E" stroke-width="28" stroke-linecap="round" opacity="0.5"/>
+  <!-- Left inner current -->
+  <path d="M218,316 C 162,304 106,280 78,248 C 54,220 62,183 84,157 C 97,141 115,134 128,132"
+    fill="none" stroke="#1E8490" stroke-width="14" stroke-linecap="round" opacity="0.55"/>
+  <!-- Left highlight thread -->
+  <path d="M216,318 C 160,305 104,281 76,249 C 52,221 61,184 83,158 C 96,142 114,135 127,133"
+    fill="none" stroke="#4BBFCE" stroke-width="4" stroke-linecap="round" opacity="0.45"/>
+
+  <!-- Right outer depth -->
+  <path d="M282,316 C 338,304 394,280 422,248 C 446,220 438,183 416,157 C 403,141 385,134 372,132"
+    fill="none" stroke="#145E6E" stroke-width="28" stroke-linecap="round" opacity="0.5"/>
+  <!-- Right inner current -->
+  <path d="M282,316 C 338,304 394,280 422,248 C 446,220 438,183 416,157 C 403,141 385,134 372,132"
+    fill="none" stroke="#1E8490" stroke-width="14" stroke-linecap="round" opacity="0.55"/>
+  <!-- Right highlight thread -->
+  <path d="M284,318 C 340,305 396,281 424,249 C 448,221 439,184 417,158 C 404,142 386,135 373,133"
+    fill="none" stroke="#4BBFCE" stroke-width="4" stroke-linecap="round" opacity="0.45"/>
+
+  <!-- ─── Globe ocean fill ────────────────────────────────────── -->
+  <circle cx="250" cy="207" r="125" fill="url(#ocean)"/>
+
+  <!-- ─── Minimal gold grid — equator + prime meridian only ─── -->
+  <g clip-path="url(#gc)">
+    <!-- Equator -->
+    <line x1="125" y1="207" x2="375" y2="207"
+      stroke="#C8893C" stroke-width="0.9" opacity="0.3"/>
+    <!-- Prime meridian -->
+    <line x1="250" y1="82"  x2="250" y2="332"
+      stroke="#C8893C" stroke-width="0.9" opacity="0.3"/>
+    <!-- Tropic of Cancer hint -->
+    <line x1="130" y1="170" x2="370" y2="170"
+      stroke="#C8893C" stroke-width="0.5" opacity="0.16"/>
+    <!-- Tropic of Capricorn hint -->
+    <line x1="130" y1="244" x2="370" y2="244"
+      stroke="#C8893C" stroke-width="0.5" opacity="0.16"/>
+  </g>
+
+  <!-- ─── Gold continent shapes ──────────────────────────────── -->
+  <g clip-path="url(#gc)" fill="#C8893C">
+
+    <!-- North America -->
+    <path d="
+      M 148,106  L 163,97  L 180,101  L 190,116
+      L 194,138  L 186,158 L 178,176  L 172,198
+      L 164,220  L 156,240 L 150,256  L 142,243
+      L 138,218  L 142,192 L 146,164  L 144,138
+      L 148,120  Z"
+      opacity="0.88"/>
+
+    <!-- Central America + Caribbean hint -->
+    <path d="M170,258 L 182,252 L 188,268 L 182,290 L 170,300 L 158,290 L 155,272 L 162,258 Z"
+      opacity="0.75"/>
+
+    <!-- Europe + Africa (center mass) -->
+    <path d="
+      M 252,99   L 272,94  L 290,102  L 300,120
+      L 303,144  L 293,160 L 281,153  L 272,166
+      L 268,188  L 266,212 L 271,234  L 281,252
+      L 277,276  L 263,288 L 250,280  L 241,263
+      L 238,240  L 242,218 L 238,194  L 240,168
+      L 245,146  L 244,122  Z"
+      opacity="0.82"/>
+
+    <!-- East / Asia hint -->
+    <path d="M 318,110 L 338,103 L 354,112 L 358,132 L 354,154 L 340,163 L 318,158 L 307,142 L 310,120 Z"
+      opacity="0.68"/>
+
+  </g>
+
+  <!-- ─── Globe top-left sheen ───────────────────────────────── -->
+  <path d="M 165,108 A 125,125 0 0,1 318,92"
+    fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" opacity="0.1"/>
+  <path d="M 152,130 A 125,125 0 0,1 300,96"
+    fill="none" stroke="#FFFFFF" stroke-width="1" stroke-linecap="round" opacity="0.06"/>
+
+  <!-- ─── Globe ring ─────────────────────────────────────────── -->
+  <circle cx="250" cy="207" r="125"
+    fill="none" stroke="#1E8490" stroke-width="2.8"/>
+
+  <!-- ─── Flowing water below pool (rivers going out) ─────────── -->
+  <!-- These taper and breathe — natural, not geometric -->
+  <path d="M 150,366 Q 198,390 250,382 Q 302,390 350,366"
+    fill="none" stroke="#1E8490" stroke-width="2.4" stroke-linecap="round" opacity="0.65"/>
+  <path d="M 120,392 Q 182,420 250,411 Q 318,420 380,392"
+    fill="none" stroke="#1E8490" stroke-width="1.8" stroke-linecap="round" opacity="0.42"/>
+  <path d="M 95,415  Q 170,446 250,436 Q 330,446 405,415"
+    fill="none" stroke="#145E6E" stroke-width="1.4" stroke-linecap="round" opacity="0.32"/>
+  <!-- A single gold river thread — the rivers of living water -->
+  <path d="M 168,436 Q 206,452 250,446 Q 294,452 332,436"
+    fill="none" stroke="#C8893C" stroke-width="1" stroke-linecap="round" opacity="0.38"/>
+
+  <!-- ─── Decorative flanking rules ──────────────────────────── -->
+  <line x1="58"  y1="522" x2="148" y2="522" stroke="#1E5068" stroke-width="0.7" opacity="0.7"/>
+  <line x1="352" y1="522" x2="442" y2="522" stroke="#1E5068" stroke-width="0.7" opacity="0.7"/>
+  <!-- Gold accent dot at center of rules -->
+  <circle cx="250" cy="522" r="2" fill="#C8893C" opacity="0.6"/>
+
+  <!-- ─── LIVING WATER — dignified serif ─────────────────────── -->
+  <text x="250" y="502"
+    font-family="'Georgia', 'Palatino Linotype', 'Book Antiqua', serif"
+    font-weight="bold"
+    font-size="44"
+    fill="#F4EFE8"
+    text-anchor="middle"
+    letter-spacing="1.5">LIVING WATER</text>
+
+  <!-- ─── NETWORK — clean tracked sans ─────────────────────────── -->
+  <text x="250" y="548"
+    font-family="'Helvetica Neue', 'Arial', sans-serif"
+    font-weight="300"
+    font-size="13"
+    fill="#38AABA"
+    text-anchor="middle"
+    letter-spacing="10">NETWORK</text>
+
+</svg>

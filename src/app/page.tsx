@@ -1,7 +1,26 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ProgramCard } from "@/components/sections/ProgramCard";
 import { CtaBanner } from "@/components/sections/CtaBanner";
+
+export const metadata: Metadata = {
+  title: "Christian Leadership Development & Discipleship-Based Mentorship",
+  description:
+    "Living Water Network equips Kingdom leaders in Atlanta and beyond through discipleship-based mentorship, counseling, marketplace ministry, and the Groundwork cohort program.",
+  openGraph: {
+    title: "Living Water Network | Christian Leadership Development",
+    description:
+      "Equipping Kingdom leaders through discipleship-based mentorship, counseling, marketplace ministry, and the Groundwork cohort program.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Living Water Network | Christian Leadership Development",
+    description:
+      "Equipping Kingdom leaders through discipleship-based mentorship, counseling, marketplace ministry, and the Groundwork cohort program.",
+  },
+};
 
 const programs = [
   {

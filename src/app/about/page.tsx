@@ -3,9 +3,22 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About Us",
   description:
-    "Learn about Living Water Network, our founder, our story, and why we exist to equip Kingdom leaders.",
+    "Learn about Living Water Network — our founder's story, our mission to equip Christian leaders through discipleship-based formation, and why we exist as an Atlanta-based 501(c)(3) nonprofit.",
+  openGraph: {
+    title: "About Living Water Network",
+    description:
+      "Our founder's story and our mission to equip Christian leaders through discipleship-based formation.",
+    type: "website",
+    images: [{ url: "/images/omar-headshot-pro.jpg", width: 1200, height: 1600, alt: "Omar Fandino, Founder of Living Water Network" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Living Water Network",
+    description:
+      "Our founder's story and our mission to equip Christian leaders through discipleship-based formation.",
+  },
 };
 
 export default function AboutPage() {

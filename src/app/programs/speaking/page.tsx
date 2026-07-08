@@ -8,9 +8,21 @@ import { ProgramInquiryForm, type ProgramField } from "@/components/sections/Pro
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Request a Speaker",
+  title: "Request a Christian Leadership Speaker",
   description:
-    "Bring Living Water Network's message to your church, conference, retreat, or corporate leadership event.",
+    "Bring Living Water Network's message on Christian leadership, discipleship, and marketplace ministry to your church, conference, retreat, or corporate leadership event.",
+  openGraph: {
+    title: "Request a Speaker | Living Water Network",
+    description:
+      "Bring a message on Christian leadership, discipleship, and marketplace ministry to your church, conference, or event.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Request a Speaker | Living Water Network",
+    description:
+      "Bring a message on Christian leadership, discipleship, and marketplace ministry to your church, conference, or event.",
+  },
 };
 
 const fields: ProgramField[] = [

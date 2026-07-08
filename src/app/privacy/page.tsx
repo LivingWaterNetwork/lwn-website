@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Living Water Network",
+  title: "Privacy Policy",
   description: "How Living Water Network collects, uses, and protects information collected through lwnetwork.org.",
 };
 

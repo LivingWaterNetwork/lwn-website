@@ -14,10 +14,32 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getPostBySlug(params.slug);
-  if (!post) return {};
+  if (!post) {
+    return {
+      title: "Post Not Found",
+      description: "This blog post could not be found on Living Water Network.",
+    };
+  }
+  const title = post.meta.title;
+  const description =
+    post.meta.excerpt ||
+    "Insights on spiritual formation, Christian leadership development, and discipleship-based mentorship from Living Water Network.";
   return {
-    title: post.meta.title,
-    description: post.meta.excerpt,
+    title,
+    description,
+    authors: post.meta.author ? [{ name: post.meta.author }] : undefined,
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      publishedTime: post.meta.date || undefined,
+      authors: post.meta.author ? [post.meta.author] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
   };
 }
 
@@ -27,8 +49,34 @@ export default function BlogPostPage({ params }: Props) {
 
   const { meta, content } = post;
 
+  const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://lwnetwork.org";
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: meta.title,
+    description: meta.excerpt || undefined,
+    datePublished: meta.date || undefined,
+    author: {
+      "@type": "Person",
+      name: meta.author || "Living Water Network",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Living Water Network",
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/images/logo.png`,
+      },
+    },
+    mainEntityOfPage: `${SITE_URL}/blog/${meta.slug}`,
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <section className="bg-navy py-20 text-white text-center">
         <div className="max-w-3xl mx-auto px-4">
           {meta.tags && meta.tags.length > 0 && (

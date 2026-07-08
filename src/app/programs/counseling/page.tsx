@@ -12,9 +12,21 @@ import { ProgramInquiryForm, type ProgramField } from "@/components/sections/Pro
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Personalized Counseling",
+  title: "Christian Counseling for Leaders",
   description:
-    "Personalized counseling for leaders — spiritual, emotional, and relational care that helps you lead from wholeness, not depletion.",
+    "Discipleship-based counseling for Christian leaders — spiritual, emotional, and relational care that helps you lead from wholeness, not depletion.",
+  openGraph: {
+    title: "Christian Counseling for Leaders | Living Water Network",
+    description:
+      "Discipleship-based, pastoral counseling for Christian leaders — spiritual, emotional, and relational care.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Christian Counseling for Leaders | Living Water Network",
+    description:
+      "Discipleship-based, pastoral counseling for Christian leaders — spiritual, emotional, and relational care.",
+  },
 };
 
 const fields: ProgramField[] = [

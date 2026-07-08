@@ -3,9 +3,21 @@ import Link from "next/link";
 import { ContactForm } from "@/components/sections/ContactForm";
 
 export const metadata: Metadata = {
-  title: "Contact",
+  title: "Contact Us",
   description:
     "Get in touch with Living Water Network — general inquiries, speaking requests, or major gifts and institutional partnerships.",
+  openGraph: {
+    title: "Contact Living Water Network",
+    description:
+      "General inquiries, speaking requests, or major gifts and institutional partnerships.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact Living Water Network",
+    description:
+      "General inquiries, speaking requests, or major gifts and institutional partnerships.",
+  },
 };
 
 export default function ContactPage() {

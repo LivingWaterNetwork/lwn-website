@@ -4,7 +4,19 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Partner With Us",
   description:
-    "Join the Living Water Network partnership circle. Sponsorship tiers, multi-year giving, and ways to invest in the next generation of Kingdom leaders.",
+    "Join the Living Water Network partnership circle. Sponsorship tiers, multi-year giving, and ways to invest in the next generation of Christian leaders in Atlanta and beyond.",
+  openGraph: {
+    title: "Partner With Us | Living Water Network",
+    description:
+      "Sponsorship tiers, multi-year giving, and ways to invest in the next generation of Christian leaders.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Partner With Us | Living Water Network",
+    description:
+      "Sponsorship tiers, multi-year giving, and ways to invest in the next generation of Christian leaders.",
+  },
 };
 
 const tiers = [
