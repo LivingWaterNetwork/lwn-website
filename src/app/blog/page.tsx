@@ -12,12 +12,14 @@ export const metadata: Metadata = {
     description:
       "Insights on spiritual formation, Christian leadership development, and discipleship-based mentorship.",
     type: "website",
+    images: [{ url: "/images/og-image.png", width: 1200, height: 630, alt: "Living Water Network" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Blog | Living Water Network",
     description:
       "Insights on spiritual formation, Christian leadership development, and discipleship-based mentorship.",
+    images: [{ url: "/images/og-image.png", width: 1200, height: 630, alt: "Living Water Network" }],
   },
 };
 

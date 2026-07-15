@@ -13,3 +13,31 @@ install.sh
 skills-lock.json
 tsconfig.tsbuildinfo
 .agents/
+
+# Internal documents, legal/financial files, and scratch assets — not part of the deployed app.
+# Kept on disk for Omar's use, but shouldn't live in source control (broader access than needed).
+.qa-scratch/
+Board Meeting Packet/
+Investor Packet/
+Living Water Network/
+LWN_*.docx
+LWN_*.pdf
+LWN_*.pptx
+LWN_*.md
+At_the_Table_*.docx
+Living_Water_Network_-_Brand_Guidelines.pptx
+CLAUDE_HANDOFF.txt
+PROJECT_BRIEF.md
+seo-ai-visibility-report.md
+slide-07_check.jpg
+*.qa-scratch*
+Resized_*.jpeg
+IMG_*.JPG
+IMG_*.jpeg
+DSC*.jpeg
+C0F1D65F-EB6E-4477-A9E2-582688A92923.jpg
+451e6fc5-7341-4d24-9615-5c073f042693.jpg
+9e724a7e-b95c-4368-88ea-b0ad0cb402ad.jpg
+a83fe003-8f8a-429f-8429-2227fb8d1251.jpg
+f910d60c-097c-4ac0-ad4d-b98509cb0cbf.jpg
+f9fd4b49-4241-4a40-a601-8842628c8391.jpg

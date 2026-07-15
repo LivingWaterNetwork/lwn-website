@@ -16,12 +16,14 @@ export const metadata: Metadata = {
     description:
       "International mission trips for Christian leaders — broadened perspective, deepened calling.",
     type: "website",
+    images: [{ url: "/images/og-image.png", width: 1200, height: 630, alt: "Living Water Network" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "International Mission Trips | Living Water Network",
     description:
       "International mission trips for Christian leaders — broadened perspective, deepened calling.",
+    images: [{ url: "/images/og-image.png", width: 1200, height: 630, alt: "Living Water Network" }],
   },
 };
 

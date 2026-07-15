@@ -20,12 +20,14 @@ export const metadata: Metadata = {
     description:
       "Discipleship-based, pastoral counseling for Christian leaders — spiritual, emotional, and relational care.",
     type: "website",
+    images: [{ url: "/images/og-image.png", width: 1200, height: 630, alt: "Living Water Network" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Christian Counseling for Leaders | Living Water Network",
     description:
       "Discipleship-based, pastoral counseling for Christian leaders — spiritual, emotional, and relational care.",
+    images: [{ url: "/images/og-image.png", width: 1200, height: 630, alt: "Living Water Network" }],
   },
 };
 

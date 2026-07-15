@@ -16,12 +16,14 @@ export const metadata: Metadata = {
     description:
       "Bring a message on Christian leadership, discipleship, and marketplace ministry to your church, conference, or event.",
     type: "website",
+    images: [{ url: "/images/og-image.png", width: 1200, height: 630, alt: "Living Water Network" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Request a Speaker | Living Water Network",
     description:
       "Bring a message on Christian leadership, discipleship, and marketplace ministry to your church, conference, or event.",
+    images: [{ url: "/images/og-image.png", width: 1200, height: 630, alt: "Living Water Network" }],
   },
 };
 

@@ -11,12 +11,14 @@ export const metadata: Metadata = {
     description:
       "Immersive cohorts, counseling, mentorship, speaking, and mission trips — Christian leadership development programs.",
     type: "website",
+    images: [{ url: "/images/og-image.png", width: 1200, height: 630, alt: "Living Water Network" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Christian Leadership Programs | Living Water Network",
     description:
       "Immersive cohorts, counseling, mentorship, speaking, and mission trips — Christian leadership development programs.",
+    images: [{ url: "/images/og-image.png", width: 1200, height: 630, alt: "Living Water Network" }],
   },
 };
 

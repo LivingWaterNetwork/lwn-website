@@ -11,12 +11,14 @@ export const metadata: Metadata = {
     description:
       "How Living Water Network turns spiritual formation into measurable Kingdom impact.",
     type: "website",
+    images: [{ url: "/images/og-image.png", width: 1200, height: 630, alt: "Living Water Network" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Our Theory of Change | Living Water Network",
     description:
       "How Living Water Network turns spiritual formation into measurable Kingdom impact.",
+    images: [{ url: "/images/og-image.png", width: 1200, height: 630, alt: "Living Water Network" }],
   },
 };
 

@@ -10,12 +10,14 @@ export const metadata: Metadata = {
     description:
       "Answers to common questions about Groundwork — LWN's 9-month Christian leadership formation journey.",
     type: "website",
+    images: [{ url: "/images/og-image.png", width: 1200, height: 630, alt: "Living Water Network" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Frequently Asked Questions | Living Water Network",
     description:
       "Answers to common questions about Groundwork — LWN's 9-month Christian leadership formation journey.",
+    images: [{ url: "/images/og-image.png", width: 1200, height: 630, alt: "Living Water Network" }],
   },
 };
 

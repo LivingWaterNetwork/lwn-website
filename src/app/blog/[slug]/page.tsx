@@ -34,11 +34,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "article",
       publishedTime: post.meta.date || undefined,
       authors: post.meta.author ? [post.meta.author] : undefined,
+      images: [{ url: "/images/og-image.png", width: 1200, height: 630, alt: "Living Water Network" }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [{ url: "/images/og-image.png", width: 1200, height: 630, alt: "Living Water Network" }],
     },
   };
 }

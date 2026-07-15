@@ -11,13 +11,14 @@ export const metadata: Metadata = {
     description:
       "Our founder's story and our mission to equip Christian leaders through discipleship-based formation.",
     type: "website",
-    images: [{ url: "/images/omar-headshot-pro.jpg", width: 1200, height: 1600, alt: "Omar Fandino, Founder of Living Water Network" }],
+    images: [{ url: "/images/og-image.png", width: 1200, height: 630, alt: "Living Water Network" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "About Living Water Network",
     description:
       "Our founder's story and our mission to equip Christian leaders through discipleship-based formation.",
+    images: [{ url: "/images/og-image.png", width: 1200, height: 630, alt: "Living Water Network" }],
   },
 };
 
