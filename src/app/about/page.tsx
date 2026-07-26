@@ -82,10 +82,12 @@ export default function AboutPage() {
                 Released in 2021 and back in Atlanta, Omar joined Victory Church. He started as an
                 administrative assistant, choosing to serve with his hands before leading with his
                 voice. That humility opened doors, and he grew into a Guest Experience Coordinator
-                role before his work expanded into the broader leadership arena. Through consulting
-                engagements with Rizewell and Grow Stack Drive, he delivered executive leadership
-                development, designed organizational strategy, and demonstrated that formation and
-                strategic execution are not opposites; they are inseparable.
+                role before his work expanded into the broader leadership arena. He was mentored
+                hands-on by Ken Joslin at Grow Stack Drive, sharpening his executive leadership
+                development and organizational strategy, and by former NFL pro Quentin Gause at
+                Rizewell, deepening his accreditation and professional development. Both
+                relationships demonstrated that formation and strategic execution are not
+                opposites; they are inseparable.
               </p>
               <p>
                 During those years, Omar was shaped by the writings of Dallas Willard, Pete
