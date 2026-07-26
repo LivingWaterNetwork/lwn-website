@@ -79,22 +79,22 @@ export default function AboutPage() {
                 becoming someone new.
               </p>
               <p>
-                Released in 2021 and back in Atlanta, Omar joined Victory Church. He started as an
+                Released in 2021 and back in Atlanta, Omar joined Victory Church as an
                 administrative assistant, choosing to serve with his hands before leading with his
-                voice. That humility opened doors, and he grew into a Guest Experience Coordinator
-                role before his work expanded into the broader leadership arena. He was mentored
-                hands-on by Ken Joslin at Grow Stack Drive, sharpening his executive leadership
-                development and organizational strategy, and by former NFL pro Quentin Gause at
-                Rizewell, deepening his accreditation and professional development. Both
-                relationships demonstrated that formation and strategic execution are not
-                opposites; they are inseparable.
+                voice. That humility opened doors: he grew into a Guest Experience Coordinator
+                role, then into work under Ken Joslin at Grow Stack Drive, where hands-on
+                mentorship in executive leadership and organizational strategy came through the
+                work itself, and alongside former NFL pro Quentin Gause at Rizewell, collaborating
+                on and being mentored through engagements that sharpened his accreditation and
+                professional development. Formation and strategic execution, Omar learned, are not
+                opposites &mdash; they are inseparable.
               </p>
               <p>
-                During those years, Omar was shaped by the writings of Dallas Willard, Pete
-                Scazzero, John Mark Comer, Dave Ferguson, William Gurnall, and Augustine, thinkers
-                who taught him that the goal of the Christian life is not greater performance but
-                deeper formation. That conviction became the foundation of Living Water Network,
-                which he founded in 2023.
+                Shaped along the way by the writings of Dallas Willard, Pete Scazzero, John Mark
+                Comer, Dave Ferguson, William Gurnall, and Augustine &mdash; thinkers who taught him
+                that the goal of the Christian life is not greater performance but deeper formation
+                &mdash; that conviction became the foundation of Living Water Network, which he
+                founded in 2023.
               </p>
               <p>
                 Today, Omar is pursuing a Bachelor&apos;s degree in Leadership Development and
