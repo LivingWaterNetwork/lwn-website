@@ -106,6 +106,21 @@ const programs = [
     a global network of believers, and a sharpened sense of their own mandate in the earth.`,
     cta: { label: "Inquire About Trips", href: "/programs/missions" },
   },
+  {
+    id: "church-advisory",
+    image: "/images/leadership-group-backstage.jpg",
+    imageAlt: "Church leadership team meeting",
+    imagePosition: "50% 40%",
+    title: "LWN Church Advisory Services",
+    tagline: "Strategy for the church itself, not just its leaders.",
+    body: `Built on Omar Fandino's own background in volunteer recruitment and engagement
+    management, young adult ministry, and small group leadership, LWN Church Advisory
+    Services works directly with church staff and leadership teams — not individuals — on
+    the systems and strategy that determine whether a congregation actually functions:
+    volunteer pipelines, young adult engagement, group leadership development, and overall
+    ministry strategy.`,
+    cta: { label: "Explore Church Advisory", href: "/programs/church-advisory" },
+  },
 ];
 
 export default function ProgramsPage() {

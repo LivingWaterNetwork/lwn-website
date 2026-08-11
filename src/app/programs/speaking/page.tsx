@@ -114,6 +114,15 @@ export default function SpeakingPage() {
             we&apos;re invited into. If your organization is looking for a speaker who can bridge
             the ministry and marketplace gap, we&apos;d love to connect.
           </p>
+          <blockquote className="mt-8 font-serif text-xl md:text-2xl italic text-navy leading-relaxed border-l-4 border-copper pl-6 text-left max-w-xl mx-auto">
+            &ldquo;I don&apos;t get on a stage to perform a testimony. I get on a stage because
+            someone in that room is living through what I survived, and they need to know
+            it&apos;s survivable.&rdquo;
+            <cite className="block mt-3 text-sm not-italic text-slate/60 font-sans">
+              — Omar J. Fandino, Founder of Living Water Network{" "}
+              <span className="text-copper">· echoes 2 Corinthians 1:4</span>
+            </cite>
+          </blockquote>
         </div>
       </section>
 

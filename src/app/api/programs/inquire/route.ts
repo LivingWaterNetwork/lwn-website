@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { sendNotificationEmail } from "@/lib/email";
 import { pushProgramInquiry } from "@/lib/airtable";
 
-const VALID_PROGRAMS = ["counseling", "mentorship", "speaking", "missions", "coaching"];
+const VALID_PROGRAMS = ["counseling", "mentorship", "speaking", "missions", "coaching", "church-advisory"];
 
 const PROGRAM_LABELS: Record<string, string> = {
   counseling: "Personalized Counseling",
@@ -11,6 +11,7 @@ const PROGRAM_LABELS: Record<string, string> = {
   speaking: "Public Speaking Engagement",
   missions: "International Mission Trip",
   coaching: "Personal Coaching",
+  "church-advisory": "Church Advisory Services",
 };
 
 export async function POST(req: NextRequest) {

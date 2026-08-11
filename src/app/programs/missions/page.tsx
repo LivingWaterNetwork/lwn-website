@@ -116,6 +116,15 @@ export default function MissionsPage() {
             serving people whose lives depend on more than a Sunday habit, has a way of
             clarifying — or correcting — what you thought you believed about your own mandate.
           </p>
+          <blockquote className="mt-8 font-serif text-xl md:text-2xl italic text-navy leading-relaxed border-l-4 border-copper pl-6 text-left max-w-xl mx-auto">
+            &ldquo;Calling sounds spiritual until it costs you a plane ticket and a language you
+            don&apos;t speak. That&apos;s usually where I&apos;ve found out if I actually
+            believed it.&rdquo;
+            <cite className="block mt-3 text-sm not-italic text-slate/60 font-sans">
+              — Omar J. Fandino, Founder of Living Water Network{" "}
+              <span className="text-copper">· echoes Isaiah 6:8</span>
+            </cite>
+          </blockquote>
         </div>
       </section>
 

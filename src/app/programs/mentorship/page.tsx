@@ -131,6 +131,14 @@ export default function MentorshipPage() {
             relationship — the same conviction behind Groundwork&apos;s formation model, lived
             out one relationship at a time.
           </p>
+          <blockquote className="mt-8 font-serif text-xl md:text-2xl italic text-navy leading-relaxed border-l-4 border-copper pl-6 text-left max-w-xl mx-auto">
+            &ldquo;I didn&apos;t just need someone to tell me what to do. I needed someone to
+            stay close enough, long enough, to watch what I actually did with it.&rdquo;
+            <cite className="block mt-3 text-sm not-italic text-slate/60 font-sans">
+              — Omar J. Fandino, Founder of Living Water Network{" "}
+              <span className="text-copper">· echoes Proverbs 27:17</span>
+            </cite>
+          </blockquote>
         </div>
       </section>
 

@@ -120,6 +120,14 @@ export default function CounselingPage() {
             something a clinical hour often can&apos;t: a shared faith, and a relationship that
             continues beyond a diagnosis.
           </p>
+          <blockquote className="mt-8 font-serif text-xl md:text-2xl italic text-navy leading-relaxed border-l-4 border-copper pl-6 text-left max-w-xl mx-auto">
+            &ldquo;I didn&apos;t need someone to fix me. I needed someone who wouldn&apos;t
+            flinch at what needed healing — and stayed anyway.&rdquo;
+            <cite className="block mt-3 text-sm not-italic text-slate/60 font-sans">
+              — Omar J. Fandino, Founder of Living Water Network{" "}
+              <span className="text-copper">· echoes Psalm 34:18</span>
+            </cite>
+          </blockquote>
         </div>
       </section>
 

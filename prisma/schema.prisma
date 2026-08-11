@@ -65,7 +65,7 @@ model ContactSubmission {
 
 model ProgramInquiry {
   id        String   @id @default(cuid())
-  program   String   // counseling | mentorship | speaking | missions | coaching
+  program   String   // counseling | mentorship | speaking | missions | coaching | church-advisory
   name      String
   email     String
   phone     String?
