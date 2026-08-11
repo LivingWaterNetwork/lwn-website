@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Personal Coaching with Omar Fandino",
   description:
-    "One-on-one Christian leadership coaching built around Living Water Network's Six Spheres formation framework — spiritual, mental, emotional, physical, relational, and stewardship health, tailored to you.",
+    "One-on-one Christian leadership coaching built around Living Water Network's Six Spheres formation framework. Not performance coaching — formation, for leaders who can't afford to keep pouring from an empty well.",
   openGraph: {
     title: "Personal Coaching | Living Water Network",
     description:
@@ -35,6 +35,27 @@ const spheres = [
   { num: "04", name: "Physical", groundworkName: "Body", desc: "Honoring the vessel God gave you — energy, rest, and health sized to the weight you're actually carrying." },
   { num: "05", name: "Relational", groundworkName: "Community", desc: "Being known and truly knowing others — marriage, family, and the relationships leadership tends to starve first." },
   { num: "06", name: "Stewardship", groundworkName: "Stewardship", desc: "Calling, gifts, time, money, and the legacy you're actually building, not just the one you talk about." },
+];
+
+const framework = [
+  {
+    letter: "S",
+    word: "See",
+    subtitle: "Intake & Discovery Assessment",
+    desc: "Before any plan gets built, you see your six spheres honestly — where you actually are, not where you assume you are. Reviewed by Omar personally before session one.",
+  },
+  {
+    letter: "S",
+    word: "Sit",
+    subtitle: "Weekly or Biweekly Sessions",
+    desc: "You don't skip the Table to get to the Field. Sessions do the slow work of formation across whichever spheres your assessment shows need it most — sequenced, not scattered.",
+  },
+  {
+    letter: "S",
+    word: "Send",
+    subtitle: "Review & Next Season",
+    desc: "At the close of your engagement, you review what actually shifted and carry it into how you lead — at work, at home, in ministry — not back into old patterns.",
+  },
 ];
 
 const included = [
@@ -88,34 +109,6 @@ const packages = [
   },
 ];
 
-const journey = [
-  {
-    step: "Inquire",
-    title: "Tell Us Where You Are",
-    desc: "Fill out the form below. Omar reviews every inquiry personally — this isn't routed to a sales team.",
-  },
-  {
-    step: "Assess",
-    title: "Intake & Discovery Assessment",
-    desc: "A guided conversation and assessment across all six spheres before any plan gets built.",
-  },
-  {
-    step: "Build",
-    title: "Your Plan, Built From Your Assessment",
-    desc: "Omar builds your coaching plan around what your six-sphere assessment actually shows — sequenced, not scattered.",
-  },
-  {
-    step: "Walk",
-    title: "Sessions, Access, and Accountability",
-    desc: "Weekly or biweekly sessions depending on your package, with direct access between calls for the moments that can't wait.",
-  },
-  {
-    step: "Review",
-    title: "Review & Next Season",
-    desc: "At the close of your engagement, review what shifted across all six spheres and decide what the next season needs.",
-  },
-];
-
 const fields: ProgramField[] = [
   {
     type: "select",
@@ -133,7 +126,7 @@ const fields: ProgramField[] = [
   {
     type: "textarea",
     id: "season",
-    label: "What season are you in, and what would you want coaching to help you move toward?",
+    label: "What's prompting you to look into coaching now?",
     required: true,
     placeholder: "Share honestly — this is what Omar reviews before your first session.",
     rows: 6,
@@ -144,73 +137,118 @@ export default function CoachingPage() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="relative bg-navy py-24 text-white text-center overflow-hidden">
+      <section className="relative bg-navy py-28 text-white text-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="/images/omar-with-colleague.jpg"
             alt="Omar Fandino in a one-on-one coaching conversation"
             fill
-            className="object-cover object-center opacity-20"
+            className="object-cover object-center opacity-15"
             priority
           />
         </div>
         <div className="relative max-w-3xl mx-auto px-4">
-          <p className="section-label text-spring mb-4">One-on-One Formation</p>
-          <h1 className="font-serif text-5xl md:text-6xl font-semibold leading-tight mb-2">
-            Personal Coaching
+          <p className="section-label text-spring mb-4">One-on-One Formation Coaching</p>
+          <h1 className="font-serif text-4xl md:text-6xl font-semibold leading-tight mb-5">
+            You Cannot Pour From an Empty Well.
           </h1>
-          <p className="text-white/50 font-sans text-sm tracking-widest uppercase mb-5">
-            With Omar Fandino, Founder of Living Water Network
+          <p className="text-white/70 text-lg font-sans max-w-xl mx-auto leading-relaxed">
+            Personal coaching with Omar Fandino — one-on-one formation for leaders who are done
+            leading from empty, built around the same Six Spheres model behind Groundwork.
           </p>
-          <p className="text-white/70 text-lg font-sans max-w-2xl mx-auto leading-relaxed">
-            The same Six Spheres formation model behind Groundwork — built one-on-one, around
-            your actual life, not a cohort calendar.
-          </p>
-          <div className="mt-8">
+          <div className="mt-9 flex flex-wrap justify-center gap-4">
             <Link href="#inquire" className="btn-primary">
-              Start With an Inquiry
+              Request a Coaching Conversation
+            </Link>
+            <Link href="#framework" className="inline-flex items-center justify-center px-6 py-3 rounded-md border-2 border-white/30 text-white font-semibold font-sans text-sm transition-colors hover:border-white hover:bg-white/10">
+              See How It Works
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ── Why this exists ── */}
+      {/* ── Problem statement ── */}
       <section className="py-16 bg-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <p className="section-label mb-3">Why This Exists</p>
-            <h2 className="section-heading">Leaders Rarely Get Coached the Way They Coach Others</h2>
-          </div>
-          <div className="space-y-4 text-slate font-sans text-base leading-relaxed">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="section-label mb-3">The Honest Problem</p>
+          <h2 className="section-heading mb-6">Most Leaders Have No One Pouring Into Them</h2>
+          <div className="space-y-4 text-slate font-sans text-base leading-relaxed text-left">
             <p>
-              Most leaders know how to pour out. Fewer have someone speaking honestly into their
-              own spiritual health, their own thought life, their own marriage, their own body,
-              their own calling — at the same time, instead of one at a time whenever there&apos;s
-              a crisis.
-            </p>
-            <p className="text-center font-serif text-xl text-navy py-4 border-l-4 border-copper pl-6 text-left">
-              &ldquo;Before the water flows through you, the ground must be prepared&rdquo; — the
-              conviction behind Groundwork holds just as true one-on-one as it does in a cohort of
-              twelve.
+              You&apos;re the one people come to. The one who prays for others, counsels others,
+              carries others. That&apos;s the job, and you don&apos;t resent it — but somewhere
+              along the way, no one is doing that for you.
             </p>
             <p>
-              Personal coaching takes that same formation model and builds it entirely around
-              you — your season, your history, your calling — with the direct access and
-              accountability a cohort format can&apos;t provide.
+              So you keep functioning. You keep performing. And the well keeps getting a little
+              emptier, one withdrawal at a time, until leading starts to cost more than it should.
             </p>
           </div>
         </div>
       </section>
 
-      {/* ── Six Spheres ── */}
-      <section className="py-16 bg-navy text-white">
+      {/* ── Differentiator ── */}
+      <section className="py-16 bg-mist">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="section-label mb-3">Why This Is Different</p>
+          <h2 className="section-heading mb-6">This Isn&apos;t Executive Coaching. It&apos;s Formation.</h2>
+          <p className="text-slate font-sans text-base leading-relaxed">
+            Most coaching optimizes what you produce — better habits, sharper strategy, tighter
+            execution. There&apos;s a place for that. But if the well itself is dry, better
+            output just empties it faster.
+          </p>
+          <blockquote className="mt-6 font-serif text-xl md:text-2xl italic text-navy leading-relaxed border-l-4 border-copper pl-6 text-left max-w-xl mx-auto">
+            &ldquo;Before the water flows through you, the ground must be prepared.&rdquo;
+          </blockquote>
+          <p className="mt-6 text-slate font-sans text-base leading-relaxed">
+            This coaching starts with the ground, not the output — the same conviction behind
+            Groundwork, built one-on-one and paced to your actual life.
+          </p>
+        </div>
+      </section>
+
+      {/* ── Framework: See. Sit. Send. ── */}
+      <section id="framework" className="py-16 bg-navy text-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <p className="section-label text-spring mb-3">The Framework</p>
+            <p className="section-label text-spring mb-3">How It Works</p>
             <h2 className="font-serif text-3xl md:text-4xl font-semibold text-white">
-              The Six Spheres
+              See. Sit. Send.
             </h2>
             <p className="mt-3 text-white/60 font-sans text-sm max-w-2xl mx-auto">
+              Every engagement — regardless of package — moves through the same three movements.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {framework.map(({ letter, word, subtitle, desc }, i) => (
+              <div key={word} className="bg-white/5 border border-white/10 rounded-2xl p-6 relative">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-11 h-11 rounded-full bg-copper text-white font-serif font-semibold flex items-center justify-center text-lg shrink-0">
+                    {letter}
+                  </div>
+                  <h3 className="font-serif text-2xl font-semibold text-white">{word}</h3>
+                </div>
+                <p className="text-copper text-xs font-semibold font-sans uppercase tracking-widest mb-2">
+                  {subtitle}
+                </p>
+                <p className="text-white/60 text-sm font-sans leading-relaxed">{desc}</p>
+                {i < framework.length - 1 && (
+                  <div className="hidden md:block absolute top-1/2 -right-4 text-white/20 text-2xl">
+                    →
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Six Spheres ── */}
+      <section className="py-16 bg-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="section-label mb-3">The Framework Underneath</p>
+            <h2 className="section-heading">The Six Spheres</h2>
+            <p className="mt-3 text-slate font-sans text-sm max-w-2xl mx-auto">
               The same six-pillar model taught in <em>At the Table</em>, LWN&apos;s proprietary
               formation guide — applied here to your individual assessment, not a shared
               curriculum.
@@ -220,16 +258,16 @@ export default function CoachingPage() {
             {spheres.map(({ num, name, groundworkName, desc }) => (
               <div
                 key={num}
-                className="bg-white/5 border border-white/10 rounded-xl p-5 hover:bg-white/8 transition-colors"
+                className="card border-t-2 border-copper hover:shadow-md transition-shadow"
               >
                 <p className="text-copper text-xs font-semibold font-sans mb-1">Sphere {num}</p>
-                <p className="text-white font-serif text-lg font-semibold mb-1">
+                <p className="text-navy font-serif text-lg font-semibold mb-1">
                   {name}
-                  <span className="text-white/35 text-xs font-sans font-normal ml-2 uppercase tracking-wide">
+                  <span className="text-slate/50 text-xs font-sans font-normal ml-2 uppercase tracking-wide">
                     Groundwork: {groundworkName}
                   </span>
                 </p>
-                <p className="text-white/55 text-sm font-sans leading-relaxed">{desc}</p>
+                <p className="text-slate text-sm font-sans leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
@@ -254,46 +292,26 @@ export default function CoachingPage() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ── Journey ── */}
-      <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <p className="section-label mb-3">How It Works</p>
-            <h2 className="section-heading">From Inquiry to Next Season</h2>
-          </div>
-          <div className="space-y-0">
-            {journey.map(({ step, title, desc }, i) => (
-              <div key={step} className="flex gap-5 py-5 border-b border-mist last:border-none">
-                <div className="shrink-0 w-11 h-11 rounded-full bg-navy text-spring font-serif font-semibold flex items-center justify-center text-sm">
-                  {i + 1}
-                </div>
-                <div>
-                  <p className="text-copper text-xs font-semibold font-sans uppercase tracking-widest mb-1">
-                    {step}
-                  </p>
-                  <h3 className="font-serif text-lg font-semibold text-navy mb-1">{title}</h3>
-                  <p className="text-slate text-sm font-sans leading-relaxed">{desc}</p>
-                </div>
-              </div>
-            ))}
+          <div className="text-center mt-10">
+            <Link href="#inquire" className="btn-primary">
+              Request a Coaching Conversation
+            </Link>
           </div>
         </div>
       </section>
 
       {/* ── Packages ── */}
-      <section className="py-16 bg-mist">
+      <section className="py-16 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <p className="section-label mb-3">Choose Your Path</p>
+            <p className="section-label mb-3">By Conversation, Not Checkout</p>
             <h2 className="section-heading">Three Ways to Work With Omar</h2>
             <p className="mt-3 text-slate font-sans text-sm max-w-2xl mx-auto">
               Every package is built around the same Six Spheres assessment — the difference is
-              depth and duration. Investment is discussed directly once we understand your
-              situation; payment plans and a limited number of scholarship spots are available
-              for clients referred by partner churches.
+              depth and duration. Because this is one-on-one with Omar directly, availability is
+              limited. Investment is discussed after your Discovery Assessment, once we understand
+              your situation; payment plans and a limited number of scholarship spots are
+              available for clients referred by partner churches.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
