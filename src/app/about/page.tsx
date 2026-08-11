@@ -149,6 +149,29 @@ export default function AboutPage() {
               to lead with purpose and integrity.
             </p>
           </div>
+
+          <div className="mt-10 grid sm:grid-cols-2 gap-4">
+            <div className="rounded-xl bg-navy px-6 py-5">
+              <p className="font-serif text-2xl font-semibold text-spring mb-1">39%</p>
+              <p className="text-white/70 text-xs font-sans leading-relaxed">
+                of Christians aren&apos;t engaged in discipleship in either direction —
+                the exact gap our formation model exists to close.
+              </p>
+              <p className="text-white/40 text-[10px] font-sans uppercase tracking-wide mt-2">
+                Barna Group, 2025
+              </p>
+            </div>
+            <div className="rounded-xl bg-navy px-6 py-5">
+              <p className="font-serif text-2xl font-semibold text-spring mb-1">35%</p>
+              <p className="text-white/70 text-xs font-sans leading-relaxed">
+                of U.S. pastors qualify as fully healthy across every measure Barna tracks —
+                why formation has to include the leader&apos;s own well-being, not just output.
+              </p>
+              <p className="text-white/40 text-[10px] font-sans uppercase tracking-wide mt-2">
+                Barna Group, Pastoral Well-Being
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 

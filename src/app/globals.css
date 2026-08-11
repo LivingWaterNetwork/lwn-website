@@ -64,4 +64,51 @@
   .form-error {
     @apply text-red-600 text-xs mt-1;
   }
+
+  /* Small credibility/trust badges — used in hero strips and footer-adjacent sections */
+  .badge {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-[11px] font-sans font-semibold uppercase tracking-wide text-white/70;
+  }
+
+  /* Stat callouts — big figure + supporting label, used wherever we cite research */
+  .stat-figure {
+    @apply font-serif text-3xl md:text-4xl font-semibold text-spring;
+  }
+}
+
+@layer utilities {
+  @keyframes ripple-pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.35;
+    }
+    50% {
+      transform: scale(1.04);
+      opacity: 0.6;
+    }
+  }
+
+  .animate-ripple {
+    animation: ripple-pulse 8s ease-in-out infinite;
+  }
+
+  .animate-ripple-delay {
+    animation: ripple-pulse 8s ease-in-out infinite;
+    animation-delay: 2.5s;
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.7s ease-out both;
+  }
 }

@@ -122,6 +122,12 @@ export default function TheoryOfChangePage() {
             reshapes their family, their church, their business, and everyone they disciple after them.
             Groundwork exists to interrupt the pattern of sending leaders before forming them.
           </p>
+          <p className="text-slate font-sans text-sm leading-relaxed mt-6 bg-mist rounded-lg px-5 py-4 text-left max-w-xl mx-auto">
+            <strong className="text-navy">Barna Group&apos;s research backs this up directly:</strong>{" "}
+            39% of Christians aren&apos;t currently being discipled or discipling anyone else, and
+            only 35% of U.S. pastors qualify as fully healthy across every measure of well-being
+            Barna tracks. Information is reaching people. Formation, largely, is not.
+          </p>
         </div>
       </section>
 
