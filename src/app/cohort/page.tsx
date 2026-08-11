@@ -154,6 +154,13 @@ export default function CohortPage() {
               Groundwork exists to interrupt that pattern. Before the water flows through you, the ground
               must be prepared. Before you lead others, you sit at the Table. Before you are sent, you are formed.
             </p>
+            <p className="text-sm bg-mist rounded-lg px-5 py-4">
+              Barna Group&apos;s research backs up what we&apos;re describing:{" "}
+              <strong className="text-navy">39% of Christians aren&apos;t currently engaged in
+              discipleship in either direction</strong> — not being discipled, and not discipling
+              anyone else. Groundwork exists specifically to close that gap, on purpose, in
+              community, over nine months instead of leaving it to chance.
+            </p>
           </div>
 
         </div>

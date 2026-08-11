@@ -1,10 +1,88 @@
 ================================================================================
 LWN WEBSITE PROJECT — CLAUDE HANDOFF BRIEFING
-Last updated: July 5, 2026, ~10:10am ET (Session 4 — build-fix follow-up)
+Last updated: August 11, 2026, ~10:30pm ET (Session 8 — homepage redesign +
+site-wide audit)
 ================================================================================
 
-*** READ THIS BLOCK FIRST — DEPLOY IS LIVE, BUT 4 PAGES WERE CRASHING FOR
-    EVERY VISITOR. A REAL FIX IS COMMITTED LOCALLY AND NEEDS A PUSH. ***
+*** READ THIS BLOCK FIRST — SITE IS FULLY PUSHED AND LIVE. NO KNOWN BUGS.
+    THIS SESSION WAS CONTENT/DESIGN WORK, NOT A BUG FIX. ***
+
+Everything described in this session is committed AND pushed — confirmed
+via `git log` showing the push landed. `npx tsc --noEmit` ran clean after
+every batch. There is nothing outstanding from Session 8 that needs a
+terminal command from Omar. (Sessions 5–7's work, summarized below, was
+also pushed and is live — the July 5 crisis further down this file is
+fully resolved and kept only as project history.)
+
+WHAT SESSION 8 DID (in order):
+  1. Built a new program page, /programs/church-advisory ("LWN Church
+     Advisory Services") — consulting for churches on volunteer
+     recruitment/engagement, young adult ministry, small group leadership,
+     and ministry strategy, drawn from Omar's own background. Wired into
+     the existing ProgramInquiryForm / /api/programs/inquire /
+     prisma.ProgramInquiry infrastructure (added "church-advisory" as a
+     valid program value in both places — see Section 2/3 for that
+     pattern). Enriched with real Barna Group / Lifeway Research
+     statistics and rewritten in warmer pastoral language per Omar's
+     request ("speak pastoral language that aligns with stats and
+     studies done").
+  2. Added the new program to /programs/page.tsx and to /programs/page's
+     nav — was previously invisible on the programs index.
+  3. Full homepage (/) redesign — this was the actual ask ("main page
+     doesn't appeal much... make this a $15,000+ website"). Found and fixed
+     the single biggest alignment bug on the site: the homepage "Programs
+     Built to Transform" section only listed 5 of the 7 real programs —
+     Personal Coaching and Church Advisory Services were completely
+     missing from the homepage. Also added: a credibility/trust badge
+     strip under the hero (501(c)(3), founding year, program count),
+     a new stats section citing real Barna Group research (39% of
+     Christians not engaged in discipleship either direction; 35% of
+     pastors qualify as fully healthy; Gen Z church attendance ~2x since
+     2020 — same figures already cited on the blog, kept consistent),
+     subtle CSS-only motion (hero water-ring pulse, fade-in-up, card
+     hover-lift), and made program cards on the homepage actually link
+     to their pages (they didn't before). ProgramCard.tsx component was
+     extended with an optional `href` prop to support this.
+  4. Added matching Barna-stat callouts to /about, /theory-of-change, and
+     /cohort — the three other mission-central pages — for the same
+     "align copy with real research" request. Same source figures reused
+     everywhere, not fabricated per-page.
+  5. Did a full read-through audit of every remaining page (donate,
+     contact, events, faq, all 4 partnership pages, the other program
+     subpages, blog, privacy/terms) hunting for the same kind of stale-
+     content/alignment bugs the homepage had. None found — those pages
+     were already strong (donate has a full fund-allocation transparency
+     breakdown + GuideStar link; partnership has an honest "we haven't
+     filed a 990 yet" disclosure instead of overstating credibility;
+     events has a bespoke black-tie visual treatment). No changes made
+     to those pages beyond what's listed above.
+  6. Design-system cleanup: globals.css gained 3 small reusable classes
+     (.badge, .stat-figure, plus keyframe utilities .animate-ripple /
+     .animate-ripple-delay / .animate-fade-in-up) — reuse these instead
+     of re-inventing hero motion or stat-card styling on future pages.
+     Also replaced a couple of hardcoded hex colors (`#00466F`) with the
+     existing `deep-sea` Tailwind token where found, for consistency —
+     did NOT do a full hex-to-token sweep of the whole codebase (still
+     tech debt if a future session wants to tackle it: `#0A77BC` in
+     particular is hardcoded in globals.css and several pages instead of
+     using the `lw.blue` token already defined in tailwind.config.ts).
+
+NOT DONE / OPEN FOR A FUTURE SESSION, if the user asks for "more":
+  - No deep visual redesign was done on donate, contact, events, faq,
+    partnership (4 pages), or the individual program subpages beyond the
+    church-advisory build. They were judged already strong on content;
+    they have NOT gotten the same motion/hover/credibility-badge polish
+    the homepage got. If asked to make the "whole site" match the new
+    homepage's visual language, start there.
+  - The `#0A77BC` → `lw.blue` token cleanup mentioned above.
+  - Cohort page hero still says "Apply for Spring 2027" — that's a real
+    fact per Section 1, not a bug.
+
+================================================================================
+PRE-AUGUST-11 HISTORY BELOW (Sessions 1–7) — still accurate, kept for
+context. The block that follows was the "read this first" block for
+Session 4 specifically (July 5 build-crisis). That crisis is resolved.
+================================================================================
 
 Status check at the top of this session found that Omar had ALREADY run
 `git push origin main` (at 9:48am ET, shortly after the previous session's
@@ -527,11 +605,15 @@ Inquiries intake form as the "Sponsorship Level" field options):
 10. HOW TO CONTINUE IN A NEW SESSION
 ================================================================================
 
-Paste this entire file into the new Claude chat as your first message, or
-say: "Read the file CLAUDE_HANDOFF.txt in my LWNETWORK CLAUDE folder and
-pick up from Section 7 — infrastructure status."
+*** CURRENT (as of Session 8, Aug 11 2026): paste this file into the new
+    chat, or say "Read CLAUDE_HANDOFF.txt in my LWNETWORK CLAUDE folder —
+    everything is pushed and live, pick up from the 'NOT DONE / OPEN FOR
+    A FUTURE SESSION' list at the top." The July 5 crisis and its
+    priority list below (items 1–6) are HISTORICAL — that work is done
+    and confirmed pushed. Do not re-run those steps; they're kept only
+    so a new session understands what already happened. ***
 
-Priority order for a new session:
+Historical priority order (Session 4, July 5 crisis — already resolved):
   1. Get Omar to run `git push origin main` from his Mac Terminal (pushes
      commit d337f67, the build-timeout fix — see the top of this file).
      Then check the Vercel deployment actually says "Ready". Do not trust
