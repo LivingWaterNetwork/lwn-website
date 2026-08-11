@@ -27,6 +27,20 @@ export const metadata: Metadata = {
   },
 };
 
+const focusAreas = [
+  { icon: "🧭", title: "Kingdom Vision Alignment", desc: "Clarifying the calling underneath the job title — what you're actually being formed to do." },
+  { icon: "🤝", title: "Accountability", desc: "A relationship, not a check-in — someone who has permission to ask the harder question." },
+  { icon: "📖", title: "Wisdom Transfer", desc: "Lessons that only come from someone who has already walked the season you're walking now." },
+  { icon: "🌱", title: "Growth in Community", desc: "Formation happens relationally, not just informationally — mentorship is where that plays out." },
+];
+
+const steps = [
+  { step: "01", title: "Tell Us Where You Are", desc: "Submit the form below — whether you're seeking a mentor, open to mentoring someone else, or not sure which." },
+  { step: "02", title: "We Find the Right Fit", desc: "We look at season, calling, and personality to pair mentor and mentee thoughtfully, not just by availability." },
+  { step: "03", title: "You Meet and Set the Rhythm", desc: "An initial conversation to set expectations, cadence, and what you're both hoping this relationship becomes." },
+  { step: "04", title: "Ongoing, Intentional Relationship", desc: "Regular meetings built around accountability and honest conversation — for as long as it's bearing fruit." },
+];
+
 const fields: ProgramField[] = [
   {
     type: "select",
@@ -53,18 +67,30 @@ const fields: ProgramField[] = [
 export default function MentorshipPage() {
   return (
     <>
-      <section className="bg-navy py-20 text-white text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="section-label text-spring mb-3">Iron Sharpening Iron</p>
-          <h1 className="font-serif text-4xl md:text-5xl font-semibold leading-tight">
+      {/* ── Hero ── */}
+      <section className="relative bg-navy py-24 text-white text-center overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/radical-mentoring-group.jpg"
+            alt="Men in a mentoring group"
+            fill
+            className="object-cover object-center opacity-20"
+            priority
+          />
+        </div>
+        <div className="relative max-w-3xl mx-auto px-4">
+          <p className="section-label text-spring mb-4">Iron Sharpening Iron</p>
+          <h1 className="font-serif text-5xl md:text-6xl font-semibold leading-tight mb-2">
             Strategic Mentorship
           </h1>
-          <p className="mt-4 text-white/65 text-lg font-sans max-w-xl mx-auto">
-            Every leader needs a Paul and a Timothy — someone ahead of them, and someone they&apos;re helping along.
+          <p className="text-white/70 text-lg font-sans max-w-xl mx-auto leading-relaxed mt-4">
+            Every leader needs a Paul and a Timothy — someone ahead of them, and someone
+            they&apos;re helping along.
           </p>
         </div>
       </section>
 
+      {/* ── Intro ── */}
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10 items-start">
           <div>
@@ -83,8 +109,9 @@ export default function MentorshipPage() {
               transfer, and Kingdom vision alignment.
             </p>
             <p className="text-slate leading-relaxed text-sm font-sans mt-4">
-              Tell us where you are, and we&apos;ll help find the right fit — whether that&apos;s a mentor for
-              you, or a mentee who could use what you&apos;ve learned.
+              This isn&apos;t a curriculum or a one-time conversation. It&apos;s an ongoing relationship —
+              the same conviction behind Groundwork&apos;s formation model, lived out one relationship at a
+              time.
             </p>
           </div>
 
@@ -96,6 +123,63 @@ export default function MentorshipPage() {
             successBody="We've received your interest and will follow up to talk through the right fit."
           />
         </div>
+      </section>
+
+      {/* ── Focus Areas ── */}
+      <section className="py-16 bg-mist">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <p className="section-label mb-3">What Mentorship Focuses On</p>
+            <h2 className="section-heading">More Than a Coffee Catch-Up</h2>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {focusAreas.map(({ icon, title, desc }) => (
+              <div key={title} className="card text-center">
+                <div className="text-3xl mb-3">{icon}</div>
+                <h3 className="font-serif text-base font-semibold text-navy mb-2">{title}</h3>
+                <p className="text-xs text-slate font-sans leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── How It Works ── */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="section-label mb-3">How It Works</p>
+            <h2 className="section-heading">From Interest to Ongoing Relationship</h2>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-6">
+            {steps.map(({ step, title, desc }) => (
+              <div key={step} className="flex gap-4">
+                <div className="shrink-0 w-10 h-10 rounded-full bg-navy text-spring font-serif font-semibold flex items-center justify-center text-sm">
+                  {step}
+                </div>
+                <div>
+                  <h3 className="font-serif text-base font-semibold text-navy mb-1">{title}</h3>
+                  <p className="text-slate text-sm font-sans leading-relaxed">{desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Photo strip ── */}
+      <section className="grid grid-cols-2 md:grid-cols-4 h-40 md:h-52">
+        {[
+          { src: "/images/team-elevator-selfie.jpg", alt: "Mentorship community and fellowship" },
+          { src: "/images/omar-with-colleague.jpg", alt: "Omar Fandino mentoring a colleague" },
+          { src: "/images/men-neighborhood-prayer.jpg", alt: "Men's mentoring and prayer gathering" },
+          { src: "/images/leadership-group-backstage.jpg", alt: "Leadership community" },
+        ].map(({ src, alt }) => (
+          <div key={src} className="relative overflow-hidden">
+            <Image src={src} alt={alt} fill className="object-cover hover:scale-105 transition-transform duration-500" />
+            <div className="absolute inset-0 bg-navy/20" />
+          </div>
+        ))}
       </section>
     </>
   );

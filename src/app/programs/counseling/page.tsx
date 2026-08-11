@@ -31,6 +31,19 @@ export const metadata: Metadata = {
   },
 };
 
+const focusSpheres = [
+  { name: "Presence", desc: "Spiritual health — reconnecting prayer and Scripture to real life, not just routine." },
+  { name: "Heart", desc: "Emotional health — processing wounds, burnout, and the places performance has covered up pain." },
+  { name: "Community", desc: "Relational health — restoring the connection leadership tends to isolate you from first." },
+];
+
+const steps = [
+  { step: "01", title: "Share What's On Your Heart", desc: "Fill out the form below — burnout, a specific season, a relationship, or something else entirely." },
+  { step: "02", title: "We Reach Out Within 24–48 Hours", desc: "A member of our pastoral care team follows up personally to schedule a first conversation. No pressure, just a starting point." },
+  { step: "03", title: "A First Conversation", desc: "An honest, unhurried conversation about your season and what care could look like for you." },
+  { step: "04", title: "Ongoing Sessions", desc: "One-on-one sessions built around your pace and your needs — spiritual, emotional, and relational care together." },
+];
+
 const fields: ProgramField[] = [
   {
     type: "textarea",
@@ -45,18 +58,30 @@ const fields: ProgramField[] = [
 export default function CounselingPage() {
   return (
     <>
-      <section className="bg-navy py-20 text-white text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="section-label text-spring mb-3">Healing That Empowers</p>
-          <h1 className="font-serif text-4xl md:text-5xl font-semibold leading-tight">
+      {/* ── Hero ── */}
+      <section className="relative bg-navy py-24 text-white text-center overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/prayer-circle.jpg"
+            alt="A small group praying together quietly"
+            fill
+            className="object-cover object-center opacity-20"
+            priority
+          />
+        </div>
+        <div className="relative max-w-3xl mx-auto px-4">
+          <p className="section-label text-spring mb-4">Healing That Empowers</p>
+          <h1 className="font-serif text-5xl md:text-6xl font-semibold leading-tight mb-2">
             Personalized Counseling
           </h1>
-          <p className="mt-4 text-white/65 text-lg font-sans max-w-xl mx-auto">
-            Great leaders need great care. Let&apos;s talk about what wholeness could look like for you.
+          <p className="text-white/70 text-lg font-sans max-w-xl mx-auto leading-relaxed mt-4">
+            Great leaders need great care. Let&apos;s talk about what wholeness could look like
+            for you.
           </p>
         </div>
       </section>
 
+      {/* ── Intro ── */}
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10 items-start">
           <div>
@@ -75,10 +100,6 @@ export default function CounselingPage() {
               season and challenges, we help leaders process wounds, overcome burnout, and rediscover the joy
               of serving from a place of wholeness rather than depletion.
             </p>
-            <p className="text-slate leading-relaxed text-sm font-sans mt-4">
-              Fill out the form and a member of our pastoral care team will reach out within 24-48 hours to
-              schedule a first conversation — no pressure, just a starting point.
-            </p>
           </div>
 
           <ProgramInquiryForm
@@ -90,6 +111,66 @@ export default function CounselingPage() {
             disclaimer="Please note: our counseling is discipleship-based pastoral care, not therapy provided by licensed or certified counselors. If you're looking for licensed clinical care, we're glad to help you find additional resources."
           />
         </div>
+      </section>
+
+      {/* ── What Counseling Focuses On ── */}
+      <section className="py-16 bg-mist">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <p className="section-label mb-3">What Counseling Focuses On</p>
+            <h2 className="section-heading">Care for the Whole Person</h2>
+            <p className="mt-3 text-slate font-sans text-sm max-w-xl mx-auto">
+              Three of the same six spheres of formation taught in <em>At the Table</em>, LWN&apos;s
+              proprietary formation guide — the ones counseling is built to address directly.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-3 gap-5">
+            {focusSpheres.map(({ name, desc }) => (
+              <div key={name} className="card text-center">
+                <h3 className="font-serif text-lg font-semibold text-navy mb-2">{name}</h3>
+                <p className="text-xs text-slate font-sans leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── How It Works ── */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="section-label mb-3">What to Expect</p>
+            <h2 className="section-heading">From Reaching Out to Ongoing Care</h2>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-6">
+            {steps.map(({ step, title, desc }) => (
+              <div key={step} className="flex gap-4">
+                <div className="shrink-0 w-10 h-10 rounded-full bg-navy text-spring font-serif font-semibold flex items-center justify-center text-sm">
+                  {step}
+                </div>
+                <div>
+                  <h3 className="font-serif text-base font-semibold text-navy mb-1">{title}</h3>
+                  <p className="text-slate text-sm font-sans leading-relaxed">{desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Photo strip ── */}
+      <section className="grid grid-cols-2 md:grid-cols-4 h-40 md:h-52">
+        {[
+          { src: "/images/apartment-prayer-circle.jpg", alt: "Pastoral prayer and care" },
+          { src: "/images/baptism-closeup.jpg", alt: "Spiritual restoration and renewal" },
+          { src: "/images/outreach-group.jpg", alt: "Community care and support" },
+          { src: "/images/prayer-restaurant.jpg", alt: "One-on-one pastoral conversation" },
+        ].map(({ src, alt }) => (
+          <div key={src} className="relative overflow-hidden">
+            <Image src={src} alt={alt} fill className="object-cover hover:scale-105 transition-transform duration-500" />
+            <div className="absolute inset-0 bg-navy/20" />
+          </div>
+        ))}
       </section>
     </>
   );

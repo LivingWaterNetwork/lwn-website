@@ -53,6 +53,20 @@ const programs = [
     cta: { label: "Get in Touch", href: "/programs/counseling" },
   },
   {
+    id: "coaching",
+    image: "/images/omar-with-colleague.jpg",
+    imageAlt: "Omar Fandino in a one-on-one coaching conversation",
+    imagePosition: "50% 30%",
+    title: "Personal Coaching",
+    tagline: "Formation, one-on-one.",
+    body: `The same Six Spheres formation model behind Groundwork, built entirely around
+    you. One-on-one coaching with founder Omar Fandino pairs a personalized plan across
+    your spiritual, mental, emotional, physical, relational, and stewardship health with
+    direct access between sessions — for leaders who need focused, honest formation on
+    their own timeline, not a cohort calendar.`,
+    cta: { label: "Explore Coaching", href: "/programs/coaching" },
+  },
+  {
     id: "mentorship",
     image: "/images/radical-mentoring-group.jpg",
     imageAlt: "Men in a Radical Mentoring group",

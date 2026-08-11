@@ -33,7 +33,7 @@ type TextareaField = {
 export type ProgramField = SelectField | TextField | TextareaField;
 
 type ProgramInquiryFormProps = {
-  program: "counseling" | "mentorship" | "speaking" | "missions";
+  program: "counseling" | "mentorship" | "speaking" | "missions" | "coaching";
   fields: ProgramField[];
   submitLabel?: string;
   successTitle?: string;

@@ -3,13 +3,14 @@ import { prisma } from "@/lib/prisma";
 import { sendNotificationEmail } from "@/lib/email";
 import { pushProgramInquiry } from "@/lib/airtable";
 
-const VALID_PROGRAMS = ["counseling", "mentorship", "speaking", "missions"];
+const VALID_PROGRAMS = ["counseling", "mentorship", "speaking", "missions", "coaching"];
 
 const PROGRAM_LABELS: Record<string, string> = {
   counseling: "Personalized Counseling",
   mentorship: "Strategic Mentorship",
   speaking: "Public Speaking Engagement",
   missions: "International Mission Trip",
+  coaching: "Personal Coaching",
 };
 
 export async function POST(req: NextRequest) {
