@@ -58,6 +58,33 @@ const framework = [
   },
 ];
 
+const extendedSupport = [
+  {
+    sphere: "Physical",
+    title: "Training & Nutrition",
+    desc: "A personal training plan and nutrition coaching built around your actual schedule and body, not a generic program.",
+    icon: "💪",
+  },
+  {
+    sphere: "Physical",
+    title: "Hormone Therapy Referrals",
+    desc: "For leaders whose energy and health issues go deeper than habits, referrals to trusted providers so the physical sphere gets real medical attention, not just encouragement.",
+    icon: "🩺",
+  },
+  {
+    sphere: "Stewardship",
+    title: "Business Development",
+    desc: "Strategy support for your business or ministry venture — stewarding what God has actually put in your hands, not just talking about calling in the abstract.",
+    icon: "📈",
+  },
+  {
+    sphere: "Stewardship",
+    title: "Website Review & Edits",
+    desc: "A practical audit and hands-on edits to your website or online presence — the same kind of build-and-fix work behind LWN's own site, applied to yours.",
+    icon: "🖥️",
+  },
+];
+
 const included = [
   {
     tag: "Step 1",
@@ -274,8 +301,35 @@ export default function CoachingPage() {
         </div>
       </section>
 
-      {/* ── What's Included ── */}
+      {/* ── Beyond Conversation ── */}
       <section className="py-16 bg-mist">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <p className="section-label mb-3">Beyond Conversation</p>
+            <h2 className="section-heading">Real Resources, Not Just a Weekly Call</h2>
+            <p className="mt-3 text-slate font-sans text-sm max-w-2xl mx-auto">
+              Formation isn&apos;t only what gets said in a session. Depending on which spheres
+              your assessment surfaces, coaching can plug directly into practical support most
+              coaching programs don&apos;t offer.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {extendedSupport.map(({ sphere, title, desc, icon }) => (
+              <div key={title} className="card text-center">
+                <div className="text-3xl mb-3">{icon}</div>
+                <p className="text-copper text-[10px] font-semibold font-sans uppercase tracking-widest mb-2">
+                  {sphere} Sphere
+                </p>
+                <h3 className="font-serif text-base font-semibold text-navy mb-2">{title}</h3>
+                <p className="text-xs text-slate font-sans leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── What's Included ── */}
+      <section className="py-16 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <p className="section-label mb-3">What&apos;s Included</p>
@@ -301,7 +355,7 @@ export default function CoachingPage() {
       </section>
 
       {/* ── Packages ── */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-mist">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <p className="section-label mb-3">By Conversation, Not Checkout</p>

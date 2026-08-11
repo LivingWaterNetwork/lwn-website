@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { ProgramInquiryForm, type ProgramField } from "@/components/sections/ProgramInquiryForm";
 
 // See src/app/programs/counseling/page.tsx for why this is forced dynamic
@@ -87,46 +88,54 @@ export default function MentorshipPage() {
             Every leader needs a Paul and a Timothy — someone ahead of them, and someone
             they&apos;re helping along.
           </p>
+          <div className="mt-8">
+            <Link href="#apply" className="btn-primary">
+              Submit Your Interest
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* ── Intro ── */}
       <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10 items-start">
-          <div>
-            <div className="rounded-2xl overflow-hidden aspect-video relative shadow-md mb-6">
-              <Image
-                src="/images/omar-mentorship-portrait.jpg"
-                alt="Omar Fandino with a ministry partner in a black blazer, arm around his shoulder in a playful, confident pose"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <p className="text-slate leading-relaxed text-sm font-sans">
-              We believe every leader needs a Paul and a Timothy — someone ahead of them on the journey and
-              someone they are helping along. Our strategic mentorship program pairs seasoned leaders with
-              emerging ones for intentional, Spirit-led relationships built around accountability, wisdom
-              transfer, and Kingdom vision alignment.
-            </p>
-            <p className="text-slate leading-relaxed text-sm font-sans mt-4">
-              This isn&apos;t a curriculum or a one-time conversation. It&apos;s an ongoing relationship —
-              the same conviction behind Groundwork&apos;s formation model, lived out one relationship at a
-              time.
-            </p>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="rounded-2xl overflow-hidden aspect-video relative shadow-md mb-6 max-w-xl mx-auto">
+            <Image
+              src="/images/omar-mentorship-portrait.jpg"
+              alt="Omar Fandino with a ministry partner in a black blazer, arm around his shoulder in a playful, confident pose"
+              fill
+              className="object-cover"
+            />
           </div>
+          <p className="text-slate leading-relaxed text-sm font-sans max-w-2xl mx-auto text-center">
+            We believe every leader needs a Paul and a Timothy — someone ahead of them on the journey and
+            someone they are helping along. Our strategic mentorship program pairs seasoned leaders with
+            emerging ones for intentional, Spirit-led relationships built around accountability, wisdom
+            transfer, and Kingdom vision alignment.
+          </p>
+        </div>
+      </section>
 
-          <ProgramInquiryForm
-            program="mentorship"
-            fields={fields}
-            submitLabel="Submit Interest"
-            successTitle="Thank You"
-            successBody="We've received your interest and will follow up to talk through the right fit."
-          />
+      {/* ── Differentiator ── */}
+      <section className="py-16 bg-mist">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="section-label mb-3">Why This Isn&apos;t Just Advice</p>
+          <h2 className="section-heading mb-6">This Isn&apos;t a Coffee Chat. It&apos;s a Relationship.</h2>
+          <p className="text-slate font-sans text-base leading-relaxed">
+            Plenty of leaders can give you advice in a single conversation. Fewer will stay in
+            the room long enough to watch whether that advice actually took root — and ask you
+            honestly if it didn&apos;t.
+          </p>
+          <p className="mt-4 text-slate font-sans text-base leading-relaxed">
+            This isn&apos;t a curriculum or a one-time conversation. It&apos;s an ongoing
+            relationship — the same conviction behind Groundwork&apos;s formation model, lived
+            out one relationship at a time.
+          </p>
         </div>
       </section>
 
       {/* ── Focus Areas ── */}
-      <section className="py-16 bg-mist">
+      <section className="py-16 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <p className="section-label mb-3">What Mentorship Focuses On</p>
@@ -145,7 +154,7 @@ export default function MentorshipPage() {
       </section>
 
       {/* ── How It Works ── */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-mist">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <p className="section-label mb-3">How It Works</p>
@@ -164,6 +173,11 @@ export default function MentorshipPage() {
               </div>
             ))}
           </div>
+          <div className="text-center mt-10">
+            <Link href="#apply" className="btn-primary">
+              Submit Your Interest
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -180,6 +194,28 @@ export default function MentorshipPage() {
             <div className="absolute inset-0 bg-navy/20" />
           </div>
         ))}
+      </section>
+
+      {/* ── Apply ── */}
+      <section id="apply" className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10 items-start">
+          <div>
+            <p className="section-label mb-3">Start Here</p>
+            <h2 className="section-heading mb-4">Submit Your Interest</h2>
+            <p className="text-slate leading-relaxed text-sm font-sans">
+              Tell us where you are, and we&apos;ll help find the right fit — whether that&apos;s
+              a mentor for you, or a mentee who could use what you&apos;ve learned.
+            </p>
+          </div>
+
+          <ProgramInquiryForm
+            program="mentorship"
+            fields={fields}
+            submitLabel="Submit Interest"
+            successTitle="Thank You"
+            successBody="We've received your interest and will follow up to talk through the right fit."
+          />
+        </div>
       </section>
     </>
   );

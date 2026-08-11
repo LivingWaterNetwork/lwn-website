@@ -3,6 +3,11 @@ import Link from "next/link";
 import { getAllPosts } from "@/lib/blog";
 import { NewsletterSignup } from "@/components/sections/NewsletterSignup";
 
+// Forced dynamic so future-dated ("scheduled") posts in content/blog
+// actually disappear/appear on their date without a new deploy — see the
+// isPublished() filter in src/lib/blog.ts for the scheduling logic.
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Blog",
   description:

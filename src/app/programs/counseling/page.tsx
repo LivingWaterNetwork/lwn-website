@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { ProgramInquiryForm, type ProgramField } from "@/components/sections/ProgramInquiryForm";
 
 // Force dynamic rendering — this route was hitting Next's 60s static
@@ -78,43 +79,52 @@ export default function CounselingPage() {
             Great leaders need great care. Let&apos;s talk about what wholeness could look like
             for you.
           </p>
+          <div className="mt-8">
+            <Link href="#apply" className="btn-primary">
+              Request Counseling
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* ── Intro ── */}
       <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10 items-start">
-          <div>
-            <div className="rounded-2xl overflow-hidden aspect-video relative shadow-md mb-6">
-              <Image
-                src="/images/prayer-small-group.jpg"
-                alt="A small group praying together quietly, hands on each other's shoulders"
-                fill
-                className="object-cover"
-                style={{ objectPosition: "50% 30%" }}
-              />
-            </div>
-            <p className="text-slate leading-relaxed text-sm font-sans">
-              Our personalized counseling sessions go beyond coaching to address the spiritual, emotional,
-              and relational dimensions of leadership. Through one-on-one engagements tailored to your unique
-              season and challenges, we help leaders process wounds, overcome burnout, and rediscover the joy
-              of serving from a place of wholeness rather than depletion.
-            </p>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="rounded-2xl overflow-hidden aspect-video relative shadow-md mb-6 max-w-xl mx-auto">
+            <Image
+              src="/images/prayer-small-group.jpg"
+              alt="A small group praying together quietly, hands on each other's shoulders"
+              fill
+              className="object-cover"
+              style={{ objectPosition: "50% 30%" }}
+            />
           </div>
+          <p className="text-slate leading-relaxed text-sm font-sans text-center max-w-2xl mx-auto">
+            Our personalized counseling sessions go beyond coaching to address the spiritual, emotional,
+            and relational dimensions of leadership. Through one-on-one engagements tailored to your unique
+            season and challenges, we help leaders process wounds, overcome burnout, and rediscover the joy
+            of serving from a place of wholeness rather than depletion.
+          </p>
+        </div>
+      </section>
 
-          <ProgramInquiryForm
-            program="counseling"
-            fields={fields}
-            submitLabel="Request Counseling"
-            successTitle="We've Received Your Request"
-            successBody="Someone from our pastoral care team will reach out within 24-48 hours. Thank you for trusting us with this."
-            disclaimer="Please note: our counseling is discipleship-based pastoral care, not therapy provided by licensed or certified counselors. If you're looking for licensed clinical care, we're glad to help you find additional resources."
-          />
+      {/* ── Differentiator ── */}
+      <section className="py-16 bg-mist">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="section-label mb-3">Why This Isn&apos;t Just Talk Therapy</p>
+          <h2 className="section-heading mb-6">Care Rooted in Scripture, Not Just Technique</h2>
+          <p className="text-slate font-sans text-base leading-relaxed">
+            This is discipleship-based pastoral care — someone walking with you through the
+            spiritual and emotional weight of leadership, not a clinical intake process. It
+            doesn&apos;t replace licensed therapy where that&apos;s needed, but it offers
+            something a clinical hour often can&apos;t: a shared faith, and a relationship that
+            continues beyond a diagnosis.
+          </p>
         </div>
       </section>
 
       {/* ── What Counseling Focuses On ── */}
-      <section className="py-16 bg-mist">
+      <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <p className="section-label mb-3">What Counseling Focuses On</p>
@@ -136,7 +146,7 @@ export default function CounselingPage() {
       </section>
 
       {/* ── How It Works ── */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-mist">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <p className="section-label mb-3">What to Expect</p>
@@ -155,6 +165,11 @@ export default function CounselingPage() {
               </div>
             ))}
           </div>
+          <div className="text-center mt-10">
+            <Link href="#apply" className="btn-primary">
+              Request Counseling
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -171,6 +186,29 @@ export default function CounselingPage() {
             <div className="absolute inset-0 bg-navy/20" />
           </div>
         ))}
+      </section>
+
+      {/* ── Apply ── */}
+      <section id="apply" className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10 items-start">
+          <div>
+            <p className="section-label mb-3">Start Here</p>
+            <h2 className="section-heading mb-4">Request Counseling</h2>
+            <p className="text-slate leading-relaxed text-sm font-sans">
+              Fill out the form and a member of our pastoral care team will reach out within
+              24-48 hours to schedule a first conversation. No pressure, just a starting point.
+            </p>
+          </div>
+
+          <ProgramInquiryForm
+            program="counseling"
+            fields={fields}
+            submitLabel="Request Counseling"
+            successTitle="We've Received Your Request"
+            successBody="Someone from our pastoral care team will reach out within 24-48 hours. Thank you for trusting us with this."
+            disclaimer="Please note: our counseling is discipleship-based pastoral care, not therapy provided by licensed or certified counselors. If you're looking for licensed clinical care, we're glad to help you find additional resources."
+          />
+        </div>
       </section>
     </>
   );

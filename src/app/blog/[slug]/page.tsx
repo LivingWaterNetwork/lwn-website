@@ -4,6 +4,11 @@ import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
 
+// Forced dynamic so a scheduled (future-dated) post's page actually 404s
+// until its date arrives, and starts resolving the moment it passes,
+// without a new deploy — see isPublished() in src/lib/blog.ts.
+export const dynamic = "force-dynamic";
+
 interface Props {
   params: { slug: string };
 }
