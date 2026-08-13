@@ -3,6 +3,8 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { FadeInSection } from "@/components/motion/FadeInSection";
+import { RevealText } from "@/components/motion/RevealText";
 
 const COPY: Record<string, { kicker: string; title: string; body: string }> = {
   inquiry: {
@@ -38,17 +40,23 @@ function ThankYouContent() {
   return (
     <section className="bg-navy py-28 text-white text-center min-h-[70vh] flex items-center">
       <div className="max-w-2xl mx-auto px-4">
-        <p className="section-label text-spring mb-4">{copy.kicker}</p>
-        <h1 className="font-serif text-4xl md:text-5xl font-semibold leading-tight mb-6">{copy.title}</h1>
-        <p className="text-white/70 font-sans text-lg leading-relaxed mb-10">{copy.body}</p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/partnership" className="btn-copper">
-            Back to Partnership
-          </Link>
-          <Link href="/" className="inline-flex items-center justify-center px-8 py-3.5 border-2 border-white/40 hover:border-white text-white font-semibold font-sans text-sm rounded-md transition-colors hover:bg-white/10">
-            Return Home
-          </Link>
-        </div>
+        <FadeInSection>
+          <p className="section-label text-spring mb-4">{copy.kicker}</p>
+        </FadeInSection>
+        <h1 className="font-serif text-4xl md:text-5xl font-semibold leading-tight mb-6">
+          <RevealText text={copy.title} />
+        </h1>
+        <FadeInSection delay={0.2}>
+          <p className="text-white/70 font-sans text-lg leading-relaxed mb-10">{copy.body}</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/partnership" className="btn-copper">
+              Back to Partnership
+            </Link>
+            <Link href="/" className="inline-flex items-center justify-center px-8 py-3.5 border-2 border-white/40 hover:border-white text-white font-semibold font-sans text-sm rounded-md transition-colors hover:bg-white/10">
+              Return Home
+            </Link>
+          </div>
+        </FadeInSection>
       </div>
     </section>
   );

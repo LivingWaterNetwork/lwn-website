@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 type FormState = "idle" | "submitting" | "success" | "error";
 
@@ -26,9 +27,14 @@ export function NewsletterSignup({ dark = false }: { dark?: boolean }) {
 
   if (state === "success") {
     return (
-      <p className={`text-sm font-sans ${dark ? "text-spring" : "text-copper"}`}>
+      <motion.p
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        className={`text-sm font-sans ${dark ? "text-spring" : "text-copper"}`}
+      >
         You&apos;re in! Watch your inbox for updates from Living Water Network.
-      </p>
+      </motion.p>
     );
   }
 
@@ -54,9 +60,14 @@ export function NewsletterSignup({ dark = false }: { dark?: boolean }) {
         {state === "submitting" ? "Subscribing…" : "Subscribe"}
       </button>
       {state === "error" && (
-        <p className="text-red-400 text-xs font-sans mt-1 sm:mt-0 sm:ml-2 self-center">
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="text-red-400 text-xs font-sans mt-1 sm:mt-0 sm:ml-2 self-center"
+        >
           Something went wrong — try again.
-        </p>
+        </motion.p>
       )}
     </form>
   );

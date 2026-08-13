@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 type FormState = "idle" | "submitting" | "success" | "error";
 
@@ -106,11 +107,16 @@ export function ProgramInquiryForm({
 
   if (state === "success") {
     return (
-      <div className="card text-center py-12">
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        className="card text-center py-12"
+      >
         <div className="text-5xl mb-4">🌊</div>
         <h3 className="font-serif text-2xl font-semibold text-navy mb-2">{successTitle}</h3>
         <p className="text-slate text-sm font-sans">{successBody}</p>
-      </div>
+      </motion.div>
     );
   }
 
@@ -208,7 +214,14 @@ export function ProgramInquiryForm({
       ))}
 
       {state === "error" && (
-        <p className="form-error text-sm">{errorMsg || "Something went wrong. Please try again."}</p>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="form-error text-sm"
+        >
+          {errorMsg || "Something went wrong. Please try again."}
+        </motion.p>
       )}
 
       <button

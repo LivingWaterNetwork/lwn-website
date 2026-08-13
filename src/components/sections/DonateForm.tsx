@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { loadStripe, Stripe, StripeElements } from "@stripe/stripe-js";
+import { motion } from "framer-motion";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? ""
@@ -126,7 +127,16 @@ function PaymentStep({ clientSecret, amount, frequency, onBack }: PaymentStepPro
         <div ref={mountRef} />
       </div>
 
-      {error && <p className="text-red-600 text-sm font-sans">{error}</p>}
+      {error && (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="text-red-600 text-sm font-sans"
+        >
+          {error}
+        </motion.p>
+      )}
 
       <button
         type="submit"
@@ -324,7 +334,16 @@ export function DonateForm() {
         </p>
       </div>
 
-      {error && <p className="form-error text-sm">{error}</p>}
+      {error && (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="form-error text-sm"
+        >
+          {error}
+        </motion.p>
+      )}
 
       <button
         type="submit"

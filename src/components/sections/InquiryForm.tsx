@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 type FormState = "idle" | "submitting" | "error";
 
@@ -134,7 +135,16 @@ export function InquiryForm({
         </div>
       ))}
 
-      {state === "error" && <p className="form-error text-sm">{errorMsg || "Something went wrong. Please try again."}</p>}
+      {state === "error" && (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="form-error text-sm"
+        >
+          {errorMsg || "Something went wrong. Please try again."}
+        </motion.p>
+      )}
 
       <button type="submit" disabled={state === "submitting"} className="btn-primary w-full disabled:opacity-60 disabled:cursor-not-allowed">
         {state === "submitting" ? "Submitting…" : submitLabel}

@@ -2,6 +2,11 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { motion } from "framer-motion";
+import { FadeInSection } from "@/components/motion/FadeInSection";
+import { SectionHeading } from "@/components/motion/SectionHeading";
+import { RevealText } from "@/components/motion/RevealText";
+import { StaggerChildren, StaggerItem } from "@/components/motion/StaggerChildren";
 
 export default function EventsPage() {
   const [form, setForm] = useState({ name: "", email: "" });
@@ -61,37 +66,57 @@ export default function EventsPage() {
 
         <div className="relative max-w-3xl mx-auto px-4 text-center text-white">
           {/* Coming soon badge */}
-          <div className="inline-flex items-center gap-2 bg-copper/20 border border-copper/40 rounded-full px-4 py-1.5 mb-8">
+          <motion.div
+            className="inline-flex items-center gap-2 bg-copper/20 border border-copper/40 rounded-full px-4 py-1.5 mb-8"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
             <span className="w-1.5 h-1.5 rounded-full bg-copper animate-pulse" />
             <span className="text-copper font-sans font-semibold text-xs uppercase tracking-[0.2em]">
               Coming Winter 2026
             </span>
-          </div>
+          </motion.div>
 
           <h1 className="font-serif text-5xl md:text-7xl font-semibold leading-[1.1] mb-6">
-            The Living Water<br />
-            <span className="italic text-spring">Network Gala</span>
+            <RevealText text="The Living Water" delay={0.15} /><br />
+            <span className="italic text-spring">
+              <RevealText text="Network Gala" delay={0.35} />
+            </span>
           </h1>
 
-          <p className="text-white/60 font-sans text-xs uppercase tracking-[0.3em] mb-8">
+          <motion.p
+            className="text-white/60 font-sans text-xs uppercase tracking-[0.3em] mb-8"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
+          >
             Black Tie · By Invitation
-          </p>
+          </motion.p>
 
-          <p className="text-white/70 font-sans text-lg leading-relaxed max-w-xl mx-auto mb-12">
+          <motion.p
+            className="text-white/70 font-sans text-lg leading-relaxed max-w-xl mx-auto mb-12"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.05 }}
+          >
             A landmark evening to publicly launch the Living Water Network movement —
             celebrating what God has built, welcoming new partners into the circle,
             and releasing the next generation of Kingdom leaders.
-          </p>
+          </motion.p>
 
-          <a
+          <motion.a
             href="#notify"
             className="inline-flex items-center gap-2 bg-copper hover:bg-copper-light text-white font-semibold font-sans text-sm px-8 py-4 rounded-md transition-colors tracking-wide"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.2 }}
           >
             Request Early Access
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
-          </a>
+          </motion.a>
         </div>
 
         {/* Scroll cue */}
@@ -103,21 +128,17 @@ export default function EventsPage() {
       {/* ── What to Expect ── */}
       <section className="py-20 bg-[#060F1A] text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <p className="text-copper font-sans font-extrabold text-xs uppercase tracking-[0.2em] mb-4">
-              The Evening
-            </p>
-            <h2 className="font-serif text-4xl font-semibold text-white leading-tight">
-              A Night Worth Dressing For
-            </h2>
-            <p className="mt-4 text-white/50 font-sans text-sm max-w-xl mx-auto leading-relaxed">
-              This is more than a fundraising gala. It is the public declaration
-              of a movement that has been quietly forming — and an invitation
-              to join it.
-            </p>
-          </div>
+          <SectionHeading
+            label="The Evening"
+            heading="A Night Worth Dressing For"
+            subheading="This is more than a fundraising gala. It is the public declaration of a movement that has been quietly forming — and an invitation to join it."
+            labelClassName="text-copper font-sans font-extrabold text-xs uppercase tracking-[0.2em] mb-4"
+            headingClassName="font-serif text-4xl font-semibold text-white leading-tight"
+            subheadingClassName="mt-4 text-white/50 font-sans text-sm max-w-xl mx-auto leading-relaxed"
+            className="mb-14"
+          />
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <StaggerChildren className="grid md:grid-cols-3 gap-6">
             {[
               {
                 icon: "🥂",
@@ -135,105 +156,104 @@ export default function EventsPage() {
                 desc: "The official public launch of Living Water Network — including a preview of what's coming in 2027 and beyond.",
               },
             ].map(({ icon, title, desc }) => (
-              <div
+              <StaggerItem
                 key={title}
                 className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/8 transition-colors"
               >
                 <div className="text-3xl mb-4">{icon}</div>
                 <h3 className="font-serif text-lg font-semibold text-white mb-2">{title}</h3>
                 <p className="text-white/50 font-sans text-sm leading-relaxed">{desc}</p>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerChildren>
         </div>
       </section>
 
       {/* ── Divider quote ── */}
       <section className="py-16 bg-navy text-white text-center">
-        <div className="max-w-2xl mx-auto px-4">
+        <FadeInSection className="max-w-2xl mx-auto px-4">
           <blockquote className="font-serif text-2xl md:text-3xl italic text-white leading-relaxed">
             &ldquo;Rivers of living water will flow from within them.&rdquo;
           </blockquote>
           <p className="mt-4 text-spring text-sm font-semibold font-sans tracking-widest uppercase">
             John 7:38
           </p>
-        </div>
+        </FadeInSection>
       </section>
 
       {/* ── Interest form ── */}
       <section id="notify" className="py-20 bg-[#060F1A] text-white">
         <div className="max-w-lg mx-auto px-4 sm:px-6">
-          <div className="text-center mb-10">
-            <p className="text-copper font-sans font-extrabold text-xs uppercase tracking-[0.2em] mb-4">
-              Reserve Your Spot
-            </p>
-            <h2 className="font-serif text-4xl font-semibold text-white mb-3">
-              Request Early Access
-            </h2>
-            <p className="text-white/50 font-sans text-sm leading-relaxed">
-              Seating is limited and by invitation. Leave your information and our team
-              will be in touch with event details as they are confirmed.
-            </p>
-          </div>
+          <SectionHeading
+            label="Reserve Your Spot"
+            heading="Request Early Access"
+            subheading="Seating is limited and by invitation. Leave your information and our team will be in touch with event details as they are confirmed."
+            labelClassName="text-copper font-sans font-extrabold text-xs uppercase tracking-[0.2em] mb-4"
+            headingClassName="font-serif text-4xl font-semibold text-white mb-3"
+            subheadingClassName="text-white/50 font-sans text-sm leading-relaxed"
+            className="mb-10"
+          />
 
           {status === "success" ? (
-            <div className="text-center py-12 bg-white/5 border border-white/10 rounded-2xl">
+            <FadeInSection className="text-center py-12 bg-white/5 border border-white/10 rounded-2xl">
               <p className="text-3xl mb-4">✉️</p>
               <h3 className="font-serif text-2xl text-white font-semibold mb-2">You&apos;re on the list.</h3>
               <p className="text-white/50 font-sans text-sm">
                 We&apos;ll reach out as event details are confirmed. Thank you for your interest.
               </p>
-            </div>
+            </FadeInSection>
           ) : (
-            <form
-              onSubmit={handleSubmit}
-              className="space-y-4 bg-white/5 border border-white/10 rounded-2xl p-8"
-            >
-              <div>
-                <label className="block text-xs font-semibold font-sans text-white/60 uppercase tracking-widest mb-2">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  placeholder="Your name"
-                  className="w-full bg-white/10 border border-white/20 rounded-md px-4 py-3 text-white placeholder-white/30 text-sm font-sans focus:outline-none focus:ring-2 focus:ring-copper/50 focus:border-copper/50 transition"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold font-sans text-white/60 uppercase tracking-widest mb-2">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  required
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  placeholder="your@email.com"
-                  className="w-full bg-white/10 border border-white/20 rounded-md px-4 py-3 text-white placeholder-white/30 text-sm font-sans focus:outline-none focus:ring-2 focus:ring-copper/50 focus:border-copper/50 transition"
-                />
-              </div>
-
-              {status === "error" && (
-                <p className="text-red-400 text-sm font-sans text-center">
-                  Something went wrong. Please email{" "}
-                  <a href="mailto:info@lwnetwork.org" className="underline">
-                    info@lwnetwork.org
-                  </a>{" "}
-                  directly.
-                </p>
-              )}
-
-              <button
-                type="submit"
-                disabled={status === "loading"}
-                className="w-full bg-copper hover:bg-copper-light disabled:opacity-60 text-white font-semibold font-sans text-sm py-3.5 rounded-md transition-colors tracking-wide mt-2"
+            <FadeInSection>
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-4 bg-white/5 border border-white/10 rounded-2xl p-8"
               >
-                {status === "loading" ? "Submitting…" : "Request Early Access"}
-              </button>
-            </form>
+                <div>
+                  <label className="block text-xs font-semibold font-sans text-white/60 uppercase tracking-widest mb-2">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    placeholder="Your name"
+                    className="w-full bg-white/10 border border-white/20 rounded-md px-4 py-3 text-white placeholder-white/30 text-sm font-sans focus:outline-none focus:ring-2 focus:ring-copper/50 focus:border-copper/50 transition"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold font-sans text-white/60 uppercase tracking-widest mb-2">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    placeholder="your@email.com"
+                    className="w-full bg-white/10 border border-white/20 rounded-md px-4 py-3 text-white placeholder-white/30 text-sm font-sans focus:outline-none focus:ring-2 focus:ring-copper/50 focus:border-copper/50 transition"
+                  />
+                </div>
+
+                {status === "error" && (
+                  <p className="text-red-400 text-sm font-sans text-center">
+                    Something went wrong. Please email{" "}
+                    <a href="mailto:info@lwnetwork.org" className="underline">
+                      info@lwnetwork.org
+                    </a>{" "}
+                    directly.
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="w-full bg-copper hover:bg-copper-light disabled:opacity-60 text-white font-semibold font-sans text-sm py-3.5 rounded-md transition-colors tracking-wide mt-2"
+                >
+                  {status === "loading" ? "Submitting…" : "Request Early Access"}
+                </button>
+              </form>
+            </FadeInSection>
           )}
 
           <p className="text-white/30 text-xs font-sans text-center mt-6">
@@ -244,7 +264,7 @@ export default function EventsPage() {
 
       {/* ── Bottom CTA ── */}
       <section className="py-16 bg-navy text-white text-center">
-        <div className="max-w-xl mx-auto px-4">
+        <FadeInSection className="max-w-xl mx-auto px-4">
           <p className="font-serif italic text-spring text-xl mb-2">Rooted in truth. Sent to lead.</p>
           <p className="text-white/50 font-sans text-sm mb-8">
             Want to support the mission before the Gala?
@@ -260,7 +280,7 @@ export default function EventsPage() {
               Apply for Groundwork
             </Link>
           </div>
-        </div>
+        </FadeInSection>
       </section>
     </>
   );
