@@ -58,7 +58,6 @@ function PaymentStep({ clientSecret, amount, frequency, onBack }: PaymentStepPro
         });
 
         // Surface Stripe load errors (account not activated, key mismatch, etc.)
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (paymentEl as any).on("loaderror", (e: any) => {
           console.error("[Stripe loaderror]", e);
           if (loadTimeout) { clearTimeout(loadTimeout); loadTimeout = null; }

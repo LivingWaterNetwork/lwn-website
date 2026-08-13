@@ -13,7 +13,7 @@ export default function DonateSuccessPage() {
         <div className="text-6xl mb-6">🌊</div>
         <h1 className="font-serif text-4xl font-semibold text-navy mb-4">Thank You!</h1>
         <p className="text-slate leading-relaxed mb-6 font-sans">
-          Your generous gift has been received. You'll receive a tax receipt at
+          Your generous gift has been received. You&apos;ll receive a tax receipt at
           the email address you provided. Your support helps us equip Kingdom
           leaders to disrupt darkness and disciple nations.
         </p>
