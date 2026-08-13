@@ -3,6 +3,7 @@ import { Newsreader, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { MotionProviders } from "@/components/motion/Providers";
 
 const hanken = Hanken_Grotesk({
   subsets: ["latin"],
@@ -106,7 +107,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         <Navbar />
-        <main>{children}</main>
+        <main>
+          <MotionProviders>{children}</MotionProviders>
+        </main>
         <Footer />
       </body>
     </html>

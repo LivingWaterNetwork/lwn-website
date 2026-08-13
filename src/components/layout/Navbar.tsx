@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { useMotionValueEvent, useScroll } from "framer-motion";
 
 const navLinks = [
   { href: "/about", label: "About" },
@@ -19,10 +20,24 @@ const navLinks = [
 export function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setScrolled(latest > 80);
+  });
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-mist shadow-sm">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+    <header
+      className={`sticky top-0 z-50 border-b border-mist bg-white/95 backdrop-blur transition-shadow duration-300 ${
+        scrolled ? "shadow-md backdrop-blur-md" : "shadow-sm"
+      }`}
+    >
+      <nav
+        className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-[height] duration-300 ${
+          scrolled ? "h-14" : "h-16"
+        }`}
+      >
         {/* Logo */}
         <Link href="/" className="flex items-center shrink-0">
           <Image

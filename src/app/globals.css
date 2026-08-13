@@ -22,15 +22,15 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center px-6 py-3 rounded-md bg-[#0A77BC] text-white font-semibold font-sans text-sm tracking-wide transition-colors hover:bg-[#1a87cc] active:bg-[#0862a0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A77BC] focus-visible:ring-offset-2;
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-md bg-[#0A77BC] text-white font-semibold font-sans text-sm tracking-wide transition hover:bg-[#1a87cc] active:bg-[#0862a0] hover:scale-[1.02] active:scale-[0.98] hover:shadow-md motion-reduce:hover:scale-100 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A77BC] focus-visible:ring-offset-2;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-6 py-3 rounded-md border-2 border-[#0A77BC] text-[#0A77BC] font-semibold font-sans text-sm tracking-wide transition-colors hover:bg-[#0A77BC] hover:text-white active:bg-[#0862a0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A77BC] focus-visible:ring-offset-2;
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-md border-2 border-[#0A77BC] text-[#0A77BC] font-semibold font-sans text-sm tracking-wide transition hover:bg-[#0A77BC] hover:text-white active:bg-[#0862a0] hover:scale-[1.02] active:scale-[0.98] hover:shadow-md motion-reduce:hover:scale-100 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A77BC] focus-visible:ring-offset-2;
   }
 
   .btn-copper {
-    @apply inline-flex items-center justify-center px-6 py-3 rounded-md bg-copper text-white font-semibold font-sans text-sm tracking-wide transition-colors hover:bg-copper-light active:bg-copper-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copper focus-visible:ring-offset-2;
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-md bg-copper text-white font-semibold font-sans text-sm tracking-wide transition hover:bg-copper-light active:bg-copper-dark hover:scale-[1.02] active:scale-[0.98] hover:shadow-md motion-reduce:hover:scale-100 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copper focus-visible:ring-offset-2;
   }
 
   .section-label {
@@ -46,7 +46,7 @@
   }
 
   .card {
-    @apply bg-white rounded-xl shadow-sm border border-mist p-6;
+    @apply bg-white rounded-xl shadow-sm border border-mist p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 motion-reduce:hover:translate-y-0;
   }
 
   .form-label {
@@ -110,5 +110,42 @@
 
   .animate-fade-in-up {
     animation: fade-in-up 0.7s ease-out both;
+  }
+
+  /* Slow drifting light layer behind the hero ripple rings */
+  @keyframes drift-a {
+    0%, 100% {
+      transform: translate(-4%, -2%) scale(1);
+    }
+    50% {
+      transform: translate(4%, 3%) scale(1.08);
+    }
+  }
+
+  @keyframes drift-b {
+    0%, 100% {
+      transform: translate(3%, 4%) scale(1.05);
+    }
+    50% {
+      transform: translate(-3%, -3%) scale(0.98);
+    }
+  }
+
+  .animate-drift-a {
+    animation: drift-a 22s ease-in-out infinite;
+  }
+
+  .animate-drift-b {
+    animation: drift-b 26s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-ripple,
+    .animate-ripple-delay,
+    .animate-fade-in-up,
+    .animate-drift-a,
+    .animate-drift-b {
+      animation: none;
+    }
   }
 }

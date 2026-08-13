@@ -9,7 +9,7 @@ interface ProgramCardProps {
 
 export function ProgramCard({ title, description, icon, href }: ProgramCardProps) {
   const content = (
-    <div className="card flex flex-col gap-4 h-full hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group">
+    <div className="card flex flex-col gap-4 h-full group">
       <div className="text-3xl group-hover:scale-110 transition-transform duration-300 origin-left">
         {icon}
       </div>
