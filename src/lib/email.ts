@@ -18,6 +18,13 @@ function formatAmount(cents: number): string {
  * with zero changes needed elsewhere in the app.
  */
 async function deliver(to: string, subject: string, text: string): Promise<void> {
+  // TEMP DIAGNOSTIC — remove after verifying delivery path in production logs.
+  console.log("[email] deliver() diagnostic:", {
+    graphConfigured: graphMailConfigured(),
+    hasResendKey: Boolean(process.env.RESEND_API_KEY),
+    notifyTo: NOTIFY_TO,
+  });
+
   if (graphMailConfigured()) {
     try {
       await sendGraphMail({ to, subject, text });
