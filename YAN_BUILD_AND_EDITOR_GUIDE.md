@@ -160,14 +160,14 @@ attribution; attribution is recorded anyway as good practice. The two
 "young adults gathering" photos are generic stock and are flagged in the manifest
 as **not** to be captioned as an actual YAN event.
 
-**No official YAN logo/icon files were supplied with this project** — only two
-brand-guideline slide decks with small raster decorations, not production assets.
-Per your direction, the mark was **recreated as code** (`src/components/yan/brand/YanMark.tsx`,
-`YanLogo.tsx`) — an original SVG node-network icon interpreting the guideline's
-description, clearly a placeholder. **Swap these two files' contents for the real
-logo when Living Water Network provides one** — every other component imports
-`<YanMark />`/`<YanLogoHorizontal />` rather than a raw `<img>`, so nothing else
-needs to change.
+**Update:** the official logo files were supplied mid-build and are now in use —
+`public/images/yan/brand/{yan-logo-primary,yan-logo-reverse,yan-icon-mark}.png`.
+`YanLogoHorizontal` renders the official lockup PNG directly (primary for light
+backgrounds, reverse for dark). No official stacked/vertical lockup was supplied,
+so the footer's stacked mark composes the official icon geometry
+(`src/components/yan/brand/YanMark.tsx`, rebuilt to match the real triangle/node
+mark exactly) with wordmark text — swap in a real stacked asset here if one is
+produced later.
 
 ## 9. SEO & analytics implementation
 
@@ -225,7 +225,7 @@ locally once `npm run dev` is available with a real `DATABASE_URL`.
 1. **Faith foundation copy** (`/yan` page, "What We Hold To" section) — condensed
    from Living Water Network's narrative beliefs (no standalone doctrinal
    statement page exists in the repo to source from directly). Needs sign-off.
-2. **YAN logo** — code-built placeholder mark (§8); needs the real brand asset.
+2. **YAN logo** — official assets now in use (§8); only the footer's stacked lockup is a composed approximation (no official vertical/stacked asset exists yet).
 3. **`YAN_ADMIN_PASSWORD`** — must be set before `/yan/admin` is usable.
 4. **`npm run db:push`** — must be run against the real database before any YAN
    content can actually be created/published (site works fine before this, just
@@ -240,7 +240,7 @@ locally once `npm run dev` is available with a real `DATABASE_URL`.
 - [ ] Set `YAN_ADMIN_PASSWORD` (and optionally `YAN_ADMIN_SESSION_SECRET`) in Vercel
 - [ ] Run `npm run db:push` against production `DATABASE_URL`
 - [ ] Approve the condensed faith-foundation copy
-- [ ] Replace the placeholder `YanMark`/`YanLogo` with the official asset once supplied
+- [ ] Produce an official stacked/vertical lockup asset for the footer, if desired (currently a composed approximation)
 - [ ] Create the Fall 2026 Leaders Roundtable event row once date/venue are confirmed
 - [ ] Invite a handful of real ministries to seed `/yan/network` before public launch
 - [ ] Choose and wire an analytics provider into `src/lib/yanAnalytics.ts`
