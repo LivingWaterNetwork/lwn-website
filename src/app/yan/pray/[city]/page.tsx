@@ -40,7 +40,7 @@ export default async function YanPrayCityPage({ params }: { params: { city: stri
     []
   );
 
-  const stats = city.slug !== "atlanta" ? getCityStats(city.slug, ["mentalHealth", "justice"]) : [];
+  const stats = getCityStats(city.slug, ["mentalHealth", "justice"]);
   const otherCities = getOtherCities(city.slug);
 
   return (
@@ -64,15 +64,13 @@ export default async function YanPrayCityPage({ params }: { params: { city: stri
         </FadeInSection>
       </section>
 
-      {city.slug !== "atlanta" && themes.length === 0 && (
-        <section className="py-14 sm:py-20 bg-white">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <YanStatsStrip stats={stats} />
-          </div>
-        </section>
-      )}
-
       <section className="py-14 sm:py-20 bg-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <YanStatsStrip stats={stats} />
+        </div>
+      </section>
+
+      <section className="py-14 sm:py-20 bg-yan-stone">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           {themes.length === 0 ? (
             <YanEmptyState
@@ -102,7 +100,7 @@ export default async function YanPrayCityPage({ params }: { params: { city: stri
         </div>
       </section>
 
-      <section id="submit-request" className="py-14 sm:py-20 bg-yan-stone">
+      <section id="submit-request" className="py-14 sm:py-20 bg-white">
         <FadeInSection className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="yan-h3 text-yan-navy text-center mb-6">Submit a prayer request</h2>
           <YanPrayerRequestForm city={city.name} />

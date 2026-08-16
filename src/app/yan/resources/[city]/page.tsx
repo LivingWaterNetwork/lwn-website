@@ -144,6 +144,12 @@ export default async function YanResourcesCityPage({ params }: { params: { city:
 
       <section className="py-14 sm:py-20 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <YanStatsStrip stats={getCityStats("atlanta", ["homelessness", "mentalHealth"])} />
+        </div>
+      </section>
+
+      <section className="py-14 sm:py-20 bg-yan-stone">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           {resources.length === 0 ? (
             <YanEmptyState
               title="The resource library is being built."
@@ -178,7 +184,7 @@ export default async function YanResourcesCityPage({ params }: { params: { city:
         </div>
       </section>
 
-      <section id="submit-resource" className="py-14 sm:py-20 bg-yan-stone">
+      <section id="submit-resource" className="py-14 sm:py-20 bg-white">
         <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
           <YanResourceSubmitForm />
         </div>

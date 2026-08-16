@@ -123,6 +123,12 @@ export default async function YanNetworkCityPage({ params }: { params: { city: s
 
       <section className="py-14 sm:py-20 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <YanStatsStrip stats={getCityStats("atlanta", ["youngAdults", "faith"])} />
+        </div>
+      </section>
+
+      <section className="py-14 sm:py-20 bg-yan-stone">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           {groups.length > 0 ? (
             <YanNetworkContent groups={groups} />
           ) : (
@@ -137,7 +143,7 @@ export default async function YanNetworkCityPage({ params }: { params: { city: s
         </div>
       </section>
 
-      <section id="add-your-group" className="py-14 sm:py-20 bg-yan-stone">
+      <section id="add-your-group" className="py-14 sm:py-20 bg-white">
         <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
           <YanGroupSuggestForm />
         </div>
