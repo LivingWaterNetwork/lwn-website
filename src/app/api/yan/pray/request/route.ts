@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { sendNotificationEmail } from "@/lib/email";
+import { sendYanNotificationEmail } from "@/lib/email";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { firstIssueMessage, isHoneypotTripped, yanPrayerRequestSchema } from "@/lib/yanValidation";
 
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
     // the console, and the request body/prayer text itself is never echoed
     // back in the API response or in error logs below.
     try {
-      await sendNotificationEmail({
+      await sendYanNotificationEmail({
         subject: `YAN: New prayer request (${visibility})`,
         text: `
 A new prayer request was submitted on /yan/pray.

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { sendNotificationEmail } from "@/lib/email";
+import { sendYanNotificationEmail } from "@/lib/email";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { firstIssueMessage, isHoneypotTripped, yanJoinSchema } from "@/lib/yanValidation";
 
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     });
 
     try {
-      await sendNotificationEmail({
+      await sendYanNotificationEmail({
         subject: `YAN: New ${PATHWAY_LABELS[pathway] ?? pathway} — ${name}`,
         text: `
 New YAN join-the-network submission:

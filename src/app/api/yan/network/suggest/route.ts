@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { sendNotificationEmail } from "@/lib/email";
+import { sendYanNotificationEmail } from "@/lib/email";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { firstIssueMessage, isHoneypotTripped, yanGroupSuggestionSchema } from "@/lib/yanValidation";
 
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
     });
 
     try {
-      await sendNotificationEmail({
+      await sendYanNotificationEmail({
         subject: `YAN: New group submission — ${groupName}`,
         text: `
 New group/ministry submitted for the YAN network directory:

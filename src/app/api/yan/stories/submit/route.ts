@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { sendNotificationEmail } from "@/lib/email";
+import { sendYanNotificationEmail } from "@/lib/email";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { firstIssueMessage, isHoneypotTripped, yanStorySubmissionSchema } from "@/lib/yanValidation";
 
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
     });
 
     try {
-      await sendNotificationEmail({
+      await sendYanNotificationEmail({
         subject: `YAN: New story submission — ${title}`,
         text: `
 New story submitted for review:
