@@ -1,13 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { subscribeToNewsletter } from "@/lib/kit";
+import { checkRateLimit } from "@/lib/rateLimit";
+import { firstIssueMessage, newsletterSchema } from "@/lib/validation";
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, firstName } = await req.json();
-
-    if (!email || typeof email !== "string" || !email.includes("@")) {
-      return NextResponse.json({ error: "A valid email is required." }, { status: 400 });
+    if (!checkRateLimit(req, "newsletter")) {
+      return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 });
     }
+
+    const body = await req.json();
+    const parsed = newsletterSchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json({ error: firstIssueMessage(parsed.error) }, { status: 400 });
+    }
+    const { email, firstName } = parsed.data;
 
     await subscribeToNewsletter(email, firstName);
 

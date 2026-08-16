@@ -2,18 +2,25 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sendNotificationEmail } from "@/lib/email";
 import { pushContactSubmission } from "@/lib/airtable";
+import { checkRateLimit } from "@/lib/rateLimit";
+import { contactSchema, firstIssueMessage, isHoneypotTripped } from "@/lib/validation";
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { name, email, message, subject } = body;
-
-    if (!name || !email || !message) {
-      return NextResponse.json(
-        { error: "Name, email, and message are required." },
-        { status: 400 }
-      );
+    if (!checkRateLimit(req, "contact")) {
+      return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 });
     }
+
+    const body = await req.json();
+    if (isHoneypotTripped(body)) {
+      return NextResponse.json({ success: true });
+    }
+
+    const parsed = contactSchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json({ error: firstIssueMessage(parsed.error) }, { status: 400 });
+    }
+    const { name, email, message, subject } = parsed.data;
 
     const inquiryLabel = typeof subject === "string" && subject.trim() ? subject.trim() : null;
 

@@ -77,6 +77,10 @@ export function InquiryForm({
 
   return (
     <form onSubmit={handleSubmit} className="card space-y-5">
+      <div className="hp-field" aria-hidden="true">
+        <label htmlFor="website">Leave this field blank</label>
+        <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
       <div className="grid sm:grid-cols-2 gap-5">
         <div>
           <label htmlFor="name" className="form-label">

@@ -2,18 +2,25 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sendNotificationEmail } from "@/lib/email";
 import { pushCohortApplication } from "@/lib/airtable";
+import { checkRateLimit } from "@/lib/rateLimit";
+import { cohortApplicationSchema, firstIssueMessage, isHoneypotTripped } from "@/lib/validation";
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { name, email, phone, city, state, role, ministry, whyJoin, referral } = body;
-
-    if (!name || !email || !whyJoin) {
-      return NextResponse.json(
-        { error: "Name, email, and reason for joining are required." },
-        { status: 400 }
-      );
+    if (!checkRateLimit(req, "cohort")) {
+      return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 });
     }
+
+    const body = await req.json();
+    if (isHoneypotTripped(body)) {
+      return NextResponse.json({ success: true }); // silently accept, do nothing
+    }
+
+    const parsed = cohortApplicationSchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json({ error: firstIssueMessage(parsed.error) }, { status: 400 });
+    }
+    const { name, email, phone, city, state, role, ministry, whyJoin, referral } = parsed.data;
 
     const application = await prisma.cohortApplication.create({
       data: { name, email, phone, city, state, role, ministry, whyJoin, referral },

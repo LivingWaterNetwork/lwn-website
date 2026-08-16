@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sendNotificationEmail } from "@/lib/email";
 import { pushProgramInquiry } from "@/lib/airtable";
-
-const VALID_PROGRAMS = ["counseling", "mentorship", "speaking", "missions", "coaching", "church-advisory"];
+import { checkRateLimit } from "@/lib/rateLimit";
+import { firstIssueMessage, isHoneypotTripped, programInquirySchema } from "@/lib/validation";
 
 const PROGRAM_LABELS: Record<string, string> = {
   counseling: "Personalized Counseling",
@@ -16,22 +16,20 @@ const PROGRAM_LABELS: Record<string, string> = {
 
 export async function POST(req: NextRequest) {
   try {
+    if (!checkRateLimit(req, "programs-inquire")) {
+      return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 });
+    }
+
     const body = await req.json();
-    const { program, name, email, phone, details } = body;
-
-    if (!program || !VALID_PROGRAMS.includes(program)) {
-      return NextResponse.json(
-        { error: "A valid program is required." },
-        { status: 400 }
-      );
+    if (isHoneypotTripped(body)) {
+      return NextResponse.json({ success: true });
     }
 
-    if (!name || !email || !details) {
-      return NextResponse.json(
-        { error: "Name, email, and details are required." },
-        { status: 400 }
-      );
+    const parsed = programInquirySchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json({ error: firstIssueMessage(parsed.error) }, { status: 400 });
     }
+    const { program, name, email, phone, details } = parsed.data;
 
     const inquiry = await prisma.programInquiry.create({
       data: { program, name, email, phone, details },

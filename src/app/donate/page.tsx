@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DonateContent } from "@/components/sections/DonateContent";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Donate",
@@ -22,5 +23,15 @@ export const metadata: Metadata = {
 };
 
 export default function DonatePage() {
-  return <DonateContent />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd([{ name: "Donate", path: "/donate" }])),
+        }}
+      />
+      <DonateContent />
+    </>
+  );
 }

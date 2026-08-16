@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ProgramsPageContent } from "@/components/sections/ProgramsPageContent";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Christian Leadership Programs",
@@ -22,5 +23,15 @@ export const metadata: Metadata = {
 };
 
 export default function ProgramsPage() {
-  return <ProgramsPageContent />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd([{ name: "Programs", path: "/programs" }])),
+        }}
+      />
+      <ProgramsPageContent />
+    </>
+  );
 }

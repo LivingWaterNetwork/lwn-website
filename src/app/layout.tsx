@@ -106,8 +106,11 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
+        <a href="#main-content" className="skip-link">
+          Skip to content
+        </a>
         <Navbar />
-        <main>
+        <main id="main-content">
           <MotionProviders>{children}</MotionProviders>
         </main>
         <Footer />

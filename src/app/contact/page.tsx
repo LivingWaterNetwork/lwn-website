@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ContactContent } from "@/components/sections/ContactContent";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -22,5 +23,15 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
-  return <ContactContent />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd([{ name: "Contact", path: "/contact" }])),
+        }}
+      />
+      <ContactContent />
+    </>
+  );
 }

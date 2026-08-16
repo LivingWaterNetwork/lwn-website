@@ -1,3 +1,8 @@
+> **Historical document.** This was the original pre-build brief and no longer
+> reflects the live site — the founder bio, cohort dates, logo, and most
+> `[PLACEHOLDER]` items below have long since been filled in and shipped.
+> Kept for historical reference only. For current setup/structure, see `README.md`.
+
 # Living Water Network — Website Rebuild
 ### Project Brief for Claude Code
 

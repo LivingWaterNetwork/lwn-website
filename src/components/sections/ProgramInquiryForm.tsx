@@ -89,6 +89,7 @@ export function ProgramInquiryForm({
       email: values.email,
       phone: values.phone,
       details,
+      website: values.website, // honeypot
     };
 
     try {
@@ -122,6 +123,10 @@ export function ProgramInquiryForm({
 
   return (
     <form onSubmit={handleSubmit} className="card space-y-5">
+      <div className="hp-field" aria-hidden="true">
+        <label htmlFor="website">Leave this field blank</label>
+        <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
       {disclaimer && (
         <p className="text-xs text-slate/55 text-center font-sans">{disclaimer}</p>
       )}

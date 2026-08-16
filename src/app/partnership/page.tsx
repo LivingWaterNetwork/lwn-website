@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PartnershipContent } from "@/components/sections/PartnershipContent";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Partner With Us",
@@ -22,5 +23,15 @@ export const metadata: Metadata = {
 };
 
 export default function PartnershipPage() {
-  return <PartnershipContent />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd([{ name: "Partner With Us", path: "/partnership" }])),
+        }}
+      />
+      <PartnershipContent />
+    </>
+  );
 }

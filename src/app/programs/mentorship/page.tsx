@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { MentorshipContent } from "@/components/sections/MentorshipContent";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 // See src/app/programs/counseling/page.tsx for why this is forced dynamic
 // (sibling route hit a static-generation build timeout; applied here too
@@ -27,5 +28,20 @@ export const metadata: Metadata = {
 };
 
 export default function MentorshipPage() {
-  return <MentorshipContent />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "Programs", path: "/programs" },
+              { name: "Strategic Mentorships", path: "/programs/mentorship" },
+            ])
+          ),
+        }}
+      />
+      <MentorshipContent />
+    </>
+  );
 }

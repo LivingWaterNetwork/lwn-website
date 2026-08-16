@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { AboutContent } from "@/components/sections/AboutContent";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -22,5 +23,15 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  return <AboutContent />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd([{ name: "About", path: "/about" }])),
+        }}
+      />
+      <AboutContent />
+    </>
+  );
 }

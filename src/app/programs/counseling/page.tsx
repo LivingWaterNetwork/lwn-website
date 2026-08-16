@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CounselingContent } from "@/components/sections/CounselingContent";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 // Force dynamic rendering — this route was hitting Next's 60s static
 // generation timeout on Vercel's build machine (3/3 attempts failed,
@@ -31,5 +32,20 @@ export const metadata: Metadata = {
 };
 
 export default function CounselingPage() {
-  return <CounselingContent />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "Programs", path: "/programs" },
+              { name: "Personalized Counseling", path: "/programs/counseling" },
+            ])
+          ),
+        }}
+      />
+      <CounselingContent />
+    </>
+  );
 }

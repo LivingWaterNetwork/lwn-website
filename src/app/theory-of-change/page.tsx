@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { TheoryOfChangeContent } from "@/components/sections/TheoryOfChangeContent";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Our Theory of Change",
@@ -22,5 +23,15 @@ export const metadata: Metadata = {
 };
 
 export default function TheoryOfChangePage() {
-  return <TheoryOfChangeContent />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd([{ name: "Theory of Change", path: "/theory-of-change" }])),
+        }}
+      />
+      <TheoryOfChangeContent />
+    </>
+  );
 }

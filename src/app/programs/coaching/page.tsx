@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CoachingContent } from "@/components/sections/CoachingContent";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 // Structurally the same as the sibling program pages, which hit a static-
 // generation build timeout on Vercel — force-dynamic defensively for the
@@ -27,5 +28,20 @@ export const metadata: Metadata = {
 };
 
 export default function CoachingPage() {
-  return <CoachingContent />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "Programs", path: "/programs" },
+              { name: "Personal Coaching", path: "/programs/coaching" },
+            ])
+          ),
+        }}
+      />
+      <CoachingContent />
+    </>
+  );
 }

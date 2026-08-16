@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ChurchAdvisoryContent } from "@/components/sections/ChurchAdvisoryContent";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 // Structurally identical to the sibling program pages, which hit a
 // static-generation build timeout on Vercel — force-dynamic defensively
@@ -27,5 +28,20 @@ export const metadata: Metadata = {
 };
 
 export default function ChurchAdvisoryPage() {
-  return <ChurchAdvisoryContent />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "Programs", path: "/programs" },
+              { name: "Church Advisory Services", path: "/programs/church-advisory" },
+            ])
+          ),
+        }}
+      />
+      <ChurchAdvisoryContent />
+    </>
+  );
 }

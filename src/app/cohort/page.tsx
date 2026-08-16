@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CohortContent } from "@/components/sections/CohortContent";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Groundwork Cohort Program",
@@ -22,5 +23,15 @@ export const metadata: Metadata = {
 };
 
 export default function CohortPage() {
-  return <CohortContent />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd([{ name: "Cohort", path: "/cohort" }])),
+        }}
+      />
+      <CohortContent />
+    </>
+  );
 }

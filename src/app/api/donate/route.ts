@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
+import { checkRateLimit } from "@/lib/rateLimit";
+import { donateSchema, firstIssueMessage } from "@/lib/validation";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "", {
   apiVersion: "2024-06-20",
@@ -12,15 +14,17 @@ const INTERVAL_MAP: Record<string, Stripe.PriceCreateParams.Recurring.Interval> 
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { amount, frequency, name, email, comment } = body;
+    // Generous limit — legitimate donors sometimes retry a card a few times.
+    if (!checkRateLimit(req, "donate", { limit: 20, windowMs: 10 * 60 * 1000 })) {
+      return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 });
+    }
 
-    if (!amount || amount < 100) {
-      return NextResponse.json({ error: "Minimum donation is $1." }, { status: 400 });
+    const body = await req.json();
+    const parsed = donateSchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json({ error: firstIssueMessage(parsed.error) }, { status: 400 });
     }
-    if (!email) {
-      return NextResponse.json({ error: "Email is required." }, { status: 400 });
-    }
+    const { amount, frequency, name, email, comment } = parsed.data;
 
     const isRecurring = frequency === "monthly" || frequency === "yearly";
     const meta = { name: name ?? "", comment: comment ?? "", frequency: isRecurring ? frequency : "one-time" };

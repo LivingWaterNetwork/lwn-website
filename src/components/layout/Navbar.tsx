@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 
 const navLinks = [
@@ -23,9 +23,51 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const { scrollY } = useScroll();
 
+  const menuRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+
   useMotionValueEvent(scrollY, "change", (latest) => {
     setScrolled(latest > 80);
   });
+
+  // Close on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  // Escape to close + focus trap while the mobile menu is open
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const menu = menuRef.current;
+    const focusables = menu?.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled])'
+    );
+    focusables?.[0]?.focus();
+
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        setMobileOpen(false);
+        toggleRef.current?.focus();
+        return;
+      }
+      if (e.key !== "Tab" || !focusables || focusables.length === 0) return;
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [mobileOpen]);
 
   return (
     <header
@@ -34,6 +76,7 @@ export function Navbar() {
       }`}
     >
       <nav
+        aria-label="Primary"
         className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-[height] duration-300 ${
           scrolled ? "h-14" : "h-16"
         }`}
@@ -56,7 +99,8 @@ export function Navbar() {
             <Link
               key={href}
               href={href}
-              className={`text-sm font-medium font-sans transition-colors hover:text-[#0A77BC] ${
+              aria-current={pathname === href ? "page" : undefined}
+              className={`text-sm font-medium font-sans transition-colors hover:text-[#0A77BC] rounded-sm ${
                 pathname === href ? "text-[#0A77BC]" : "text-slate"
               }`}
             >
@@ -70,16 +114,19 @@ export function Navbar() {
 
         {/* Mobile hamburger */}
         <button
+          ref={toggleRef}
           className="md:hidden p-2 rounded-md text-slate hover:bg-mist transition-colors"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
+          onClick={() => setMobileOpen((open) => !open)}
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-menu"
         >
           {mobileOpen ? (
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           ) : (
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           )}
@@ -88,11 +135,19 @@ export function Navbar() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-mist bg-white px-4 pb-4 pt-2 space-y-1">
+        <div
+          id="mobile-menu"
+          ref={menuRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile navigation"
+          className="md:hidden border-t border-mist bg-white px-4 pb-4 pt-2 space-y-1"
+        >
           {navLinks.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
+              aria-current={pathname === href ? "page" : undefined}
               onClick={() => setMobileOpen(false)}
               className={`block px-3 py-2 rounded-md text-sm font-medium font-sans transition-colors hover:bg-mist hover:text-[#0A77BC] ${
                 pathname === href ? "text-[#0A77BC] bg-mist" : "text-slate"
