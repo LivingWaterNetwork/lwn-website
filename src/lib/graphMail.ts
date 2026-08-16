@@ -59,12 +59,15 @@ export async function sendGraphMail({
   to,
   subject,
   text,
+  html,
   from,
   attachments,
 }: {
   to: string;
   subject: string;
   text: string;
+  /** Optional HTML body. When present, this is sent instead of the plain-text body. */
+  html?: string;
   /**
    * Optional sender mailbox override. The "LWN Website Mailer" Entra ID app
    * has the Mail.Send APPLICATION permission, which grants it the ability to
@@ -90,7 +93,7 @@ export async function sendGraphMail({
       body: JSON.stringify({
         message: {
           subject,
-          body: { contentType: "Text", content: text },
+          body: html ? { contentType: "HTML", content: html } : { contentType: "Text", content: text },
           toRecipients: [{ emailAddress: { address: to } }],
           ...(attachments && attachments.length > 0
             ? {
