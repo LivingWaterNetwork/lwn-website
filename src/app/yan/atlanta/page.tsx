@@ -102,10 +102,10 @@ export default async function YanAtlantaPage() {
                 "A gathering for pastors and leaders currently serving young adults across Atlanta — details are being prepared. Register your interest now and be first to know when the date, venue, and capacity are confirmed."}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
-              <Link href="/yan/events" className="yan-btn-primary">
+              <Link href="/yan/events/atlanta" className="yan-btn-primary">
                 {featuredEvent ? "View event details" : "Register your interest"}
               </Link>
-              <Link href="/yan/events" className="yan-btn-secondary">
+              <Link href="/yan/events/atlanta" className="yan-btn-secondary">
                 See all events
               </Link>
             </div>
@@ -121,7 +121,7 @@ export default async function YanAtlantaPage() {
               eyebrow="The Network"
               title="The map is being formed."
               body="Atlanta's young-adult ministries are just beginning to connect here. If you lead one, be a founding member — if you're looking for community, ask us to notify you when discovery opens."
-              ctaHref="/yan/network"
+              ctaHref="/yan/network/atlanta"
               ctaLabel="Explore the network"
             />
           </FadeInSection>
@@ -139,7 +139,7 @@ export default async function YanAtlantaPage() {
                 We&apos;ll introduce the pastors and ministry leaders shaping this movement here as the
                 network grows.
               </p>
-              <Link href="/yan/leaders" className="yan-btn-ghost text-sm self-start">
+              <Link href="/yan/leaders/atlanta" className="yan-btn-ghost text-sm self-start">
                 Meet the leaders
               </Link>
             </div>
@@ -152,7 +152,7 @@ export default async function YanAtlantaPage() {
                 As ministries connect and young adults find community, we&apos;ll share real, approved
                 stories of what God is doing across the city.
               </p>
-              <Link href="/yan/stories" className="yan-btn-ghost text-sm self-start">
+              <Link href="/yan/stories/atlanta" className="yan-btn-ghost text-sm self-start">
                 Read stories
               </Link>
             </div>

@@ -5,6 +5,7 @@ import { safeYanQuery } from "@/lib/yanData";
 import { breadcrumbJsonLd, canonical } from "@/lib/seo";
 import { YanEventRegisterForm } from "@/components/yan/sections/YanEventRegisterForm";
 import { buildIcsDataUri } from "@/lib/yanIcs";
+import { getYanCity } from "@/lib/yanCities";
 
 export const dynamic = "force-dynamic";
 
@@ -12,11 +13,13 @@ async function getEvent(slug: string) {
   return safeYanQuery(() => prisma.yanEvent.findUnique({ where: { slug }, include: { registrations: true } }), null);
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { city: string; slug: string } }): Promise<Metadata> {
+  const city = getYanCity(params.city);
+  if (!city || city.slug !== "atlanta") return { title: "Event" };
   const event = await getEvent(params.slug);
   if (!event) return { title: "Event" };
   return {
-    ...canonical(`/yan/events/${event.slug}`),
+    ...canonical(`/yan/events/${city.slug}/${event.slug}`),
     title: event.title,
     description: event.summary,
   };
@@ -27,7 +30,13 @@ function formatDate(d: Date | null) {
   return d.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "2-digit" });
 }
 
-export default async function YanEventDetailPage({ params }: { params: { slug: string } }) {
+export default async function YanEventDetailPage({ params }: { params: { city: string; slug: string } }) {
+  const city = getYanCity(params.city);
+  // Events aren't city-scoped in the schema yet — only Atlanta has a real
+  // calendar, so any other city's event-detail URL is a 404, not a leak of
+  // Atlanta's data under another city's path.
+  if (!city || city.slug !== "atlanta") notFound();
+
   const event = await getEvent(params.slug);
   if (!event) notFound();
 
@@ -59,9 +68,10 @@ export default async function YanEventDetailPage({ params }: { params: { slug: s
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             breadcrumbJsonLd([
-              { name: "YAN Atlanta", path: "/yan" },
+              { name: "YAN", path: "/yan" },
               { name: "Events", path: "/yan/events" },
-              { name: event.title, path: `/yan/events/${event.slug}` },
+              { name: "Atlanta", path: "/yan/events/atlanta" },
+              { name: event.title, path: `/yan/events/atlanta/${event.slug}` },
             ])
           ),
         }}

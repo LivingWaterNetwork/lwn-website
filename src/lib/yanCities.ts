@@ -59,6 +59,18 @@ export const YAN_CITIES: YanCity[] = [
     heroImage: "/images/yan/source/la-downtown-skyline.jpg",
     heroImageAlt: "Downtown Los Angeles skyline",
   },
+  {
+    slug: "phoenix",
+    name: "Phoenix",
+    shortName: "PHX",
+    state: "Arizona",
+    status: "launching-soon",
+    stageBadge: "New Hub — Join the Launch Team",
+    tagline: "One City. Many Churches. One Mission.",
+    summary: "The same movement, taking root across Phoenix and the Valley.",
+    heroImage: "/images/yan/source/young-adults-hangout-music.jpg",
+    heroImageAlt: "Young adults gathering together",
+  },
 ];
 
 export function getYanCity(slug: string): YanCity | undefined {
