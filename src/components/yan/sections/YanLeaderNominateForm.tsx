@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { HONEYPOT_FIELD } from "@/lib/yanValidation";
 
-export function YanLeaderNominateForm() {
+export function YanLeaderNominateForm({ city = "Atlanta" }: { city?: string }) {
   const [form, setForm] = useState({
     name: "",
     ministryName: "",
@@ -25,7 +25,7 @@ export function YanLeaderNominateForm() {
       const res = await fetch("/api/yan/leaders/nominate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, city }),
       });
       const json = await res.json();
       if (!res.ok) {
@@ -87,7 +87,7 @@ export function YanLeaderNominateForm() {
       </div>
       <label className="inline-flex items-start gap-2 text-sm text-yan-navy/70 mb-4">
         <input type="checkbox" className="mt-1" checked={form.consentGiven} onChange={(e) => setForm((f) => ({ ...f, consentGiven: e.target.checked }))} />
-        I confirm this leader has agreed to be featured on the YAN Atlanta website.
+        I confirm this leader has agreed to be featured on the YAN website.
       </label>
       {error && <p role="alert" className="yan-form-error mb-4">{error}</p>}
       <button type="submit" disabled={status === "submitting"} className="yan-btn-primary !bg-yan-blue w-full sm:w-auto disabled:opacity-60">

@@ -20,9 +20,11 @@ export function YanNavbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const currentCitySlug = pathname?.match(/^\/yan\/([^/]+)/)?.[1];
   const currentCity = currentCitySlug ? getYanCity(currentCitySlug) : undefined;
-  // The Network/Events/Leaders/Pray/Resources/Stories directory is Atlanta's only —
-  // hide it on not-yet-launched city hubs so it never reads as "New York's events".
-  const showDirectoryLinks = !currentCity || currentCity.status === "live";
+  // Network/Events/Leaders/Pray/Resources/Stories now each start with a
+  // national intro + city picker, so they're safe to show everywhere — a
+  // visitor on a not-yet-launched city hub still lands on an honest
+  // "coming soon" page for that city, never on Atlanta's data.
+  const showDirectoryLinks = true;
   const menuRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
 

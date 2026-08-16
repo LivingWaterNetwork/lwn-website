@@ -6,7 +6,7 @@ import { track } from "@/lib/yanAnalytics";
 
 const TYPES = ["testimony", "movement-moment", "event-recap", "collaboration"];
 
-export function YanStorySubmitForm() {
+export function YanStorySubmitForm({ city = "Atlanta" }: { city?: string }) {
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -28,7 +28,7 @@ export function YanStorySubmitForm() {
       const res = await fetch("/api/yan/stories/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, city }),
       });
       const json = await res.json();
       if (!res.ok) {
@@ -99,7 +99,7 @@ export function YanStorySubmitForm() {
       </div>
       <label className="flex items-start gap-2 text-sm text-yan-navy/70 mb-4">
         <input type="checkbox" checked={form.consentGiven} onChange={(e) => setForm((f) => ({ ...f, consentGiven: e.target.checked }))} />
-        I consent to this story being published on the YAN Atlanta website, with my name attached.
+        I consent to this story being published on the YAN website, with my name attached.
       </label>
       {error && <p role="alert" className="yan-form-error mb-4">{error}</p>}
       <button type="submit" disabled={status === "submitting"} className="yan-btn-primary !bg-yan-blue w-full sm:w-auto disabled:opacity-60">

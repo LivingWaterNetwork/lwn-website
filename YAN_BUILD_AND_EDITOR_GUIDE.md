@@ -45,15 +45,30 @@ go from empty to populated without any redesign.
   ranked list; and a brand-new city hub is labeled honestly as its own stage
   ("New Hub — Join the Launch Team") rather than hidden or padded with fabricated
   content.
-- The **Network/Events/Leaders/Pray/Resources/Stories directory nav is Atlanta's
-  only** (it's the only city with a real backend directory yet) — it's
-  conditionally hidden on the New York and Los Angeles pages so a visitor there
-  never lands on Atlanta's data thinking it's their own city's.
-- **`YanGroup.city`** (Prisma field, default `"Atlanta"`) tags every group
-  suggestion by which city's page it came from — `/yan/network` filters to
-  `city: "Atlanta"` explicitly now that the field exists. New York/LA group
-  submissions are tagged accordingly so they're distinguishable in
-  `/yan/admin/groups` once that hub's directory is built out for real.
+- **Update — city-context IA + full city-scoping (added after the multi-city
+  launch)**: `/yan/network`, `/events`, `/leaders`, `/pray`, `/resources`,
+  `/stories`, and `/join` each now open with a national intro (what that page
+  is for, network-wide) plus a city picker, handing off to a per-city view at
+  `/yan/{page}/{citySlug}`. A fourth hub, **Phoenix** (`/yan/phoenix`), was
+  added alongside Atlanta/NYC/LA. Every non-Atlanta city view is grounded in
+  real, cited statistics (`src/lib/yanCityStats.ts` + the `YanStatsStrip`
+  component) instead of empty boilerplate — young-adult population, faith
+  engagement, mental health, justice-system involvement, homelessness,
+  loneliness, and church-growth momentum, each sourced to a named, dated
+  public report.
+- **Every `Yan*` content model is now city-scoped**, not just `YanGroup`:
+  `YanLeader`, `YanEvent`, `YanResource`, `YanStory`, and `YanPrayerTheme` all
+  gained a `city String @default("Atlanta")` field (`YanPrayerRequest` got an
+  optional `city` — requests aren't city-gated, it's just recorded for
+  context). Each city-scoped page queries by `city` now, so a non-Atlanta hub
+  will automatically start showing its own real directory content the moment
+  something is published for it in `/yan/admin` — no further code change
+  needed. `src/lib/yanCities.ts` exports `YAN_CITY_NAMES` as the single
+  source of truth for the city dropdown options used by every admin form and
+  submission API.
+- Events' detail route moved from `/yan/events/[slug]` to
+  `/yan/events/[city]/[slug]` to avoid a Next.js dynamic-segment naming
+  conflict with the new city-listing route at `/yan/events/[city]`.
 
 ## 2. Final route map
 

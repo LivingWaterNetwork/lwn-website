@@ -41,6 +41,15 @@ function JoinFormInner() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathway]);
 
+  // Re-sync the city field when a same-page city chooser link changes the
+  // `?city=` query param — the pathway/form state above only reads it once
+  // on mount, so this keeps a click on "New York City" further down the page
+  // from being silently ignored.
+  const cityParam = params.get("city");
+  useEffect(() => {
+    if (cityParam) setForm((f) => ({ ...f, city: cityParam }));
+  }, [cityParam]);
+
   const activePathway = PATHWAYS.find((p) => p.key === pathway);
 
   async function handleSubmit(e: React.FormEvent) {

@@ -39,6 +39,7 @@ export const yanPrayerRequestSchema = z.object({
   requestText: z.string().trim().min(1, "Please share your prayer request.").max(3000),
   name: optionalText(200),
   email: z.string().trim().email("Please enter a valid email.").max(320).optional().or(z.literal("")),
+  city: optionalText(120),
   visibility: z.enum(["private", "anonymous-public"]).default("private"),
   allowFollowUp: z.boolean().default(false),
 });
@@ -66,6 +67,7 @@ export const yanResourceSubmissionSchema = z.object({
   resourceType: z.enum(["leader-tool", "curriculum", "prayer-guide", "event-kit", "reading", "training", "opportunity"]),
   description: z.string().trim().min(1, "Please describe the resource.").max(2000),
   externalUrl: optionalText(300),
+  city: optionalText(120),
 });
 
 /** /yan/stories — testimony/story submission for review. */
@@ -76,6 +78,7 @@ export const yanStorySubmissionSchema = z.object({
   storyType: z.enum(["testimony", "movement-moment", "event-recap", "collaboration"]),
   body: z.string().trim().min(1, "Please share the story.").max(4000),
   consentGiven: z.literal(true, { message: "Consent to publish is required." }),
+  city: optionalText(120),
 });
 
 /** /yan/leaders — leader/ministry nomination for review. */
@@ -87,6 +90,7 @@ export const yanLeaderNominationSchema = z.object({
   nominatedByName: name,
   nominatedByEmail: email,
   consentGiven: z.literal(true, { message: "Confirming consent is required." }),
+  city: optionalText(120),
 });
 
 /** Shared "get launch updates" subscribe form. */

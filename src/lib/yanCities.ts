@@ -59,6 +59,18 @@ export const YAN_CITIES: YanCity[] = [
     heroImage: "/images/yan/source/la-downtown-skyline.jpg",
     heroImageAlt: "Downtown Los Angeles skyline",
   },
+  {
+    slug: "phoenix",
+    name: "Phoenix",
+    shortName: "PHX",
+    state: "Arizona",
+    status: "launching-soon",
+    stageBadge: "New Hub — Join the Launch Team",
+    tagline: "One City. Many Churches. One Mission.",
+    summary: "The same movement, taking root across Phoenix and the Valley.",
+    heroImage: "/images/yan/source/young-adults-hangout-music.jpg",
+    heroImageAlt: "Young adults gathering together",
+  },
 ];
 
 export function getYanCity(slug: string): YanCity | undefined {
@@ -71,4 +83,12 @@ export function getHomeBaseCity(): YanCity {
 
 export function getOtherCities(slug: string): YanCity[] {
   return YAN_CITIES.filter((c) => c.slug !== slug);
+}
+
+/** The `city` column value used across every city-scoped Yan* Prisma model — e.g. `["Atlanta", "New York City", ...]`. */
+export const YAN_CITY_NAMES: string[] = YAN_CITIES.map((c) => c.name);
+
+/** Maps a city hub slug (e.g. "new-york") to its stored `city` column value (e.g. "New York City"). */
+export function cityNameFromSlug(slug: string): string {
+  return getYanCity(slug)?.name ?? "Atlanta";
 }

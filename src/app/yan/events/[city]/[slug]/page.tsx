@@ -5,18 +5,26 @@ import { safeYanQuery } from "@/lib/yanData";
 import { breadcrumbJsonLd, canonical } from "@/lib/seo";
 import { YanEventRegisterForm } from "@/components/yan/sections/YanEventRegisterForm";
 import { buildIcsDataUri } from "@/lib/yanIcs";
+import { getYanCity } from "@/lib/yanCities";
 
 export const dynamic = "force-dynamic";
 
-async function getEvent(slug: string) {
-  return safeYanQuery(() => prisma.yanEvent.findUnique({ where: { slug }, include: { registrations: true } }), null);
+async function getEvent(slug: string, cityName: string) {
+  const event = await safeYanQuery(() => prisma.yanEvent.findUnique({ where: { slug }, include: { registrations: true } }), null);
+  // Event slugs are globally unique in the schema, but this route is scoped
+  // to one city's path — confirm the event actually belongs here rather than
+  // rendering, say, an Atlanta event under a /yan/events/phoenix/ URL.
+  if (!event || event.city !== cityName) return null;
+  return event;
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const event = await getEvent(params.slug);
+export async function generateMetadata({ params }: { params: { city: string; slug: string } }): Promise<Metadata> {
+  const city = getYanCity(params.city);
+  if (!city) return { title: "Event" };
+  const event = await getEvent(params.slug, city.name);
   if (!event) return { title: "Event" };
   return {
-    ...canonical(`/yan/events/${event.slug}`),
+    ...canonical(`/yan/events/${city.slug}/${event.slug}`),
     title: event.title,
     description: event.summary,
   };
@@ -27,8 +35,11 @@ function formatDate(d: Date | null) {
   return d.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "2-digit" });
 }
 
-export default async function YanEventDetailPage({ params }: { params: { slug: string } }) {
-  const event = await getEvent(params.slug);
+export default async function YanEventDetailPage({ params }: { params: { city: string; slug: string } }) {
+  const city = getYanCity(params.city);
+  if (!city) notFound();
+
+  const event = await getEvent(params.slug, city.name);
   if (!event) notFound();
 
   const capacity = event.capacity;
@@ -59,9 +70,10 @@ export default async function YanEventDetailPage({ params }: { params: { slug: s
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
             breadcrumbJsonLd([
-              { name: "YAN Atlanta", path: "/yan" },
+              { name: "YAN", path: "/yan" },
               { name: "Events", path: "/yan/events" },
-              { name: event.title, path: `/yan/events/${event.slug}` },
+              { name: city.name, path: `/yan/events/${city.slug}` },
+              { name: event.title, path: `/yan/events/${city.slug}/${event.slug}` },
             ])
           ),
         }}
@@ -70,7 +82,9 @@ export default async function YanEventDetailPage({ params }: { params: { slug: s
 
       <section className="py-16 sm:py-24 bg-yan-navy">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="yan-eyebrow yan-eyebrow-dark mb-3">{event.eventType.replace(/-/g, " ")}</p>
+          <p className="yan-eyebrow yan-eyebrow-dark mb-3">
+            {event.eventType.replace(/-/g, " ")} &middot; {city.name}
+          </p>
           <h1 className="yan-h1 text-white mb-4">{event.title}</h1>
           <p className="yan-body text-white/70 mb-6 text-lg">{event.summary}</p>
 

@@ -149,6 +149,7 @@ model YanLeader {
   bio              String
   photoUrl         String?
   quote            String?
+  city             String   @default("Atlanta") // "Atlanta" | "New York City" | "Los Angeles" | "Phoenix"
   featured         Boolean  @default(false)
   status           String   @default("pending") // pending | published | archived
   consentGiven     Boolean  @default(false)
@@ -164,6 +165,7 @@ model YanEvent {
   title           String
   slug            String                 @unique
   eventType       String // roundtable | prayer-gathering | worship-night | service-project | training | resource-exchange
+  city            String                 @default("Atlanta") // "Atlanta" | "New York City" | "Los Angeles" | "Phoenix"
   summary         String
   description     String?
   startsAt        DateTime?
@@ -207,6 +209,7 @@ model YanResource {
   description      String
   fileUrl          String?
   externalUrl      String?
+  city             String   @default("Atlanta") // "Atlanta" | "New York City" | "Los Angeles" | "Phoenix"
   featured         Boolean  @default(false)
   status           String   @default("pending") // pending | published | archived
   submittedByEmail String?
@@ -224,6 +227,7 @@ model YanStory {
   body             String
   authorName       String?
   mediaUrl         String?
+  city             String   @default("Atlanta") // "Atlanta" | "New York City" | "Los Angeles" | "Phoenix"
   consentGiven     Boolean  @default(false)
   status           String   @default("pending") // pending | published | archived
   submittedByEmail String?
@@ -238,6 +242,7 @@ model YanPrayerTheme {
   title        String
   body         String
   scriptureRef String?
+  city         String   @default("Atlanta") // "Atlanta" | "New York City" | "Los Angeles" | "Phoenix"
   status       String   @default("draft") // draft | published | archived
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -250,6 +255,7 @@ model YanPrayerRequest {
   requestText   String
   name          String?
   email         String?
+  city          String? // city page the request was submitted from, if known — requests aren't city-gated
   visibility    String   @default("private") // private | anonymous-public
   allowFollowUp Boolean  @default(false)
   status        String   @default("new") // new | reviewed | published | archived
