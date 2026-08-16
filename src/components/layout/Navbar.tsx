@@ -69,6 +69,11 @@ export function Navbar() {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [mobileOpen]);
 
+  // The YAN mini-site owns its own header (see src/components/yan/layout/YanNavbar.tsx)
+  // so the main-site chrome doesn't stack on top of it under /yan. This check
+  // runs after every hook above so hook order never changes between renders.
+  if (pathname?.startsWith("/yan")) return null;
+
   return (
     <header
       className={`sticky top-0 z-50 border-b border-mist bg-white/95 backdrop-blur transition-shadow duration-300 ${

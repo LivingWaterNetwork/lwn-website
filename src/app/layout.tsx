@@ -3,6 +3,7 @@ import { Newsreader, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { SiteSkipLink } from "@/components/layout/SiteSkipLink";
 import { MotionProviders } from "@/components/motion/Providers";
 
 const hanken = Hanken_Grotesk({
@@ -106,9 +107,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
-        <a href="#main-content" className="skip-link">
-          Skip to content
-        </a>
+        <SiteSkipLink />
         <Navbar />
         <main id="main-content">
           <MotionProviders>{children}</MotionProviders>

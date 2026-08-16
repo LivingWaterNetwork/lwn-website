@@ -1,8 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { NewsletterSignup } from "@/components/sections/NewsletterSignup";
 
 export function Footer() {
+  const pathname = usePathname();
+
+  // The YAN mini-site owns its own footer (see src/components/yan/layout/YanFooter.tsx).
+  if (pathname?.startsWith("/yan")) return null;
+
   return (
     <footer className="bg-navy text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -45,6 +53,7 @@ export function Footer() {
                 { href: "/programs", label: "Programs" },
                 { href: "/cohort", label: "Cohort" },
                 { href: "/events", label: "Events" },
+                { href: "/yan", label: "YAN Atlanta" },
                 { href: "/partnership", label: "Partner With Us" },
                 { href: "/theory-of-change", label: "Theory of Change" },
                 { href: "/faq", label: "FAQ" },

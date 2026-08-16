@@ -41,3 +41,9 @@ C0F1D65F-EB6E-4477-A9E2-582688A92923.jpg
 a83fe003-8f8a-429f-8429-2227fb8d1251.jpg
 f910d60c-097c-4ac0-ad4d-b98509cb0cbf.jpg
 f9fd4b49-4241-4a40-a601-8842628c8391.jpg
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
