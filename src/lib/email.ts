@@ -6,6 +6,11 @@ const resend = new Resend(process.env.RESEND_API_KEY ?? "");
 // (Graph mail below is the preferred path — no DNS dependency at all.)
 const FROM = process.env.RESEND_FROM_EMAIL ?? "Living Water Network <onboarding@resend.dev>";
 const NOTIFY_TO = process.env.NOTIFY_EMAIL ?? "info@lwnetwork.org";
+// YAN's public forms notify a dedicated inbox rather than the main site's
+// general one — kept separate so YAN submissions don't get lost in the
+// main site's inquiry volume, and so the recipient can change independent
+// of NOTIFY_EMAIL.
+const YAN_NOTIFY_TO = process.env.YAN_NOTIFY_EMAIL ?? "yan@lwnetwork.org";
 
 function formatAmount(cents: number): string {
   return `$${(cents / 100).toLocaleString("en-US", { minimumFractionDigits: 2 })}`;
@@ -49,6 +54,17 @@ export async function sendNotificationEmail({
   text: string;
 }) {
   await deliver(NOTIFY_TO, subject, text);
+}
+
+/** Internal notification email for YAN's public forms — routes to the YAN inbox, not the main site's. */
+export async function sendYanNotificationEmail({
+  subject,
+  text,
+}: {
+  subject: string;
+  text: string;
+}) {
+  await deliver(YAN_NOTIFY_TO, subject, text);
 }
 
 const SITE_URL = "https://www.lwnetwork.org";
