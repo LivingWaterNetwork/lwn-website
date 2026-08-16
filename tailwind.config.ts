@@ -38,10 +38,23 @@ const config: Config = {
         spring: "#7CCBE6",
         mist: "#EAF1F6",
         slate: "#445563",
+        // YAN Atlanta — namespaced brand palette, kept isolated from the LWN
+        // tokens above so the two systems never collide or bleed into each other.
+        yan: {
+          navy: "#0B1120",
+          blue: "#2563EB",
+          "blue-light": "#3B82F6",
+          "blue-dark": "#1D4ED8",
+          clay: "#C49A6C",
+          sage: "#5A755E",
+          stone: "#E5E7EB",
+        },
       },
       fontFamily: {
         serif: ["var(--font-newsreader)", "Georgia", "serif"],
         sans: ["var(--font-hanken)", "system-ui", "sans-serif"],
+        "yan-heading": ["var(--font-yan-poppins)", "system-ui", "sans-serif"],
+        "yan-body": ["var(--font-yan-manrope)", "system-ui", "sans-serif"],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

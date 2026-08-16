@@ -105,6 +105,184 @@ model MultiYearPledgeInquiry {
   @@map("multi_year_pledge_inquiries")
 }
 
+// ---------------------------------------------------------------------------
+// YAN Atlanta — content + submission models for the /yan mini-site.
+// Namespaced with a Yan* prefix and yan_ table names so they stay clearly
+// separated from the core LWN models above. All backward-compatible
+// additions — no existing model/table is touched.
+// ---------------------------------------------------------------------------
+
+model YanGroup {
+  id                 String   @id @default(cuid())
+  name               String
+  slug               String   @unique
+  description        String
+  neighborhood       String?
+  meetingDay         String?
+  meetingFrequency   String?
+  ageRangeMin        Int?
+  ageRangeMax        Int?
+  churchAffiliation  String?
+  gatheringType      String? // in-person | hybrid | online
+  accessibilityNotes String?
+  websiteUrl         String?
+  instagramHandle    String?
+  contactEmail       String?
+  leaderName         String?
+  featured           Boolean  @default(false)
+  verified           Boolean  @default(false)
+  status             String   @default("pending") // pending | published | archived
+  submittedByEmail   String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@map("yan_groups")
+}
+
+model YanLeader {
+  id               String   @id @default(cuid())
+  name             String
+  slug             String   @unique
+  role             String?
+  ministryName     String?
+  bio              String
+  photoUrl         String?
+  quote            String?
+  featured         Boolean  @default(false)
+  status           String   @default("pending") // pending | published | archived
+  consentGiven     Boolean  @default(false)
+  submittedByEmail String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("yan_leaders")
+}
+
+model YanEvent {
+  id              String                 @id @default(cuid())
+  title           String
+  slug            String                 @unique
+  eventType       String // roundtable | prayer-gathering | worship-night | service-project | training | resource-exchange
+  summary         String
+  description     String?
+  startsAt        DateTime?
+  endsAt          DateTime?
+  timezone        String                 @default("America/New_York")
+  venueName       String?
+  venueAddress    String?
+  capacity        Int?
+  waitlistEnabled Boolean                @default(true)
+  audience        String?
+  status          String                 @default("draft") // draft | coming-soon | published | past | cancelled
+  featured        Boolean                @default(false)
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
+  registrations   YanEventRegistration[]
+
+  @@map("yan_events")
+}
+
+model YanEventRegistration {
+  id           String   @id @default(cuid())
+  eventId      String
+  event        YanEvent @relation(fields: [eventId], references: [id])
+  name         String
+  email        String
+  phone        String?
+  role         String? // pastor | ministry-leader | volunteer | other
+  organization String?
+  status       String   @default("registered") // registered | waitlisted | cancelled
+  createdAt    DateTime @default(now())
+
+  @@index([eventId])
+  @@map("yan_event_registrations")
+}
+
+model YanResource {
+  id               String   @id @default(cuid())
+  title            String
+  slug             String   @unique
+  resourceType     String // leader-tool | curriculum | prayer-guide | event-kit | reading | training | opportunity
+  description      String
+  fileUrl          String?
+  externalUrl      String?
+  featured         Boolean  @default(false)
+  status           String   @default("pending") // pending | published | archived
+  submittedByEmail String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("yan_resources")
+}
+
+model YanStory {
+  id               String   @id @default(cuid())
+  title            String
+  slug             String   @unique
+  storyType        String // testimony | movement-moment | event-recap | collaboration
+  body             String
+  authorName       String?
+  mediaUrl         String?
+  consentGiven     Boolean  @default(false)
+  status           String   @default("pending") // pending | published | archived
+  submittedByEmail String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("yan_stories")
+}
+
+model YanPrayerTheme {
+  id           String   @id @default(cuid())
+  title        String
+  body         String
+  scriptureRef String?
+  status       String   @default("draft") // draft | published | archived
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("yan_prayer_themes")
+}
+
+model YanPrayerRequest {
+  id            String   @id @default(cuid())
+  requestText   String
+  name          String?
+  email         String?
+  visibility    String   @default("private") // private | anonymous-public
+  allowFollowUp Boolean  @default(false)
+  status        String   @default("new") // new | reviewed | published | archived
+  createdAt     DateTime @default(now())
+
+  @@map("yan_prayer_requests")
+}
+
+model YanJoinSubmission {
+  id           String   @id @default(cuid())
+  pathway      String // ministry-leader | pastor | roundtable-interest | find-community | partner-volunteer | updates
+  name         String
+  email        String
+  phone        String?
+  ministryName String?
+  city         String?
+  role         String?
+  message      String?
+  status       String   @default("new")
+  createdAt    DateTime @default(now())
+
+  @@map("yan_join_submissions")
+}
+
+model YanSubscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  firstName String?
+  interests String? // comma-separated pathway interests
+  createdAt DateTime @default(now())
+
+  @@map("yan_subscribers")
+}
+
 model GalaSponsorshipInquiry {
   id               String   @id @default(cuid())
   name             String

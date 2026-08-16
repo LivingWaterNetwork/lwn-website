@@ -168,3 +168,118 @@
     }
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * YAN Atlanta component layer — used only under /yan (imported the same as
+ * every class above, but every selector is `yan-` prefixed so nothing here
+ * collides with the main-site classes elsewhere in this file).
+ * ------------------------------------------------------------------------- */
+
+@layer components {
+  .yan-btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-yan-blue text-white font-yan-heading font-semibold text-sm tracking-wide transition hover:bg-yan-blue-light active:bg-yan-blue-dark hover:scale-[1.02] active:scale-[0.98] motion-reduce:hover:scale-100 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yan-blue-light focus-visible:ring-offset-2 focus-visible:ring-offset-yan-navy;
+  }
+
+  .yan-btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-white/25 text-white font-yan-heading font-semibold text-sm tracking-wide transition hover:bg-white/10 hover:border-white/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-yan-navy;
+  }
+
+  .yan-btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full border border-yan-navy/15 text-yan-navy font-yan-heading font-semibold text-sm transition hover:bg-yan-navy/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yan-blue focus-visible:ring-offset-2;
+  }
+
+  .yan-eyebrow {
+    @apply font-yan-heading font-bold text-xs uppercase tracking-[0.2em] text-yan-blue;
+  }
+
+  .yan-h1 {
+    @apply font-yan-heading font-bold text-4xl sm:text-5xl md:text-6xl leading-[1.05] tracking-tight;
+  }
+
+  .yan-h2 {
+    @apply font-yan-heading font-bold text-3xl md:text-4xl leading-tight tracking-tight;
+  }
+
+  .yan-h3 {
+    @apply font-yan-heading font-semibold text-xl md:text-2xl leading-snug;
+  }
+
+  .yan-body {
+    @apply font-yan-body text-base leading-relaxed;
+  }
+
+  .yan-card {
+    @apply bg-white rounded-2xl border border-yan-navy/10 shadow-sm p-6 transition hover:shadow-md;
+  }
+
+  .yan-card-dark {
+    @apply bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-sm;
+  }
+
+  .yan-pill {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[11px] font-yan-body font-semibold uppercase tracking-wide text-white/70;
+  }
+
+  .yan-form-label {
+    @apply block text-sm font-yan-heading font-semibold text-yan-navy mb-1.5;
+  }
+
+  .yan-form-input {
+    @apply w-full px-4 py-2.5 rounded-lg border border-yan-navy/15 bg-white text-yan-navy text-sm font-yan-body focus:outline-none focus:ring-2 focus:ring-yan-blue focus:border-transparent transition-shadow;
+  }
+
+  .yan-form-textarea {
+    @apply w-full px-4 py-2.5 rounded-lg border border-yan-navy/15 bg-white text-yan-navy text-sm font-yan-body focus:outline-none focus:ring-2 focus:ring-yan-blue focus:border-transparent transition-shadow resize-y;
+  }
+
+  .yan-form-error {
+    @apply text-red-600 text-xs mt-1 font-yan-body;
+  }
+
+  .yan-empty-state {
+    @apply text-center py-16 px-6 rounded-2xl border border-dashed border-yan-navy/20 bg-yan-stone/40;
+  }
+
+  .yan-skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-md focus:bg-yan-navy focus:px-4 focus:py-2.5 focus:text-white focus:text-sm focus:font-semibold focus:font-yan-body focus:outline-none focus:ring-2 focus:ring-yan-blue focus:ring-offset-2;
+  }
+}
+
+@layer utilities {
+  @keyframes yan-signal-pulse {
+    0%,
+    100% {
+      opacity: 0.35;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.06);
+    }
+  }
+
+  .yan-animate-signal {
+    animation: yan-signal-pulse 3.4s ease-in-out infinite;
+  }
+
+  @keyframes yan-node-drift {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(0, -6px);
+    }
+  }
+
+  .yan-animate-node-drift {
+    animation: yan-node-drift 6s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .yan-animate-signal,
+    .yan-animate-node-drift {
+      animation: none;
+    }
+  }
+}
