@@ -8,6 +8,8 @@ import { breadcrumbJsonLd, canonical } from "@/lib/seo";
 import { YanEmptyState } from "@/components/yan/primitives/YanEmptyState";
 import { YanStorySubmitForm } from "@/components/yan/sections/YanStorySubmitForm";
 import { YanStatsStrip } from "@/components/yan/sections/YanStatsStrip";
+import { FadeInSection } from "@/components/motion/FadeInSection";
+import { StaggerChildren, StaggerItem } from "@/components/motion/StaggerChildren";
 import { getYanCity, getOtherCities } from "@/lib/yanCities";
 import { getCityStats } from "@/lib/yanCityStats";
 
@@ -49,7 +51,7 @@ export default async function YanStoriesCityPage({ params }: { params: { city: s
       <>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
         <section className="py-16 sm:py-24 bg-yan-navy text-center">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInSection className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="yan-eyebrow yan-eyebrow-dark mb-3">Stories &middot; {city.name}</p>
             <h1 className="yan-h1 text-white mb-4">
               {stories.length > 0 ? `What God is already doing in ${city.name}.` : `The first ${city.name} stories haven't been written yet.`}
@@ -59,22 +61,24 @@ export default async function YanStoriesCityPage({ params }: { params: { city: s
                 ? `Real testimonies, movement moments, and collaboration stories from across ${city.name}'s young-adult ministries.`
                 : `Here's the real momentum already building among young adults in ${city.name} — the same movement these stories will eventually document.`}
             </p>
-          </div>
+          </FadeInSection>
         </section>
 
         <section className="py-14 sm:py-20 bg-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             {stories.length > 0 ? (
-              <ul className="space-y-6">
+              <StaggerChildren className="space-y-6">
                 {stories.map((s) => (
-                  <li key={s.id} className="yan-card">
-                    <p className="yan-eyebrow mb-2">{s.storyType.replace(/-/g, " ")}</p>
-                    <h2 className="yan-h3 text-yan-navy mb-2">{s.title}</h2>
-                    <p className="text-sm text-yan-navy/65 font-yan-body leading-relaxed whitespace-pre-line">{s.body}</p>
-                    {s.authorName && <p className="text-xs text-yan-navy/40 mt-3">— {s.authorName}</p>}
-                  </li>
+                  <StaggerItem key={s.id}>
+                    <div className="yan-card">
+                      <p className="yan-eyebrow mb-2">{s.storyType.replace(/-/g, " ")}</p>
+                      <h2 className="yan-h3 text-yan-navy mb-2">{s.title}</h2>
+                      <p className="text-sm text-yan-navy/65 font-yan-body leading-relaxed whitespace-pre-line">{s.body}</p>
+                      {s.authorName && <p className="text-xs text-yan-navy/40 mt-3">— {s.authorName}</p>}
+                    </div>
+                  </StaggerItem>
                 ))}
-              </ul>
+              </StaggerChildren>
             ) : (
               <YanStatsStrip stats={stats} />
             )}
@@ -82,13 +86,13 @@ export default async function YanStoriesCityPage({ params }: { params: { city: s
         </section>
 
         <section id="share-story" className="py-14 sm:py-20 bg-yan-stone">
-          <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInSection className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
             <YanStorySubmitForm city={city.name} />
-          </div>
+          </FadeInSection>
         </section>
 
         <section className="py-14 sm:py-16 bg-white border-t border-yan-navy/5 text-center">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInSection className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="yan-eyebrow mb-3">Already Live</p>
             <p className="text-yan-navy/60 font-yan-body mb-6">Read the first stories out of Atlanta.</p>
             <div className="flex flex-wrap items-center justify-center gap-3">
@@ -103,7 +107,7 @@ export default async function YanStoriesCityPage({ params }: { params: { city: s
                   </Link>
                 ))}
             </div>
-          </div>
+          </FadeInSection>
         </section>
       </>
     );
@@ -137,16 +141,18 @@ export default async function YanStoriesCityPage({ params }: { params: { city: s
               ctaLabel="Share a story"
             />
           ) : (
-            <ul className="space-y-6">
+            <StaggerChildren className="space-y-6">
               {stories.map((s) => (
-                <li key={s.id} className="yan-card">
-                  <p className="yan-eyebrow mb-2">{s.storyType.replace(/-/g, " ")}</p>
-                  <h2 className="yan-h3 text-yan-navy mb-2">{s.title}</h2>
-                  <p className="text-sm text-yan-navy/65 font-yan-body leading-relaxed whitespace-pre-line">{s.body}</p>
-                  {s.authorName && <p className="text-xs text-yan-navy/40 mt-3">— {s.authorName}</p>}
-                </li>
+                <StaggerItem key={s.id}>
+                  <div className="yan-card">
+                    <p className="yan-eyebrow mb-2">{s.storyType.replace(/-/g, " ")}</p>
+                    <h2 className="yan-h3 text-yan-navy mb-2">{s.title}</h2>
+                    <p className="text-sm text-yan-navy/65 font-yan-body leading-relaxed whitespace-pre-line">{s.body}</p>
+                    {s.authorName && <p className="text-xs text-yan-navy/40 mt-3">— {s.authorName}</p>}
+                  </div>
+                </StaggerItem>
               ))}
-            </ul>
+            </StaggerChildren>
           )}
         </div>
       </section>

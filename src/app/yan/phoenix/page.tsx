@@ -82,9 +82,7 @@ export default function YanPhoenixPage() {
               adults are navigating real challenges alongside real spiritual momentum.
             </p>
           </FadeInSection>
-          <FadeInSection delay={0.1}>
-            <YanStatsStrip stats={stats} />
-          </FadeInSection>
+          <YanStatsStrip stats={stats} />
         </div>
       </section>
 

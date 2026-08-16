@@ -8,6 +8,8 @@ import { breadcrumbJsonLd, canonical } from "@/lib/seo";
 import { YanPrayerRequestForm } from "@/components/yan/sections/YanPrayerRequestForm";
 import { YanEmptyState } from "@/components/yan/primitives/YanEmptyState";
 import { YanStatsStrip } from "@/components/yan/sections/YanStatsStrip";
+import { FadeInSection } from "@/components/motion/FadeInSection";
+import { StaggerChildren, StaggerItem } from "@/components/motion/StaggerChildren";
 import { getYanCity, getOtherCities } from "@/lib/yanCities";
 import { getCityStats } from "@/lib/yanCityStats";
 
@@ -52,14 +54,14 @@ export default async function YanPrayCityPage({ params }: { params: { city: stri
           </div>
         )}
         {city.slug !== "atlanta" && <div className="absolute inset-0 bg-yan-navy" />}
-        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <FadeInSection className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="yan-eyebrow yan-eyebrow-dark mb-3">Pray &middot; {city.name}</p>
           <h1 className="yan-h1 text-white mb-4">Covering {city.name} in prayer.</h1>
           <p className="yan-body text-white/65 max-w-xl mx-auto">
             Prayer is our first response — for the churches, the leaders, and the next generation of
             {` ${city.name}`}.
           </p>
-        </div>
+        </FadeInSection>
       </section>
 
       {city.slug !== "atlanta" && themes.length === 0 && (
@@ -85,29 +87,31 @@ export default async function YanPrayCityPage({ params }: { params: { city: stri
               ctaLabel="Submit a prayer request"
             />
           ) : (
-            <ul className="space-y-4">
+            <StaggerChildren className="space-y-4">
               {themes.map((theme) => (
-                <li key={theme.id} className="yan-card">
-                  <h2 className="yan-h3 text-yan-navy mb-2">{theme.title}</h2>
-                  <p className="text-sm text-yan-navy/65 font-yan-body leading-relaxed mb-2">{theme.body}</p>
-                  {theme.scriptureRef && <p className="text-xs text-yan-blue font-semibold">{theme.scriptureRef}</p>}
-                </li>
+                <StaggerItem key={theme.id}>
+                  <div className="yan-card">
+                    <h2 className="yan-h3 text-yan-navy mb-2">{theme.title}</h2>
+                    <p className="text-sm text-yan-navy/65 font-yan-body leading-relaxed mb-2">{theme.body}</p>
+                    {theme.scriptureRef && <p className="text-xs text-yan-blue font-semibold">{theme.scriptureRef}</p>}
+                  </div>
+                </StaggerItem>
               ))}
-            </ul>
+            </StaggerChildren>
           )}
         </div>
       </section>
 
       <section id="submit-request" className="py-14 sm:py-20 bg-yan-stone">
-        <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <FadeInSection className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="yan-h3 text-yan-navy text-center mb-6">Submit a prayer request</h2>
           <YanPrayerRequestForm city={city.name} />
-        </div>
+        </FadeInSection>
       </section>
 
       {city.slug !== "atlanta" && (
         <section className="py-14 sm:py-16 bg-white border-t border-yan-navy/5 text-center">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInSection className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="yan-eyebrow mb-3">Already Live</p>
             <p className="text-yan-navy/60 font-yan-body mb-6">See Atlanta&apos;s weekly prayer themes.</p>
             <div className="flex flex-wrap items-center justify-center gap-3">
@@ -122,7 +126,7 @@ export default async function YanPrayCityPage({ params }: { params: { city: stri
                   </Link>
                 ))}
             </div>
-          </div>
+          </FadeInSection>
         </section>
       )}
     </>

@@ -7,6 +7,8 @@ import { safeYanQuery } from "@/lib/yanData";
 import { breadcrumbJsonLd, canonical } from "@/lib/seo";
 import { YanEmptyState } from "@/components/yan/primitives/YanEmptyState";
 import { YanStatsStrip } from "@/components/yan/sections/YanStatsStrip";
+import { FadeInSection } from "@/components/motion/FadeInSection";
+import { StaggerChildren, StaggerItem } from "@/components/motion/StaggerChildren";
 import { getYanCity, getOtherCities } from "@/lib/yanCities";
 import { getCityStats } from "@/lib/yanCityStats";
 
@@ -59,7 +61,7 @@ export default async function YanEventsCityPage({ params }: { params: { city: st
       <>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
         <section className="py-20 sm:py-28 bg-yan-navy text-center">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInSection className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="yan-eyebrow yan-eyebrow-dark mb-3">Events &middot; {city.name}</p>
             <h1 className="yan-h1 text-white mb-4">
               {upcoming.length > 0 ? `Gathering ${city.name}'s leaders.` : `${city.name} doesn't have a calendar yet.`}
@@ -69,7 +71,7 @@ export default async function YanEventsCityPage({ params }: { params: { city: st
                 ? `Roundtables, prayer gatherings, worship nights, service projects, and resource exchanges across ${city.name}.`
                 : "Here's why gathering matters here — and the real need this hub's first events will exist to meet."}
             </p>
-          </div>
+          </FadeInSection>
         </section>
 
         {upcoming.length === 0 && (
@@ -91,9 +93,9 @@ export default async function YanEventsCityPage({ params }: { params: { city: st
                 ctaLabel="Register your interest"
               />
             ) : (
-              <ul className="space-y-4">
+              <StaggerChildren className="space-y-4">
                 {upcoming.map((event) => (
-                  <li key={event.id}>
+                  <StaggerItem key={event.id}>
                     <Link href={`/yan/events/${city.slug}/${event.slug}`} className="yan-card block hover:shadow-md">
                       <div className="flex items-start justify-between gap-4">
                         <div>
@@ -107,9 +109,9 @@ export default async function YanEventsCityPage({ params }: { params: { city: st
                       </div>
                       <p className="text-sm text-yan-navy/60 mt-3 line-clamp-2">{event.summary}</p>
                     </Link>
-                  </li>
+                  </StaggerItem>
                 ))}
-              </ul>
+              </StaggerChildren>
             )}
 
             {past.length > 0 && (
@@ -130,7 +132,7 @@ export default async function YanEventsCityPage({ params }: { params: { city: st
         </section>
 
         <section className="py-14 sm:py-16 bg-white border-t border-yan-navy/5 text-center">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInSection className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="yan-eyebrow mb-3">Already Live</p>
             <p className="text-yan-navy/60 font-yan-body mb-6">See Atlanta&apos;s events calendar.</p>
             <div className="flex flex-wrap items-center justify-center gap-3">
@@ -145,7 +147,7 @@ export default async function YanEventsCityPage({ params }: { params: { city: st
                   </Link>
                 ))}
             </div>
-          </div>
+          </FadeInSection>
         </section>
       </>
     );
@@ -180,9 +182,9 @@ export default async function YanEventsCityPage({ params }: { params: { city: st
               ctaLabel="Register your interest"
             />
           ) : (
-            <ul className="space-y-4">
+            <StaggerChildren className="space-y-4">
               {upcoming.map((event) => (
-                <li key={event.id}>
+                <StaggerItem key={event.id}>
                   <Link href={`/yan/events/atlanta/${event.slug}`} className="yan-card block hover:shadow-md">
                     <div className="flex items-start justify-between gap-4">
                       <div>
@@ -194,9 +196,9 @@ export default async function YanEventsCityPage({ params }: { params: { city: st
                     </div>
                     <p className="text-sm text-yan-navy/60 mt-3 line-clamp-2">{event.summary}</p>
                   </Link>
-                </li>
+                </StaggerItem>
               ))}
-            </ul>
+            </StaggerChildren>
           )}
 
           {past.length > 0 && (

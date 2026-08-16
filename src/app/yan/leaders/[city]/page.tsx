@@ -8,6 +8,8 @@ import { breadcrumbJsonLd, canonical } from "@/lib/seo";
 import { YanEmptyState } from "@/components/yan/primitives/YanEmptyState";
 import { YanLeaderNominateForm } from "@/components/yan/sections/YanLeaderNominateForm";
 import { YanStatsStrip } from "@/components/yan/sections/YanStatsStrip";
+import { FadeInSection } from "@/components/motion/FadeInSection";
+import { StaggerChildren, StaggerItem } from "@/components/motion/StaggerChildren";
 import { getYanCity, getOtherCities } from "@/lib/yanCities";
 import { getCityStats } from "@/lib/yanCityStats";
 
@@ -49,7 +51,7 @@ export default async function YanLeadersCityPage({ params }: { params: { city: s
       <>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
         <section className="py-16 sm:py-24 bg-yan-navy text-center">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInSection className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="yan-eyebrow yan-eyebrow-dark mb-3">Leaders &middot; {city.name}</p>
             <h1 className="yan-h1 text-white mb-4">
               {leaders.length > 0 ? `${city.name}'s leaders, together.` : `${city.name} doesn't have leaders listed yet — you could be first.`}
@@ -59,23 +61,25 @@ export default async function YanLeadersCityPage({ params }: { params: { city: s
                 ? `The pastors and ministry leaders already serving young adults across ${city.name}.`
                 : `This hub is just beginning. Here's the real context of the leaders and young adults ${city.name}'s network exists to serve.`}
             </p>
-          </div>
+          </FadeInSection>
         </section>
 
         <section className="py-14 sm:py-20 bg-white">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             {leaders.length > 0 ? (
-              <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <StaggerChildren className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {leaders.map((leader) => (
-                  <li key={leader.id} className="yan-card">
-                    <h3 className="yan-h3 !text-lg text-yan-navy mb-1">{leader.name}</h3>
-                    {(leader.role || leader.ministryName) && (
-                      <p className="text-xs text-yan-navy/40 mb-3">{[leader.role, leader.ministryName].filter(Boolean).join(" · ")}</p>
-                    )}
-                    <p className="text-sm text-yan-navy/65 font-yan-body leading-relaxed line-clamp-4">{leader.bio}</p>
-                  </li>
+                  <StaggerItem key={leader.id}>
+                    <div className="yan-card h-full">
+                      <h3 className="yan-h3 !text-lg text-yan-navy mb-1">{leader.name}</h3>
+                      {(leader.role || leader.ministryName) && (
+                        <p className="text-xs text-yan-navy/40 mb-3">{[leader.role, leader.ministryName].filter(Boolean).join(" · ")}</p>
+                      )}
+                      <p className="text-sm text-yan-navy/65 font-yan-body leading-relaxed line-clamp-4">{leader.bio}</p>
+                    </div>
+                  </StaggerItem>
                 ))}
-              </ul>
+              </StaggerChildren>
             ) : (
               <YanStatsStrip stats={stats} />
             )}
@@ -83,13 +87,13 @@ export default async function YanLeadersCityPage({ params }: { params: { city: s
         </section>
 
         <section id="nominate" className="py-14 sm:py-20 bg-yan-stone">
-          <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInSection className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
             <YanLeaderNominateForm city={city.name} />
-          </div>
+          </FadeInSection>
         </section>
 
         <section className="py-14 sm:py-16 bg-white border-t border-yan-navy/5 text-center">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInSection className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="yan-eyebrow mb-3">Already Live</p>
             <p className="text-yan-navy/60 font-yan-body mb-6">Meet the leaders already introduced in Atlanta.</p>
             <div className="flex flex-wrap items-center justify-center gap-3">
@@ -104,7 +108,7 @@ export default async function YanLeadersCityPage({ params }: { params: { city: s
                   </Link>
                 ))}
             </div>
-          </div>
+          </FadeInSection>
         </section>
       </>
     );
@@ -138,17 +142,19 @@ export default async function YanLeadersCityPage({ params }: { params: { city: s
               ctaLabel="Nominate a leader"
             />
           ) : (
-            <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <StaggerChildren className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {leaders.map((leader) => (
-                <li key={leader.id} className="yan-card">
-                  <h3 className="yan-h3 !text-lg text-yan-navy mb-1">{leader.name}</h3>
-                  {(leader.role || leader.ministryName) && (
-                    <p className="text-xs text-yan-navy/40 mb-3">{[leader.role, leader.ministryName].filter(Boolean).join(" · ")}</p>
-                  )}
-                  <p className="text-sm text-yan-navy/65 font-yan-body leading-relaxed line-clamp-4">{leader.bio}</p>
-                </li>
+                <StaggerItem key={leader.id}>
+                  <div className="yan-card h-full">
+                    <h3 className="yan-h3 !text-lg text-yan-navy mb-1">{leader.name}</h3>
+                    {(leader.role || leader.ministryName) && (
+                      <p className="text-xs text-yan-navy/40 mb-3">{[leader.role, leader.ministryName].filter(Boolean).join(" · ")}</p>
+                    )}
+                    <p className="text-sm text-yan-navy/65 font-yan-body leading-relaxed line-clamp-4">{leader.bio}</p>
+                  </div>
+                </StaggerItem>
               ))}
-            </ul>
+            </StaggerChildren>
           )}
         </div>
       </section>

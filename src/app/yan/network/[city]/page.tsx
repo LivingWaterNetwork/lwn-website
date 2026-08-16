@@ -9,6 +9,7 @@ import { YanNetworkContent } from "@/components/yan/sections/YanNetworkContent";
 import { YanGroupSuggestForm } from "@/components/yan/sections/YanGroupSuggestForm";
 import { YanEmptyState } from "@/components/yan/primitives/YanEmptyState";
 import { YanStatsStrip } from "@/components/yan/sections/YanStatsStrip";
+import { FadeInSection } from "@/components/motion/FadeInSection";
 import { getYanCity, getOtherCities } from "@/lib/yanCities";
 import { getCityStats } from "@/lib/yanCityStats";
 
@@ -53,7 +54,7 @@ export default async function YanNetworkCityPage({ params }: { params: { city: s
       <>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
         <section className="py-16 sm:py-20 bg-yan-navy text-center">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInSection className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="yan-eyebrow yan-eyebrow-dark mb-3">The Network &middot; {city.name}</p>
             <h1 className="yan-h1 text-white mb-4">
               {groups.length > 0 ? `${city.name}'s young-adult ministries.` : `${city.name}'s network is just beginning.`}
@@ -63,7 +64,7 @@ export default async function YanNetworkCityPage({ params }: { params: { city: s
                 ? `A growing directory of the groups, ministries, and leaders already serving young adults across ${city.name}.`
                 : `There's no directory here yet — ${city.name} is a ${city.stageBadge.toLowerCase()}. Here's the real picture of who this network exists to serve.`}
             </p>
-          </div>
+          </FadeInSection>
         </section>
 
         <section className="py-14 sm:py-20 bg-white">
@@ -73,13 +74,13 @@ export default async function YanNetworkCityPage({ params }: { params: { city: s
         </section>
 
         <section className="py-14 sm:py-20 bg-yan-stone">
-          <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInSection className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
             <YanGroupSuggestForm city={city.name} />
-          </div>
+          </FadeInSection>
         </section>
 
         <section className="py-14 sm:py-16 bg-white border-t border-yan-navy/5 text-center">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInSection className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="yan-eyebrow mb-3">Already Live</p>
             <p className="text-yan-navy/60 font-yan-body mb-6">
               See Atlanta&apos;s network — the same directory {city.name}&apos;s will grow into.
@@ -96,7 +97,7 @@ export default async function YanNetworkCityPage({ params }: { params: { city: s
                   </Link>
                 ))}
             </div>
-          </div>
+          </FadeInSection>
         </section>
       </>
     );

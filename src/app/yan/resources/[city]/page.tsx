@@ -8,6 +8,8 @@ import { breadcrumbJsonLd, canonical } from "@/lib/seo";
 import { YanEmptyState } from "@/components/yan/primitives/YanEmptyState";
 import { YanResourceSubmitForm } from "@/components/yan/sections/YanResourceSubmitForm";
 import { YanStatsStrip } from "@/components/yan/sections/YanStatsStrip";
+import { FadeInSection } from "@/components/motion/FadeInSection";
+import { StaggerChildren, StaggerItem } from "@/components/motion/StaggerChildren";
 import { getYanCity, getOtherCities } from "@/lib/yanCities";
 import { getCityStats } from "@/lib/yanCityStats";
 import { track } from "@/lib/yanAnalytics";
@@ -50,7 +52,7 @@ export default async function YanResourcesCityPage({ params }: { params: { city:
       <>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
         <section className="py-16 sm:py-24 bg-yan-navy text-center">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInSection className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="yan-eyebrow yan-eyebrow-dark mb-3">Resources &middot; {city.name}</p>
             <h1 className="yan-h1 text-white mb-4">
               {resources.length > 0 ? "Shared tools for shared ministry." : `${city.name}'s resource library is just beginning.`}
@@ -60,32 +62,34 @@ export default async function YanResourcesCityPage({ params }: { params: { city:
                 ? `Leader tools, curriculum, prayer guides, event kits, and training — built by and for ${city.name}'s young-adult ministries.`
                 : `Here's the real context leaders and young adults in ${city.name} are navigating — the need this library exists to help meet.`}
             </p>
-          </div>
+          </FadeInSection>
         </section>
 
         <section className="py-14 sm:py-20 bg-white">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             {resources.length > 0 ? (
-              <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <StaggerChildren className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {resources.map((r) => (
-                  <li key={r.id} className="yan-card">
-                    <p className="yan-eyebrow mb-2">{r.resourceType.replace(/-/g, " ")}</p>
-                    <h3 className="yan-h3 !text-lg text-yan-navy mb-2">{r.title}</h3>
-                    <p className="text-sm text-yan-navy/60 font-yan-body leading-relaxed mb-3 line-clamp-3">{r.description}</p>
-                    {(r.fileUrl || r.externalUrl) && (
-                      <a
-                        href={r.fileUrl ?? r.externalUrl ?? "#"}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={() => track("yan_resource_opened", { resource: r.slug })}
-                        className="text-yan-blue text-sm font-semibold"
-                      >
-                        Open resource
-                      </a>
-                    )}
-                  </li>
+                  <StaggerItem key={r.id}>
+                    <div className="yan-card h-full">
+                      <p className="yan-eyebrow mb-2">{r.resourceType.replace(/-/g, " ")}</p>
+                      <h3 className="yan-h3 !text-lg text-yan-navy mb-2">{r.title}</h3>
+                      <p className="text-sm text-yan-navy/60 font-yan-body leading-relaxed mb-3 line-clamp-3">{r.description}</p>
+                      {(r.fileUrl || r.externalUrl) && (
+                        <a
+                          href={r.fileUrl ?? r.externalUrl ?? "#"}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => track("yan_resource_opened", { resource: r.slug })}
+                          className="text-yan-blue text-sm font-semibold"
+                        >
+                          Open resource
+                        </a>
+                      )}
+                    </div>
+                  </StaggerItem>
                 ))}
-              </ul>
+              </StaggerChildren>
             ) : (
               <YanStatsStrip stats={stats} />
             )}
@@ -93,13 +97,13 @@ export default async function YanResourcesCityPage({ params }: { params: { city:
         </section>
 
         <section id="submit-resource" className="py-14 sm:py-20 bg-yan-stone">
-          <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInSection className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
             <YanResourceSubmitForm city={city.name} />
-          </div>
+          </FadeInSection>
         </section>
 
         <section className="py-14 sm:py-16 bg-white border-t border-yan-navy/5 text-center">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInSection className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="yan-eyebrow mb-3">Already Live</p>
             <p className="text-yan-navy/60 font-yan-body mb-6">Browse Atlanta&apos;s resource library.</p>
             <div className="flex flex-wrap items-center justify-center gap-3">
@@ -114,7 +118,7 @@ export default async function YanResourcesCityPage({ params }: { params: { city:
                   </Link>
                 ))}
             </div>
-          </div>
+          </FadeInSection>
         </section>
       </>
     );
@@ -148,26 +152,28 @@ export default async function YanResourcesCityPage({ params }: { params: { city:
               ctaLabel="Submit a resource"
             />
           ) : (
-            <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <StaggerChildren className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {resources.map((r) => (
-                <li key={r.id} className="yan-card">
-                  <p className="yan-eyebrow mb-2">{r.resourceType.replace(/-/g, " ")}</p>
-                  <h3 className="yan-h3 !text-lg text-yan-navy mb-2">{r.title}</h3>
-                  <p className="text-sm text-yan-navy/60 font-yan-body leading-relaxed mb-3 line-clamp-3">{r.description}</p>
-                  {(r.fileUrl || r.externalUrl) && (
-                    <a
-                      href={r.fileUrl ?? r.externalUrl ?? "#"}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => track("yan_resource_opened", { resource: r.slug })}
-                      className="text-yan-blue text-sm font-semibold"
-                    >
-                      Open resource
-                    </a>
-                  )}
-                </li>
+                <StaggerItem key={r.id}>
+                  <div className="yan-card h-full">
+                    <p className="yan-eyebrow mb-2">{r.resourceType.replace(/-/g, " ")}</p>
+                    <h3 className="yan-h3 !text-lg text-yan-navy mb-2">{r.title}</h3>
+                    <p className="text-sm text-yan-navy/60 font-yan-body leading-relaxed mb-3 line-clamp-3">{r.description}</p>
+                    {(r.fileUrl || r.externalUrl) && (
+                      <a
+                        href={r.fileUrl ?? r.externalUrl ?? "#"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => track("yan_resource_opened", { resource: r.slug })}
+                        className="text-yan-blue text-sm font-semibold"
+                      >
+                        Open resource
+                      </a>
+                    )}
+                  </div>
+                </StaggerItem>
               ))}
-            </ul>
+            </StaggerChildren>
           )}
         </div>
       </section>
