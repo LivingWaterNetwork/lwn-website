@@ -1,3 +1,5 @@
+import { YAN_CITY_NAMES } from "@/lib/yanCities";
+
 /**
  * Field metadata for the generic YAN admin CRUD UI + server validation.
  * Adding a new manageable model means adding one entry here — the admin
@@ -39,7 +41,7 @@ export const YAN_ADMIN_MODELS: Record<string, YanAdminModelConfig> = {
       { name: "name", label: "Group / ministry name", type: "text", required: true },
       { name: "slug", label: "Slug", type: "text", required: true, helpText: "URL-safe, unique, e.g. beltline-young-adults" },
       { name: "description", label: "Description", type: "textarea", required: true },
-      { name: "city", label: "City", type: "select", required: true, options: ["Atlanta", "New York City", "Los Angeles"] },
+      { name: "city", label: "City", type: "select", required: true, options: YAN_CITY_NAMES },
       { name: "neighborhood", label: "Neighborhood / area", type: "text" },
       { name: "meetingDay", label: "Meeting day", type: "text" },
       { name: "meetingFrequency", label: "Meeting frequency", type: "text" },
@@ -61,7 +63,7 @@ export const YAN_ADMIN_MODELS: Record<string, YanAdminModelConfig> = {
     key: "leaders",
     label: "Leader",
     pluralLabel: "Leader Spotlights",
-    listColumns: ["name", "ministryName", "status", "featured", "consentGiven"],
+    listColumns: ["name", "city", "ministryName", "status", "featured", "consentGiven"],
     quickToggleFields: ["featured"],
     fields: [
       { name: "name", label: "Name", type: "text", required: true },
@@ -71,6 +73,7 @@ export const YAN_ADMIN_MODELS: Record<string, YanAdminModelConfig> = {
       { name: "bio", label: "Bio", type: "textarea", required: true },
       { name: "photoUrl", label: "Photo URL", type: "text" },
       { name: "quote", label: "Quote", type: "textarea" },
+      { name: "city", label: "City", type: "select", required: true, options: YAN_CITY_NAMES },
       { name: "featured", label: "Featured", type: "boolean" },
       { name: "consentGiven", label: "Consent given", type: "boolean", required: true },
       { name: "status", label: "Status", type: "select", options: STATUS_CONTENT, required: true },
@@ -80,7 +83,7 @@ export const YAN_ADMIN_MODELS: Record<string, YanAdminModelConfig> = {
     key: "events",
     label: "Event",
     pluralLabel: "Events",
-    listColumns: ["title", "eventType", "startsAt", "status", "featured"],
+    listColumns: ["title", "city", "eventType", "startsAt", "status", "featured"],
     quickToggleFields: ["featured"],
     fields: [
       { name: "title", label: "Title", type: "text", required: true },
@@ -92,6 +95,7 @@ export const YAN_ADMIN_MODELS: Record<string, YanAdminModelConfig> = {
         required: true,
         options: ["roundtable", "prayer-gathering", "worship-night", "service-project", "training", "resource-exchange"],
       },
+      { name: "city", label: "City", type: "select", required: true, options: YAN_CITY_NAMES },
       { name: "summary", label: "Summary", type: "textarea", required: true },
       { name: "description", label: "Full description", type: "textarea" },
       { name: "startsAt", label: "Starts at", type: "datetime" },
@@ -115,7 +119,7 @@ export const YAN_ADMIN_MODELS: Record<string, YanAdminModelConfig> = {
     key: "resources",
     label: "Resource",
     pluralLabel: "Resources",
-    listColumns: ["title", "resourceType", "status", "featured"],
+    listColumns: ["title", "city", "resourceType", "status", "featured"],
     quickToggleFields: ["featured"],
     fields: [
       { name: "title", label: "Title", type: "text", required: true },
@@ -130,6 +134,7 @@ export const YAN_ADMIN_MODELS: Record<string, YanAdminModelConfig> = {
       { name: "description", label: "Description", type: "textarea", required: true },
       { name: "fileUrl", label: "File URL", type: "text" },
       { name: "externalUrl", label: "External URL", type: "text" },
+      { name: "city", label: "City", type: "select", required: true, options: YAN_CITY_NAMES },
       { name: "featured", label: "Featured", type: "boolean" },
       { name: "status", label: "Status", type: "select", options: STATUS_CONTENT, required: true },
     ],
@@ -138,7 +143,7 @@ export const YAN_ADMIN_MODELS: Record<string, YanAdminModelConfig> = {
     key: "stories",
     label: "Story",
     pluralLabel: "Stories",
-    listColumns: ["title", "storyType", "status", "consentGiven"],
+    listColumns: ["title", "city", "storyType", "status", "consentGiven"],
     fields: [
       { name: "title", label: "Title", type: "text", required: true },
       { name: "slug", label: "Slug", type: "text", required: true },
@@ -152,6 +157,7 @@ export const YAN_ADMIN_MODELS: Record<string, YanAdminModelConfig> = {
       { name: "body", label: "Story", type: "textarea", required: true },
       { name: "authorName", label: "Author name", type: "text" },
       { name: "mediaUrl", label: "Media URL", type: "text" },
+      { name: "city", label: "City", type: "select", required: true, options: YAN_CITY_NAMES },
       { name: "consentGiven", label: "Consent given", type: "boolean", required: true },
       { name: "status", label: "Status", type: "select", options: STATUS_CONTENT, required: true },
     ],
@@ -160,11 +166,12 @@ export const YAN_ADMIN_MODELS: Record<string, YanAdminModelConfig> = {
     key: "prayer-themes",
     label: "Prayer theme",
     pluralLabel: "Prayer Themes",
-    listColumns: ["title", "scriptureRef", "status"],
+    listColumns: ["title", "city", "scriptureRef", "status"],
     fields: [
       { name: "title", label: "Title", type: "text", required: true },
       { name: "body", label: "Prayer prompt", type: "textarea", required: true },
       { name: "scriptureRef", label: "Scripture reference", type: "text" },
+      { name: "city", label: "City", type: "select", required: true, options: YAN_CITY_NAMES },
       { name: "status", label: "Status", type: "select", options: ["draft", "published", "archived"], required: true },
     ],
   },
@@ -172,11 +179,12 @@ export const YAN_ADMIN_MODELS: Record<string, YanAdminModelConfig> = {
     key: "prayer-requests",
     label: "Prayer request",
     pluralLabel: "Prayer Requests",
-    listColumns: ["visibility", "status", "allowFollowUp", "createdAt"],
+    listColumns: ["visibility", "city", "status", "allowFollowUp", "createdAt"],
     fields: [
       { name: "requestText", label: "Request", type: "textarea", required: true },
       { name: "name", label: "Name", type: "text" },
       { name: "email", label: "Email", type: "email" },
+      { name: "city", label: "City (if shared)", type: "select", options: YAN_CITY_NAMES },
       { name: "visibility", label: "Visibility", type: "select", options: ["private", "anonymous-public"] },
       { name: "allowFollowUp", label: "Allow follow-up", type: "boolean" },
       { name: "status", label: "Status", type: "select", options: STATUS_SUBMISSION.concat("published") },

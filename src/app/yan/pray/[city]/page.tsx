@@ -33,10 +33,10 @@ export default async function YanPrayCityPage({ params }: { params: { city: stri
     { name: city.name, path: `/yan/pray/${city.slug}` },
   ]);
 
-  const themes =
-    city.slug === "atlanta"
-      ? await safeYanQuery(() => prisma.yanPrayerTheme.findMany({ where: { status: "published" }, orderBy: { createdAt: "desc" } }), [])
-      : [];
+  const themes = await safeYanQuery(
+    () => prisma.yanPrayerTheme.findMany({ where: { status: "published", city: city.name }, orderBy: { createdAt: "desc" } }),
+    []
+  );
 
   const stats = city.slug !== "atlanta" ? getCityStats(city.slug, ["mentalHealth", "justice"]) : [];
   const otherCities = getOtherCities(city.slug);
@@ -62,7 +62,7 @@ export default async function YanPrayCityPage({ params }: { params: { city: stri
         </div>
       </section>
 
-      {city.slug !== "atlanta" && (
+      {city.slug !== "atlanta" && themes.length === 0 && (
         <section className="py-14 sm:py-20 bg-white">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <YanStatsStrip stats={stats} />
@@ -101,7 +101,7 @@ export default async function YanPrayCityPage({ params }: { params: { city: stri
       <section id="submit-request" className="py-14 sm:py-20 bg-yan-stone">
         <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="yan-h3 text-yan-navy text-center mb-6">Submit a prayer request</h2>
-          <YanPrayerRequestForm />
+          <YanPrayerRequestForm city={city.name} />
         </div>
       </section>
 

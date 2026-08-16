@@ -84,3 +84,11 @@ export function getHomeBaseCity(): YanCity {
 export function getOtherCities(slug: string): YanCity[] {
   return YAN_CITIES.filter((c) => c.slug !== slug);
 }
+
+/** The `city` column value used across every city-scoped Yan* Prisma model — e.g. `["Atlanta", "New York City", ...]`. */
+export const YAN_CITY_NAMES: string[] = YAN_CITIES.map((c) => c.name);
+
+/** Maps a city hub slug (e.g. "new-york") to its stored `city` column value (e.g. "New York City"). */
+export function cityNameFromSlug(slug: string): string {
+  return getYanCity(slug)?.name ?? "Atlanta";
+}

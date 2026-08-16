@@ -37,6 +37,14 @@ export default async function YanNetworkCityPage({ params }: { params: { city: s
     { name: city.name, path: `/yan/network/${city.slug}` },
   ]);
 
+  // Query every city the same way — a non-Atlanta hub naturally starts
+  // showing its real directory the moment groups are published for it,
+  // instead of needing a code change once it stops being "coming soon".
+  const groups = await safeYanQuery(
+    () => prisma.yanGroup.findMany({ where: { status: "published", city: city.name }, orderBy: [{ featured: "desc" }, { name: "asc" }] }),
+    []
+  );
+
   if (city.slug !== "atlanta") {
     const stats = getCityStats(city.slug, ["youngAdults", "faith"]);
     const otherCities = getOtherCities(city.slug);
@@ -47,17 +55,20 @@ export default async function YanNetworkCityPage({ params }: { params: { city: s
         <section className="py-16 sm:py-20 bg-yan-navy text-center">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="yan-eyebrow yan-eyebrow-dark mb-3">The Network &middot; {city.name}</p>
-            <h1 className="yan-h1 text-white mb-4">{city.name}&apos;s network is just beginning.</h1>
+            <h1 className="yan-h1 text-white mb-4">
+              {groups.length > 0 ? `${city.name}'s young-adult ministries.` : `${city.name}'s network is just beginning.`}
+            </h1>
             <p className="yan-body text-white/65 max-w-xl mx-auto">
-              There&apos;s no directory here yet — {city.name} is a {city.stageBadge.toLowerCase()}. Here&apos;s the
-              real picture of who this network exists to serve.
+              {groups.length > 0
+                ? `A growing directory of the groups, ministries, and leaders already serving young adults across ${city.name}.`
+                : `There's no directory here yet — ${city.name} is a ${city.stageBadge.toLowerCase()}. Here's the real picture of who this network exists to serve.`}
             </p>
           </div>
         </section>
 
         <section className="py-14 sm:py-20 bg-white">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <YanStatsStrip stats={stats} />
+            {groups.length > 0 ? <YanNetworkContent groups={groups} /> : <YanStatsStrip stats={stats} />}
           </div>
         </section>
 
@@ -90,11 +101,6 @@ export default async function YanNetworkCityPage({ params }: { params: { city: s
       </>
     );
   }
-
-  const groups = await safeYanQuery(
-    () => prisma.yanGroup.findMany({ where: { status: "published", city: "Atlanta" }, orderBy: [{ featured: "desc" }, { name: "asc" }] }),
-    []
-  );
 
   return (
     <>

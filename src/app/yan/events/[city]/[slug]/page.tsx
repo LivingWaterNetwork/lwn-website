@@ -9,14 +9,19 @@ import { getYanCity } from "@/lib/yanCities";
 
 export const dynamic = "force-dynamic";
 
-async function getEvent(slug: string) {
-  return safeYanQuery(() => prisma.yanEvent.findUnique({ where: { slug }, include: { registrations: true } }), null);
+async function getEvent(slug: string, cityName: string) {
+  const event = await safeYanQuery(() => prisma.yanEvent.findUnique({ where: { slug }, include: { registrations: true } }), null);
+  // Event slugs are globally unique in the schema, but this route is scoped
+  // to one city's path — confirm the event actually belongs here rather than
+  // rendering, say, an Atlanta event under a /yan/events/phoenix/ URL.
+  if (!event || event.city !== cityName) return null;
+  return event;
 }
 
 export async function generateMetadata({ params }: { params: { city: string; slug: string } }): Promise<Metadata> {
   const city = getYanCity(params.city);
-  if (!city || city.slug !== "atlanta") return { title: "Event" };
-  const event = await getEvent(params.slug);
+  if (!city) return { title: "Event" };
+  const event = await getEvent(params.slug, city.name);
   if (!event) return { title: "Event" };
   return {
     ...canonical(`/yan/events/${city.slug}/${event.slug}`),
@@ -32,12 +37,9 @@ function formatDate(d: Date | null) {
 
 export default async function YanEventDetailPage({ params }: { params: { city: string; slug: string } }) {
   const city = getYanCity(params.city);
-  // Events aren't city-scoped in the schema yet — only Atlanta has a real
-  // calendar, so any other city's event-detail URL is a 404, not a leak of
-  // Atlanta's data under another city's path.
-  if (!city || city.slug !== "atlanta") notFound();
+  if (!city) notFound();
 
-  const event = await getEvent(params.slug);
+  const event = await getEvent(params.slug, city.name);
   if (!event) notFound();
 
   const capacity = event.capacity;
@@ -70,8 +72,8 @@ export default async function YanEventDetailPage({ params }: { params: { city: s
             breadcrumbJsonLd([
               { name: "YAN", path: "/yan" },
               { name: "Events", path: "/yan/events" },
-              { name: "Atlanta", path: "/yan/events/atlanta" },
-              { name: event.title, path: `/yan/events/atlanta/${event.slug}` },
+              { name: city.name, path: `/yan/events/${city.slug}` },
+              { name: event.title, path: `/yan/events/${city.slug}/${event.slug}` },
             ])
           ),
         }}
@@ -80,7 +82,9 @@ export default async function YanEventDetailPage({ params }: { params: { city: s
 
       <section className="py-16 sm:py-24 bg-yan-navy">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="yan-eyebrow yan-eyebrow-dark mb-3">{event.eventType.replace(/-/g, " ")}</p>
+          <p className="yan-eyebrow yan-eyebrow-dark mb-3">
+            {event.eventType.replace(/-/g, " ")} &middot; {city.name}
+          </p>
           <h1 className="yan-h1 text-white mb-4">{event.title}</h1>
           <p className="yan-body text-white/70 mb-6 text-lg">{event.summary}</p>
 

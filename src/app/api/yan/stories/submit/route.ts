@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     if (!parsed.success) {
       return NextResponse.json({ error: firstIssueMessage(parsed.error) }, { status: 400 });
     }
-    const { name, email, title, storyType, body: storyBody, consentGiven } = parsed.data;
+    const { name, email, title, storyType, body: storyBody, consentGiven, city } = parsed.data;
 
     const baseSlug = slugify(title) || "story";
     let slug = baseSlug;
@@ -37,6 +37,7 @@ export async function POST(req: NextRequest) {
         storyType,
         body: storyBody,
         authorName: name,
+        city: city || "Atlanta",
         consentGiven: Boolean(consentGiven),
         submittedByEmail: email,
         status: "pending",
@@ -51,6 +52,7 @@ New story submitted for review:
 
 Title: ${title}
 Type: ${storyType}
+City: ${city || "Atlanta"}
 Submitted by: ${name} (${email})
 Consent to publish: ${consentGiven ? "yes" : "no"}
 

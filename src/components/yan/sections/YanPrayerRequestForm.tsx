@@ -4,7 +4,7 @@ import { useState } from "react";
 import { HONEYPOT_FIELD } from "@/lib/yanValidation";
 import { track } from "@/lib/yanAnalytics";
 
-export function YanPrayerRequestForm() {
+export function YanPrayerRequestForm({ city }: { city?: string }) {
   const [form, setForm] = useState({
     requestText: "",
     name: "",
@@ -24,7 +24,7 @@ export function YanPrayerRequestForm() {
       const res = await fetch("/api/yan/pray/request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, city }),
       });
       const json = await res.json();
       if (!res.ok) {

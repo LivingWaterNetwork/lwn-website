@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     if (!parsed.success) {
       return NextResponse.json({ error: firstIssueMessage(parsed.error) }, { status: 400 });
     }
-    const { name, ministryName, role, bio, nominatedByName, nominatedByEmail, consentGiven } = parsed.data;
+    const { name, ministryName, role, bio, nominatedByName, nominatedByEmail, consentGiven, city } = parsed.data;
 
     const baseSlug = slugify(name) || "leader";
     let slug = baseSlug;
@@ -37,6 +37,7 @@ export async function POST(req: NextRequest) {
         role: role || null,
         ministryName: ministryName || null,
         bio,
+        city: city || "Atlanta",
         consentGiven: Boolean(consentGiven),
         submittedByEmail: nominatedByEmail,
         status: "pending",
@@ -50,6 +51,7 @@ export async function POST(req: NextRequest) {
 New leader/ministry nomination for spotlight review:
 
 Leader: ${name}${role ? ` (${role})` : ""}${ministryName ? ` — ${ministryName}` : ""}
+City: ${city || "Atlanta"}
 Nominated by: ${nominatedByName} (${nominatedByEmail})
 Consent confirmed by nominator: ${consentGiven ? "yes" : "no"}
 

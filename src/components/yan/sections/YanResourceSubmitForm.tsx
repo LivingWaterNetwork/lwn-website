@@ -5,7 +5,7 @@ import { HONEYPOT_FIELD } from "@/lib/yanValidation";
 
 const TYPES = ["leader-tool", "curriculum", "prayer-guide", "event-kit", "reading", "training", "opportunity"];
 
-export function YanResourceSubmitForm() {
+export function YanResourceSubmitForm({ city = "Atlanta" }: { city?: string }) {
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -26,7 +26,7 @@ export function YanResourceSubmitForm() {
       const res = await fetch("/api/yan/resources/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, city }),
       });
       const json = await res.json();
       if (!res.ok) {

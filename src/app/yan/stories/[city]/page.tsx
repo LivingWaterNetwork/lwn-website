@@ -36,6 +36,11 @@ export default async function YanStoriesCityPage({ params }: { params: { city: s
     { name: city.name, path: `/yan/stories/${city.slug}` },
   ]);
 
+  const stories = await safeYanQuery(
+    () => prisma.yanStory.findMany({ where: { status: "published", city: city.name }, orderBy: { createdAt: "desc" } }),
+    []
+  );
+
   if (city.slug !== "atlanta") {
     const stats = getCityStats(city.slug, ["engagement", "faith"]);
     const otherCities = getOtherCities(city.slug);
@@ -46,23 +51,39 @@ export default async function YanStoriesCityPage({ params }: { params: { city: s
         <section className="py-16 sm:py-24 bg-yan-navy text-center">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="yan-eyebrow yan-eyebrow-dark mb-3">Stories &middot; {city.name}</p>
-            <h1 className="yan-h1 text-white mb-4">The first {city.name} stories haven&apos;t been written yet.</h1>
+            <h1 className="yan-h1 text-white mb-4">
+              {stories.length > 0 ? `What God is already doing in ${city.name}.` : `The first ${city.name} stories haven't been written yet.`}
+            </h1>
             <p className="yan-body text-white/65 max-w-xl mx-auto">
-              Here&apos;s the real momentum already building among young adults in {city.name} —
-              the same movement these stories will eventually document.
+              {stories.length > 0
+                ? `Real testimonies, movement moments, and collaboration stories from across ${city.name}'s young-adult ministries.`
+                : `Here's the real momentum already building among young adults in ${city.name} — the same movement these stories will eventually document.`}
             </p>
           </div>
         </section>
 
         <section className="py-14 sm:py-20 bg-white">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <YanStatsStrip stats={stats} />
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            {stories.length > 0 ? (
+              <ul className="space-y-6">
+                {stories.map((s) => (
+                  <li key={s.id} className="yan-card">
+                    <p className="yan-eyebrow mb-2">{s.storyType.replace(/-/g, " ")}</p>
+                    <h2 className="yan-h3 text-yan-navy mb-2">{s.title}</h2>
+                    <p className="text-sm text-yan-navy/65 font-yan-body leading-relaxed whitespace-pre-line">{s.body}</p>
+                    {s.authorName && <p className="text-xs text-yan-navy/40 mt-3">— {s.authorName}</p>}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <YanStatsStrip stats={stats} />
+            )}
           </div>
         </section>
 
         <section id="share-story" className="py-14 sm:py-20 bg-yan-stone">
           <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
-            <YanStorySubmitForm />
+            <YanStorySubmitForm city={city.name} />
           </div>
         </section>
 
@@ -87,11 +108,6 @@ export default async function YanStoriesCityPage({ params }: { params: { city: s
       </>
     );
   }
-
-  const stories = await safeYanQuery(
-    () => prisma.yanStory.findMany({ where: { status: "published" }, orderBy: { createdAt: "desc" } }),
-    []
-  );
 
   return (
     <>

@@ -17,12 +17,14 @@ export async function POST(req: NextRequest) {
     if (!parsed.success) {
       return NextResponse.json({ error: firstIssueMessage(parsed.error) }, { status: 400 });
     }
-    const { requestText, name, email, visibility, allowFollowUp } = parsed.data;
+    const { requestText, name, email, city, visibility, allowFollowUp } = parsed.data;
 
     // Every submission starts private/unpublished — moderation must explicitly
     // change status before an anonymized version can ever appear on /yan/pray.
+    // City is stored (if provided) purely so admin can see where a request came
+    // from — prayer requests are never city-gated the way directory content is.
     const request = await prisma.yanPrayerRequest.create({
-      data: { requestText, name: name || null, email: email || null, visibility, allowFollowUp, status: "new" },
+      data: { requestText, name: name || null, email: email || null, city: city || null, visibility, allowFollowUp, status: "new" },
     });
 
     // Notification is sent to the internal team inbox only — never logged to
@@ -36,6 +38,7 @@ A new prayer request was submitted on /yan/pray.
 
 Visibility requested: ${visibility}
 Follow-up permitted: ${allowFollowUp ? "yes" : "no"}
+City: ${city || "(not shared)"}
 Name: ${name || "(not shared)"}
 Email: ${email || "(not shared)"}
 

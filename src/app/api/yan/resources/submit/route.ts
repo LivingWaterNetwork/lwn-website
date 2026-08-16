@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     if (!parsed.success) {
       return NextResponse.json({ error: firstIssueMessage(parsed.error) }, { status: 400 });
     }
-    const { name, email, title, resourceType, description, externalUrl } = parsed.data;
+    const { name, email, title, resourceType, description, externalUrl, city } = parsed.data;
 
     const baseSlug = slugify(title) || "resource";
     let slug = baseSlug;
@@ -31,7 +31,16 @@ export async function POST(req: NextRequest) {
     }
 
     const resource = await prisma.yanResource.create({
-      data: { title, slug, resourceType, description, externalUrl: externalUrl || null, submittedByEmail: email, status: "pending" },
+      data: {
+        title,
+        slug,
+        resourceType,
+        description,
+        externalUrl: externalUrl || null,
+        city: city || "Atlanta",
+        submittedByEmail: email,
+        status: "pending",
+      },
     });
 
     try {
@@ -42,6 +51,7 @@ New resource submitted for review:
 
 Title: ${title}
 Type: ${resourceType}
+City: ${city || "Atlanta"}
 Submitted by: ${name} (${email})
 Link: ${externalUrl || "—"}
 
