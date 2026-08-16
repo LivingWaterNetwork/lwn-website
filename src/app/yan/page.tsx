@@ -8,6 +8,7 @@ import { MovementGateway } from "@/components/yan/gateway/MovementGateway";
 import { CitySelector } from "@/components/yan/gateway/CitySelector";
 import { YanSubscribeForm } from "@/components/yan/sections/YanSubscribeForm";
 import { ConnectIcon, CollaborateIcon, PrayIcon, ImpactIcon } from "@/components/yan/icons/PillarIcons";
+import { YanFaithAnchor } from "@/components/yan/sections/YanFaithAnchor";
 import { YAN_CITIES } from "@/lib/yanCities";
 
 export const dynamic = "force-dynamic";
@@ -213,6 +214,13 @@ export default function YanNationalPage() {
               </StaggerItem>
             ))}
           </StaggerChildren>
+        </div>
+      </section>
+
+      {/* 5b. Faith anchor — Scripture + a historic Christian voice, grounding the movement in Jesus before anything else */}
+      <section className="bg-white pt-20 sm:pt-28">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <YanFaithAnchor pageKey="national" />
         </div>
       </section>
 

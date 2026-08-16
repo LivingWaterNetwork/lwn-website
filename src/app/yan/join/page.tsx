@@ -4,6 +4,7 @@ import { breadcrumbJsonLd, canonical } from "@/lib/seo";
 import { YanJoinForm } from "@/components/yan/sections/YanJoinForm";
 import { FadeInSection } from "@/components/motion/FadeInSection";
 import { StaggerChildren, StaggerItem } from "@/components/motion/StaggerChildren";
+import { YanFaithAnchor } from "@/components/yan/sections/YanFaithAnchor";
 import { YAN_CITIES } from "@/lib/yanCities";
 import { getCityStats } from "@/lib/yanCityStats";
 
@@ -32,6 +33,12 @@ export default function YanJoinPage() {
             help — there&apos;s a next step for you here.
           </p>
         </FadeInSection>
+      </section>
+
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <YanFaithAnchor pageKey="join" />
+        </div>
       </section>
 
       <section className="py-14 sm:py-20 bg-yan-stone">

@@ -7,6 +7,7 @@ import { canonical, breadcrumbJsonLd } from "@/lib/seo";
 import { FadeInSection } from "@/components/motion/FadeInSection";
 import { MovementGateway } from "@/components/yan/gateway/MovementGateway";
 import { YanEmptyState } from "@/components/yan/primitives/YanEmptyState";
+import { YanFaithAnchor } from "@/components/yan/sections/YanFaithAnchor";
 import { getOtherCities } from "@/lib/yanCities";
 
 export const dynamic = "force-dynamic";
@@ -84,6 +85,13 @@ export default async function YanAtlantaPage() {
               </div>
             </div>
           </FadeInSection>
+        </div>
+      </section>
+
+      {/* Faith anchor — Scripture + a historic Christian voice, grounding the movement in Jesus before anything else */}
+      <section className="bg-white py-20 sm:py-28">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <YanFaithAnchor pageKey="national" />
         </div>
       </section>
 

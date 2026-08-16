@@ -5,6 +5,7 @@ import { FadeInSection } from "@/components/motion/FadeInSection";
 import { YanEmptyState } from "@/components/yan/primitives/YanEmptyState";
 import { YanGroupSuggestForm } from "@/components/yan/sections/YanGroupSuggestForm";
 import { YanStatsStrip } from "@/components/yan/sections/YanStatsStrip";
+import { YanFaithAnchor } from "@/components/yan/sections/YanFaithAnchor";
 import { getYanCity, getOtherCities } from "@/lib/yanCities";
 import { getCityStats } from "@/lib/yanCityStats";
 
@@ -69,6 +70,13 @@ export default function YanPhoenixPage() {
             you&apos;d be one of the first voices shaping what YAN Phoenix becomes.
           </p>
         </FadeInSection>
+      </section>
+
+      {/* Faith anchor — Scripture + a historic Christian voice, grounding the movement in Jesus before anything else */}
+      <section className="bg-white pb-20 sm:pb-28">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <YanFaithAnchor pageKey="national" />
+        </div>
       </section>
 
       {/* Real context — cited stats grounding why this hub matters */}
