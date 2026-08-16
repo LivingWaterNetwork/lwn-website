@@ -134,6 +134,12 @@ export default async function YanLeadersCityPage({ params }: { params: { city: s
 
       <section className="py-14 sm:py-20 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <YanStatsStrip stats={getCityStats("atlanta", ["faith", "engagement"])} />
+        </div>
+      </section>
+
+      <section className="py-14 sm:py-20 bg-yan-stone">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           {leaders.length === 0 ? (
             <YanEmptyState
               title="Atlanta's leaders will be introduced here."
@@ -159,7 +165,7 @@ export default async function YanLeadersCityPage({ params }: { params: { city: s
         </div>
       </section>
 
-      <section id="nominate" className="py-14 sm:py-20 bg-yan-stone">
+      <section id="nominate" className="py-14 sm:py-20 bg-white">
         <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
           <YanLeaderNominateForm />
         </div>

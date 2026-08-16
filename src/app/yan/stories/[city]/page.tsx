@@ -133,6 +133,12 @@ export default async function YanStoriesCityPage({ params }: { params: { city: s
 
       <section className="py-14 sm:py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <YanStatsStrip stats={getCityStats("atlanta", ["engagement", "faith"])} />
+        </div>
+      </section>
+
+      <section className="py-14 sm:py-20 bg-yan-stone">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {stories.length === 0 ? (
             <YanEmptyState
               title="The first stories are coming soon."
@@ -157,7 +163,7 @@ export default async function YanStoriesCityPage({ params }: { params: { city: s
         </div>
       </section>
 
-      <section id="share-story" className="py-14 sm:py-20 bg-yan-stone">
+      <section id="share-story" className="py-14 sm:py-20 bg-white">
         <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
           <YanStorySubmitForm />
         </div>

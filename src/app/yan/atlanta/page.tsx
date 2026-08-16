@@ -8,7 +8,9 @@ import { FadeInSection } from "@/components/motion/FadeInSection";
 import { MovementGateway } from "@/components/yan/gateway/MovementGateway";
 import { YanEmptyState } from "@/components/yan/primitives/YanEmptyState";
 import { YanFaithAnchor } from "@/components/yan/sections/YanFaithAnchor";
+import { YanStatsStrip } from "@/components/yan/sections/YanStatsStrip";
 import { getOtherCities } from "@/lib/yanCities";
+import { getCityStats } from "@/lib/yanCityStats";
 
 export const dynamic = "force-dynamic";
 
@@ -89,9 +91,16 @@ export default async function YanAtlantaPage() {
       </section>
 
       {/* Faith anchor — Scripture + a historic Christian voice, grounding the movement in Jesus before anything else */}
-      <section className="bg-white py-20 sm:py-28">
+      <section className="bg-white pt-20 sm:pt-28">
         <div className="px-4 sm:px-6 lg:px-8">
           <YanFaithAnchor pageKey="national" />
+        </div>
+      </section>
+
+      {/* Real context — cited stats grounding why Atlanta needs this network */}
+      <section className="bg-white py-20 sm:py-28">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <YanStatsStrip stats={getCityStats("atlanta", ["youngAdults", "mentalHealth", "justice"])} />
         </div>
       </section>
 
