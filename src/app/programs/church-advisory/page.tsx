@@ -8,6 +8,7 @@ import { breadcrumbJsonLd } from "@/lib/seo";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/programs/church-advisory" },
   title: "Church Advisory Services",
   description:
     "LWN Church Advisory Services works directly with church staff and leadership teams on volunteer recruitment and engagement, young adult ministry, small group leadership development, and overall ministry strategy.",

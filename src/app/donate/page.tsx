@@ -3,6 +3,7 @@ import { DonateContent } from "@/components/sections/DonateContent";
 import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/donate" },
   title: "Donate",
   description:
     "Support Living Water Network, a 501(c)(3) Christian leadership nonprofit. Your tax-deductible gift helps launch the Groundwork cohort and equip Kingdom leaders.",

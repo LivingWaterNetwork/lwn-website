@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PrivacyPolicyContent } from "@/components/sections/PrivacyPolicyContent";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/privacy" },
   title: "Privacy Policy",
   description: "How Living Water Network collects, uses, and protects information collected through lwnetwork.org.",
 };

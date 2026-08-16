@@ -8,6 +8,7 @@ import { breadcrumbJsonLd } from "@/lib/seo";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/programs/speaking" },
   title: "Request a Christian Leadership Speaker",
   description:
     "Bring Living Water Network's message on Christian leadership, discipleship, and marketplace ministry to your church, conference, retreat, or corporate leadership event.",

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { FAQContent } from "@/components/sections/FAQContent";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/faq" },
   title: "FAQ",
   description:
     "Answers to common questions about Groundwork — LWN's 9-month Christian leadership formation journey, including cost, tracks, application steps, and program logistics.",

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { TermsOfUseContent } from "@/components/sections/TermsOfUseContent";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/terms" },
   title: "Terms of Use",
   description: "Terms governing use of the lwnetwork.org website.",
 };

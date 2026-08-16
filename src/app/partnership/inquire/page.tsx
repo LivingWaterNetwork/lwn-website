@@ -7,6 +7,7 @@ import { PartnershipInquireContent } from "@/components/sections/PartnershipInqu
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/partnership/inquire" },
   title: "Partner With Us — Start the Conversation",
   description: "Tell us about your interest in partnering with Living Water Network at a specific tier or level of investment.",
 };

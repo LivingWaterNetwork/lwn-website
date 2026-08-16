@@ -3,6 +3,7 @@ import { ProgramsPageContent } from "@/components/sections/ProgramsPageContent";
 import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/programs" },
   title: "Christian Leadership Programs",
   description:
     "Explore Living Water Network's Christian leadership development programs: the Groundwork cohort, discipleship-based counseling, mentorship, speaking, and international mission trips.",

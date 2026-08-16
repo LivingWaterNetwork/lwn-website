@@ -88,6 +88,30 @@ Every public form (`cohort`, `contact`, `programs/inquire`, `partnership/*`,
 donate route is Zod-validated but has a more generous rate limit since legitimate
 donors sometimes retry a card.
 
+## SEO & search indexing
+
+Every page has a self-referencing `alternates.canonical` and BreadcrumbList JSON-LD;
+the homepage and blog posts additionally carry Organization/Article JSON-LD. The
+sitemap (`src/app/sitemap.ts`) is the source of truth for known routes — add a new
+route there when you ship one, or it won't be discoverable via sitemap.
+
+**Google**: does not support push-based indexing for a normal site. The real levers
+are (1) an accurate, complete sitemap — submit `https://lwnetwork.org/sitemap.xml` in
+[Google Search Console](https://search.google.com/search-console) once, Google
+re-fetches it periodically after that — and (2) Search Console's URL Inspection tool
+to request indexing manually for a specific new/changed page.
+
+**Bing/Yandex/etc.**: `GET /api/cron/indexnow` (auth: `Bearer $CRON_SECRET`) pushes
+every sitemap URL to the [IndexNow](https://www.indexnow.org) protocol, which fans
+out to participating engines within minutes instead of waiting on their own crawl
+schedule. Not on an automatic schedule (the Vercel cron slot is already used by
+`send-thank-you-letters`) — run it manually after a deploy that adds or meaningfully
+changes pages:
+
+```bash
+curl -H "Authorization: Bearer $CRON_SECRET" https://lwnetwork.org/api/cron/indexnow
+```
+
 ## Deployment
 
 Deploys automatically to Vercel on push to `main`. Do not force-push or rewrite

@@ -3,6 +3,7 @@ import { TheoryOfChangeContent } from "@/components/sections/TheoryOfChangeConte
 import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/theory-of-change" },
   title: "Our Theory of Change",
   description:
     "How Living Water Network turns spiritual formation into measurable Kingdom impact — our logic model from inputs to outcomes to lasting change.",

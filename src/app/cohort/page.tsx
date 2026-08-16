@@ -3,6 +3,7 @@ import { CohortContent } from "@/components/sections/CohortContent";
 import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/cohort" },
   title: "Groundwork Cohort Program",
   description:
     "Groundwork is LWN's 9-month Christian leadership formation journey in Atlanta — three phases, three tracks, one purpose: to form Kingdom leaders before sending them.",

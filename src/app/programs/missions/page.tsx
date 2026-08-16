@@ -8,6 +8,7 @@ import { breadcrumbJsonLd } from "@/lib/seo";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/programs/missions" },
   title: "International Mission Trips",
   description:
     "Inquire about Living Water Network's international mission trips for Christian leaders — broadened perspective, deepened calling, hands-on Kingdom service.",

@@ -7,6 +7,7 @@ import { MultiYearPledgeContent } from "@/components/sections/MultiYearPledgeCon
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/partnership/multi-year-pledge" },
   title: "Discuss a Multi-Year Pledge",
   description: "Multi-year pledges let Living Water Network plan with confidence — hire staff, build curriculum, and launch new cohorts with certainty.",
 };

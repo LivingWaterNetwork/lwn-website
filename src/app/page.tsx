@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { HomePageContent } from "@/components/sections/HomePageContent";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/" },
   title: "Christian Leadership Development & Discipleship-Based Mentorship",
   description:
     "Living Water Network equips Kingdom leaders in Atlanta and beyond through discipleship-based mentorship, counseling, coaching, church advisory, marketplace ministry, and the Groundwork cohort program.",

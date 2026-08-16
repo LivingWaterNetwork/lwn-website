@@ -3,6 +3,7 @@ import { ContactContent } from "@/components/sections/ContactContent";
 import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/contact" },
   title: "Contact Us",
   description:
     "Get in touch with Living Water Network — general inquiries, speaking requests, or major gifts and institutional partnerships.",

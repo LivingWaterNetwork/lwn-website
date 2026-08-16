@@ -7,6 +7,7 @@ import { SponsorTheGalaContent } from "@/components/sections/SponsorTheGalaConte
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/partnership/sponsor-the-gala" },
   title: "Sponsor the Gala",
   description: "Reserve a table or sponsor Living Water Network's annual Black Tie Gala — Atlanta's Kingdom leadership vision night.",
 };

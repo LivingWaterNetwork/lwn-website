@@ -8,6 +8,7 @@ import { BlogContent } from "@/components/sections/BlogContent";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/blog" },
   title: "Blog",
   description:
     "Insights on spiritual formation, Christian leadership development, and discipleship-based mentorship from Living Water Network.",

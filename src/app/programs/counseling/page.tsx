@@ -12,6 +12,7 @@ import { breadcrumbJsonLd } from "@/lib/seo";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/programs/counseling" },
   title: "Christian Counseling for Leaders",
   description:
     "Discipleship-based counseling for Christian leaders — spiritual, emotional, and relational care that helps you lead from wholeness, not depletion.",

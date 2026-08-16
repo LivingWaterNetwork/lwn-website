@@ -1,5 +1,15 @@
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://lwnetwork.org";
 
+/**
+ * Self-referencing canonical URL for a page's `metadata.alternates`. Spread
+ * this into a page's `metadata` export: `{ ...metadata, ...canonical("/about") }`.
+ * Prevents duplicate-content signals from query strings/trailing slashes and
+ * tells Google unambiguously which URL is authoritative for each page.
+ */
+export function canonical(path: string) {
+  return { alternates: { canonical: `${SITE_URL}${path}` } };
+}
+
 export interface BreadcrumbItem {
   name: string;
   path: string; // e.g. "/programs/coaching"

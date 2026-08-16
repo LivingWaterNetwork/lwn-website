@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/donate/success" },
   title: "Thank You — Donation Received",
   description: "Your donation to Living Water Network has been received.",
 };

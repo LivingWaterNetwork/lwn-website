@@ -3,6 +3,7 @@ import { AboutContent } from "@/components/sections/AboutContent";
 import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/about" },
   title: "About Us",
   description:
     "Learn about Living Water Network — our founder's story, our mission to equip Christian leaders through discipleship-based formation, and why we exist as an Atlanta-based 501(c)(3) nonprofit.",

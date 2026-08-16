@@ -3,6 +3,7 @@ import { PartnershipContent } from "@/components/sections/PartnershipContent";
 import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/partnership" },
   title: "Partner With Us",
   description:
     "Join the Living Water Network partnership circle. Sponsorship tiers, multi-year giving, and ways to invest in the next generation of Christian leaders in Atlanta and beyond.",
