@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 import { safeYanQuery } from "@/lib/yanData";
 import { breadcrumbJsonLd, canonical } from "@/lib/seo";
@@ -27,8 +28,12 @@ export default async function YanLeadersPage() {
           __html: JSON.stringify(breadcrumbJsonLd([{ name: "YAN Atlanta", path: "/yan" }, { name: "Leaders", path: "/yan/leaders" }])),
         }}
       />
-      <section className="py-16 sm:py-24 bg-yan-navy text-center">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative py-16 sm:py-24 text-center overflow-hidden">
+        <div className="absolute inset-0">
+          <Image src="/images/yan/source/atlanta-mural-atlantamade.jpg" alt="" fill className="object-cover" />
+          <div className="absolute inset-0 bg-yan-navy/85" />
+        </div>
+        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="yan-eyebrow yan-eyebrow-dark mb-3">Leaders</p>
           <h1 className="yan-h1 text-white mb-4">Atlanta&apos;s leaders, together.</h1>
           <p className="yan-body text-white/65 max-w-xl mx-auto">

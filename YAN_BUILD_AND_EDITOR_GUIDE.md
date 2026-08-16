@@ -1,29 +1,69 @@
-# YAN Atlanta — Build & Editor Guide
+# YAN — Build & Editor Guide
 
-This document is the operational handoff for the `/yan` mini-site built inside the
+This document is the operational handoff for the `/yan` section built inside the
 Living Water Network (`lwnetwork.org`) codebase. It covers what was built, how to
 manage content, what's required before launch, and what still needs human review.
 
 ## 1. Executive summary
 
-`/yan` is a full mini-site for **YAN Atlanta / Young Adults Network Atlanta**,
-Living Water Network's initiative connecting Atlanta's existing young-adult
-ministries, groups, pastors, and leaders. It has its own navy/blue brand system,
-navigation, footer, and eight public routes, all backed by new Prisma models and a
-lightweight authenticated admin at `/yan/admin`. It reuses the existing Next.js App
-Router, Tailwind, Framer Motion, Prisma/Postgres, and Resend/Graph email systems —
-no new backend, CMS, or infrastructure stack was introduced.
+`/yan` is now a **national mini-site for YAN — Young Adults Network**, Living
+Water Network's initiative connecting young-adult ministries, groups, pastors, and
+leaders city by city. `/yan` itself is the national landing page (mission, the
+four pillars, a "choose your city" gateway); **Atlanta is the founding hub**
+(`/yan/atlanta`) with the full directory/events/leaders/prayer/resources/stories
+system live under it; **New York City** (`/yan/new-york`) and **Los Angeles**
+(`/yan/los-angeles`) are newly-added, honestly-labeled "launching soon" hub pages
+with their own hero imagery, an interest/founding-team CTA, and cross-links back
+to Atlanta and each other.
+
+It has its own navy/blue brand system, navigation, footer, and public routes, all
+backed by new Prisma models and a lightweight authenticated admin at
+`/yan/admin`. It reuses the existing Next.js App Router, Tailwind, Framer Motion,
+Prisma/Postgres, and Resend/Graph email systems — no new backend, CMS, or
+infrastructure stack was introduced.
 
 Every route has a real, on-brand "coming soon" / zero-data state, since no real
 groups, leaders, events, resources, or stories exist yet — the site is designed to
 go from empty to populated without any redesign.
 
+### Multi-city architecture (added after initial launch)
+
+- **`src/lib/yanCities.ts`** is the single source of truth for cities — slug, name,
+  status (`live` | `launching-soon`), stage badge copy, tagline, hero image. Adding
+  a fourth city means one new entry here plus a new `src/app/yan/[slug]/page.tsx`.
+- The **`CitySelector`** component (`src/components/yan/gateway/CitySelector.tsx`)
+  is the modal "Find Your City" gateway on the national homepage; a persistent
+  card-grid section on the same page does the same job without a click, per the
+  research below. A small city-switcher dropdown also lives in every page's navbar
+  utility strip (and in the mobile menu) so a visitor can jump cities from anywhere.
+- **Design research**: before building this, an agent researched how real
+  multi-city faith/values-based networks (Redeemer City to City, Q Commons, The
+  Send, Faith Driven Entrepreneur) handle a national-page-plus-city-hubs
+  structure. Key patterns applied here: the origin city's status is framed as
+  *earned through story* ("this is where it started"), not administrative
+  ("headquarters"); city navigation uses an *equal-weight* photo card grid, not a
+  ranked list; and a brand-new city hub is labeled honestly as its own stage
+  ("New Hub — Join the Launch Team") rather than hidden or padded with fabricated
+  content.
+- The **Network/Events/Leaders/Pray/Resources/Stories directory nav is Atlanta's
+  only** (it's the only city with a real backend directory yet) — it's
+  conditionally hidden on the New York and Los Angeles pages so a visitor there
+  never lands on Atlanta's data thinking it's their own city's.
+- **`YanGroup.city`** (Prisma field, default `"Atlanta"`) tags every group
+  suggestion by which city's page it came from — `/yan/network` filters to
+  `city: "Atlanta"` explicitly now that the field exists. New York/LA group
+  submissions are tagged accordingly so they're distinguishable in
+  `/yan/admin/groups` once that hub's directory is built out for real.
+
 ## 2. Final route map
 
 | Route | Purpose |
 |---|---|
-| `/yan` | Movement home — hero, gateway CTA, pillars, network story, roundtable preview, faith foundation |
-| `/yan/network` | Ministry/group directory (list + lightweight area-grouped "map" view), search/filter, add-your-group |
+| `/yan` | **National** home — mission, city selector/gateway, pillars, how-it-works, faith foundation |
+| `/yan/atlanta` | **Founding hub** — Atlanta-specific hero, network story, roundtable preview, network/leaders/stories previews |
+| `/yan/new-york` | New, honestly-labeled "launching soon" hub — origin story, interest CTA, early group-interest form |
+| `/yan/los-angeles` | Same as New York, for Los Angeles |
+| `/yan/network` | Atlanta's ministry/group directory (list + lightweight area-grouped "map" view), search/filter, add-your-group |
 | `/yan/events` | Event list + `/yan/events/[slug]` detail with registration/waitlist and add-to-calendar |
 | `/yan/leaders` | Leader/ministry spotlights + nomination form |
 | `/yan/pray` | Prayer themes + private/anonymized prayer request form (crisis-line language included) |
@@ -149,16 +189,28 @@ No secret values are included here — only names and purpose.
 Everything else (`DATABASE_URL`, `RESEND_API_KEY`, `NOTIFY_EMAIL`, MS Graph vars)
 reuses the site's existing configuration — nothing new required there.
 
-## 8. Atlanta image source/license manifest
+## 8. Image source/license manifest
 
-8 images sourced from Unsplash and Pexels (Downtown/Midtown skyline, BeltLine,
-murals/street texture, diverse young-adult community scenes, historic Atlanta
-architecture). Full manifest with original URLs, photographers, licenses, and
-per-image usage notes: **`public/images/yan/source/MANIFEST.md`**. Both licenses
-used (Unsplash License, Pexels License) permit free commercial use without
-attribution; attribution is recorded anyway as good practice. The two
-"young adults gathering" photos are generic stock and are flagged in the manifest
-as **not** to be captioned as an actual YAN event.
+17 images total, sourced from Unsplash, Pexels, and NASA — full manifest with
+original URLs, photographers, licenses, and per-image usage notes:
+**`public/images/yan/source/MANIFEST.md`**.
+
+- **Atlanta (8):** Downtown/Midtown skyline, BeltLine, murals/street texture,
+  diverse young-adult community scenes, historic Atlanta architecture.
+- **National (1):** `national-usa-night-lights-nasa.jpg` — NASA's "City Lights of
+  the United States" satellite composite (Suomi NPP VIIRS), a genuine U.S.
+  government work and public domain, used as the national homepage's hero —
+  visually doubling as the "network of connected cities" metaphor.
+- **New York City (4) / Los Angeles (4):** skyline/aerial establishing shots,
+  street-level scenes, and diverse young-adult gathering photos for each city's
+  hub page. Note from the sourcing pass: no free/verified Brooklyn-brownstone or
+  Silver Lake/Echo Park street photo was available, so Times Square (NYC) and
+  Venice Beach (LA) were used for the street-level scenes instead.
+
+Unsplash License and Pexels License both permit free commercial use without
+attribution; attribution is recorded anyway as good practice. The "young adults
+gathering" photos are generic stock and are flagged in the manifest as **not** to
+be captioned as an actual YAN event.
 
 **Update:** the official logo files were supplied mid-build and are now in use —
 `public/images/yan/brand/{yan-logo-primary,yan-logo-reverse,yan-icon-mark}.png`.
@@ -234,13 +286,17 @@ All exceed the 90/95/95/95 targets. LCP ranged 0.3–1.2s, CLS was 0 everywhere.
 - `/favicon.ico` returns a 500 on every page (including `/programs`, untouched by this work) — two conflicting favicon sources (`public/favicon.ico` and `src/app/favicon.ico`) already exist in the repo.
 - The shared `.btn-copper` button (main-site component, reused by `NewsletterSignup` in the YAN footer) has white-on-copper text contrast of 4.46:1 — just under the 4.5:1 AA threshold. It's the one point keeping every route's accessibility score at 96 instead of 100. Pre-existing in the main site's design system; out of scope to change here since it'd affect every `btn-copper` use site-wide, but worth a follow-up.
 
-**Not yet run against the actual deployed preview:** this session's Vercel preview
-deployment currently sits behind **Vercel Deployment Protection** (a project-level
-setting requiring a Vercel login to view any preview URL), which returned every
-request as a 302 redirect — so the numbers above are from a local production
-server, not the live preview. Turn off "Vercel Authentication" for Preview
-deployments in Project Settings → Deployment Protection to get a publicly
-reachable preview link, then this same suite can be re-run against it directly.
+**Update — site is live in production** (`https://www.lwnetwork.org/yan`) and the
+multi-city expansion (national page, Atlanta/New York/LA hubs) was verified the
+same way before merging: full production build, 15/15 unit tests, 15/16 e2e
+(1 correctly skipped, mobile-only nav check), and Lighthouse on `/yan`,
+`/yan/atlanta`, `/yan/new-york`, and `/yan/los-angeles` — Performance 95-98,
+Accessibility 96 (same pre-existing `.btn-copper` point as above), Best Practices
+100, SEO 100 on every route. One real bug this pass caught and fixed: the
+Network/Events/Leaders/Pray/Resources/Stories nav (Atlanta's directory) was
+showing identically on the New York/LA pages, which would have misled a visitor
+there into thinking it was their own city's data — it's now conditionally hidden
+on not-yet-launched city hubs, in both the desktop nav and the mobile menu.
 
 ## 12. Remaining human approvals before launch
 

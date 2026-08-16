@@ -28,7 +28,7 @@ function JoinFormInner() {
     email: "",
     phone: "",
     ministryName: "",
-    city: "",
+    city: params.get("city") ?? "",
     role: "",
     message: "",
     [HONEYPOT_FIELD]: "",

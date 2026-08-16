@@ -48,6 +48,7 @@ export const yanGroupSuggestionSchema = z.object({
   name,
   email,
   groupName: z.string().trim().min(1, "Group or ministry name is required.").max(200),
+  city: optionalText(120),
   neighborhood: optionalText(120),
   meetingDay: optionalText(60),
   meetingFrequency: optionalText(60),
