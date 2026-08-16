@@ -1,32 +1,29 @@
+import Image from "next/image";
 import { YanMark } from "./YanMark";
 
-/**
- * Accessible name for the mark everywhere it appears. Nearby live text (page
- * titles, the "Atlanta" descriptor) supplies local-search context — the mark
- * itself never gets "Atlanta" baked in, per the naming hierarchy.
- */
-const ACCESSIBLE_NAME = "YAN — Young Adults Network";
+/** Official lockup artwork, as supplied — see public/images/yan/brand/. */
+const LOGO_ASPECT = 1390 / 306;
 
 /** Primary lockup — horizontal, for headers and wherever width allows. */
-export function YanLogoHorizontal({ tone = "dark" }: { tone?: "dark" | "light" }) {
+export function YanLogoHorizontal({ tone = "dark", height = 34 }: { tone?: "dark" | "light"; height?: number }) {
   return (
-    <span role="img" aria-label={ACCESSIBLE_NAME} className="inline-flex items-center gap-2.5">
-      <YanMark variant={tone === "light" ? "white" : "navy"} size={34} />
-      <span
-        className={`font-yan-heading font-bold text-xl tracking-tight ${
-          tone === "light" ? "text-white" : "text-yan-navy"
-        }`}
-      >
-        YAN
-      </span>
-    </span>
+    <Image
+      src={tone === "light" ? "/images/yan/brand/yan-logo-reverse.png" : "/images/yan/brand/yan-logo-primary.png"}
+      alt="YAN — Young Adults Network"
+      width={Math.round(height * LOGO_ASPECT)}
+      height={height}
+      className="h-auto w-auto"
+      style={{ height, width: "auto" }}
+      priority
+    />
   );
 }
 
-/** Alternate lockup — stacked, for square/vertical formats (footer, social, apparel). */
+/** Alternate lockup — stacked, for square/vertical formats (footer, social). No stacked artwork was
+ * supplied, so this composes the official icon mark with the wordmark text to match its style. */
 export function YanLogoStacked({ tone = "dark" }: { tone?: "dark" | "light" }) {
   return (
-    <span role="img" aria-label={ACCESSIBLE_NAME} className="inline-flex flex-col items-center gap-2">
+    <span role="img" aria-label="YAN — Young Adults Network" className="inline-flex flex-col items-center gap-2">
       <YanMark variant={tone === "light" ? "white" : "navy"} size={44} />
       <span
         className={`font-yan-heading font-semibold text-[11px] uppercase tracking-[0.25em] text-center leading-tight ${
