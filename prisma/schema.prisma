@@ -117,6 +117,7 @@ model YanGroup {
   name               String
   slug               String   @unique
   description        String
+  city               String   @default("Atlanta") // city slug label, e.g. "Atlanta" | "New York City" | "Los Angeles"
   neighborhood       String?
   meetingDay         String?
   meetingFrequency   String?

@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
     if (!parsed.success) {
       return NextResponse.json({ error: firstIssueMessage(parsed.error) }, { status: 400 });
     }
-    const { name, email, groupName, neighborhood, meetingDay, meetingFrequency, gatheringType, websiteUrl, instagramHandle, description } =
+    const { name, email, groupName, city, neighborhood, meetingDay, meetingFrequency, gatheringType, websiteUrl, instagramHandle, description } =
       parsed.data;
 
     const baseSlug = slugify(groupName) || "group";
@@ -42,6 +42,7 @@ export async function POST(req: NextRequest) {
         name: groupName,
         slug,
         description,
+        city: city || "Atlanta",
         neighborhood: neighborhood || null,
         meetingDay: meetingDay || null,
         meetingFrequency: meetingFrequency || null,
@@ -62,6 +63,7 @@ export async function POST(req: NextRequest) {
 New group/ministry submitted for the YAN network directory:
 
 Group: ${groupName}
+City: ${city || "Atlanta"}
 Submitted by: ${name} (${email})
 Neighborhood: ${neighborhood || "—"}
 Meeting: ${meetingDay || "—"} · ${meetingFrequency || "—"}

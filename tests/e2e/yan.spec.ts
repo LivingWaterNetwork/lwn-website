@@ -7,19 +7,35 @@ import { test, expect } from "@playwright/test";
  * even before `npm run db:push` has been run.
  */
 
-test("homepage loads with the movement gateway", async ({ page }) => {
+test("national homepage loads with the city selector", async ({ page }) => {
   await page.goto("/yan");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("One City");
-  await page.getByRole("button", { name: "Enter the Network" }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("network for what God is already doing");
+  await page.getByRole("button", { name: "Find Your City" }).click();
   await expect(page.getByRole("dialog")).toBeVisible();
-  await expect(page.getByRole("link", { name: /pastor or church leader/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Atlanta/i }).first()).toBeVisible();
 });
 
-test("gateway pathway routes into the join flow", async ({ page }) => {
+test("city selector routes to a city hub page", async ({ page }) => {
   await page.goto("/yan");
+  await page.getByRole("button", { name: "Find Your City" }).click();
+  await page.getByRole("dialog").getByRole("link", { name: /Atlanta/i }).click();
+  await expect(page).toHaveURL(/\/yan\/atlanta/);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("One City");
+});
+
+test("Atlanta hub page's movement gateway opens and routes into the join flow", async ({ page }) => {
+  await page.goto("/yan/atlanta");
   await page.getByRole("button", { name: "Enter the Network" }).click();
+  await expect(page.getByRole("dialog")).toBeVisible();
   await page.getByRole("link", { name: /want to find a young-adult community/i }).click();
   await expect(page).toHaveURL(/\/yan\/join/);
+});
+
+test("new and unlaunched city hubs are honest about their stage", async ({ page }) => {
+  await page.goto("/yan/new-york");
+  await expect(page.getByText(/doesn't exist yet/i)).toBeVisible();
+  await page.goto("/yan/los-angeles");
+  await expect(page.getByText(/doesn't exist yet/i)).toBeVisible();
 });
 
 test("join flow validates required fields before submit", async ({ page }) => {
@@ -39,7 +55,7 @@ test("prayer request page shows crisis language and private-by-default option", 
 test("every YAN nav route is reachable by keyboard from the homepage", async ({ page, isMobile }) => {
   test.skip(isMobile, "the desktop nav is intentionally hidden on mobile viewports; mobile keyboard access goes through the hamburger menu instead");
   await page.goto("/yan");
-  const navLink = page.getByRole("navigation", { name: "YAN Atlanta" }).getByRole("link", { name: "Network", exact: true });
+  const navLink = page.getByRole("navigation", { name: "YAN" }).getByRole("link", { name: "Network", exact: true });
   await navLink.focus();
   await expect(navLink).toBeFocused();
 });

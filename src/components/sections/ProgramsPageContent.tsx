@@ -165,23 +165,23 @@ export function ProgramsPageContent() {
         </StaggerChildren>
       </section>
 
-      {/* YAN Atlanta initiative */}
+      {/* YAN initiative */}
       <section className="py-16 bg-white border-t border-mist">
         <FadeInSection className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-2xl bg-navy px-8 py-10 md:px-12 md:py-12 flex flex-col md:flex-row items-center gap-8">
             <div className="flex-1 text-center md:text-left">
               <p className="section-label text-spring mb-2">An LWN Initiative</p>
               <h2 className="font-serif text-2xl md:text-3xl font-semibold text-white mb-3">
-                YAN Atlanta — connecting the city&apos;s young-adult ministries
+                YAN — connecting young-adult ministries, city by city
               </h2>
               <p className="text-white/70 text-sm font-sans leading-relaxed max-w-xl">
-                Young Adults Network is a citywide movement helping the young-adult ministries,
-                groups, and leaders already serving Atlanta find one another, pray together, and
-                grow stronger together.
+                Young Adults Network is a growing movement helping the young-adult ministries,
+                groups, and leaders already serving their cities find one another, pray together,
+                and grow stronger together — founded in Atlanta, now expanding nationally.
               </p>
             </div>
             <Link href="/yan" className="btn-copper shrink-0">
-              Explore YAN Atlanta
+              Explore YAN
             </Link>
           </div>
         </FadeInSection>

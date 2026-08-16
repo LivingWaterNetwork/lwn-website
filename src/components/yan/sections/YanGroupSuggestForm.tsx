@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { HONEYPOT_FIELD } from "@/lib/yanValidation";
 
-export function YanGroupSuggestForm() {
+export function YanGroupSuggestForm({ city = "Atlanta" }: { city?: string }) {
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -28,7 +28,7 @@ export function YanGroupSuggestForm() {
       const res = await fetch("/api/yan/network/suggest", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, city }),
       });
       const json = await res.json();
       if (!res.ok) {

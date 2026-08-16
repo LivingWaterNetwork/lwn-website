@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { YanLogoStacked } from "@/components/yan/brand/YanLogo";
 import { NewsletterSignup } from "@/components/sections/NewsletterSignup";
+import { YAN_CITIES } from "@/lib/yanCities";
 
 const footerLinks = [
   { href: "/yan/network", label: "Network" },
@@ -24,9 +25,22 @@ export function YanFooter() {
           <NewsletterSignup dark />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
           <div className="md:col-span-1">
             <YanLogoStacked tone="light" />
+          </div>
+
+          <div>
+            <p className="yan-eyebrow yan-eyebrow-dark mb-3">Cities</p>
+            <ul className="space-y-2 text-sm font-yan-body">
+              {YAN_CITIES.map((city) => (
+                <li key={city.slug}>
+                  <Link href={`/yan/${city.slug}`} className="text-white/65 hover:text-white transition-colors">
+                    {city.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div>

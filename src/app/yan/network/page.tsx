@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 import { safeYanQuery } from "@/lib/yanData";
 import { breadcrumbJsonLd, canonical } from "@/lib/seo";
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 
 export default async function YanNetworkPage() {
   const groups = await safeYanQuery(
-    () => prisma.yanGroup.findMany({ where: { status: "published" }, orderBy: [{ featured: "desc" }, { name: "asc" }] }),
+    () => prisma.yanGroup.findMany({ where: { status: "published", city: "Atlanta" }, orderBy: [{ featured: "desc" }, { name: "asc" }] }),
     []
   );
 
@@ -29,8 +30,12 @@ export default async function YanNetworkPage() {
           __html: JSON.stringify(breadcrumbJsonLd([{ name: "YAN Atlanta", path: "/yan" }, { name: "Network", path: "/yan/network" }])),
         }}
       />
-      <section className="py-16 sm:py-20 bg-yan-navy">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative py-16 sm:py-20 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image src="/images/yan/source/atlanta-graffiti-underpass.jpg" alt="" fill className="object-cover" />
+          <div className="absolute inset-0 bg-yan-navy/85" />
+        </div>
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="yan-eyebrow yan-eyebrow-dark mb-3">The Network</p>
           <h1 className="yan-h1 text-white mb-4">Atlanta&apos;s young-adult ministries.</h1>
           <p className="yan-body text-white/65 max-w-2xl">

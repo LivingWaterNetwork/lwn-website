@@ -53,7 +53,7 @@ export function Footer() {
                 { href: "/programs", label: "Programs" },
                 { href: "/cohort", label: "Cohort" },
                 { href: "/events", label: "Events" },
-                { href: "/yan", label: "YAN Atlanta" },
+                { href: "/yan", label: "YAN — Young Adults Network" },
                 { href: "/partnership", label: "Partner With Us" },
                 { href: "/theory-of-change", label: "Theory of Change" },
                 { href: "/faq", label: "FAQ" },
