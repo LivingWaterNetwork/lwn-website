@@ -89,6 +89,11 @@ export function YanFooter() {
             </Link>
           </div>
         </div>
+
+        <p className="mt-6 text-[11px] text-white/30 font-yan-body leading-relaxed">
+          Scripture quotations marked (NIV) are taken from the Holy Bible, New International Version®, NIV®.
+          Copyright © 1973, 1978, 1984, 2011 by Biblica, Inc.™ Used by permission. All rights reserved worldwide.
+        </p>
       </div>
     </footer>
   );

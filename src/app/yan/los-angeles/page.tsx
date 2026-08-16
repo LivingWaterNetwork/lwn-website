@@ -5,6 +5,7 @@ import { canonical, breadcrumbJsonLd } from "@/lib/seo";
 import { FadeInSection } from "@/components/motion/FadeInSection";
 import { YanEmptyState } from "@/components/yan/primitives/YanEmptyState";
 import { YanGroupSuggestForm } from "@/components/yan/sections/YanGroupSuggestForm";
+import { YanFaithAnchor } from "@/components/yan/sections/YanFaithAnchor";
 import { getYanCity, getOtherCities } from "@/lib/yanCities";
 
 export const dynamic = "force-static";
@@ -70,6 +71,13 @@ export default function YanLosAngelesPage() {
             County, you&apos;d be one of the first voices shaping what YAN LA becomes.
           </p>
         </FadeInSection>
+      </section>
+
+      {/* Faith anchor — Scripture + a historic Christian voice, grounding the movement in Jesus before anything else */}
+      <section className="bg-white pb-20 sm:pb-28">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <YanFaithAnchor pageKey="national" />
+        </div>
       </section>
 
       {/* LA imagery + neighborhoods */}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FadeInSection } from "@/components/motion/FadeInSection";
 import { StaggerChildren, StaggerItem } from "@/components/motion/StaggerChildren";
+import { YanFaithAnchor } from "@/components/yan/sections/YanFaithAnchor";
 import { YAN_CITIES } from "@/lib/yanCities";
 import { getCityStats, type YanStatCategory } from "@/lib/yanCityStats";
 
@@ -32,6 +33,12 @@ export function YanPageCityGateway({
           <h1 className="yan-h1 text-white mb-5">{title}</h1>
           <p className="yan-body text-white/65 max-w-xl mx-auto">{intro}</p>
         </FadeInSection>
+      </section>
+
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <YanFaithAnchor pageKey={pageSlug} />
+        </div>
       </section>
 
       <section className="py-16 sm:py-24 bg-yan-stone">
