@@ -9,7 +9,7 @@ export default function YanAdminHome() {
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="flex items-center justify-between mb-10">
         <div>
-          <p className="yan-eyebrow mb-2">YAN Admin</p>
+          <p className="yan-eyebrow yan-eyebrow-dark mb-2">YAN Admin</p>
           <h1 className="yan-h2 text-white">Manage content</h1>
         </div>
         <AdminLogoutButton />

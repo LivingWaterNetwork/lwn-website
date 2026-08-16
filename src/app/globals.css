@@ -188,8 +188,13 @@
     @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full border border-yan-navy/15 text-yan-navy font-yan-heading font-semibold text-sm transition hover:bg-yan-navy/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yan-blue focus-visible:ring-offset-2;
   }
 
+  /* Default variant meets AA (4.5:1) on white/stone; add `.yan-eyebrow-dark` on navy backgrounds. */
   .yan-eyebrow {
-    @apply font-yan-heading font-bold text-xs uppercase tracking-[0.2em] text-yan-blue;
+    @apply font-yan-heading font-bold text-xs uppercase tracking-[0.2em] text-yan-blue-dark;
+  }
+
+  .yan-eyebrow-dark {
+    @apply text-yan-blue-light;
   }
 
   .yan-h1 {

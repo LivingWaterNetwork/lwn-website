@@ -26,7 +26,7 @@ export default async function YanPrayPage() {
       />
       <section className="py-16 sm:py-24 bg-yan-navy text-center">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="yan-eyebrow mb-3">Pray</p>
+          <p className="yan-eyebrow yan-eyebrow-dark mb-3">Pray</p>
           <h1 className="yan-h1 text-white mb-4">Covering the city in prayer.</h1>
           <p className="yan-body text-white/65 max-w-xl mx-auto">
             Prayer is our first response — for our churches, our leaders, and the next generation of

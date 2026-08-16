@@ -29,7 +29,7 @@ export default async function YanLeadersPage() {
       />
       <section className="py-16 sm:py-24 bg-yan-navy text-center">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="yan-eyebrow mb-3">Leaders</p>
+          <p className="yan-eyebrow yan-eyebrow-dark mb-3">Leaders</p>
           <h1 className="yan-h1 text-white mb-4">Atlanta&apos;s leaders, together.</h1>
           <p className="yan-body text-white/65 max-w-xl mx-auto">
             The pastors and ministry leaders already serving young adults across this city — the

@@ -20,7 +20,7 @@ export default function YanJoinPage() {
       />
       <section className="py-16 sm:py-24 bg-yan-navy">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="yan-eyebrow mb-3">Join the Network</p>
+          <p className="yan-eyebrow yan-eyebrow-dark mb-3">Join the Network</p>
           <h1 className="yan-h1 text-white mb-4">Bring your city into the room.</h1>
           <p className="yan-body text-white/65 mb-10 max-w-xl">
             Whether you lead a ministry, pastor a church, want to find community, or simply want to

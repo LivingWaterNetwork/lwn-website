@@ -70,29 +70,29 @@ export default async function YanEventDetailPage({ params }: { params: { slug: s
 
       <section className="py-16 sm:py-24 bg-yan-navy">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="yan-eyebrow mb-3">{event.eventType.replace(/-/g, " ")}</p>
+          <p className="yan-eyebrow yan-eyebrow-dark mb-3">{event.eventType.replace(/-/g, " ")}</p>
           <h1 className="yan-h1 text-white mb-4">{event.title}</h1>
           <p className="yan-body text-white/70 mb-6 text-lg">{event.summary}</p>
 
           <dl className="grid sm:grid-cols-2 gap-4 text-sm mb-8">
             {event.startsAt ? (
               <div className="yan-card-dark">
-                <dt className="text-white/40 text-xs uppercase tracking-wide mb-1">When</dt>
+                <dt className="text-white/50 text-xs uppercase tracking-wide mb-1">When</dt>
                 <dd className="text-white">{formatDate(event.startsAt)}</dd>
               </div>
             ) : (
               <div className="yan-card-dark">
-                <dt className="text-white/40 text-xs uppercase tracking-wide mb-1">When</dt>
+                <dt className="text-white/50 text-xs uppercase tracking-wide mb-1">When</dt>
                 <dd className="text-white/70">Details coming soon</dd>
               </div>
             )}
             <div className="yan-card-dark">
-              <dt className="text-white/40 text-xs uppercase tracking-wide mb-1">Where</dt>
+              <dt className="text-white/50 text-xs uppercase tracking-wide mb-1">Where</dt>
               <dd className="text-white/70">{event.venueName ?? "Venue to be announced"}</dd>
             </div>
             {event.audience && (
               <div className="yan-card-dark sm:col-span-2">
-                <dt className="text-white/40 text-xs uppercase tracking-wide mb-1">Who should attend</dt>
+                <dt className="text-white/50 text-xs uppercase tracking-wide mb-1">Who should attend</dt>
                 <dd className="text-white/70">{event.audience}</dd>
               </div>
             )}

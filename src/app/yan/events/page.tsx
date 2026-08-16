@@ -43,7 +43,7 @@ export default async function YanEventsPage() {
           <div className="absolute inset-0 bg-yan-navy/85" />
         </div>
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="yan-eyebrow mb-3">Events</p>
+          <p className="yan-eyebrow yan-eyebrow-dark mb-3">Events</p>
           <h1 className="yan-h1 text-white mb-4">Gathering Atlanta&apos;s leaders.</h1>
           <p className="yan-body text-white/70 max-w-xl mx-auto">
             Roundtables, prayer gatherings, worship nights, service projects, and resource

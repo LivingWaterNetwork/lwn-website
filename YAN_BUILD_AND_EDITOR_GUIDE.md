@@ -186,11 +186,12 @@ produced later.
 
 ## 11. Performance & testing results
 
-**Automated (run in this session):**
+**Automated (run in this session, against a local production build — `npm run build && npm run start`):**
 ```bash
 npm install            # installs vitest + @playwright/test (newly added)
 npm run build           # ✓ succeeds — see note below on required env vars
 npm test                # ✓ 15/15 unit tests pass (Zod schema validation)
+npm run test:e2e        # ✓ 11/12 pass, 1 correctly skipped (see below)
 ```
 `npm run build` requires `RESEND_API_KEY` to be a non-empty string (a pre-existing
 repo requirement, unrelated to this YAN work — `lib/email.ts` constructs a `Resend`
@@ -198,27 +199,48 @@ client at module scope) and a syntactically valid `DATABASE_URL` for `prisma
 generate`. Real values are configured in Vercel already; this session verified the
 build succeeds using placeholder values for both.
 
-**Manual smoke test (this session):** started `npm run dev` against an
-unreachable database and requested all 9 public `/yan/*` routes — all returned
-HTTP 200 and rendered their designed empty/coming-soon states (confirms
-`safeYanQuery` works before `db:push` is run). Screenshotted `/yan`, `/yan/network`,
-`/yan/events`, `/yan/pray`, `/yan/join`, and `/programs` at 390px and 1440px —
-no horizontal overflow, no layout breaks. One visual bug was found and fixed
-during this pass: several section backgrounds used a translucent `bg-yan-stone/40-50`
-that rendered muddy over the mini-site's navy body — changed to solid `bg-yan-stone`.
+**Playwright e2e** (`tests/e2e/yan.spec.ts`) ran against a local production server
+on both the `chromium` and `mobile-chrome` projects: the movement gateway, the
+join flow's pathway routing and required-field validation, the prayer request
+page's crisis-line language and private-by-default option, keyboard reachability
+of the nav, and skip-link focus order — all pass. The one skip is intentional:
+the "nav reachable by keyboard" check is scoped out on the mobile project since
+the desktop nav is correctly `hidden` there (real access goes through the
+hamburger menu instead).
 
-**Pre-existing issue observed, not a YAN regression:** `/favicon.ico` returns a
-500 on every page (including `/programs`, untouched by this work) — there appear
-to be two conflicting favicon sources (`public/favicon.ico` and
-`src/app/favicon.ico`) already in the repo. Worth a separate look, unrelated to
-this build.
+**Lighthouse** (desktop preset) run against every public `/yan/*` route on a local
+production server:
 
-**Not run in this session (needs a live environment):** Playwright e2e
-(`npm run test:e2e`, spec written at `tests/e2e/yan.spec.ts` covering the gateway,
-join flow, prayer-request crisis language, and keyboard navigation), Lighthouse
-audits, and full WCAG automated scanning — all require a deployed/long-running
-server this sandboxed session doesn't have. The e2e spec is ready to run in CI or
-locally once `npm run dev` is available with a real `DATABASE_URL`.
+| Route | Performance | Accessibility | Best Practices | SEO |
+|---|---|---|---|---|
+| `/yan` | 98 | 96 | 100 | 100 |
+| `/yan/network` | 100 | 96 | 100 | 100 |
+| `/yan/events` | 100 | 96 | 100 | 100 |
+| `/yan/leaders` | 100 | 96 | 100 | 100 |
+| `/yan/pray` | 100 | 96 | 100 | 100 |
+| `/yan/resources` | 100 | 96 | 100 | 100 |
+| `/yan/stories` | 100 | 96 | 100 | 100 |
+| `/yan/join` | 100 | 96 | 100 | 100 |
+
+All exceed the 90/95/95/95 targets. LCP ranged 0.3–1.2s, CLS was 0 everywhere.
+
+**Real bugs found by this QA pass and fixed (not just test-authoring issues):**
+1. Two duplicate "Skip to content" links on every `/yan` page — the main site's skip link (in the root layout) wasn't hidden under `/yan` the way `Navbar`/`Footer` already were. Added `SiteSkipLink.tsx` following the same pattern.
+2. `YanEmptyState`'s heading was an `<h3>` sitting directly under each page's `<h1>` with no `<h2>` between them (since there's no real content yet to head with one) — a heading-order violation on every route showing an empty state, i.e. currently all of them. Changed to `<h2>`.
+3. Several `yan-eyebrow` labels and a couple of low-opacity white captions on navy backgrounds were below the 4.5:1 AA contrast ratio (verified with computed luminance, not just eyeballing) — added a `.yan-eyebrow-dark` variant (using the existing `yan-blue-light` token, 5.1:1 on navy) applied to every navy-background usage, and bumped a few `text-white/35-40` captions to `/50`.
+4. An earlier visual bug (also fixed, same pass): several section backgrounds used a translucent `bg-yan-stone/40-50` that rendered muddy over the mini-site's navy body — changed to solid `bg-yan-stone`.
+
+**Pre-existing issues observed, not YAN regressions:**
+- `/favicon.ico` returns a 500 on every page (including `/programs`, untouched by this work) — two conflicting favicon sources (`public/favicon.ico` and `src/app/favicon.ico`) already exist in the repo.
+- The shared `.btn-copper` button (main-site component, reused by `NewsletterSignup` in the YAN footer) has white-on-copper text contrast of 4.46:1 — just under the 4.5:1 AA threshold. It's the one point keeping every route's accessibility score at 96 instead of 100. Pre-existing in the main site's design system; out of scope to change here since it'd affect every `btn-copper` use site-wide, but worth a follow-up.
+
+**Not yet run against the actual deployed preview:** this session's Vercel preview
+deployment currently sits behind **Vercel Deployment Protection** (a project-level
+setting requiring a Vercel login to view any preview URL), which returned every
+request as a 302 redirect — so the numbers above are from a local production
+server, not the live preview. Turn off "Vercel Authentication" for Preview
+deployments in Project Settings → Deployment Protection to get a publicly
+reachable preview link, then this same suite can be re-run against it directly.
 
 ## 12. Remaining human approvals before launch
 
@@ -244,5 +266,6 @@ locally once `npm run dev` is available with a real `DATABASE_URL`.
 - [ ] Create the Fall 2026 Leaders Roundtable event row once date/venue are confirmed
 - [ ] Invite a handful of real ministries to seed `/yan/network` before public launch
 - [ ] Choose and wire an analytics provider into `src/lib/yanAnalytics.ts`
-- [ ] Run `npm run test:e2e` against a deployed preview once available
+- [ ] Turn off Vercel Deployment Protection ("Vercel Authentication") for Preview deployments so this PR's preview link is publicly reachable, then re-run `npm run test:e2e` + Lighthouse against it
 - [ ] Spot-check `/favicon.ico` (pre-existing issue, unrelated to this build)
+- [ ] Consider fixing the shared `.btn-copper` white-on-copper contrast (4.46:1, pre-existing, main-site component)

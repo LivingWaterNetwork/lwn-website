@@ -30,7 +30,7 @@ export default async function YanResourcesPage() {
       />
       <section className="py-16 sm:py-24 bg-yan-navy text-center">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="yan-eyebrow mb-3">Resources</p>
+          <p className="yan-eyebrow yan-eyebrow-dark mb-3">Resources</p>
           <h1 className="yan-h1 text-white mb-4">Shared tools for shared ministry.</h1>
           <p className="yan-body text-white/65 max-w-xl mx-auto">
             Leader tools, curriculum, prayer guides, event kits, reading, training, and shared

@@ -104,7 +104,7 @@ export default async function YanHomePage() {
 
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-24 sm:pt-36 sm:pb-32 text-center">
           <FadeInSection>
-            <p className="yan-eyebrow mb-5">YAN Atlanta &middot; Young Adults Network</p>
+            <p className="yan-eyebrow yan-eyebrow-dark mb-5">YAN Atlanta &middot; Young Adults Network</p>
             <h1 className="yan-h1 text-white mb-6 text-balance">
               One City. <br className="sm:hidden" />
               Many Churches. <br className="sm:hidden" />
@@ -139,7 +139,7 @@ export default async function YanHomePage() {
       <section className="bg-yan-navy py-20 sm:py-28 relative overflow-hidden">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <FadeInSection className="text-center mb-14">
-            <p className="yan-eyebrow mb-3">A City, Connected</p>
+            <p className="yan-eyebrow yan-eyebrow-dark mb-3">A City, Connected</p>
             <h2 className="yan-h2 text-white mb-5">Atlanta&apos;s ministries, becoming one network.</h2>
             <p className="yan-body text-white/60 max-w-2xl mx-auto">
               From Midtown to the Westside, from the BeltLine to the suburbs — young-adult ministries
@@ -215,7 +215,7 @@ export default async function YanHomePage() {
         </div>
         <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeInSection>
-            <p className="yan-eyebrow mb-3">Fall 2026</p>
+            <p className="yan-eyebrow yan-eyebrow-dark mb-3">Fall 2026</p>
             <h2 className="yan-h2 text-white mb-4">
               {featuredEvent ? featuredEvent.title : "The YAN Leaders Roundtable"}
             </h2>
@@ -285,7 +285,7 @@ export default async function YanHomePage() {
       {/* 9. Faith foundation */}
       <section className="bg-yan-navy py-20 sm:py-28">
         <FadeInSection className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="yan-eyebrow mb-6">What We Hold To</p>
+          <p className="yan-eyebrow yan-eyebrow-dark mb-6">What We Hold To</p>
           <ul className="space-y-3 text-white/80 font-yan-body text-lg">
             <li>Jesus is the center.</li>
             <li>Scripture is our foundation.</li>
@@ -293,7 +293,7 @@ export default async function YanHomePage() {
             <li>The local church matters.</li>
             <li>Unity serves the mission.</li>
           </ul>
-          <p className="text-white/35 text-xs mt-8 font-yan-body">
+          <p className="text-white/50 text-xs mt-8 font-yan-body">
             Condensed from Living Water Network&apos;s beliefs — pending final review before launch.
           </p>
         </FadeInSection>

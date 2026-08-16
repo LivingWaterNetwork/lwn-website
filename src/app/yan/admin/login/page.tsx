@@ -37,7 +37,7 @@ function LoginForm() {
   return (
     <div className="min-h-[70vh] flex items-center justify-center px-4 py-20">
       <form onSubmit={handleSubmit} className="w-full max-w-sm yan-card-dark">
-        <p className="yan-eyebrow mb-2">YAN Admin</p>
+        <p className="yan-eyebrow yan-eyebrow-dark mb-2">YAN Admin</p>
         <h1 className="yan-h3 text-white mb-6">Sign in to manage content</h1>
         <label htmlFor="password" className="block text-sm font-yan-body text-white/70 mb-1.5">
           Admin password

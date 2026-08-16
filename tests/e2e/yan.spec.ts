@@ -36,10 +36,12 @@ test("prayer request page shows crisis language and private-by-default option", 
   await expect(page.getByLabel(/Keep this private/i)).toBeChecked();
 });
 
-test("every YAN nav route is reachable by keyboard from the homepage", async ({ page }) => {
+test("every YAN nav route is reachable by keyboard from the homepage", async ({ page, isMobile }) => {
+  test.skip(isMobile, "the desktop nav is intentionally hidden on mobile viewports; mobile keyboard access goes through the hamburger menu instead");
   await page.goto("/yan");
-  await page.getByRole("link", { name: "Network" }).focus();
-  await expect(page.getByRole("link", { name: "Network" })).toBeFocused();
+  const navLink = page.getByRole("navigation", { name: "YAN Atlanta" }).getByRole("link", { name: "Network", exact: true });
+  await navLink.focus();
+  await expect(navLink).toBeFocused();
 });
 
 test("skip link is the first focusable element", async ({ page }) => {

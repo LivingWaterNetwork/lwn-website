@@ -31,7 +31,7 @@ export default async function YanNetworkPage() {
       />
       <section className="py-16 sm:py-20 bg-yan-navy">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="yan-eyebrow mb-3">The Network</p>
+          <p className="yan-eyebrow yan-eyebrow-dark mb-3">The Network</p>
           <h1 className="yan-h1 text-white mb-4">Atlanta&apos;s young-adult ministries.</h1>
           <p className="yan-body text-white/65 max-w-2xl">
             A growing directory of the groups, ministries, and leaders already serving young adults
