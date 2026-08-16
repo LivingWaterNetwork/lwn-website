@@ -16,7 +16,8 @@ export default defineConfig({
       : undefined,
     // Playwright's browser doesn't inherit the environment's HTTPS_PROXY on its own —
     // pass it through explicitly so remote targets are reachable in proxied sandboxes.
-    proxy: process.env.HTTPS_PROXY ? { server: process.env.HTTPS_PROXY } : undefined,
+    // Only for remote targets: routing localhost through an HTTPS-only proxy breaks it.
+    proxy: isRemoteTarget && process.env.HTTPS_PROXY ? { server: process.env.HTTPS_PROXY } : undefined,
   },
   projects: [
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },

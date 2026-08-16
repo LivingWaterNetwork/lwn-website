@@ -287,14 +287,14 @@ export default async function YanHomePage() {
         <FadeInSection className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="yan-eyebrow yan-eyebrow-dark mb-6">What We Hold To</p>
           <ul className="space-y-3 text-white/80 font-yan-body text-lg">
-            <li>Jesus is the center.</li>
-            <li>Scripture is our foundation.</li>
-            <li>Prayer is our first response.</li>
-            <li>The local church matters.</li>
-            <li>Unity serves the mission.</li>
+            <li>Jesus is the center — every ministry we connect points back to Him, not to a program.</li>
+            <li>Scripture and prayer come first — before strategy, before growth.</li>
+            <li>Formation happens in community — no one is meant to lead, or grow, alone.</li>
+            <li>The local church matters — YAN strengthens churches; it never replaces them.</li>
+            <li>What&apos;s formed in one leader is meant to multiply into others.</li>
           </ul>
           <p className="text-white/50 text-xs mt-8 font-yan-body">
-            Condensed from Living Water Network&apos;s beliefs — pending final review before launch.
+            Condensed from Living Water Network&apos;s beliefs and formation model.
           </p>
         </FadeInSection>
       </section>
