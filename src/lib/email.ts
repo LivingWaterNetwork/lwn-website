@@ -13,7 +13,7 @@ const YAN_NOTIFY_TO = process.env.YAN_NOTIFY_EMAIL ?? "yan@lwnetwork.org";
 // Business Stewardship Discovery submissions (currently just /discovery/dante)
 // go straight to Omar rather than the shared info@ inbox — these are
 // personal, one-on-one discovery conversations he's driving himself.
-const DISCOVERY_NOTIFY_TO = process.env.DISCOVERY_NOTIFY_EMAIL ?? "omar@lwnetwork.org";
+const DISCOVERY_NOTIFY_TO = process.env.DISCOVERY_NOTIFY_EMAIL ?? "ofandino@lwnetwork.org";
 
 function formatAmount(cents: number): string {
   return `$${(cents / 100).toLocaleString("en-US", { minimumFractionDigits: 2 })}`;
