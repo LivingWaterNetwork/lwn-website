@@ -12,8 +12,12 @@ const NOTIFY_TO = process.env.NOTIFY_EMAIL ?? "info@lwnetwork.org";
 const YAN_NOTIFY_TO = process.env.YAN_NOTIFY_EMAIL ?? "yan@lwnetwork.org";
 // Business Stewardship Discovery submissions (currently just /discovery/dante)
 // go straight to Omar rather than the shared info@ inbox — these are
-// personal, one-on-one discovery conversations he's driving himself.
-const DISCOVERY_NOTIFY_TO = process.env.DISCOVERY_NOTIFY_EMAIL ?? "omar@lwnetwork.org";
+// personal, one-on-one discovery conversations he's driving himself. Sent to
+// both of his addresses; override with a comma-separated list via
+// DISCOVERY_NOTIFY_EMAIL if that should ever change.
+const DISCOVERY_NOTIFY_TO = process.env.DISCOVERY_NOTIFY_EMAIL
+  ? process.env.DISCOVERY_NOTIFY_EMAIL.split(",").map((addr) => addr.trim())
+  : ["omar@lwnetwork.org", "ofandino@lwnetwork.org"];
 
 function formatAmount(cents: number): string {
   return `$${(cents / 100).toLocaleString("en-US", { minimumFractionDigits: 2 })}`;
@@ -25,7 +29,7 @@ function formatAmount(cents: number): string {
  * Resend. This means email starts working the moment Graph is configured,
  * with zero changes needed elsewhere in the app.
  */
-async function deliver(to: string, subject: string, text: string, html?: string): Promise<void> {
+async function deliver(to: string | string[], subject: string, text: string, html?: string): Promise<void> {
   if (graphMailConfigured()) {
     try {
       await sendGraphMail({ to, subject, text, html });
