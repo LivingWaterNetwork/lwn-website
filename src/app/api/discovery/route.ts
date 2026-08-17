@@ -40,7 +40,7 @@ const ANSWER_LABELS: Record<string, string> = {
 
 export async function POST(req: NextRequest) {
   try {
-    if (!checkRateLimit(req, "discovery")) {
+    if (!checkRateLimit(req, "discovery", { limit: 10, windowMs: 10 * 60 * 1000 })) {
       return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 });
     }
 
