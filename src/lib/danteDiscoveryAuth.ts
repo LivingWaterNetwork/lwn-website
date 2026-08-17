@@ -10,12 +10,13 @@
 export const DANTE_DISCOVERY_COOKIE = "dante_discovery_session";
 const SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
 
+// Falls back to a baked-in default so this works with zero environment setup.
+// Override with DANTE_DISCOVERY_ACCESS_CODE / DANTE_DISCOVERY_SESSION_SECRET in
+// Vercel if the code ever needs to be rotated without a code change.
+const DEFAULT_ACCESS_CODE = "Dante1year";
+
 function getSecret(): string {
-  const secret = process.env.DANTE_DISCOVERY_SESSION_SECRET || process.env.DANTE_DISCOVERY_ACCESS_CODE;
-  if (!secret) {
-    throw new Error("DANTE_DISCOVERY_SESSION_SECRET (or DANTE_DISCOVERY_ACCESS_CODE) is not configured.");
-  }
-  return secret;
+  return process.env.DANTE_DISCOVERY_SESSION_SECRET || process.env.DANTE_DISCOVERY_ACCESS_CODE || DEFAULT_ACCESS_CODE;
 }
 
 function toBase64Url(bytes: ArrayBuffer): string {
@@ -66,8 +67,7 @@ export async function isValidDiscoverySessionToken(token: string | undefined | n
 
 /** Constant-time-ish comparison of the submitted access code against the configured one. */
 export function isCorrectDiscoveryAccessCode(candidate: string): boolean {
-  const expected = process.env.DANTE_DISCOVERY_ACCESS_CODE;
-  if (!expected) return false;
+  const expected = process.env.DANTE_DISCOVERY_ACCESS_CODE || DEFAULT_ACCESS_CODE;
   if (candidate.length !== expected.length) return false;
   let diff = 0;
   for (let i = 0; i < expected.length; i++) {

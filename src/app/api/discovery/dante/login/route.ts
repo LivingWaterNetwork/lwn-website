@@ -11,13 +11,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Too many attempts. Please try again later." }, { status: 429 });
   }
 
-  if (!process.env.DANTE_DISCOVERY_ACCESS_CODE) {
-    return NextResponse.json(
-      { error: "This link isn't set up yet (DANTE_DISCOVERY_ACCESS_CODE is unset)." },
-      { status: 503 }
-    );
-  }
-
   const body = await req.json().catch(() => null);
   const code = typeof body?.code === "string" ? body.code : "";
 
