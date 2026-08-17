@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 function AccessForm() {
-  const router = useRouter();
   const params = useSearchParams();
   const [code, setCode] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -25,8 +24,11 @@ function AccessForm() {
         setError(json.error ?? "That didn't work.");
         return;
       }
-      router.push(params.get("next") ?? "/discovery/dante");
-      router.refresh();
+      // A full navigation, not router.push + router.refresh(): refresh()
+      // re-fetches the force-dynamic destination route in the background
+      // and swaps in a freshly mounted copy about a second after landing,
+      // silently wiping anything already typed into the form by then.
+      window.location.href = params.get("next") ?? "/discovery/dante";
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {
