@@ -63,7 +63,7 @@ export async function sendGraphMail({
   from,
   attachments,
 }: {
-  to: string | string[];
+  to: string;
   subject: string;
   text: string;
   /** Optional HTML body. When present, this is sent instead of the plain-text body. */
@@ -94,7 +94,7 @@ export async function sendGraphMail({
         message: {
           subject,
           body: html ? { contentType: "HTML", content: html } : { contentType: "Text", content: text },
-          toRecipients: (Array.isArray(to) ? to : [to]).map((address) => ({ emailAddress: { address } })),
+          toRecipients: [{ emailAddress: { address: to } }],
           ...(attachments && attachments.length > 0
             ? {
                 attachments: attachments.map((a) => ({
