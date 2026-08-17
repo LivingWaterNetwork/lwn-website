@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { sendNotificationEmail } from "@/lib/email";
+import { sendDiscoveryNotificationEmail } from "@/lib/email";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { firstIssueMessage, isHoneypotTripped, businessStewardshipDiscoverySchema } from "@/lib/validation";
 
@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
       .join("\n\n");
 
     try {
-      await sendNotificationEmail({
+      await sendDiscoveryNotificationEmail({
         subject: `New Business Stewardship Discovery — ${name}`,
         text: `
 New Business Stewardship Discovery submission (${clientSlug}):

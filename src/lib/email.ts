@@ -1,7 +1,6 @@
 import { Resend } from "resend";
 import { sendGraphMail, graphMailConfigured } from "./graphMail";
 
-const resend = new Resend(process.env.RESEND_API_KEY ?? "");
 // Temporary: using Resend shared domain until lwnetwork.org MX DNS record is added.
 // (Graph mail below is the preferred path — no DNS dependency at all.)
 const FROM = process.env.RESEND_FROM_EMAIL ?? "Living Water Network <onboarding@resend.dev>";
@@ -11,6 +10,10 @@ const NOTIFY_TO = process.env.NOTIFY_EMAIL ?? "info@lwnetwork.org";
 // main site's inquiry volume, and so the recipient can change independent
 // of NOTIFY_EMAIL.
 const YAN_NOTIFY_TO = process.env.YAN_NOTIFY_EMAIL ?? "yan@lwnetwork.org";
+// Business Stewardship Discovery submissions (currently just /discovery/dante)
+// go straight to Omar rather than the shared info@ inbox — these are
+// personal, one-on-one discovery conversations he's driving himself.
+const DISCOVERY_NOTIFY_TO = process.env.DISCOVERY_NOTIFY_EMAIL ?? "omar@lwnetwork.org";
 
 function formatAmount(cents: number): string {
   return `$${(cents / 100).toLocaleString("en-US", { minimumFractionDigits: 2 })}`;
@@ -33,10 +36,15 @@ async function deliver(to: string, subject: string, text: string, html?: string)
     }
   }
 
+  // Constructed lazily, only once we know a key is present — the Resend SDK
+  // throws immediately on an empty key, so building it eagerly at module
+  // load time would 500 every form on the site whenever RESEND_API_KEY is
+  // unset, instead of just skipping the send as intended here.
   if (!process.env.RESEND_API_KEY) {
     console.warn("[email] No email provider configured — skipping:", subject);
     return;
   }
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   const { error } = await resend.emails.send({ from: FROM, to, subject, text, ...(html ? { html } : {}) });
   if (error) {
@@ -65,6 +73,17 @@ export async function sendYanNotificationEmail({
   text: string;
 }) {
   await deliver(YAN_NOTIFY_TO, subject, text);
+}
+
+/** Internal notification email for Business Stewardship Discovery submissions — routes to Omar directly. */
+export async function sendDiscoveryNotificationEmail({
+  subject,
+  text,
+}: {
+  subject: string;
+  text: string;
+}) {
+  await deliver(DISCOVERY_NOTIFY_TO, subject, text);
 }
 
 const SITE_URL = "https://www.lwnetwork.org";
