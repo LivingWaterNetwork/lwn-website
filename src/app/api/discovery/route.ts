@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { sendDiscoveryNotificationEmail } from "@/lib/email";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { firstIssueMessage, isHoneypotTripped, businessStewardshipDiscoverySchema } from "@/lib/validation";
+import { buildDiscoveryExecutiveSummary } from "@/lib/discoverySummary";
 
 const ANSWER_LABELS: Record<string, string> = {
   otherServices: "Other services beyond estate cleanouts & junk removal",
@@ -58,6 +59,8 @@ export async function POST(req: NextRequest) {
       data: { clientSlug, name, email, phone, answers },
     });
 
+    const executiveSummary = buildDiscoveryExecutiveSummary(answers);
+
     const answersText = Object.entries(answers)
       .filter(([, value]) => value && value.trim().length > 0)
       .map(([key, value]) => `${ANSWER_LABELS[key] ?? key}:\n${value}`)
@@ -72,6 +75,12 @@ New Business Stewardship Discovery submission (${clientSlug}):
 Name: ${name}
 Email: ${email}
 Phone: ${phone ?? "—"}
+
+${executiveSummary}
+
+────────────────────────
+FULL ANSWERS
+────────────────────────
 
 ${answersText}
         `.trim(),
