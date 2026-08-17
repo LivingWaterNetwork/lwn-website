@@ -290,6 +290,26 @@ model YanSubscriber {
   @@map("yan_subscribers")
 }
 
+// ---------------------------------------------------------------------------
+// Business Stewardship Discovery — a personalized business-discovery form
+// used ahead of strategy calls. clientSlug identifies which personalized
+// version the submission came from (e.g. "dante"); answers holds the full
+// structured response so the shape can evolve per-client without migrations.
+// ---------------------------------------------------------------------------
+
+model BusinessStewardshipDiscovery {
+  id         String   @id @default(cuid())
+  clientSlug String // which personalized discovery this came from, e.g. "dante"
+  name       String
+  email      String
+  phone      String?
+  answers    Json
+  status     String   @default("new")
+  createdAt  DateTime @default(now())
+
+  @@map("business_stewardship_discoveries")
+}
+
 model GalaSponsorshipInquiry {
   id               String   @id @default(cuid())
   name             String
