@@ -53,7 +53,10 @@ export async function approveTheologyPosition(formData: FormData) {
       status: "APPROVED",
       approvedAt: new Date(),
       allowAutomaticUse: formData.get("allowAutomaticUse") === "on",
-      source: "candidate entry",
+      // Records which reference the candidate drew from, if any. Attribution
+      // matters: in an interview he should know whether a position is one he
+      // articulated himself or one he adopted from a source and made his own.
+      source: String(formData.get("source") ?? "").trim() || "candidate entry",
     },
   });
   revalidatePath("/theology");

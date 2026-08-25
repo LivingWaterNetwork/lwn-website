@@ -49,12 +49,11 @@ export async function buildScoringInput(
   const qualifications = parseArray<string>(opp.qualificationsJson);
   const body = opp.descriptionText ?? "";
 
-  const lane = opp.lane
-    ? { key: opp.lane, confidence: 1 }
-    : (() => {
-        const m = classifyLane(opp.title, `${body} ${responsibilities.join(" ")}`);
-        return m ? { key: m.lane.key, confidence: m.confidence } : null;
-      })();
+  // The lane is derived data, not user input, so it is re-derived on every
+  // score rather than trusted from import time. Classification logic improves;
+  // a lane persisted by an older version should not outlive it.
+  const match = classifyLane(opp.title, `${body} ${responsibilities.join(" ")}`);
+  const lane = match ? { key: match.lane.key, confidence: match.confidence } : null;
 
   const churchFacts = opp.church.facts;
   const theologyFacts = churchFacts.filter((f) => f.category === "theology");
@@ -147,6 +146,7 @@ export async function scoreAndPersist(
       redFlagsJson: JSON.stringify(result.redFlags),
       unknownsJson: JSON.stringify(result.unknowns),
       scoredAt: new Date(),
+      lane: input.lane,
       status: nextStatus,
       onHold: input.church.onHold ? true : before.onHold,
     },

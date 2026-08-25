@@ -29,6 +29,38 @@ and the red-flag detector cannot assess a credential gap without them.
 Go to `/theology`. Every topic starts NOT YET DEFINED and the system will not
 write one for you.
 
+### Working from reference statements
+
+You named Change Church, 2819 Church, Victory Church, and Christ for all Nations
+as aligning with your theology. Their published statements are loaded as
+**reference material** — quoted verbatim, attributed, linked to the source — and
+mapped article-by-article to your topics. Each topic shows the relevant articles
+so you can react to real wording instead of starting from a blank page.
+
+They are not your positions. Nothing in `references.ts` is ever read when
+answering an application question; the resolver only reads APPROVED positions
+you wrote. A test enforces this (`tests/unit/theology-references.test.ts`).
+
+Two reasons this matters beyond principle:
+
+**Your sources disagree with each other.** The dashboard shows where:
+
+- *Charismatic theology / spiritual gifts* — CfaN states tongues as the evidence
+  of Spirit baptism (classical Pentecostal initial-evidence doctrine). Victory
+  affirms Spirit baptism without stating initial evidence. Change and 2819 do
+  not address it. Adopting all four gives you contradictory answers.
+- *Eschatology* — CfaN affirms the rapture of the Church (dispensational
+  language). 2819 and Change affirm a visible second coming without specifying a
+  rapture. Reformed and amillennial churches notice which language you use.
+
+**Seven topics have no coverage at all**, two of which get asked constantly:
+**women in ministry** and **church governance**. No statement you named addresses
+either. You will write those from scratch, and they materially determine fit.
+
+When you approve a position, record whether you wrote it yourself or adapted it
+from a source. In an interview you should know which is which — a committee will
+ask you to expand on anything you affirm.
+
 Prioritize the topics applications actually ask about: Scripture, salvation,
 the gospel, baptism, the Holy Spirit, spiritual gifts, women in ministry,
 human sexuality, and church governance. These also unlock theological alignment

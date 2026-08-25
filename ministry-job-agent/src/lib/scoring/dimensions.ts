@@ -369,6 +369,15 @@ export function scoreTrajectory(input: ScoringInput): DimensionScore {
 
   const signals: Array<[string, number, string]> = [
     ["build from the ground up", 2.5, "green-field ministry to build"],
+    // "create a new X" and "rebuild X" are the clearest trajectory signals a
+    // church posting gives: they mean the structure does not exist yet and the
+    // hire owns designing it. Matching only stock phrases like "ground up"
+    // missed these entirely.
+    ["create a new", 2.5, "authority to create something new"],
+    ["creation of a new", 2.5, "authority to create something new"],
+    ["rebuild", 2, "mandate to rebuild an existing system"],
+    ["build and manage", 1.5, "builds and owns ongoing plans"],
+    ["multiplication", 2, "multiplication mandate"],
     ["launch", 2, "launching something new"],
     ["grow", 1.5, "growth mandate"],
     ["expand", 1.5, "expansion mandate"],

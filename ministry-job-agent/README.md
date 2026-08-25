@@ -148,6 +148,12 @@ letter draft is built from approved material and cited research only; anywhere i
 would need a fact the system does not have, it writes `[NEEDS: ...]` instead of
 inventing one — and a draft containing a marker cannot be approved.
 
+**Theology.** Every topic starts NOT YET DEFINED. Published statements of faith
+from churches the candidate named are loaded as attributed *reference material*
+and mapped to each topic, with convergence analysis showing where those sources
+agree, conflict, or are silent. References are never read by the answer resolver
+— only positions the candidate wrote and approved.
+
 **Human input queue.** Everything the system refused to guess lands here with the
 exact question. Answering one stores it in the answer bank or theology database,
 so you answer each question once.

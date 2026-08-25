@@ -130,14 +130,17 @@ export const MINISTRY_LANES: MinistryLane[] = [
     label: "Associate Pastor of Discipleship",
     priority: 16,
     titles: ["associate pastor of discipleship", "associate pastor discipleship"],
-    functionSignals: ["discipleship", "adult ministries"],
+    functionSignals: ["adult discipleship", "discipleship ministry", "adult ministries"],
   },
   {
     key: "associate_pastor_community",
     label: "Associate Pastor of Community",
     priority: 17,
     titles: ["associate pastor of community", "associate pastor community", "associate pastor of groups"],
-    functionSignals: ["community", "groups", "adult ministries"],
+    // Specific phrases only. Bare "community" and "groups" appear in almost
+    // every relational-ministry posting and made this low-priority lane
+    // outrank the dedicated Groups and Community lanes it should defer to.
+    functionSignals: ["adult ministries", "community life", "groups ministry"],
   },
   {
     key: "adult_ministries_pastor",
@@ -177,12 +180,69 @@ export interface LaneMatch {
   signals: string[];
 }
 
+/** Words that carry no identifying weight in a job title. */
+const TITLE_STOP_WORDS = new Set(["of", "and", "the", "for", "a", "an", "to"]);
+
+/**
+ * Role words that appear in nearly every church job title. On their own they
+ * identify nothing — "Facilities Director" shares "director" with "Ministries
+ * Director" and is a completely different job — so a title match requires at
+ * least one distinctive word to hit.
+ */
+const GENERIC_ROLE_WORDS = new Set([
+  "pastor", "director", "minister", "associate", "lead", "leader", "ministries", "ministry",
+]);
+
+/**
+ * How much of a lane's title vocabulary appears in the posting title, 0..1.
+ *
+ * Token-based rather than exact-substring, because real titles are messy:
+ * "Associate Pastor // Discipleship and House Churches" should match the
+ * discipleship and house-church lanes but contains none of their title strings
+ * verbatim. Tokens match as substrings, so "churches" satisfies "church".
+ *
+ * Scoring is driven by the distinctive words. The generic role word contributes
+ * a small confirmation bonus once a distinctive word has already matched.
+ */
+function titleOverlap(laneTitles: string[], postingTitle: string): number {
+  let best = 0;
+
+  for (const candidate of laneTitles) {
+    const tokens = candidate.split(/\s+/).filter((t) => t && !TITLE_STOP_WORDS.has(t));
+    if (tokens.length === 0) continue;
+
+    const distinctive = tokens.filter((t) => !GENERIC_ROLE_WORDS.has(t));
+    const generic = tokens.filter((t) => GENERIC_ROLE_WORDS.has(t));
+
+    // A lane whose title is nothing but role words (e.g. "ministries director")
+    // needs every one of them present to count at all.
+    if (distinctive.length === 0) {
+      const allPresent = generic.every((t) => postingTitle.includes(t));
+      best = Math.max(best, allPresent ? 1 : 0);
+      continue;
+    }
+
+    const distinctiveHits = distinctive.filter((t) => postingTitle.includes(t)).length;
+    if (distinctiveHits === 0) continue;
+
+    const genericHit = generic.length > 0 && generic.some((t) => postingTitle.includes(t));
+    const score = Math.min(1, (distinctiveHits / distinctive.length) * 0.9 + (genericHit ? 0.1 : 0));
+    best = Math.max(best, score);
+  }
+
+  return best;
+}
+
 /**
  * Classify a posting by title AND responsibilities.
  *
- * A title hit alone is good evidence but not conclusive; responsibility hits
- * raise confidence and can carry a lane on their own. This is why a role with an
- * unfamiliar title still lands in the right lane.
+ * Titles are a weak signal in church hiring, so responsibilities can carry a
+ * lane on their own. A signal that also appears in the title counts double —
+ * "House Churches" in the title of a house-church role is far stronger evidence
+ * than the same phrase buried in a duties list.
+ *
+ * Ties break toward the higher-priority lane, so a role that genuinely spans two
+ * lanes lands in the one the candidate cares more about.
  */
 export function classifyLane(title: string, bodyText: string): LaneMatch | null {
   const t = title.toLowerCase();
@@ -191,22 +251,24 @@ export function classifyLane(title: string, bodyText: string): LaneMatch | null 
   let best: LaneMatch | null = null;
 
   for (const lane of MINISTRY_LANES) {
-    const matchedOnTitle = lane.titles.some((needle) => t.includes(needle));
+    const overlap = titleOverlap(lane.titles, t);
     const signals = lane.functionSignals.filter((needle) => body.includes(needle));
-    if (!matchedOnTitle && signals.length === 0) continue;
+    const signalWeight = signals.reduce((sum, s) => sum + (t.includes(s) ? 2 : 1), 0);
 
-    // Title match is worth 0.6; each responsibility signal adds 0.15, capped at 1.
-    const raw = (matchedOnTitle ? 0.6 : 0) + Math.min(signals.length, 3) * 0.15;
+    if (overlap === 0 && signals.length === 0) continue;
+
+    // A full title match is worth 0.6; partial overlap scales down. Weighted
+    // responsibility signals add up to 0.45, so responsibilities alone can
+    // classify a role whose title gives nothing away.
+    const raw = overlap * 0.6 + Math.min(signalWeight, 3) * 0.15;
     const confidence = Math.min(1, raw);
 
-    // Tie-break toward the higher-priority lane so "College & Young Adults"
-    // does not lose to a generic "college" signal elsewhere in the posting.
     const better =
       !best ||
       confidence > best.confidence + 1e-9 ||
       (Math.abs(confidence - best.confidence) < 1e-9 && lane.priority < best.lane.priority);
 
-    if (better) best = { lane, confidence, matchedOnTitle, signals };
+    if (better) best = { lane, confidence, matchedOnTitle: overlap >= 0.999, signals };
   }
 
   return best;
