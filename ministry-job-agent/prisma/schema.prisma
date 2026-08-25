@@ -180,6 +180,11 @@ model Opportunity {
   redFlagsJson       String  @default("[]")
   unknownsJson       String  @default("[]")
   scoredAt           DateTime?
+  /// What this would score if every UNKNOWN dimension resolved favorably.
+  /// Drives research triage; see src/lib/scoring/engine.ts.
+  ceiling            Int?
+  provisional        Boolean  @default(false)
+  researchRecommended Boolean @default(false)
 
   status     String  @default("DISCOVERED")
   statusNote String?

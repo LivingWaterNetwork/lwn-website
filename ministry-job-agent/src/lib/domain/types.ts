@@ -117,4 +117,19 @@ export interface ScoreResult {
   dimensions: DimensionScore[];
   redFlags: RedFlag[];
   unknowns: string[];
+  /**
+   * True when dimensions were scored around missing evidence rather than
+   * against it — an unresearched church, undisclosed pay. The score is a floor,
+   * not a verdict.
+   */
+  provisional: boolean;
+  /**
+   * The score this opportunity would reach if every UNKNOWN dimension resolved
+   * at the top of its range. Used for triage: an unresearched church cannot
+   * clear 70 on its own, so ranking by score alone would mean nothing ever gets
+   * researched and nothing ever clears the bar.
+   */
+  ceiling: number;
+  /** True when the ceiling clears the report threshold but the score does not. */
+  researchRecommended: boolean;
 }

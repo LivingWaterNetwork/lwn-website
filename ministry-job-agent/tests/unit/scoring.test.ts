@@ -150,6 +150,24 @@ describe("red flag overrides", () => {
     expect(result.redFlags.some((f) => f.code === "CHURCH_ON_HOLD")).toBe(true);
   });
 
+  it("flags a doctrinal-agreement requirement however it is worded", () => {
+    // Regression: a real posting requiring agreement with the C&MA Statement of
+    // Faith went unflagged because the detector only matched "sign" and "affirm".
+    for (const phrasing of [
+      "Agrees with the Christian and Missionary Alliance Statement of Faith",
+      "Must sign our statement of faith",
+      "Candidate will adhere to our doctrinal statement",
+      "Required to subscribe to the articles of faith",
+      "Must align with our confession of faith",
+    ]) {
+      const result = scoreOpportunity(baseInput({ bodyText: `${baseInput().bodyText} ${phrasing}.` }));
+      expect(
+        result.redFlags.some((f) => f.code === "UNAPPROVED_DOCTRINAL_AFFIRMATION"),
+        `not flagged: "${phrasing}"`,
+      ).toBe(true);
+    }
+  });
+
   it("flags an unapproved doctrinal affirmation", () => {
     const result = scoreOpportunity(
       baseInput({

@@ -36,9 +36,16 @@ async function main() {
       result.classification !== result.rawClassification
         ? `  (red-flag override from ${result.rawClassification})`
         : "";
+    const ceiling =
+      result.researchRecommended || (result.provisional && result.ceiling > result.score)
+        ? `  (ceiling ${result.ceiling})`
+        : "";
     console.log(
-      `${String(result.score).padStart(3)}/100  ${result.classification.padEnd(8)} ${opp.church.name} — ${opp.title}${override}`,
+      `${String(result.score).padStart(3)}/100  ${result.classification.padEnd(8)} ${opp.church.name} — ${opp.title}${override}${ceiling}`,
     );
+    if (result.researchRecommended) {
+      console.log(`         → RESEARCH THIS: could reach ${result.ceiling} once the church is researched.`);
+    }
     for (const f of result.redFlags) {
       console.log(`         ⚑ ${f.severity}: ${f.message}`);
     }
@@ -47,12 +54,16 @@ async function main() {
     }
   }
 
-  const counts = await prisma.opportunity.groupBy({
-    by: ["classification"],
-    _count: true,
-  });
+  const counts = await prisma.opportunity.groupBy({ by: ["classification"], _count: true });
   console.log("\nPipeline:");
   for (const c of counts) console.log(`  ${c.classification ?? "unscored"}: ${c._count}`);
+
+  const toResearch = await prisma.opportunity.count({ where: { researchRecommended: true } });
+  if (toResearch > 0) {
+    console.log(
+      `\n${toResearch} opportunit${toResearch === 1 ? "y is" : "ies are"} held below the bar only by missing church research.`,
+    );
+  }
 }
 
 main()

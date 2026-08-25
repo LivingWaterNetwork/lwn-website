@@ -21,8 +21,15 @@ const CREDENTIAL_REQUIREMENTS: Array<{ pattern: RegExp; credential: string }> = 
 
 /** Doctrinal affirmations that must be candidate-approved before an application. */
 const AFFIRMATION_PATTERNS: Array<{ pattern: RegExp; topic: string }> = [
-  { pattern: /\bsign(?:ing)? (?:our|the) statement of faith\b/i, topic: "statement of faith" },
-  { pattern: /\baffirm (?:our|the) (?:statement of faith|doctrinal statement)\b/i, topic: "statement of faith" },
+  {
+    // Churches word this a dozen ways — "sign our statement of faith", "agrees
+    // with the C&MA Statement of Faith", "adhere to sound doctrine as expressed
+    // in...", "must subscribe to our articles of faith". Matching only "sign"
+    // and "affirm" let a real doctrinal-agreement requirement through unflagged.
+    pattern:
+      /\b(sign|signing|affirm|affirms|agree|agrees|adhere|adheres|subscribe|subscribes|align|aligns|uphold|upholds|assent)\b[^.]{0,70}\b(statement of faith|doctrinal statement|articles of faith|confession of faith|statement of belief)\b/i,
+    topic: "statement of faith",
+  },
   { pattern: /\bcomplementarian\b/i, topic: "complementarianism" },
   { pattern: /\begalitarian\b/i, topic: "egalitarianism" },
   { pattern: /\bcessationist\b/i, topic: "cessationism" },

@@ -16,6 +16,7 @@ import { PrismaClient } from "@prisma/client";
 import { extractClaims, isSupportedImport } from "../src/lib/imports/extract";
 import { dedupeKey, looksLikeDuplicate, pickCanonicalUrl } from "../src/lib/dedup/dedupe";
 import { classifyLane } from "../src/lib/domain/lanes";
+import { coercePosting } from "../src/lib/imports/coerce";
 import type { RawPosting } from "../src/lib/domain/types";
 
 const prisma = new PrismaClient();
@@ -58,11 +59,11 @@ async function readText(path: string): Promise<string | null> {
   return null;
 }
 
-function isPosting(value: unknown): value is RawPosting {
-  if (typeof value !== "object" || value === null) return false;
-  const v = value as Record<string, unknown>;
-  return typeof v.title === "string" && typeof v.churchName === "string";
-}
+/**
+ * JSON gives us `unknown`. coercePosting validates and converts every field —
+ * notably turning date strings into Date objects, which Prisma requires and
+ * which the RawPosting type cannot enforce across a JSON.parse boundary.
+ */
 
 async function importPosting(posting: RawPosting): Promise<"created" | "merged"> {
   const churchSlug = slugify(posting.churchName);
@@ -207,7 +208,11 @@ async function main() {
         continue;
       }
       const list = Array.isArray(parsed) ? parsed : [parsed];
-      const postings = list.filter(isPosting);
+      const postings = list.map(coercePosting).filter((p): p is RawPosting => p !== null);
+      const rejected = list.length - postings.length;
+      if (rejected > 0) {
+        console.log(`  ${file}: skipped ${rejected} entr${rejected === 1 ? "y" : "ies"} missing a title or church name`);
+      }
       if (postings.length > 0) {
         for (const p of postings) {
           const outcome = await importPosting(p);

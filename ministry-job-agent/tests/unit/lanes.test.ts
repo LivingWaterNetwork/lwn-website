@@ -78,10 +78,7 @@ describe("lane classification on messy real titles", () => {
 describe("trajectory signals on real posting language", () => {
   it("recognizes create/rebuild language as trajectory", async () => {
     const { scoreTrajectory } = await import("../../src/lib/scoring/dimensions");
-    const input = {
-      bodyText: GARDEN_BODY,
-      responsibilities: [],
-    } as never;
+    const input = { bodyText: GARDEN_BODY, responsibilities: [], qualifications: [] } as never;
     const result = scoreTrajectory(input);
     expect(result.awarded).toBeGreaterThan(0);
     expect(result.rationale.join(" ")).toMatch(/create|rebuild|multiplication/i);
@@ -89,7 +86,7 @@ describe("trajectory signals on real posting language", () => {
 
   it("still scores a posting with no trajectory language at zero", async () => {
     const { scoreTrajectory } = await import("../../src/lib/scoring/dimensions");
-    const input = { bodyText: "Maintain the existing calendar.", responsibilities: [] } as never;
+    const input = { bodyText: "Maintain the existing calendar.", responsibilities: [], qualifications: [] } as never;
     expect(scoreTrajectory(input).awarded).toBe(0);
   });
 });

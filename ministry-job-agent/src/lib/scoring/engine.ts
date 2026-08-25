@@ -59,5 +59,31 @@ export function scoreOpportunity(input: ScoringInput): ScoreResult {
 
   const unknowns = Array.from(new Set(dimensions.flatMap((d) => d.unknowns)));
 
-  return { score, classification, rawClassification, dimensions, redFlags, unknowns };
+  // A dimension scored around a gap is provisional, not settled. The ceiling is
+  // what this role would score if those gaps closed favorably.
+  //
+  // Without this the workflow deadlocks: research is meant to happen for
+  // opportunities likely to score 70+, but an unresearched church is capped
+  // well below 70 by the theology and culture dimensions, so nothing would ever
+  // qualify for the research that would let it qualify. The ceiling breaks the
+  // circle without inflating the score itself.
+  const unknownDimensions = dimensions.filter((d) => d.confidence === "UNKNOWN");
+  const headroom = unknownDimensions.reduce((sum, d) => sum + (d.max - d.awarded), 0);
+  const ceiling = Math.round(Math.min(RUBRIC_TOTAL, score + headroom));
+
+  const provisional = unknownDimensions.length > 0;
+  const blockedByRedFlag = redFlags.some((f) => f.severity === "CRITICAL" && f.overridesClassification);
+  const researchRecommended = provisional && !blockedByRedFlag && score < 70 && ceiling >= 70;
+
+  return {
+    score,
+    classification,
+    rawClassification,
+    dimensions,
+    redFlags,
+    unknowns,
+    provisional,
+    ceiling,
+    researchRecommended,
+  };
 }

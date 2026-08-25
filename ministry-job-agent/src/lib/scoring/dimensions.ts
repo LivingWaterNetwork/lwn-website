@@ -188,44 +188,89 @@ export function scoreTheologicalAlignment(input: ScoringInput): DimensionScore {
   return { key, label, awarded: round1(awarded), max, confidence, rationale, unknowns };
 }
 
-const SCOPE_SIGNALS: Array<{ term: string; points: number; note: string }> = [
-  { term: "develop the strategy", points: 2.5, note: "owns ministry strategy" },
-  { term: "strategic", points: 1.5, note: "strategic responsibility" },
-  { term: "build a team", points: 2, note: "team building" },
-  { term: "recruit", points: 1.5, note: "recruiting leaders" },
-  { term: "develop leaders", points: 2.5, note: "leader development" },
-  { term: "leadership development", points: 2.5, note: "leader development" },
-  { term: "volunteer", points: 1.5, note: "volunteer leadership" },
-  { term: "supervise", points: 2, note: "staff supervision" },
-  { term: "direct report", points: 2, note: "staff supervision" },
-  { term: "manage staff", points: 2, note: "staff supervision" },
-  { term: "teach", points: 2, note: "teaching responsibility" },
-  { term: "preach", points: 2, note: "preaching responsibility" },
-  { term: "pastoral care", points: 1.5, note: "pastoral care" },
-  { term: "budget", points: 1.5, note: "budget ownership" },
-  { term: "leadership team", points: 1.5, note: "seat on a leadership team" },
+/**
+ * A scored signal matched by pattern rather than exact phrase.
+ *
+ * Naive substring matching was missing most real postings: a list containing
+ * "develop leaders" does not match "develop and equip group leaders", and
+ * "strategic" does not match "lead vision and strategy". Church postings phrase
+ * the same responsibility a dozen ways, so these match the concept.
+ */
+interface PatternSignal {
+  pattern: RegExp;
+  points: number;
+  note: string;
+}
+
+function matchSignals(text: string, signals: PatternSignal[]) {
+  const hits = signals.filter((s) => s.pattern.test(text));
+  const raw = hits.reduce((sum, h) => sum + h.points, 0);
+  const notes = Array.from(new Set(hits.map((h) => h.note)));
+  return { hits, raw, notes };
+}
+
+const SCOPE_SIGNALS: PatternSignal[] = [
+  {
+    pattern: /\b(own|lead|develop|shape|set|create|drive|cast)\b[^.]{0,30}\b(vision|strateg)/i,
+    points: 3,
+    note: "owns vision or strategy",
+  },
+  { pattern: /\bstrategic(ally)?\b/i, points: 1.5, note: "strategic responsibility" },
+  {
+    pattern: /\b(build|building|form|assemble|grow)\b[^.]{0,25}\bteams?\b/i,
+    points: 2,
+    note: "team building",
+  },
+  { pattern: /\brecruit/i, points: 1.5, note: "recruiting leaders" },
+  {
+    // "develop leaders", "equip group leaders", "train and support leaders",
+    // "coach ministry directors", "raise up volunteers" — all one concept.
+    pattern: /\b(develop|equip|train|coach|mentor|coaching|raise up|invest in|support)\b[^.]{0,35}\b(leaders?|directors?|volunteers?|teams?)\b/i,
+    points: 3,
+    note: "leader development",
+  },
+  { pattern: /\bleadership development\b/i, points: 2.5, note: "leader development" },
+  { pattern: /\bvolunteers?\b/i, points: 1.5, note: "volunteer leadership" },
+  {
+    pattern: /\b(supervise|supervisory|manage|managing|oversee|overseeing|lead and coach)\b[^.]{0,35}\b(staff|directors?|reports?|teams?|team members?|ministries)\b/i,
+    points: 2.5,
+    note: "staff supervision",
+  },
+  { pattern: /\bdirect reports?\b/i, points: 2, note: "staff supervision" },
+  { pattern: /\bteach(ing|es)?\b/i, points: 2, note: "teaching responsibility" },
+  { pattern: /\bpreach(ing|es)?\b/i, points: 2, note: "preaching responsibility" },
+  {
+    pattern: /\bpastoral care\b|\bcounsel(ing|ling)?\b|\bvisitation\b|\bweddings?\b|\bfunerals?\b/i,
+    points: 1.5,
+    note: "pastoral care",
+  },
+  { pattern: /\bbudget/i, points: 1.5, note: "budget ownership" },
+  {
+    pattern: /\b(lead(ership)? team|executive (team|leadership)|elder (board|team)|servant leadership team|pastors'? board)\b/i,
+    points: 2,
+    note: "seat on a leadership team",
+  },
+  { pattern: /\boversee\b|\boversight\b/i, points: 1, note: "ministry oversight" },
 ];
 
 export function scoreLeadershipScope(input: ScoringInput): DimensionScore {
   const { max, key, label } = RUBRIC.leadershipScope;
-  const body = `${input.bodyText}\n${input.responsibilities.join("\n")}`.toLowerCase();
+  const body = `${input.bodyText}\n${input.responsibilities.join("\n")}\n${input.qualifications.join("\n")}`;
   const rationale: string[] = [];
   const unknowns: string[] = [];
 
-  const hits = SCOPE_SIGNALS.filter((s) => body.includes(s.term));
-  const raw = hits.reduce((sum, h) => sum + h.points, 0);
+  const { hits, raw, notes } = matchSignals(body, SCOPE_SIGNALS);
 
   if (hits.length === 0) {
     unknowns.push("Posting does not describe scope of authority, team, or teaching.");
   } else {
-    const notes = Array.from(new Set(hits.map((h) => h.note)));
     rationale.push(`Scope includes: ${notes.join(", ")}.`);
   }
 
-  // 15 raw signal points saturates the dimension.
-  const awarded = clamp((raw / 15) * max, 0, max);
+  // 18 raw signal points saturates the dimension.
+  const awarded = clamp((raw / 18) * max, 0, max);
 
-  if (body.includes("under the direction of") && !body.includes("strategic")) {
+  if (/\bunder the direction of\b/i.test(body) && !/\bstrateg/i.test(body)) {
     rationale.push("Role appears execution-oriented rather than strategy-owning.");
   }
 
@@ -234,17 +279,12 @@ export function scoreLeadershipScope(input: ScoringInput): DimensionScore {
     label,
     awarded: round1(awarded),
     max,
-    confidence: hits.length >= 4 ? "HIGH" : hits.length >= 1 ? "MEDIUM" : "UNKNOWN",
+    confidence: hits.length >= 5 ? "HIGH" : hits.length >= 2 ? "MEDIUM" : "UNKNOWN",
     rationale,
     unknowns,
   };
 }
 
-/**
- * Church health scores only on credible, cited public information.
- * Absence of evidence is scored as absence, never as a negative judgment —
- * and no signal here is ever read as abuse, scandal, or misconduct.
- */
 export function scoreChurchHealth(input: ScoringInput): DimensionScore {
   const { max, key, label } = RUBRIC.churchHealth;
   const rationale: string[] = [];
@@ -361,45 +401,43 @@ export function scoreCompensation(input: ScoringInput): DimensionScore {
   };
 }
 
+const TRAJECTORY_SIGNALS: PatternSignal[] = [
+  { pattern: /\bfrom the ground up\b|\bgreen ?field\b/i, points: 2.5, note: "green-field ministry to build" },
+  {
+    // "create a new pathway", "rebuild the process", "launch groups",
+    // "build systems" — the structure does not exist yet and this hire owns it.
+    pattern: /\b(creat(e|ing|ion)|build|building|establish|launch|start|develop|design)\b[^.]{0,40}\b(new|systems?|process(es)?|pathway|structure|platform|strategy|curriculum)\b/i,
+    points: 3,
+    note: "authority to design and build",
+  },
+  { pattern: /\bre-?build|\bre-?imagine|\bre-?design|\bevaluate,? ?(and )?(re)?build/i, points: 2.5, note: "mandate to rebuild an existing system" },
+  { pattern: /\bmultiplication\b|\bmultiply(ing)?\b/i, points: 2, note: "multiplication mandate" },
+  { pattern: /\bexpan(d|sion)\b|\bgrowth\b|\bgrowing\b/i, points: 1.5, note: "growth or expansion mandate" },
+  { pattern: /\bmulti-?site\b|\bcampus(es)?\b/i, points: 1.5, note: "multisite organization" },
+  {
+    pattern: /\b(reports?|reporting|partners?|partnering|works?|working)\b[^.]{0,40}\b(lead pastor|executive pastor|senior pastor|executive leadership|elders?)\b/i,
+    points: 2.5,
+    note: "proximity to senior leadership",
+  },
+  { pattern: /\b(lead(ership)? team|executive team|servant leadership team)\b/i, points: 2, note: "seat on the lead team" },
+  { pattern: /\bordination\b|\bresidency\b/i, points: 1, note: "development or ordination pathway" },
+];
+
 export function scoreTrajectory(input: ScoringInput): DimensionScore {
   const { max, key, label } = RUBRIC.trajectory;
-  const body = `${input.bodyText}\n${input.responsibilities.join("\n")}`.toLowerCase();
+  const body = `${input.bodyText}\n${input.responsibilities.join("\n")}\n${input.qualifications.join("\n")}`;
   const rationale: string[] = [];
   const unknowns: string[] = [];
 
-  const signals: Array<[string, number, string]> = [
-    ["build from the ground up", 2.5, "green-field ministry to build"],
-    // "create a new X" and "rebuild X" are the clearest trajectory signals a
-    // church posting gives: they mean the structure does not exist yet and the
-    // hire owns designing it. Matching only stock phrases like "ground up"
-    // missed these entirely.
-    ["create a new", 2.5, "authority to create something new"],
-    ["creation of a new", 2.5, "authority to create something new"],
-    ["rebuild", 2, "mandate to rebuild an existing system"],
-    ["build and manage", 1.5, "builds and owns ongoing plans"],
-    ["multiplication", 2, "multiplication mandate"],
-    ["launch", 2, "launching something new"],
-    ["grow", 1.5, "growth mandate"],
-    ["expand", 1.5, "expansion mandate"],
-    ["multisite", 1.5, "multisite organization"],
-    ["executive team", 2, "proximity to executive leadership"],
-    ["lead team", 2, "seat on the lead team"],
-    ["reports to the lead pastor", 2, "reports to the lead pastor"],
-    ["reports directly to", 1.5, "direct reporting line to senior leadership"],
-    ["develop and implement", 2, "authority to design and implement"],
-    ["ordination", 1, "ordination pathway"],
-    ["residency", 1, "development pathway"],
-  ];
+  const { hits, raw, notes } = matchSignals(body, TRAJECTORY_SIGNALS);
 
-  const hits = signals.filter(([term]) => body.includes(term));
-  const raw = hits.reduce((s, [, pts]) => s + pts, 0);
   if (hits.length) {
-    rationale.push(`Trajectory signals: ${hits.map(([, , note]) => note).join(", ")}.`);
+    rationale.push(`Trajectory signals: ${notes.join(", ")}.`);
   } else {
     unknowns.push("Posting says little about growth path, authority, or organizational influence.");
   }
 
-  const awarded = clamp((raw / 10) * max, 0, max);
+  const awarded = clamp((raw / 11) * max, 0, max);
   return {
     key,
     label,
