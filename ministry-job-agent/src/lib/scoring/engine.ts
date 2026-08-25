@@ -1,6 +1,6 @@
 import type { ScoreResult, ScoringInput } from "../domain/types";
 import type { Classification } from "../domain/enums";
-import { classify, RUBRIC_TOTAL } from "./rubric";
+import { classify, RESEARCH_RESOLVABLE_DIMENSIONS, RUBRIC_TOTAL } from "./rubric";
 import { detectRedFlags } from "./red-flags";
 import {
   scoreChurchHealth,
@@ -68,7 +68,12 @@ export function scoreOpportunity(input: ScoringInput): ScoreResult {
   // qualify for the research that would let it qualify. The ceiling breaks the
   // circle without inflating the score itself.
   const unknownDimensions = dimensions.filter((d) => d.confidence === "UNKNOWN");
-  const headroom = unknownDimensions.reduce((sum, d) => sum + (d.max - d.awarded), 0);
+
+  // Only count headroom research can actually recover. Including headroom from
+  // a vague posting would make thin listings outrank documented ones.
+  const headroom = unknownDimensions
+    .filter((d) => RESEARCH_RESOLVABLE_DIMENSIONS.includes(d.key))
+    .reduce((sum, d) => sum + (d.max - d.awarded), 0);
   const ceiling = Math.round(Math.min(RUBRIC_TOTAL, score + headroom));
 
   const provisional = unknownDimensions.length > 0;

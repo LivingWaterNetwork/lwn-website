@@ -14,26 +14,46 @@ import { RUBRIC } from "./rubric";
 const contains = (haystack: string, needles: string[]) =>
   needles.filter((n) => haystack.includes(n));
 
-/** Ministry emphases the candidate is positioned around, weighted by centrality. */
-const CORE_EMPHASES: Array<{ term: string; weight: number }> = [
-  { term: "spiritual formation", weight: 3 },
-  { term: "discipleship", weight: 3 },
-  { term: "disciple-making", weight: 3 },
-  { term: "young adults", weight: 3 },
-  { term: "small groups", weight: 2.5 },
-  { term: "life groups", weight: 2.5 },
-  { term: "community groups", weight: 2.5 },
-  { term: "leadership development", weight: 2.5 },
-  { term: "leader development", weight: 2.5 },
-  { term: "volunteer development", weight: 2 },
-  { term: "multiplication", weight: 2 },
-  { term: "equipping", weight: 2 },
-  { term: "community", weight: 1.5 },
-  { term: "pastoral care", weight: 1.5 },
-  { term: "spiritual disciplines", weight: 1.5 },
-  { term: "prayer", weight: 1 },
-  { term: "leader care", weight: 1.5 },
-  { term: "discipleship pathway", weight: 3 },
+/**
+ * Ministry emphases the candidate is positioned around, weighted by centrality.
+ *
+ * Matched by pattern, not literal phrase. Churches say "raise up new leaders",
+ * "growth groups", "18-29", "disciple-making" — none of which a substring list
+ * built around "develop leaders", "small groups", "young adults" and
+ * "discipleship" would catch. This is the heaviest dimension in the rubric at
+ * 30 points, so a miss here dominates the whole score.
+ */
+const CORE_EMPHASES: Array<{ pattern: RegExp; weight: number; label: string }> = [
+  { pattern: /\bspiritual formation\b|\bformation\b/i, weight: 3, label: "spiritual formation" },
+  { pattern: /\bdisciple(ship|-making|making|s|d|ing)?\b/i, weight: 3, label: "discipleship" },
+  {
+    pattern: /\byoung adults?\b|\b20s and 30s\b|\btwenties\b|\b1[89]\s*[-–]\s*(29|30|35)\b|\bemerging adults?\b|\bpost[- ]college\b|\bcollege (students|ministry)\b/i,
+    weight: 3,
+    label: "young adults",
+  },
+  {
+    pattern: /\b(small|life|community|growth|connection|home|missional)\s+groups?\b|\bgroup (leaders?|ministry)\b|\bmissional communit/i,
+    weight: 2.5,
+    label: "groups ministry",
+  },
+  {
+    pattern: /\bleader(ship)? development\b|\b(develop|equip|train|coach|mentor|raise up)\b[^.]{0,35}\b(leaders?|directors?)\b/i,
+    weight: 2.5,
+    label: "leadership development",
+  },
+  { pattern: /\bvolunteers?\b/i, weight: 2, label: "volunteer development" },
+  { pattern: /\bmultipl(y|ying|ication|es)\b/i, weight: 2, label: "multiplication" },
+  { pattern: /\bequip(ping|s|ped)?\b/i, weight: 2, label: "equipping" },
+  { pattern: /\bcommunity\b|\bbelonging\b/i, weight: 1.5, label: "community" },
+  { pattern: /\bpastoral care\b|\bshepherd(ing|s)?\b/i, weight: 1.5, label: "pastoral care" },
+  { pattern: /\bspiritual disciplines\b|\bscripture engagement\b/i, weight: 1.5, label: "spiritual disciplines" },
+  { pattern: /\bprayer\b/i, weight: 1, label: "prayer" },
+  { pattern: /\bleader care\b|\bcare for [^.]{0,20}leaders\b/i, weight: 1.5, label: "leader care" },
+  {
+    pattern: /\bdiscipleship pathway\b|\bnext steps\b|\bgrowth path(way)?\b|\bassimilation\b/i,
+    weight: 3,
+    label: "discipleship pathway",
+  },
 ];
 
 /** Signals the role is mostly programming and logistics rather than formation. */
@@ -68,12 +88,14 @@ export function scoreMinistryAlignment(input: ScoringInput): DimensionScore {
   }
 
   // Emphasis coverage: what the role actually asks the person to do.
-  const matched = CORE_EMPHASES.filter((e) => body.includes(e.term));
-  const weightSum = matched.reduce((s, e) => s + e.weight, 0);
-  // 14 weighted points of emphasis coverage saturates this component.
-  const emphasisPoints = Math.min(14, (weightSum / 14) * 14);
+  const matched = CORE_EMPHASES.filter((e) => e.pattern.test(body));
+  const weightSum = matched.reduce((sum, e) => sum + e.weight, 0);
+  // 16 weighted points of emphasis coverage saturates this component.
+  const emphasisPoints = Math.min(14, (weightSum / 16) * 14);
   if (matched.length > 0) {
-    rationale.push(`Responsibilities emphasize: ${matched.map((m) => m.term).join(", ")}.`);
+    rationale.push(
+      `Responsibilities emphasize: ${Array.from(new Set(matched.map((m) => m.label))).join(", ")}.`,
+    );
   } else {
     unknowns.push("Posting text names none of the candidate's core ministry emphases.");
   }
@@ -91,7 +113,7 @@ export function scoreMinistryAlignment(input: ScoringInput): DimensionScore {
 
   // Bonus where the posting explicitly owns a discipleship or formation pathway.
   let bonus = 0;
-  if (body.includes("discipleship pathway") || body.includes("spiritual formation")) {
+  if (/\bdiscipleship pathway\b|\bspiritual formation\b/i.test(body)) {
     bonus = 4;
     rationale.push("Bonus 4 pts: role explicitly owns a formation or discipleship pathway.");
   }

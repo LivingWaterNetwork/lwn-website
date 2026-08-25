@@ -12,6 +12,23 @@ export const RUBRIC = {
   geography: { key: "geography", label: "Geography", max: 5 },
 } as const;
 
+/**
+ * Dimensions that church research can actually resolve.
+ *
+ * This distinction drives the research ceiling. A dimension left UNKNOWN because
+ * we have not researched the church (its doctrine, its culture) is recoverable —
+ * go read the church's site and the number moves. A dimension left UNKNOWN
+ * because the POSTING is vague is not: no amount of research turns a two-line
+ * listing into a role with described scope.
+ *
+ * Counting both kinds of headroom made a thin listing outrank a fully documented
+ * one, because ignorance produced more headroom than evidence did.
+ */
+export const RESEARCH_RESOLVABLE_DIMENSIONS: readonly string[] = [
+  RUBRIC.theologicalAlignment.key,
+  RUBRIC.churchHealth.key,
+];
+
 export const RUBRIC_TOTAL = Object.values(RUBRIC).reduce((sum, d) => sum + d.max, 0);
 
 export const CLASSIFICATION_BANDS = [

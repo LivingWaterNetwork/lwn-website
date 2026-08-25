@@ -236,3 +236,58 @@ describe("red flag overrides", () => {
     expect(text).not.toMatch(/abuse|toxic|scandal|misconduct/);
   });
 });
+
+describe("research ceiling", () => {
+  /**
+   * Regression: the ceiling originally counted headroom from every UNKNOWN
+   * dimension, so a two-line listing outranked a fully documented role — being
+   * uninformative scored better than being detailed.
+   */
+  const documented = () =>
+    baseInput({
+      church: { name: "Documented", denomination: null, network: null, onHold: false, researched: false },
+      theology: { approvedTopics: [], churchSignals: [], statementOfFaithFound: false },
+      cultureClaims: [],
+    });
+
+  const vague = () =>
+    baseInput({
+      bodyText: "We are looking for a pastor. Contact us.",
+      responsibilities: [],
+      qualifications: [],
+      lane: null,
+      laneConfidence: 0,
+      church: { name: "Vague", denomination: null, network: null, onHold: false, researched: false },
+      theology: { approvedTopics: [], churchSignals: [], statementOfFaithFound: false },
+      cultureClaims: [],
+      compensation: { salaryMin: null, salaryMax: null, benefits: [], housingNote: null, relocationNote: null },
+    });
+
+  it("does not let a vague posting outrank a documented one on ceiling", () => {
+    expect(scoreOpportunity(documented()).ceiling).toBeGreaterThan(scoreOpportunity(vague()).ceiling);
+  });
+
+  it("counts only headroom that church research can recover", () => {
+    const result = scoreOpportunity(documented());
+    // Theology and church health are unknown; both are research-resolvable.
+    expect(result.ceiling).toBeGreaterThan(result.score);
+    expect(result.ceiling - result.score).toBeLessThanOrEqual(30);
+  });
+
+  it("gives a fully-known opportunity no research headroom", () => {
+    const result = scoreOpportunity(baseInput());
+    expect(result.ceiling).toBe(result.score);
+    expect(result.provisional).toBe(false);
+  });
+
+  it("never reports a ceiling above the rubric total", () => {
+    expect(scoreOpportunity(vague()).ceiling).toBeLessThanOrEqual(100);
+  });
+
+  it("flags research when the ceiling clears the bar but the score does not", () => {
+    const result = scoreOpportunity(documented());
+    if (result.ceiling >= 70 && result.score < 70) {
+      expect(result.researchRecommended).toBe(true);
+    }
+  });
+});
