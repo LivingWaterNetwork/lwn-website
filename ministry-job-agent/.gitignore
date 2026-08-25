@@ -1,0 +1,46 @@
+node_modules/
+.next/
+out/
+dist/
+tsconfig.tsbuildinfo
+.DS_Store
+
+# Secrets
+.env
+.env.local
+.env*.local
+
+# The database holds candidate personal information. Never commit it.
+data/
+!data/.gitkeep
+
+# Candidate material: structure is versioned, content is not.
+candidate/**
+!candidate/**/
+!candidate/**/README.md
+resumes/**
+!resumes/**/
+!resumes/**/README.md
+portfolio/**
+!portfolio/**/
+!portfolio/**/README.md
+
+# Working directories
+inbox/*
+!inbox/README.md
+logs/*
+!logs/.gitkeep
+applications/**/*
+!applications/**/.gitkeep
+research/**/*
+!research/**/.gitkeep
+
+# Generated reports name real churches and carry research notes.
+jobs/**/*
+!jobs/**/.gitkeep
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

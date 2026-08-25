@@ -1,0 +1,460 @@
+// Ministry Job Agent — data model.
+//
+// Provider is SQLite: this is a local-first, single-operator tool and the whole
+// database is one gitignored file under ./data. SQLite has no native enums, so
+// every enum-ish column is a String whose legal values live in src/lib/domain/enums.ts
+// and are validated by zod at the boundary (see src/lib/db/validation.ts).
+//
+// Two invariants are enforced structurally rather than by convention:
+//   1. Candidate facts and theology positions carry a `status`. Nothing may be used
+//      in an application unless status === "APPROVED". Unknown stays unknown.
+//   2. An ApplicationPackage cannot reach SUBMITTED without an ApprovalRecord.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+/// A single approved (or pending) scalar fact about the candidate.
+/// `path` is a dotted address into the candidate schema, e.g. "identity.full_name".
+model CandidateFact {
+  id          String   @id @default(cuid())
+  path        String   @unique
+  category    String
+  label       String
+  valueJson   String? // JSON-encoded value. null === NOT PROVIDED.
+  status      String   @default("NOT_PROVIDED") // NOT_PROVIDED | UNVERIFIED_IMPORT | APPROVED | REJECTED
+  source      String?
+  sourceUrl   String?
+  sensitive   Boolean  @default(false)
+  notes       String?
+  approvedAt  DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category])
+  @@index([status])
+}
+
+/// A repeating candidate record: one job, one degree, one credential, one reference.
+model CandidateRecord {
+  id         String    @id @default(cuid())
+  kind       String // employment | ministry | education | credential | ordination | leadership | teaching | metric | skill | church_history | reference | link
+  payload    String // JSON object. Shape validated per-kind in src/lib/candidate/records.ts
+  status     String    @default("UNVERIFIED_IMPORT") // UNVERIFIED_IMPORT | APPROVED | REJECTED
+  source     String?
+  sourceUrl  String?
+  sensitive  Boolean   @default(false)
+  notes      String?
+  sortOrder  Int       @default(0)
+  approvedAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([kind, status])
+}
+
+/// One theological topic. Absent an APPROVED position, the answer engine refuses.
+model TheologyPosition {
+  id                String    @id @default(cuid())
+  topic             String    @unique
+  displayName       String
+  status            String    @default("NOT_YET_DEFINED") // NOT_YET_DEFINED | APPROVED | NEEDS_REVIEW
+  position          String?
+  shortForm         String?
+  notes             String?
+  source            String?
+  allowAutomaticUse Boolean   @default(false)
+  approvedAt        DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([status])
+}
+
+/// Reusable, candidate-approved application answers.
+model AnswerBankEntry {
+  id                String    @id @default(cuid())
+  category          String
+  question          String
+  /// Lowercased, punctuation-stripped question used for fuzzy matching.
+  normalizedQuestion String
+  approvedAnswer    String
+  shortVersion      String?
+  mediumVersion     String?
+  longVersion       String?
+  keywordsJson      String    @default("[]")
+  status            String    @default("DRAFT") // DRAFT | APPROVED | RETIRED
+  allowAutomaticUse Boolean   @default(false)
+  source            String?
+  approvedAt        DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  answers ApplicationQuestion[]
+
+  @@index([category])
+  @@index([status])
+}
+
+model Church {
+  id                  String   @id @default(cuid())
+  slug                String   @unique
+  name                String
+  city                String?
+  state               String?
+  website             String?
+  denomination        String?
+  network             String?
+  leadPastor          String?
+  campusCount         Int?
+  attendanceNote      String? // Only what the church publicly states. Never estimated.
+  statementOfFaithUrl String?
+  staffPageUrl        String?
+  researchStatus      String   @default("NOT_RESEARCHED") // NOT_RESEARCHED | IN_PROGRESS | RESEARCHED
+  researchSummary     String?
+  researchedAt        DateTime?
+  holdReason          String? // Set for HOLD — DO NOT APPLY churches.
+  onHold              Boolean  @default(false)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  facts         ChurchFact[]
+  opportunities Opportunity[]
+}
+
+/// A single researched claim about a church. `kind` keeps VERIFIED FACT and
+/// INFERENCE / POTENTIAL CONCERN strictly separated — they are never merged.
+model ChurchFact {
+  id        String   @id @default(cuid())
+  churchId  String
+  category  String // basics | theology | ministry_philosophy | culture | position | compensation | location
+  claim     String
+  kind      String // VERIFIED_FACT | INFERENCE
+  sourceUrl String?
+  sourceNote String?
+  confidence String  @default("MEDIUM") // LOW | MEDIUM | HIGH
+  createdAt DateTime @default(now())
+
+  church Church @relation(fields: [churchId], references: [id], onDelete: Cascade)
+
+  @@index([churchId, kind])
+}
+
+model Opportunity {
+  id             String    @id @default(cuid())
+  churchId       String
+  title          String
+  /// Normalized ministry lane, e.g. "young_adults_pastor". See src/lib/domain/lanes.ts
+  lane           String?
+  city           String?
+  state          String?
+  metro          String?
+  employmentType String? // FULL_TIME | PART_TIME | CONTRACT | UNKNOWN
+  descriptionText String?
+  responsibilitiesJson String @default("[]")
+  qualificationsJson   String @default("[]")
+
+  canonicalUrl String?
+  /// Stable hash of church + role + location + description shingle. One job = one row.
+  dedupeKey    String  @unique
+
+  postedDate    DateTime?
+  deadline      DateTime?
+  discoveredAt  DateTime  @default(now())
+
+  salaryMin      Int?
+  salaryMax      Int?
+  salaryNote     String?
+  benefitsJson   String @default("[]")
+  housingNote    String?
+  relocationNote String?
+
+  score              Int?
+  classification     String? // PRIORITY | STRONG | REVIEW | PASS
+  scoreBreakdownJson String? // JSON: per-dimension awarded/max/confidence/rationale
+  redFlagsJson       String  @default("[]")
+  unknownsJson       String  @default("[]")
+  scoredAt           DateTime?
+
+  status     String  @default("DISCOVERED")
+  statusNote String?
+  onHold     Boolean @default(false)
+  holdReason String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  church        Church              @relation(fields: [churchId], references: [id], onDelete: Cascade)
+  sources       OpportunitySource[]
+  packageRecord ApplicationPackage?
+  statusHistory StatusEvent[]
+  followUps     FollowUp[]
+  humanInputs   HumanInputRequest[]
+  decisions     DecisionLog[]
+
+  @@index([classification])
+  @@index([status])
+}
+
+/// Where an opportunity was seen. Same job on 4 boards = 1 Opportunity, 4 sources.
+model OpportunitySource {
+  id            String   @id @default(cuid())
+  opportunityId String
+  source        String // churchstaffing | vanderbloemen | indeed | church_site | manual | ...
+  url           String
+  isCanonical   Boolean  @default(false)
+  foundAt       DateTime @default(now())
+  rawTitle      String?
+
+  opportunity Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  @@unique([opportunityId, url])
+}
+
+model ApplicationPackage {
+  id            String @id @default(cuid())
+  opportunityId String @unique
+
+  resumeVariant       String? // key into ResumeVariant
+  resumeRationale     String?
+  coverLetterAngle    String?
+  coverLetterDraft    String?
+  portfolioItemsJson  String  @default("[]")
+  attachmentsJson     String  @default("[]")
+  /// Statements of faith / attestations the form would have the candidate affirm.
+  attestationsJson    String  @default("[]")
+
+  status      String @default("DRAFT") // DRAFT | WAITING_FOR_HUMAN_INPUT | READY_FOR_APPROVAL | APPROVED_TO_APPLY | SUBMITTED | CLOSED
+  preparedAt  DateTime?
+  submittedAt DateTime?
+  submissionNote String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  opportunity   Opportunity           @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  questions     ApplicationQuestion[]
+  approvals     ApprovalRecord[]
+  humanInputs   HumanInputRequest[]
+  automationRuns AutomationRun[]
+}
+
+model ApplicationQuestion {
+  id        String @id @default(cuid())
+  packageId String
+
+  questionText String
+  fieldType    String  @default("TEXT") // TEXT | TEXTAREA | SELECT | RADIO | CHECKBOX | FILE | DATE | ATTESTATION
+  required     Boolean @default(true)
+  optionsJson  String  @default("[]")
+
+  answerText   String?
+  answerSource String? // ANSWER_BANK | CANDIDATE_FACT | THEOLOGY | HUMAN
+  answerBankId String?
+  /// RESOLVED | HUMAN_INPUT_REQUIRED | THEOLOGICAL_REVIEW_REQUIRED | ATTESTATION_REVIEW_REQUIRED
+  resolution   String  @default("HUMAN_INPUT_REQUIRED")
+  resolutionNote String?
+  autoUsable   Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  package    ApplicationPackage @relation(fields: [packageId], references: [id], onDelete: Cascade)
+  answerBank AnswerBankEntry?   @relation(fields: [answerBankId], references: [id])
+
+  @@index([packageId, resolution])
+}
+
+/// The human approval gate. No submission path exists without one of these.
+model ApprovalRecord {
+  id        String   @id @default(cuid())
+  packageId String
+  decision  String // APPROVED | REJECTED | CHANGES_REQUESTED
+  decidedBy String
+  decidedAt DateTime @default(now())
+  /// Frozen copy of exactly what was shown on the approval screen.
+  snapshotJson String
+  notes     String?
+
+  package ApplicationPackage @relation(fields: [packageId], references: [id], onDelete: Cascade)
+
+  @@index([packageId])
+}
+
+/// The blocking queue. Anything the system does not know becomes a row here.
+model HumanInputRequest {
+  id       String @id @default(cuid())
+  kind     String // CANDIDATE_FACT | THEOLOGY | APPLICATION_QUESTION | ATTESTATION | COMPENSATION
+  question String
+  context  String?
+  /// Where the approved answer should be stored once the candidate responds.
+  storeTo  String?
+
+  opportunityId String?
+  packageId     String?
+  questionId    String?
+
+  status      String @default("OPEN") // OPEN | ANSWERED | DISMISSED
+  response    String?
+  respondedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  opportunity Opportunity?        @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  package     ApplicationPackage? @relation(fields: [packageId], references: [id], onDelete: Cascade)
+
+  @@index([status, kind])
+}
+
+model StatusEvent {
+  id            String   @id @default(cuid())
+  opportunityId String
+  fromStatus    String?
+  toStatus      String
+  actor         String   @default("system")
+  note          String?
+  at            DateTime @default(now())
+
+  opportunity Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  @@index([opportunityId, at])
+}
+
+model FollowUp {
+  id            String   @id @default(cuid())
+  opportunityId String
+  kind          String // APPLICATION_FOLLOW_UP | THANK_YOU | INTERVIEW_PREP | CHECK_IN
+  dueDate       DateTime
+  status        String   @default("DUE") // DUE | DRAFTED | SENT | CANCELLED
+  draftText     String?
+  notes         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  opportunity Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  @@index([status, dueDate])
+}
+
+/// Candidate decisions, kept so recommendations improve over time.
+/// Never used to alter theology or factual history — preference signal only.
+model DecisionLog {
+  id            String   @id @default(cuid())
+  opportunityId String
+  decision      String // APPROVED_TO_APPLY | DECLINED | WITHDREW | REJECTED_BY_CHURCH | OFFER | HOLD
+  reason        String?
+  scoreAtDecision Int?
+  resumeVariant String?
+  coverLetterAngle String?
+  laneAtDecision String?
+  at            DateTime @default(now())
+
+  opportunity Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+
+  @@index([decision])
+}
+
+model ImportedSource {
+  id         String   @id @default(cuid())
+  filename   String
+  mediaType  String
+  sha256     String   @unique
+  bytes      Int
+  importedAt DateTime @default(now())
+  textPath   String? // extracted plaintext, stored under ./data/imports
+  notes      String?
+
+  claims ExtractedClaim[]
+}
+
+/// Conservative extraction output. Always lands as UNVERIFIED_IMPORT.
+model ExtractedClaim {
+  id               String   @id @default(cuid())
+  importedSourceId String
+  claimText        String
+  suggestedPath    String?
+  suggestedKind    String? // fact | record kind
+  suggestedValue   String?
+  excerpt          String?
+  status           String   @default("UNVERIFIED_IMPORT") // UNVERIFIED_IMPORT | APPROVED | REJECTED
+  reviewedAt       DateTime?
+  createdAt        DateTime @default(now())
+
+  source ImportedSource @relation(fields: [importedSourceId], references: [id], onDelete: Cascade)
+
+  @@index([status])
+}
+
+model ResumeVariant {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  name        String
+  focus       String
+  summary     String?
+  /// Path under ./resumes. Content is candidate-supplied; never generated from thin air.
+  sourcePath  String
+  atsPath     String?
+  lanesJson   String   @default("[]")
+  status      String   @default("NOT_PROVIDED") // NOT_PROVIDED | DRAFT | APPROVED
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+}
+
+model PortfolioAsset {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  name        String
+  summary     String
+  detail      String?
+  bestForJson String   @default("[]")
+  linkUrl     String?
+  filePath    String?
+  status      String   @default("SUMMARY_ONLY") // SUMMARY_ONLY | LINK_READY | FILE_READY
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+}
+
+/// Playwright-assisted application sessions. Every stop reason is recorded.
+model AutomationRun {
+  id        String    @id @default(cuid())
+  packageId String
+  startedAt DateTime  @default(now())
+  endedAt   DateTime?
+  status    String    @default("RUNNING") // RUNNING | PAUSED_FOR_HUMAN | STOPPED_SAFETY | COMPLETED_DRAFT | FAILED
+  stopReason String?
+  mode       String   @default("CAPTURE") // CAPTURE | FILL_DRAFT
+  capturedQuestionsJson String @default("[]")
+  logPath   String?
+  notes     String?
+
+  package ApplicationPackage @relation(fields: [packageId], references: [id], onDelete: Cascade)
+
+  @@index([packageId])
+}
+
+/// Single-row settings table (id is always "default").
+model SearchPreference {
+  id                String   @id @default("default")
+  minSalary         Int?
+  preferredSalary   Int?
+  relocationOpen    Boolean  @default(true)
+  nationwide        Boolean  @default(true)
+  statesJson        String   @default("[]")
+  metrosJson        String   @default("[]")
+  churchTypesJson   String   @default("[\"non_denominational\"]")
+  denominationsJson String   @default("[]")
+  excludedDenominationsJson String @default("[]")
+  roleTypesJson     String   @default("[]")
+  employmentTypesJson String @default("[\"FULL_TIME\"]")
+  minChurchSize     Int?
+  maxChurchSize     Int?
+  searchTermsJson   String   @default("[]")
+  reportThreshold   Int      @default(70)
+  autoSubmitEnabled Boolean  @default(false) // Locked off. Phase 1 never submits.
+  updatedAt         DateTime @updatedAt
+}

@@ -47,3 +47,9 @@ f9fd4b49-4241-4a40-a601-8842628c8391.jpg
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Standalone ministry job agent — separate app, not part of the website build.
+# Its own dependencies and database live inside it and must not be deployed here.
+ministry-job-agent/node_modules/
+ministry-job-agent/.next/
+ministry-job-agent/data/

@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
+    "target": "ES2022",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
+    "allowJs": false,
     "skipLibCheck": true,
     "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -16,7 +19,5 @@
     "paths": { "@/*": ["./src/*"] }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  // ministry-job-agent is a separate, self-contained app with its own tsconfig,
-  // dependencies, and build. Excluded so `next build` here never typechecks it.
-  "exclude": ["node_modules", "ministry-job-agent"]
+  "exclude": ["node_modules"]
 }

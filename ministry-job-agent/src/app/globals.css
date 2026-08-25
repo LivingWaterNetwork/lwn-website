@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #f5f7f9;
+  --surface: #ffffff;
+  --ink: #12181f;
+  --ink-muted: #5b6672;
+  --line: #e2e7ec;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1418;
+    --surface: #161d23;
+    --ink: #e8edf2;
+    --ink-muted: #9aa7b4;
+    --line: #263038;
+  }
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+body {
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  .card {
+    @apply rounded-lg border p-5;
+    background: var(--surface);
+    border-color: var(--line);
+  }
+  .label {
+    @apply text-[11px] font-semibold uppercase tracking-wider;
+    color: var(--ink-muted);
+  }
+  .muted {
+    color: var(--ink-muted);
+  }
+  .hairline {
+    border-color: var(--line);
+  }
+}

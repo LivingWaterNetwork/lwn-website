@@ -1,0 +1,3 @@
+# The ministry job agent is a separate local-first application. It is not part
+# of the lwnetwork website and must never be deployed with it.
+ministry-job-agent/
