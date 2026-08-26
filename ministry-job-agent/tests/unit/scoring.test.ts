@@ -40,6 +40,7 @@ function baseInput(overrides: Partial<ScoringInput> = {}): ScoringInput {
     location: { city: "Franklin", state: "TN" },
     candidate: { approvedCredentials: [], approvedEducation: ["Bachelor of Arts Ministry"], relocationOpen: true },
     preferences: { minSalary: 60000, preferredSalary: 75000, nationwide: true, states: [] },
+    posting: { deadline: null, postedDate: null, now: new Date("2026-08-25T00:00:00Z") },
     ...overrides,
   };
 }
@@ -289,5 +290,100 @@ describe("research ceiling", () => {
     if (result.ceiling >= 70 && result.score < 70) {
       expect(result.researchRecommended).toBe(true);
     }
+  });
+});
+
+describe("posting freshness and hard requirement gates", () => {
+  it("forces PASS on a posting whose deadline has passed", () => {
+    const result = scoreOpportunity(
+      baseInput({
+        posting: {
+          deadline: new Date("2024-09-22T00:00:00Z"),
+          postedDate: null,
+          now: new Date("2026-08-25T00:00:00Z"),
+        },
+      }),
+    );
+    expect(result.rawClassification).toBe("PRIORITY");
+    expect(result.classification).toBe("PASS");
+    const flag = result.redFlags.find((f) => f.code === "POSTING_CLOSED")!;
+    expect(flag.severity).toBe("CRITICAL");
+    expect(flag.evidence).toMatch(/2024-09-22/);
+  });
+
+  it("catches closed-posting language even without a deadline field", () => {
+    const result = scoreOpportunity(
+      baseInput({ bodyText: `${baseInput().bodyText} This posting is no longer accepting applications.` }),
+    );
+    expect(result.classification).toBe("PASS");
+    expect(result.redFlags.some((f) => f.code === "POSTING_CLOSED")).toBe(true);
+  });
+
+  it("leaves a future deadline alone", () => {
+    const result = scoreOpportunity(
+      baseInput({
+        posting: {
+          deadline: new Date("2026-12-31T00:00:00Z"),
+          postedDate: null,
+          now: new Date("2026-08-25T00:00:00Z"),
+        },
+      }),
+    );
+    expect(result.redFlags.some((f) => f.code === "POSTING_CLOSED")).toBe(false);
+  });
+
+  it("flags a denominational membership or credentialing gate", () => {
+    for (const phrasing of [
+      "Member of an Anglican church for at least one year",
+      "Confirmed in an Anglican church",
+      "Current credentialing as recognized by the Churches of God General Conference",
+      "Completion of the local discernment process before residency begins",
+    ]) {
+      const result = scoreOpportunity(baseInput({ bodyText: `${baseInput().bodyText} ${phrasing}.` }));
+      expect(
+        result.redFlags.some((f) => f.code === "DENOMINATIONAL_GATE"),
+        `not flagged: "${phrasing}"`,
+      ).toBe(true);
+    }
+  });
+
+  it("does not flag an ordinary denominational affiliation as a gate", () => {
+    const result = scoreOpportunity(
+      baseInput({ bodyText: `${baseInput().bodyText} We are an Evangelical Free congregation.` }),
+    );
+    expect(result.redFlags.some((f) => f.code === "DENOMINATIONAL_GATE")).toBe(false);
+  });
+
+  it("flags a defining skill from outside the candidate's lane", () => {
+    const music = scoreOpportunity(
+      baseInput({ bodyText: `${baseInput().bodyText} Mastery of guitar and/or piano required.` }),
+    );
+    expect(music.redFlags.some((f) => f.code === "SPECIALIZED_SKILL_REQUIRED")).toBe(true);
+
+    const language = scoreOpportunity(
+      baseInput({ bodyText: `${baseInput().bodyText} Spanish language full to primary fluency proficiency.` }),
+    );
+    expect(language.redFlags.some((f) => f.code === "SPECIALIZED_SKILL_REQUIRED")).toBe(true);
+  });
+
+  it("does not flag a specialized skill the candidate has on file", () => {
+    const result = scoreOpportunity(
+      baseInput({
+        bodyText: `${baseInput().bodyText} Mastery of guitar and/or piano required.`,
+        candidate: {
+          approvedCredentials: ["Musical performance certificate"],
+          approvedEducation: [],
+          relocationOpen: true,
+        },
+      }),
+    );
+    expect(result.redFlags.some((f) => f.code === "SPECIALIZED_SKILL_REQUIRED")).toBe(false);
+  });
+
+  it("keeps scoring pure — the same input scores the same twice", () => {
+    const a = scoreOpportunity(baseInput());
+    const b = scoreOpportunity(baseInput());
+    expect(a.score).toBe(b.score);
+    expect(a.redFlags.length).toBe(b.redFlags.length);
   });
 });

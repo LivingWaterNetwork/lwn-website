@@ -73,6 +73,14 @@ export interface ScoringInput {
     state?: string | null;
   };
 
+  /** Posting freshness. A closed posting is not worth preparing for. */
+  posting: {
+    deadline?: Date | null;
+    postedDate?: Date | null;
+    /** Evaluation time, passed in rather than read from the clock, so scoring stays pure. */
+    now: Date;
+  };
+
   /** Candidate credentials the posting may require. Empty until approved data exists. */
   candidate: {
     approvedCredentials: string[];

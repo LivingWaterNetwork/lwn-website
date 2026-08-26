@@ -95,6 +95,7 @@ export async function buildScoringInput(
       relocationNote: opp.relocationNote,
     },
     location: { city: opp.city, state: opp.state },
+    posting: { deadline: opp.deadline, postedDate: opp.postedDate, now: new Date() },
     candidate: {
       approvedCredentials: approvedCredentials.map((r) => {
         const p = parseJson<Record<string, unknown>>(r.payload, {});

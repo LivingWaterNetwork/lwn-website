@@ -39,6 +39,43 @@ const AFFIRMATION_PATTERNS: Array<{ pattern: RegExp; topic: string }> = [
   { pattern: /\bspeaking in tongues (?:is )?(?:required|expected)\b/i, topic: "spiritual gifts" },
 ];
 
+/**
+ * Requirements tied to a specific denomination's membership or credentialing
+ * process. Unlike a degree, these cannot be satisfied by a candidate who is
+ * otherwise qualified — they gate on belonging to that body, often for a stated
+ * minimum period. A real posting required Anglican membership for at least one
+ * year plus confirmation; another required credentialing by the Churches of God
+ * General Conference. Neither is something an applicant can acquire in time.
+ */
+const DENOMINATIONAL_GATE_PATTERNS: Array<{ pattern: RegExp; label: string }> = [
+  {
+    pattern: /\bmember of an? [A-Z][A-Za-z ]{2,40}church for at least\b/i,
+    label: "membership in the church's denomination for a minimum period",
+  },
+  { pattern: /\bconfirmed in an? [A-Z][A-Za-z ]{2,40}church\b/i, label: "confirmation in that denomination" },
+  {
+    pattern: /\bcredential(ing|ed)?\b[^.]{0,50}\b(recognized by|conference|denomination|district)\b/i,
+    label: "denominational credentialing",
+  },
+  {
+    pattern: /\b(ministry license|licens(ed|ure))\b[^.]{0,30}\bor ordination (is )?required\b/i,
+    label: "a ministry license or ordination",
+  },
+  { pattern: /\blocal discernment process\b/i, label: "completion of a denominational discernment process" },
+];
+
+/**
+ * Specialized skills that define a different vocation. A posting that pairs a
+ * discipleship title with a requirement to master an instrument is really a
+ * worship role with discipleship attached, and the candidate would be screened
+ * out on the half of the job his lane does not cover.
+ */
+const SPECIALIZED_SKILL_PATTERNS: Array<{ pattern: RegExp; skill: string }> = [
+  { pattern: /\bmastery of (guitar|piano|keys)\b|\bmusical proficiency\b|\bproficient (on|with) (guitar|piano)\b/i, skill: "musical instrument mastery" },
+  { pattern: /\b(full|native|primary) (to [a-z]+ )?fluency\b|\bfluent in (spanish|korean|mandarin|cantonese|portuguese)\b/i, skill: "native-level fluency in a second language" },
+  { pattern: /\blicensed (counselor|therapist|clinician)\b|\bLPC\b|\bLMFT\b/i, skill: "a clinical counseling license" },
+];
+
 const ADMIN_TERMS = [
   "administrative support",
   "clerical",
@@ -174,7 +211,54 @@ export function detectRedFlags(input: ScoringInput): RedFlag[] {
     });
   }
 
-  // 8. Posting is too thin to evaluate honestly.
+  // 8. Denominational membership or credentialing gate.
+  for (const gate of DENOMINATIONAL_GATE_PATTERNS) {
+    const match = body.match(gate.pattern);
+    if (!match) continue;
+    flags.push({
+      code: "DENOMINATIONAL_GATE",
+      severity: "MAJOR",
+      message: `Role requires ${gate.label}, which cannot be acquired on an application timeline.`,
+      evidence: `Posting text: "${excerpt(body, match.index ?? 0)}"`,
+      overridesClassification: false,
+    });
+    break;
+  }
+
+  // 9. A defining skill from outside the candidate's lane.
+  for (const skill of SPECIALIZED_SKILL_PATTERNS) {
+    const match = body.match(skill.pattern);
+    if (!match) continue;
+    const held = input.candidate.approvedCredentials.some((c) =>
+      c.toLowerCase().includes(skill.skill.split(" ")[0]!.toLowerCase()),
+    );
+    if (held) continue;
+    flags.push({
+      code: "SPECIALIZED_SKILL_REQUIRED",
+      severity: "MAJOR",
+      message: `Role requires ${skill.skill}, which is not recorded in approved candidate skills.`,
+      evidence: `Posting text: "${excerpt(body, match.index ?? 0)}"`,
+      overridesClassification: false,
+    });
+    break;
+  }
+
+  // 10. The posting has closed. Nothing else about it matters.
+  const { deadline, now } = input.posting;
+  const closedLanguage = /\bno longer accepting applications\b|\bposting closed\b|\bposition (has been )?filled\b/i.exec(body);
+  if ((deadline && deadline.getTime() < now.getTime()) || closedLanguage) {
+    flags.push({
+      code: "POSTING_CLOSED",
+      severity: "CRITICAL",
+      message: "This posting has closed. Boards keep expired listings visible long after the search ends.",
+      evidence: deadline
+        ? `Application deadline was ${deadline.toISOString().slice(0, 10)}; today is ${now.toISOString().slice(0, 10)}.`
+        : `Posting states: "${excerpt(body, closedLanguage!.index)}"`,
+      overridesClassification: true,
+    });
+  }
+
+  // 11. Posting is too thin to evaluate honestly.
   if (input.bodyText.trim().length < 250 && input.responsibilities.length < 2) {
     flags.push({
       code: "INSUFFICIENT_POSTING_DETAIL",
