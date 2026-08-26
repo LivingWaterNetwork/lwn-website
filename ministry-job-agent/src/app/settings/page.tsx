@@ -7,11 +7,17 @@ import { Badge, PageHeader, Value } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
 
-const POLICY_TONE: Record<string, string> = {
-  AUTOMATED_ALLOWED: "PRIORITY",
+const DISCOVERY_TONE: Record<string, string> = {
+  READABLE: "PRIORITY",
+  READABLE_BY_POSTING: "STRONG",
   MANUAL_ONLY: "REVIEW",
-  API_REQUIRED: "STRONG",
   UNREVIEWED: "neutral",
+};
+
+const APPLICATION_TONE: Record<string, string> = {
+  ASSISTED_DRAFT: "STRONG",
+  MANUAL_ONLY: "REVIEW",
+  RELATIONSHIP_DRIVEN: "neutral",
 };
 
 export default async function SettingsPage() {
@@ -72,8 +78,10 @@ export default async function SettingsPage() {
       <section className="card mb-6">
         <h2 className="mb-1 text-[15px] font-semibold">Source access policies</h2>
         <p className="muted mb-3 text-[13px] leading-relaxed">
-          The agent reads this before it touches a site. Anything not AUTOMATED_ALLOWED produces a manual-review work
-          item rather than an automated fetch. No source is scraped against its terms, and no anti-bot system is bypassed.
+          Two separate questions per source: may the agent <strong>read</strong> its listings, and may an application be
+          <strong> drafted</strong> through it. A search firm can be readable and still be somewhere only you can apply.
+          Both fail closed. No source is read against its terms, and no anti-bot system is bypassed — a 403 is recorded
+          and not retried.
         </p>
         <div className="space-y-2">
           {DISCOVERY_SOURCES.map((s) => (
@@ -83,8 +91,18 @@ export default async function SettingsPage() {
                   {s.name} {!s.enabled ? <span className="muted text-[11px]">· disabled</span> : null}
                 </div>
                 <p className="muted mt-0.5 text-[12px] leading-relaxed">{s.policyNote}</p>
+                {s.observed ? (
+                  <p className="muted mt-1 font-mono text-[11px] leading-relaxed">observed: {s.observed}</p>
+                ) : null}
               </div>
-              <Badge tone={POLICY_TONE[s.policy] ?? "neutral"}>{s.policy.replace(/_/g, " ")}</Badge>
+              <div className="flex shrink-0 flex-col items-end gap-1">
+                <Badge tone={DISCOVERY_TONE[s.discoveryPolicy] ?? "neutral"}>
+                  read: {s.discoveryPolicy.replace(/_/g, " ").toLowerCase()}
+                </Badge>
+                <Badge tone={APPLICATION_TONE[s.applicationPolicy] ?? "neutral"}>
+                  apply: {s.applicationPolicy.replace(/_/g, " ").toLowerCase()}
+                </Badge>
+              </div>
             </div>
           ))}
         </div>

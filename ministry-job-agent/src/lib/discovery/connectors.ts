@@ -1,5 +1,5 @@
 import type { RawPosting } from "../domain/types";
-import { DISCOVERY_SOURCES, mayFetchAutomatically, SOURCE_BY_KEY } from "./sources";
+import { DISCOVERY_SOURCES, mayReadListings, SOURCE_BY_KEY } from "./sources";
 import { buildQueries, type QueryOptions } from "./search-terms";
 
 /**
@@ -64,7 +64,7 @@ export function createManualConnector(sourceKey: string): Connector {
           howToImport:
             "Run these searches in your own browser session, then save each posting as a .json or .md file in ./inbox and run `npm run import`.",
         },
-        notes: [`${source.name} is ${source.policy}; produced a manual review item instead of fetching.`],
+        notes: [`${source.name} discovery is ${source.discoveryPolicy}; produced a manual review item instead of fetching.`],
       };
     },
   };
@@ -158,7 +158,7 @@ export function buildConnectors(deps: {
       continue;
     }
     // Every remaining source is manual until its policy is reviewed and changed.
-    if (!mayFetchAutomatically(source.key)) {
+    if (!mayReadListings(source.key)) {
       connectors.push(createManualConnector(source.key));
     }
   }
