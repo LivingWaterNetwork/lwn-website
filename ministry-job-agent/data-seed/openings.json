@@ -1,0 +1,5239 @@
+{
+ "note": "Public job-posting data only: church names, titles, locations, salaries and URLs as published, plus cited research claims. No candidate information. Regenerate with `npm run export:openings`; restore with `npm run seed:openings`.",
+ "exportedAt": "2026-08-28T02:53:52.667Z",
+ "churches": [
+  {
+   "slug": "rock-harbor-church",
+   "name": "Rock Harbor Church",
+   "city": null,
+   "state": null,
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": true,
+   "holdReason": "HOLD — DO NOT APPLY. Placed on hold by the candidate. Remove the hold to pursue.",
+   "facts": []
+  },
+  {
+   "slug": "bay-area-church-opportunity",
+   "name": "Bay Area church opportunity (previously identified)",
+   "city": null,
+   "state": null,
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": true,
+   "holdReason": "HOLD — DO NOT APPLY. Previously identified Bay Area opportunity, on hold by the candidate. Church identity NOT PROVIDED; update this record when the candidate supplies it.",
+   "facts": []
+  },
+  {
+   "slug": "garden-church",
+   "name": "Garden Church",
+   "city": "Huntington Beach",
+   "state": "CA",
+   "website": "https://www.garden.church",
+   "denomination": "Non-denominational",
+   "network": null,
+   "campusCount": 2,
+   "statementOfFaithUrl": null,
+   "researchStatus": "RESEARCHED",
+   "researchSummary": "Two campuses (Huntington Beach and Costa Mesa). Runs a house church network as a core structure rather than an add-on. Statement of faith NOT LOCATED — site returned HTTP 429 and was not retried.",
+   "onHold": false,
+   "holdReason": null,
+   "facts": [
+    {
+     "category": "position",
+     "claim": "Reports to the Pastor of Strategic Leadership, not the Lead Pastor. Authority over the discipleship rebuild may be real but is one layer down; worth clarifying.",
+     "kind": "INFERENCE",
+     "sourceUrl": null,
+     "confidence": "LOW"
+    },
+    {
+     "category": "culture",
+     "claim": "Posting states an ideal schedule of Sunday through Thursday, 40-55 hours per week. The upper end is a demanding week; ask what it looks like in practice.",
+     "kind": "INFERENCE",
+     "sourceUrl": null,
+     "confidence": "LOW"
+    },
+    {
+     "category": "theology",
+     "claim": "Statement of faith NOT LOCATED. garden.church returned HTTP 429 (rate limited) and was not retried, per the source access policy.",
+     "kind": "INFERENCE",
+     "sourceUrl": null,
+     "confidence": "LOW"
+    },
+    {
+     "category": "basics",
+     "claim": "Two campuses: Huntington Beach (16450 E. Pacific Coast Hwy) and Costa Mesa (2599 Newport Blvd).",
+     "kind": "VERIFIED_FACT",
+     "sourceUrl": "https://www.garden.church/costamesa",
+     "confidence": "HIGH"
+    },
+    {
+     "category": "basics",
+     "claim": "Michael Petrila serves as Community Life Pastor and oversees the house church network.",
+     "kind": "VERIFIED_FACT",
+     "sourceUrl": "https://www.garden.church/ministries",
+     "confidence": "MEDIUM"
+    },
+    {
+     "category": "ministry_philosophy",
+     "claim": "Supports and equips simple churches in homes, providing a network of accountability, encouragement, and local mission. Each House Church meets weekly with shared meals, worship, reading scripture, and prayer.",
+     "kind": "VERIFIED_FACT",
+     "sourceUrl": "https://garden.church/housechurch",
+     "confidence": "HIGH"
+    },
+    {
+     "category": "ministry_philosophy",
+     "claim": "Stated vision: the church is not just a place to attend but a people embodying the reality of Heaven here and now.",
+     "kind": "VERIFIED_FACT",
+     "sourceUrl": "https://www.garden.church/",
+     "confidence": "MEDIUM"
+    },
+    {
+     "category": "position",
+     "claim": "Posting requires training and experience ministering in the power of the Spirit, indicating charismatic or continuationist practice.",
+     "kind": "VERIFIED_FACT",
+     "sourceUrl": "https://docs.google.com/document/d/1MsjbYzusv-kgCsIH9p1-ZuX6Jso_k67HJlpnMTDA_jY/edit",
+     "confidence": "HIGH"
+    }
+   ]
+  },
+  {
+   "slug": "faith-arlington",
+   "name": "Faith Arlington",
+   "city": "Arlington",
+   "state": "TN",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "lifesong-church",
+   "name": "Lifesong Church",
+   "city": "Sutton",
+   "state": "MA",
+   "website": "https://lifesongonline.org",
+   "denomination": "Non-denominational",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "RESEARCHED",
+   "researchSummary": "Non-denominational church in Central Massachusetts, founded 2006. Listed on the Outreach 100. NOTE: lifesong.church is a different Lifesong in Russell, KY - do not confuse them.",
+   "onHold": false,
+   "holdReason": null,
+   "facts": [
+    {
+     "category": "theology",
+     "claim": "No statement of faith was retrieved. The what-we-believe page was referenced but not fetched.",
+     "kind": "INFERENCE",
+     "sourceUrl": null,
+     "confidence": "LOW"
+    },
+    {
+     "category": "basics",
+     "claim": "Non-denominational church in Sutton, MA, founded in 2006. Listed among the Outreach 100 churches.",
+     "kind": "VERIFIED_FACT",
+     "sourceUrl": "https://outreach100.com/churches/lifesong-church",
+     "confidence": "MEDIUM"
+    },
+    {
+     "category": "ministry_philosophy",
+     "claim": "Stated mission: help people Know God, Live in Freedom, Discover Purpose, and Deliver Hope.",
+     "kind": "VERIFIED_FACT",
+     "sourceUrl": "https://lifesongonline.org/",
+     "confidence": "HIGH"
+    },
+    {
+     "category": "ministry_philosophy",
+     "claim": "States that spiritual growth requires being connected relationally, and that people are changed into the likeness of Christ when everyone plays their part by serving.",
+     "kind": "VERIFIED_FACT",
+     "sourceUrl": "https://lifesongonline.org/",
+     "confidence": "HIGH"
+    },
+    {
+     "category": "culture",
+     "claim": "Describes itself as a Jesus-centered church for imperfect people seeking a community of grace, hope, and love.",
+     "kind": "VERIFIED_FACT",
+     "sourceUrl": "https://lifesongonline.org/",
+     "confidence": "MEDIUM"
+    }
+   ]
+  },
+  {
+   "slug": "ridgeway-alliance-church",
+   "name": "Ridgeway Alliance Church",
+   "city": "White Plains",
+   "state": "NY",
+   "website": "https://ridgewaychurch.com",
+   "denomination": "Christian and Missionary Alliance",
+   "network": "C&MA",
+   "campusCount": null,
+   "statementOfFaithUrl": "https://www.cmalliance.org/about/beliefs/statement-of-faith/",
+   "researchStatus": "RESEARCHED",
+   "researchSummary": "Christian and Missionary Alliance congregation in White Plains, NY. Full job description obtained from the church site.",
+   "onHold": false,
+   "holdReason": null,
+   "facts": [
+    {
+     "category": "theology",
+     "claim": "The C&MA statement itself was not retrieved — cmalliance.org returned HTTP 403 and was not retried. Read it in full before affirming.",
+     "kind": "INFERENCE",
+     "sourceUrl": null,
+     "confidence": "LOW"
+    },
+    {
+     "category": "theology",
+     "claim": "Affiliated with the Christian and Missionary Alliance; the role requires agreement with the C&MA Statement of Faith.",
+     "kind": "VERIFIED_FACT",
+     "sourceUrl": "https://ridgewaychurch.com/pastor-of-spiritual-formation-missions",
+     "confidence": "HIGH"
+    },
+    {
+     "category": "ministry_philosophy",
+     "claim": "Stated values: prayer, biblical maturity, evangelism, compassionate service, passion for global missions, discipleship multiplication, and team ministry collaboration.",
+     "kind": "VERIFIED_FACT",
+     "sourceUrl": "https://ridgewaychurch.com/pastor-of-spiritual-formation-missions",
+     "confidence": "HIGH"
+    },
+    {
+     "category": "ministry_philosophy",
+     "claim": "Discipleship philosophy measures success by how effectively the pastor equips God&apos;s people rather than personal ministry performance, emphasizing volunteer leader multiplication.",
+     "kind": "VERIFIED_FACT",
+     "sourceUrl": "https://ridgewaychurch.com/pastor-of-spiritual-formation-missions",
+     "confidence": "HIGH"
+    },
+    {
+     "category": "culture",
+     "claim": "Role reports to the Senior Pastor. Office hours Monday-Thursday plus Sunday, with 1-2 evening meetings on average.",
+     "kind": "VERIFIED_FACT",
+     "sourceUrl": "https://ridgewaychurch.com/pastor-of-spiritual-formation-missions",
+     "confidence": "HIGH"
+    },
+    {
+     "category": "position",
+     "claim": "Role pairs spiritual formation with missions and cross-cultural ministry (ESL, Spanish, Arabic) and liaison to six global mission partners. Roughly half the role is missions, not formation.",
+     "kind": "VERIFIED_FACT",
+     "sourceUrl": "https://ridgewaychurch.com/pastor-of-spiritual-formation-missions",
+     "confidence": "HIGH"
+    }
+   ]
+  },
+  {
+   "slug": "epic-church",
+   "name": "Epic Church",
+   "city": "Palm Coast",
+   "state": "FL",
+   "website": "https://www.theepicchurch.com",
+   "denomination": "Non-denominational",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "RESEARCHED",
+   "researchSummary": "Non-denominational church in Palm Coast, FL. Beliefs summarized on the public site; no formal statement of faith page located.",
+   "onHold": false,
+   "holdReason": null,
+   "facts": [
+    {
+     "category": "theology",
+     "claim": "No formal statement of faith page was located; beliefs are stated in summary form only. Ask for the full doctrinal statement.",
+     "kind": "INFERENCE",
+     "sourceUrl": null,
+     "confidence": "LOW"
+    },
+    {
+     "category": "theology",
+     "claim": "States belief in the Trinity, that everyone has sinned and needs Jesus, and that salvation is by grace through faith in Jesus Christ.",
+     "kind": "VERIFIED_FACT",
+     "sourceUrl": "https://www.theepicchurch.com/",
+     "confidence": "HIGH"
+    },
+    {
+     "category": "culture",
+     "claim": "Describes itself as a church for people who do not do church and a safe place to explore the teachings of Jesus.",
+     "kind": "VERIFIED_FACT",
+     "sourceUrl": "https://www.theepicchurch.com/",
+     "confidence": "HIGH"
+    },
+    {
+     "category": "ministry_philosophy",
+     "claim": "States that faith without action is incomplete and actively seeks opportunities to make a difference locally and globally.",
+     "kind": "VERIFIED_FACT",
+     "sourceUrl": "https://www.theepicchurch.com/",
+     "confidence": "MEDIUM"
+    },
+    {
+     "category": "ministry_philosophy",
+     "claim": "Runs a public Next Steps and missions pathway, consistent with the role&apos;s discipleship-pathway ownership.",
+     "kind": "VERIFIED_FACT",
+     "sourceUrl": "https://www.theepicchurch.com/epic-missions",
+     "confidence": "MEDIUM"
+    }
+   ]
+  },
+  {
+   "slug": "monument-bible-church",
+   "name": "Monument Bible Church",
+   "city": "Scottsbluff",
+   "state": "NE",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "rock-prairie-church",
+   "name": "Rock Prairie Church",
+   "city": "Tipton",
+   "state": "IN",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "covenant-church-of-nc",
+   "name": "Covenant Church of NC",
+   "city": "Greenville",
+   "state": "NC",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "troy-christian-chapel",
+   "name": "Troy Christian Chapel",
+   "city": "Troy",
+   "state": "MI",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "timberline-church",
+   "name": "Timberline Church",
+   "city": "Fort Collins",
+   "state": "CO",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "the-chapel-at-marlboro",
+   "name": "The Chapel at Marlboro",
+   "city": "Louisville",
+   "state": "OH",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "grace-church",
+   "name": "Grace Church",
+   "city": "Chino Valley",
+   "state": "AZ",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "encompass",
+   "name": "Encompass",
+   "city": "Parker",
+   "state": "CO",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "harper-evangelical-free-church",
+   "name": "Harper Evangelical Free Church",
+   "city": "Port Orchard",
+   "state": "WA",
+   "website": null,
+   "denomination": "EFCA",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "wellspring-church-3-streams-institute",
+   "name": "Wellspring Church / 3 Streams Institute",
+   "city": "Englewood",
+   "state": "CO",
+   "website": null,
+   "denomination": "Anglican",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "mt-gilead-church",
+   "name": "Mt Gilead Church",
+   "city": "Olney",
+   "state": "IL",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "tnl-church",
+   "name": "TNL Church",
+   "city": "Centennial",
+   "state": "CO",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "hillside-church",
+   "name": "Hillside Church",
+   "city": "Bloomington",
+   "state": "MN",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "1st-street-church",
+   "name": "1st Street Church",
+   "city": "Fort Lupton",
+   "state": "CO",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "crossroads-church",
+   "name": "Crossroads Church",
+   "city": "Hampstead",
+   "state": "MD",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "family-bible-church",
+   "name": "Family Bible Church",
+   "city": "Oak Harbor",
+   "state": "WA",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "brookdale-christian-church",
+   "name": "Brookdale Christian Church",
+   "city": "Bloomfield",
+   "state": "NJ",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "connection-church",
+   "name": "Connection Church",
+   "city": "Sioux Falls",
+   "state": "SD",
+   "website": null,
+   "denomination": "Acts 29 / The Gospel Coalition / 9Marks / SEND Network / Dakota Baptist Convention",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "true-north-church",
+   "name": "True North Church",
+   "city": "Pittsburgh",
+   "state": "PA",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "good-news-bible-church",
+   "name": "Good News Bible Church",
+   "city": "Green Bay",
+   "state": "WI",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "grace-fellowship",
+   "name": "Grace Fellowship",
+   "city": "Columbus",
+   "state": "OH",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "tri-county-church",
+   "name": "Tri County Church",
+   "city": "Grampian",
+   "state": "PA",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "calvary-bible-church",
+   "name": "Calvary Bible Church",
+   "city": "Derry",
+   "state": "NH",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "monument-community-presbyterian-church",
+   "name": "Monument Community Presbyterian Church",
+   "city": "Monument",
+   "state": "CO",
+   "website": null,
+   "denomination": "Presbyterian",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "new-life-mission-church-of-colorado",
+   "name": "New Life Mission Church of Colorado",
+   "city": "Aurora",
+   "state": "CO",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "first-presbyterian-church",
+   "name": "First Presbyterian Church",
+   "city": "Bakersfield",
+   "state": "CA",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "stone-hill-church-of-princeton",
+   "name": "Stone Hill Church of Princeton",
+   "city": "Princeton",
+   "state": "NJ",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "st-andrew-s-anglican-church",
+   "name": "St Andrew's Anglican Church",
+   "city": "Mt. Pleasant",
+   "state": "SC",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "valley-bible-church",
+   "name": "Valley Bible Church",
+   "city": "Haddam",
+   "state": "CT",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "grace-bible-church",
+   "name": "Grace Bible Church",
+   "city": "Laurel",
+   "state": "MT",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "grace-point-church-of-paradise",
+   "name": "Grace Point Church of Paradise",
+   "city": "Paradise",
+   "state": "PA",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "city-church",
+   "name": "City Church",
+   "city": "Corpus Christi",
+   "state": "TX",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "redeemer-christian-church",
+   "name": "Redeemer Christian Church",
+   "city": "Denver",
+   "state": "CO",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "mission-hills-church",
+   "name": "Mission Hills Church",
+   "city": "Littleton",
+   "state": "CO",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "seeds-wilderness-way",
+   "name": "Seeds Wilderness Way",
+   "city": "Montrose",
+   "state": "CO",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "crossroads-community-church",
+   "name": "Crossroads Community Church",
+   "city": "Parker",
+   "state": "CO",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "new-hope-church",
+   "name": "New Hope Church",
+   "city": "Williston",
+   "state": "ND",
+   "website": null,
+   "denomination": "Wesleyan",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "calvary-baptist-church",
+   "name": "Calvary Baptist Church",
+   "city": "Beaumont",
+   "state": "TX",
+   "website": null,
+   "denomination": "Baptist (SBC)",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "bethany-bible-church",
+   "name": "Bethany Bible Church",
+   "city": "Van Buren Township",
+   "state": "MI",
+   "website": null,
+   "denomination": "Independent non-denominational evangelical (IFCA member)",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "faithful-bible-church",
+   "name": "Faithful Bible Church",
+   "city": "Pinehurst",
+   "state": "NC",
+   "website": null,
+   "denomination": "Non-denominational",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "grace-community-church",
+   "name": "Grace Community Church",
+   "city": "Universal City",
+   "state": "TX",
+   "website": null,
+   "denomination": "Non-denominational",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "riva-trace-baptist-church",
+   "name": "Riva Trace Baptist Church",
+   "city": "Davidsonville",
+   "state": "MD",
+   "website": null,
+   "denomination": "Baptist (SBC)",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "the-journey-church-nyc",
+   "name": "The Journey Church NYC",
+   "city": "New York",
+   "state": "NY",
+   "website": null,
+   "denomination": "Non-denominational",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "palm-west-community-church",
+   "name": "Palm West Community Church",
+   "city": "Sun City West",
+   "state": "AZ",
+   "website": null,
+   "denomination": "Non-denominational",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "life-church",
+   "name": "Life.Church",
+   "city": "Edmond",
+   "state": "OK",
+   "website": null,
+   "denomination": "Evangelical Covenant",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "norwin-christian-church",
+   "name": "Norwin Christian Church",
+   "city": "North Huntingdon",
+   "state": "PA",
+   "website": null,
+   "denomination": "Non-denominational (Restoration movement / independent Christian churches)",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "living-hope",
+   "name": "Living Hope",
+   "city": "Willmar",
+   "state": "MN",
+   "website": null,
+   "denomination": "Evangelical Free",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "the-harbor-church",
+   "name": "The Harbor Church",
+   "city": "West Kingston",
+   "state": "RI",
+   "website": null,
+   "denomination": "Non-denominational",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "first-central-bible-church",
+   "name": "First Central Bible Church",
+   "city": "Chicopee",
+   "state": "MA",
+   "website": null,
+   "denomination": "Non-denominational",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "west-side-brethren-in-christ-church",
+   "name": "West Side Brethren in Christ Church",
+   "city": "Chambersburg",
+   "state": "PA",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "bell-shoals-church-apollo-beach-campus",
+   "name": "Bell Shoals Church (Apollo Beach Campus)",
+   "city": "Apollo Beach",
+   "state": "FL",
+   "website": null,
+   "denomination": "Baptist: SBC",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "northbridge-community-church",
+   "name": "Northbridge Community Church",
+   "city": "Rochester",
+   "state": "MN",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "realife-inc",
+   "name": "Realife, Inc.",
+   "city": "Marianna",
+   "state": "FL",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "refuge-church-malin",
+   "name": "Refuge Church Malin",
+   "city": "Malin",
+   "state": "OR",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "the-compass-church-naperville",
+   "name": "The Compass Church - Naperville",
+   "city": "Naperville",
+   "state": "IL",
+   "website": null,
+   "denomination": "Evangelical Free",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "church-of-the-front-range",
+   "name": "Church of the Front Range",
+   "city": "Colorado Springs",
+   "state": "CO",
+   "website": null,
+   "denomination": "Non-denominational",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "city-life-church",
+   "name": "City Life Church",
+   "city": "Grand Rapids",
+   "state": "MI",
+   "website": null,
+   "denomination": "Wesleyan",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "lizella-baptist",
+   "name": "Lizella Baptist",
+   "city": "Lizella",
+   "state": "GA",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "first-baptist-church-of-rock-hill",
+   "name": "First Baptist Church of Rock Hill",
+   "city": "Rock Hill",
+   "state": "SC",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "summit-church",
+   "name": "Summit Church",
+   "city": "Lincoln",
+   "state": "CA",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "concord-baptist-church",
+   "name": "Concord Baptist Church",
+   "city": "Granite Falls",
+   "state": "NC",
+   "website": null,
+   "denomination": "Baptist: SBC",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "live-oaks-community-church",
+   "name": "Live Oaks Community Church",
+   "city": "The Villages",
+   "state": "FL",
+   "website": null,
+   "denomination": "Evangelical Free",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "silver-creek-church",
+   "name": "Silver Creek Church",
+   "city": "Aurora",
+   "state": "OH",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "encounter-church",
+   "name": "ENCOUNTER Church",
+   "city": "Ventura",
+   "state": "CA",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "alexandria-covenant-church",
+   "name": "Alexandria Covenant Church",
+   "city": "Alexandria",
+   "state": "MN",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "crossover-church-of-rosedale",
+   "name": "Crossover Church of Rosedale",
+   "city": "Bakersfield",
+   "state": "CA",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "decision-point",
+   "name": "Decision Point",
+   "city": "Boston",
+   "state": "MA",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "st-andrew-presbyterian-church",
+   "name": "St. Andrew Presbyterian Church",
+   "city": "Williamsport",
+   "state": "MD",
+   "website": null,
+   "denomination": "United Methodist",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "902-church",
+   "name": "902 Church",
+   "city": "Kinston",
+   "state": "NC",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "alliance-church",
+   "name": "Alliance Church",
+   "city": "Appleton",
+   "state": "WI",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "lifebridge-christian-church",
+   "name": "LifeBridge Christian Church",
+   "city": "Longmont",
+   "state": "CO",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "rutherford-bible-chapel",
+   "name": "Rutherford Bible Chapel",
+   "city": "Rutherford",
+   "state": "NJ",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "elizabethtown-first-church-of-god",
+   "name": "Elizabethtown First Church of God",
+   "city": "Elizabethtown",
+   "state": "PA",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "double-oak-community-church",
+   "name": "Double Oak Community Church",
+   "city": "Birmingham",
+   "state": "AL",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "northfield-baptist-church",
+   "name": "Northfield Baptist Church",
+   "city": "Northfield",
+   "state": "OH",
+   "website": null,
+   "denomination": "Baptist (Other)",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "creekside-christian-church",
+   "name": "Creekside Christian Church",
+   "city": "Elk Grove",
+   "state": "CA",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "first-baptist-new-lebanon",
+   "name": "First Baptist New Lebanon",
+   "city": "New Lebanon",
+   "state": "OH",
+   "website": null,
+   "denomination": "Southern Baptist Convention",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "montavilla-church",
+   "name": "Montavilla Church",
+   "city": "Portland",
+   "state": "OR",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "arise-church",
+   "name": "Arise Church",
+   "city": "Sioux Falls",
+   "state": "SD",
+   "website": null,
+   "denomination": "Alliance of Reformed Churches (ARC)",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "forest-park-church",
+   "name": "Forest Park Church",
+   "city": "Elizabeth",
+   "state": "NC",
+   "website": null,
+   "denomination": "Church of God (Cleveland, TN)",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "trinity-lighthouse-hatfield",
+   "name": "Trinity Lighthouse Hatfield",
+   "city": "Hatfield",
+   "state": "PA",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "mason-county-reformed-church",
+   "name": "Mason County Reformed Church",
+   "city": "Scottville",
+   "state": "MI",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "west-shore-free-church",
+   "name": "West Shore Free Church",
+   "city": "Mechanicsburg",
+   "state": "PA",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "fbc-dalton",
+   "name": "FBC Dalton",
+   "city": "Dalton",
+   "state": "GA",
+   "website": null,
+   "denomination": "Cooperative Baptist Fellowship",
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "northside-community-church",
+   "name": "Northside Community Church",
+   "city": "Knightdale",
+   "state": "NC",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "shoestring-valley-community-church",
+   "name": "Shoestring Valley Community Church",
+   "city": "Onalaska",
+   "state": "WA",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "southside-christian-church",
+   "name": "Southside Christian Church",
+   "city": "Spokane",
+   "state": "WA",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  },
+  {
+   "slug": "clear-creek-rock-house",
+   "name": "Clear Creek Rock House",
+   "city": "Idaho Springs",
+   "state": "CO",
+   "website": null,
+   "denomination": null,
+   "network": null,
+   "campusCount": null,
+   "statementOfFaithUrl": null,
+   "researchStatus": "NOT_RESEARCHED",
+   "researchSummary": null,
+   "onHold": false,
+   "holdReason": null,
+   "facts": []
+  }
+ ],
+ "opportunities": [
+  {
+   "churchSlug": "garden-church",
+   "title": "Associate Pastor // Discipleship and House Churches",
+   "lane": "discipleship_pastor",
+   "city": "Huntington Beach",
+   "state": "CA",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Associate Pastor over Discipleship and House Churches at Garden Church. Serve as the primary pastoral leader over the House Church network: support, pastor and care for House Church Leaders, identify and train new House Church Leaders, pastor and coach the House Church Overseers Team, visit regularly to shepherd and evaluate health, develop House Church curriculum in collaboration with the Teaching Team, oversee the strategic multiplication of House Churches, and mobilize House Churches to live on mission. Own the Discipleship Pathway: evaluate, rebuild and oversee a new assimilation/belonging/discipleship process, create a new follow up process, lead the creation of a new discipleship pathway that creates a cohesive curriculum of courses, experiences and practices, plan and lead Welcome to Church Experiences at both campuses, and plan and execute baptisms. Lead Garden Courses: planning, ideation, administration and execution; create content and train leaders to teach and facilitate; develop a digital platform for content and courses. Serve as a member of the Garden Teaching Team and be prepared to preach as scheduled at any Garden Service, School of Ministry or Event. Management: monthly one-to-ones with direct reports, build and manage yearly Ministry Plans, oversee assigned budgets and budget vs actuals, relationally invest in the lives of your team, model leading through vulnerability and prayer. Supervisor: Pastor of Strategic Leadership. Ideal work schedule Sunday through Thursday, 40-55 hours per week.",
+   "responsibilities": [
+    "Serve as the primary pastoral leader over the House Church network",
+    "Support, pastor and care for House Church Leaders",
+    "Identify and train new House Church Leaders",
+    "Pastor, coach and serve the House Church Overseers Team",
+    "Develop House Church curriculum in collaboration with the Teaching Team",
+    "Oversee the strategic multiplication of House Churches",
+    "Evaluate, rebuild and oversee a new assimilation/belonging/discipleship process",
+    "Lead the creation of a new discipleship pathway and cohesive curriculum",
+    "Plan and execute baptisms alongside the Pastoral Team and Elders",
+    "Lead planning and execution of Garden Courses; create content and train leaders",
+    "Serve on the Garden Teaching Team and preach as scheduled",
+    "Supervise direct reports and oversee assigned budgets",
+    "Serve as a member of the Pastoral Care Team"
+   ],
+   "qualifications": [
+    "A bachelor's degree in a related field; graduate level theological training or school of ministry experience preferred",
+    "4-6 years of experience in vocational pastoral ministry",
+    "Training and experience in house church leadership, discipleship, preaching, pastoral care and ministering in the power of the Spirit",
+    "Proven competency in identifying, training and empowering leaders",
+    "Maintain the qualifications of a spiritual leader according to Scripture and in alignment with Leadership Guidelines",
+    "Competence in managing people"
+   ],
+   "canonicalUrl": "https://docs.google.com/document/d/1MsjbYzusv-kgCsIH9p1-ZuX6Jso_k67HJlpnMTDA_jY/edit",
+   "dedupeKey": "9195fb75c887e26750980fb1ba573ccf",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": 80000,
+   "salaryMax": 85000,
+   "salaryNote": "dependent on experience, plus full benefits package",
+   "benefits": [
+    "full benefits package"
+   ],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://docs.google.com/document/d/1MsjbYzusv-kgCsIH9p1-ZuX6Jso_k67HJlpnMTDA_jY/edit",
+     "isCanonical": true,
+     "rawTitle": "Associate Pastor // Discipleship and House Churches"
+    }
+   ]
+  },
+  {
+   "churchSlug": "faith-arlington",
+   "title": "Discipleship Pastor",
+   "lane": "discipleship_pastor",
+   "city": "Arlington",
+   "state": "TN",
+   "employmentType": "UNKNOWN",
+   "descriptionText": "Leads the creation and implementation of a church-wide discipleship strategy, deepening spiritual relationships and integrating growth pathways across adult ministries. Develops disciple-making processes, aligns ministries, trains leaders, evaluates effectiveness, and promotes biblical teaching to nurture spiritual growth, equip leaders, and ensure alignment with the church's mission and vision.",
+   "responsibilities": [
+    "Lead creation and implementation of a church-wide discipleship strategy",
+    "Integrate growth pathways across adult ministries",
+    "Develop disciple-making processes",
+    "Align ministries around the discipleship strategy",
+    "Train leaders",
+    "Evaluate effectiveness of discipleship efforts",
+    "Promote biblical teaching to nurture spiritual growth and equip leaders"
+   ],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/discipleship-pastor/",
+   "dedupeKey": "379be81374ea11f5e288c22a3fa7eafb",
+   "postedDate": "2026-06-04T00:00:00.000Z",
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/discipleship-pastor/",
+     "isCanonical": true,
+     "rawTitle": "Discipleship Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "lifesong-church",
+   "title": "Adult Ministries Pastor",
+   "lane": "adult_ministries_pastor",
+   "city": "Sutton",
+   "state": "MA",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Work directly with Executive Leadership to shape vision and strategy for Lifesong's assimilation and small groups ministries. Oversee assimilation efforts through a two to four step process to help individuals become part of the church community. Directly lead the development, execution, engagement and expansion of Small Groups for community, care, and spiritual formation. Oversee Care ministries in collaboration with the Care Pastor and the Impressions ministry in collaboration with the Impressions Director. Build and manage the Adult Ministries budget and track key performance indicators with regular reviews.",
+   "responsibilities": [
+    "Shape vision and strategy for assimilation and small groups ministries with Executive Leadership",
+    "Oversee assimilation efforts through a two to four step process",
+    "Lead development, execution, engagement and expansion of Small Groups",
+    "Oversee Care ministries in collaboration with the Care Pastor",
+    "Oversee Impressions ministry in collaboration with the Impressions Director",
+    "Build and manage the Adult Ministries budget",
+    "Track key performance indicators and conduct regular reviews"
+   ],
+   "qualifications": [
+    "Proven experience building and leading teams",
+    "3-5 years experience in a Pastor or Director role",
+    "Ability to think strategically and creatively",
+    "Self-motivated and able to work independently",
+    "Strong project management skills",
+    "Bachelor's degree preferred"
+   ],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/adult-ministries-pastor-2/",
+   "dedupeKey": "04d523c659a137fcfa6458e0d67830a2",
+   "postedDate": "2026-06-10T00:00:00.000Z",
+   "deadline": null,
+   "salaryMin": 70000,
+   "salaryMax": 85000,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/adult-ministries-pastor-2/",
+     "isCanonical": false,
+     "rawTitle": "Adult Ministries Pastor"
+    },
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/adult-ministries-pastor/",
+     "isCanonical": true,
+     "rawTitle": "Adult Ministries Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "ridgeway-alliance-church",
+   "title": "Pastor of Spiritual Formation & Missions",
+   "lane": "spiritual_formation_pastor",
+   "city": "White Plains",
+   "state": "NY",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Develop and oversee the church discipleship pathway from first-time guest through mature disciple, and equip leaders through Scripture, prayer, and spiritual disciplines. Identify and mentor emerging leaders. Oversee local ministries including the Food Pantry and community service. Lead cross-cultural initiatives including ESL, Spanish and Arabic ministries. Serve as primary liaison to six global mission partners and coordinate short-term opportunities. Preach, teach, provide counseling, perform weddings and funerals, participate in staff planning, and attend prayer gatherings. Reports to the Senior Pastor. Full-time exempt, minimum 40 hours plus evenings, weekends and retreats.",
+   "responsibilities": [
+    "Develop and oversee the discipleship pathway from first-time guest through mature disciple",
+    "Equip leaders through Scripture, prayer, and spiritual disciplines",
+    "Identify and mentor emerging leaders",
+    "Oversee local ministries including the Food Pantry and community service",
+    "Lead cross-cultural initiatives (ESL, Spanish, Arabic ministries)",
+    "Serve as primary liaison to six global mission partners",
+    "Preach, teach, and provide counseling",
+    "Perform weddings and funerals",
+    "Participate in staff planning and attend prayer gatherings"
+   ],
+   "qualifications": [
+    "A vibrant and growing relationship with Jesus Christ characterized by humility, integrity, and servant leadership",
+    "Meets biblical pastoral qualifications",
+    "Agrees with the Christian and Missionary Alliance Statement of Faith",
+    "Master of Divinity preferred but not required",
+    "Demonstrated discipleship leadership and volunteer recruitment experience",
+    "Strong biblical teaching ability",
+    "Cross-cultural ministry passion"
+   ],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/pastor-of-spiritual-formation-missions/",
+   "dedupeKey": "b9ade6374d93fd8bb3d49ecdbdef859a",
+   "postedDate": "2026-07-01T00:00:00.000Z",
+   "deadline": null,
+   "salaryMin": 85000,
+   "salaryMax": 100000,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/pastor-of-spiritual-formation-missions/",
+     "isCanonical": true,
+     "rawTitle": "Pastor of Spiritual Formation & Missions"
+    }
+   ]
+  },
+  {
+   "churchSlug": "epic-church",
+   "title": "Next Steps Lead (Discipleship & Teaching Team)",
+   "lane": "next_steps_pastor",
+   "city": "Palm Coast",
+   "state": "FL",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Lead vision and strategy for Groups across all life stages. Develop and equip group leaders with training, resources and support. Build systems for people connection and retention, and organize bridge events between Sunday services and community life. Plan and lead 3-4 baptism events annually and guide adults through baptism classes and preparation. Work with Family Ministries for an integrated approach. Oversee adult ministry areas including Connections. Partner with the Lead and Executive Pastors on the weekend experience. Lead and coach ministry directors. Preach 8-10 times per year. Provide pastoral care through weddings, funerals, prayer and counseling. Serve on the Servant Leadership Team.",
+   "responsibilities": [
+    "Lead vision and strategy for Groups across all life stages",
+    "Develop and equip group leaders with training, resources, and support",
+    "Build systems for people connection and retention",
+    "Organize bridge events between Sunday services and community life",
+    "Plan and lead 3-4 baptism events annually",
+    "Guide adults through baptism classes and preparation",
+    "Oversee adult ministry areas including Connections",
+    "Partner with Lead and Executive Pastors on the weekend experience",
+    "Lead and coach ministry directors",
+    "Preach 8-10 times per year",
+    "Provide pastoral care through weddings, funerals, prayer, and counseling",
+    "Serve on the Servant Leadership Team"
+   ],
+   "qualifications": [
+    "Alignment with Epic's mission, values, and theology",
+    "5+ years church leadership in discipleship, groups, or pastoral ministry",
+    "Proven ability to develop leaders, manage systems, and lead volunteers",
+    "Strong communicator one-on-one and in public speaking",
+    "Bachelor's degree in ministry or related field, Master's preferred",
+    "Experience with Rooted preferred"
+   ],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/next-steps-lead-discipleship-teaching-team/",
+   "dedupeKey": "d0ba8f581efa8d5388a83760fca98f47",
+   "postedDate": "2026-04-01T00:00:00.000Z",
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/next-steps-lead-discipleship-teaching-team/",
+     "isCanonical": true,
+     "rawTitle": "Next Steps Lead (Discipleship & Teaching Team)"
+    }
+   ]
+  },
+  {
+   "churchSlug": "monument-bible-church",
+   "title": "Pastor of Connection and Discipleship",
+   "lane": "discipleship_pastor",
+   "city": "Scottsbluff",
+   "state": "NE",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Oversee identifying and assimilating new attendees, oversee the quarterly Starting Point gathering, lead volunteers for greeting and connection cafe teams, and lead the bi-annual Membership Morning. Plan adult bible classes, equipping classes, small groups, bible studies and conferences; recruit and train teachers and small group leaders; serve as pastoral contact for college and career ministry. Preach 6-8 sermons annually, participate in Sunday worship services, teach adult classes and small groups. Participate in counseling, hospital visits and prayer, conduct weddings and funerals, partner with the deacon team. Oversee bulletin and newsletter content and use print and social media to promote opportunities.",
+   "responsibilities": [
+    "Oversee identifying and assimilating new attendees",
+    "Oversee the quarterly Starting Point gathering",
+    "Lead volunteers for greeting and connection cafe teams",
+    "Lead the bi-annual Membership Morning",
+    "Plan adult bible classes, equipping classes, small groups, bible studies and conferences",
+    "Recruit and train teachers and small group leaders",
+    "Serve as pastoral contact for college and career ministry",
+    "Preach 6-8 sermons annually",
+    "Participate in counseling, hospital visits and prayer; conduct weddings and funerals",
+    "Oversee bulletin and newsletter content and promote opportunities via print and social media"
+   ],
+   "qualifications": [
+    "Exhibit the character qualities of an elder (1 Timothy 3:2-7 and Titus 1:6-9)",
+    "Confirmation of a vocational-pastoral ministry call",
+    "Bachelor's degree required, Master's degree preferred",
+    "Local church pastoral ministry experience",
+    "Clear and winsome communicator",
+    "Ability to disciple others and provide biblical counseling",
+    "Gifted in administration, preaching, recruiting and building teams",
+    "Ordination required to receive the housing allowance"
+   ],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/pastor-of-connection-and-discipleship/",
+   "dedupeKey": "280d0ece49dbcd403dd267c220ca7765",
+   "postedDate": "2026-06-01T00:00:00.000Z",
+   "deadline": null,
+   "salaryMin": 60000,
+   "salaryMax": null,
+   "salaryNote": "Minimum $60,000 annual compensation package, with higher pay offered based on education and experience",
+   "benefits": [
+    "housing allowance (ordination required)",
+    "ministry reimbursement account",
+    "flexible vacation"
+   ],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/pastor-of-connection-and-discipleship/",
+     "isCanonical": false,
+     "rawTitle": "Pastor of Connection and Discipleship"
+    }
+   ]
+  },
+  {
+   "churchSlug": "rock-prairie-church",
+   "title": "Pastor of Discipleship and Congregational Care",
+   "lane": "discipleship_pastor",
+   "city": "Tipton",
+   "state": "IN",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Develop the discipleship strategy and oversee the Foundations Discipleship Hour. Equip Life Group leaders through training and meetings. Oversee the Prayer Team and corporate prayer strategy. Create processes connecting members to biblical counseling, and connect sick, hospitalized and homebound members to care. Counsel and visit church members. Preach approximately 6-10 times yearly. Attend staff, elder and Sunday worship meetings. Lead mission trips as needed. Develop and oversee relevant budgets. Non-denominational with Baptist roots.",
+   "responsibilities": [
+    "Develop the discipleship strategy and oversee the Foundations Discipleship Hour",
+    "Equip Life Group leaders through training and meetings",
+    "Oversee the Prayer Team and corporate prayer strategy",
+    "Create processes connecting members to biblical counseling",
+    "Counsel and visit church members; connect sick and homebound members to care",
+    "Preach approximately 6-10 times yearly",
+    "Lead mission trips as needed",
+    "Develop and oversee relevant budgets"
+   ],
+   "qualifications": [
+    "Bachelor's degree required",
+    "Seminary degree preferred",
+    "3-5 years full-time ministry experience preferred"
+   ],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/pastor-of-discipleship-and-congregational-care/",
+   "dedupeKey": "fd8bc96b1341f9ce53e4d20b405c0566",
+   "postedDate": "2026-05-01T00:00:00.000Z",
+   "deadline": null,
+   "salaryMin": 50000,
+   "salaryMax": 70000,
+   "salaryNote": "$50-70k/year plus benefits",
+   "benefits": [
+    "benefits (unspecified)"
+   ],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/pastor-of-discipleship-and-congregational-care/",
+     "isCanonical": false,
+     "rawTitle": "Pastor of Discipleship and Congregational Care"
+    }
+   ]
+  },
+  {
+   "churchSlug": "covenant-church-of-nc",
+   "title": "Pastor of Covenant Life | Discipleship & Congregational Care",
+   "lane": "discipleship_pastor",
+   "city": "Greenville",
+   "state": "NC",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Building people rather than programs. Developing leaders and creating healthy teams. Overseeing Directors of Connections, Men's, Women's, Young Adult, and Congregational Care ministries. Equipping leaders to help people take their next step with Jesus. Cultivating systems for discipleship and authentic community. The posting describes the work as helping people become disciples who make disciples through authentic, life-changing community.",
+   "responsibilities": [
+    "Develop leaders and create healthy teams",
+    "Oversee Directors of Connections, Men's, Women's, Young Adult, and Congregational Care ministries",
+    "Equip leaders to help people take their next step with Jesus",
+    "Cultivate systems for discipleship and authentic community"
+   ],
+   "qualifications": [
+    "Bachelor's Degree required",
+    "5-10 years experience required",
+    "Proven leader passionate about developing leaders"
+   ],
+   "canonicalUrl": "https://justchurchjobs.com/job/6390/pastor-of-covenant-life-discipleship-congregational-care",
+   "dedupeKey": "c1ef8e9dd38812e60a0f9733963fcc74",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/6390/pastor-of-covenant-life-discipleship-congregational-care",
+     "isCanonical": false,
+     "rawTitle": "Pastor of Covenant Life | Discipleship & Congregational Care"
+    }
+   ]
+  },
+  {
+   "churchSlug": "troy-christian-chapel",
+   "title": "Associate Pastor of Family Ministries",
+   "lane": "young_adults_pastor",
+   "city": "Troy",
+   "state": "MI",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Lead discipleship for children, youth, and young adults through Christ-centered programming. Recruit, train, and support volunteer teams across family ministries. Oversee curriculum selection and enforce child-protection policies. Teach Sunday School and provide occasional pulpit supply. Provide pastoral care including visitation and crisis support. Serve on the Pastors' Board and Joint Pastors & Trustees Committee. Coordinate family ministry events, retreats, and outreach.",
+   "responsibilities": [
+    "Lead discipleship for children, youth, and young adults through Christ-centered programming",
+    "Recruit, train, and support volunteer teams across family ministries",
+    "Oversee curriculum selection and enforce child-protection policies",
+    "Teach Sunday School and provide occasional pulpit supply",
+    "Provide pastoral care including visitation and crisis support",
+    "Coordinate family ministry events, retreats, and outreach"
+   ],
+   "qualifications": [
+    "Bachelor's degree in biblical education or Christian ministry",
+    "Experience in children's/youth/family ministry",
+    "Ordained Christian minister or willing to undergo ordination",
+    "Ability to teach effectively and recruit volunteers"
+   ],
+   "canonicalUrl": "https://jobs.ministryhub.org/job/associate-pastor-of-family-ministries/troy-christian-chapel",
+   "dedupeKey": "71fb5959180d632512a88b8a5b078aab",
+   "postedDate": null,
+   "deadline": "2026-09-20T00:00:00.000Z",
+   "salaryMin": 50000,
+   "salaryMax": 65000,
+   "salaryNote": null,
+   "benefits": [
+    "parsonage/housing"
+   ],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://jobs.ministryhub.org/job/associate-pastor-of-family-ministries/troy-christian-chapel",
+     "isCanonical": false,
+     "rawTitle": "Associate Pastor of Family Ministries"
+    }
+   ]
+  },
+  {
+   "churchSlug": "timberline-church",
+   "title": "Young Adult and College Pastor",
+   "lane": "young_adults_pastor",
+   "city": "Fort Collins",
+   "state": "CO",
+   "employmentType": "UNKNOWN",
+   "descriptionText": "Launch and lead a growing ministry for college students and young adults, with focus on casting vision, creating momentum, and helping young adults become fully integrated into the life and mission of a healthy, multi-generational church.",
+   "responsibilities": [
+    "Launch and lead a growing ministry for college students and young adults",
+    "Cast vision and create momentum for the ministry",
+    "Help young adults become fully integrated into the life and mission of the church"
+   ],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/young-adult-and-college-pastor/",
+   "dedupeKey": "6e380be35de4fd25ce779ce70adacb1b",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": 60000,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/young-adult-and-college-pastor/",
+     "isCanonical": false,
+     "rawTitle": "Young Adult and College Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "the-chapel-at-marlboro",
+   "title": "Pastor of Outreach and Young Adults",
+   "lane": "young_adults_pastor",
+   "city": "Louisville",
+   "state": "OH",
+   "employmentType": "UNKNOWN",
+   "descriptionText": "Lead and grow the church's Young Adults Ministry for ages 18-30. Develop and lead church-wide outreach initiatives and community engagement. Mobilize and shepherd volunteer outreach teams. Help lead and expand the church's food truck outreach ministry. Provide organizational and administrative support to the Lead Pastor. Build pathways for young adults to engage in discipleship, fellowship and church life. Reports to the Lead Pastor.",
+   "responsibilities": [
+    "Lead and grow the Young Adults Ministry for ages 18-30",
+    "Develop and lead church-wide outreach initiatives and community engagement",
+    "Mobilize and shepherd volunteer outreach teams",
+    "Help lead and expand the food truck outreach ministry",
+    "Provide organizational and administrative support to the Lead Pastor",
+    "Build pathways for young adults to engage in discipleship, fellowship and church life"
+   ],
+   "qualifications": [
+    "Relational and outgoing leadership ability",
+    "An entrepreneurial mobilizer who can lead outreach initiatives",
+    "Organized and creative with spiritual grounding"
+   ],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/pastor-of-outreach-and-young-adults/",
+   "dedupeKey": "a36ce5032f00ae24dc71a43ebad56714",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/pastor-of-outreach-and-young-adults/",
+     "isCanonical": false,
+     "rawTitle": "Pastor of Outreach and Young Adults"
+    }
+   ]
+  },
+  {
+   "churchSlug": "grace-church",
+   "title": "Next Gen Pastor",
+   "lane": "next_steps_pastor",
+   "city": "Chino Valley",
+   "state": "AZ",
+   "employmentType": "UNKNOWN",
+   "descriptionText": "Develop, execute and maintain a well-rounded Young Adults and Youth Ministry, including programming, discipleship, weekly teaching, volunteer training and event planning for both age groups.",
+   "responsibilities": [
+    "Develop, execute and maintain a Young Adults and Youth Ministry",
+    "Weekly teaching",
+    "Volunteer training",
+    "Event planning for both age groups",
+    "Discipleship of young adults and youth"
+   ],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/next-gen-pastor-3/",
+   "dedupeKey": "ce8dee45f0b0b9d81f9fc34b5f0e904a",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": 50000,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/next-gen-pastor-3/",
+     "isCanonical": false,
+     "rawTitle": "Next Gen Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "encompass",
+   "title": "Student Ministries Pastor",
+   "lane": null,
+   "city": "Parker",
+   "state": "CO",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/student-ministries-pastor/",
+   "dedupeKey": "6c4bcc2726cac20300b24e72f3817109",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/student-ministries-pastor/",
+     "isCanonical": false,
+     "rawTitle": "Student Ministries Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "harper-evangelical-free-church",
+   "title": "Associate Pastor",
+   "lane": "groups_pastor",
+   "city": "Port Orchard",
+   "state": "WA",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Partner with the senior pastor on day-to-day ministry planning and execution. Oversee and empower various ministries and teams including Small Groups and Men's Ministry. Lead deacon meetings and assist with preaching 6-12 times annually. Provide pastoral care and enfold visitors into the church through the membership process. Build and develop church leadership. Coordinate volunteers and annual church events. Accountable to the Senior Pastor.",
+   "responsibilities": [
+    "Partner with the senior pastor on ministry planning and execution",
+    "Oversee and empower ministries and teams including Small Groups and Men's Ministry",
+    "Lead deacon meetings",
+    "Assist with preaching 6-12 times annually",
+    "Enfold visitors through the membership process",
+    "Build and develop church leadership",
+    "Coordinate volunteers and annual church events"
+   ],
+   "qualifications": [
+    "Formal theological education required",
+    "Open to pursuing ordination within the EFCA",
+    "Relational, communicative, collaborative and competent"
+   ],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/associate-pastor-2/",
+   "dedupeKey": "7a9104d2025029c9cc404cd5042dfbf8",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": 70000,
+   "salaryMax": 80000,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/associate-pastor-2/",
+     "isCanonical": false,
+     "rawTitle": "Associate Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "wellspring-church-3-streams-institute",
+   "title": "Pastoral Resident",
+   "lane": "spiritual_formation_pastor",
+   "city": "Englewood",
+   "state": "CO",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "A two-year, full-time, paid training program covering preaching, teaching, spiritual formation, pastoral care, compassion ministries, project management and financial oversight. 40-45 hours per week.",
+   "responsibilities": [
+    "Preaching and teaching",
+    "Spiritual formation",
+    "Pastoral care and compassion ministries",
+    "Project management and financial oversight"
+   ],
+   "qualifications": [
+    "Member of an Anglican church for at least one year",
+    "Confirmed in an Anglican church",
+    "Completion of local discernment process before residency begins",
+    "Demonstrated potential for excellence in organizational leadership and preaching"
+   ],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/pastoral-resident/",
+   "dedupeKey": "af818629df9560e14076ac43b8e45e0c",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": 74500,
+   "salaryMax": null,
+   "salaryNote": "$74,500 per year; a two-year paid training program",
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/pastoral-resident/",
+     "isCanonical": false,
+     "rawTitle": "Pastoral Resident"
+    }
+   ]
+  },
+  {
+   "churchSlug": "mt-gilead-church",
+   "title": "Associate Pastor",
+   "lane": null,
+   "city": "Olney",
+   "state": "IL",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/associate-pastor/",
+   "dedupeKey": "61afb0c31dae0ffb0431c8809b6d14a7",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/associate-pastor/",
+     "isCanonical": false,
+     "rawTitle": "Associate Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "tnl-church",
+   "title": "Community Growth Director",
+   "lane": "community_pastor",
+   "city": "Centennial",
+   "state": "CO",
+   "employmentType": "PART_TIME",
+   "descriptionText": "Build relationships in the surrounding community and help raise awareness of TNL. Create practical opportunities for outreach, local partnerships and visibility. Help people move from attending to participating through stronger engagement. Own social media and external marketing and promotion efforts. Participate in Tuesday night worship gatherings and support community dinners and events. Part-time, averaging 15 hours per week.",
+   "responsibilities": [
+    "Build relationships in the surrounding community and raise awareness of the church",
+    "Create opportunities for outreach, local partnerships and visibility",
+    "Help people move from attending to participating",
+    "Own social media and external marketing and promotion",
+    "Support Tuesday night worship gatherings and community dinners"
+   ],
+   "qualifications": [
+    "An outgoing person with a heart for growing the local church",
+    "A self-starter who builds relationships easily",
+    "Able to recruit, rally and mobilize people around a shared mission",
+    "Strong communication, public speaking and collaboration skills"
+   ],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/community-growth-director/",
+   "dedupeKey": "6c4eb8f6b9d999ef1f70411b29016be7",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": "$2,600-$3,000 per month, eligible for housing allowance",
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/community-growth-director/",
+     "isCanonical": false,
+     "rawTitle": "Community Growth Director"
+    }
+   ]
+  },
+  {
+   "churchSlug": "hillside-church",
+   "title": "Executive Pastor",
+   "lane": null,
+   "city": "Bloomington",
+   "state": "MN",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/executive-pastor-6/",
+   "dedupeKey": "bb818dd6cf3683c92d9b7f87b09065a8",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/executive-pastor-6/",
+     "isCanonical": false,
+     "rawTitle": "Executive Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "1st-street-church",
+   "title": "Associate Pastor",
+   "lane": null,
+   "city": "Fort Lupton",
+   "state": "CO",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/associate-pastor-10/",
+   "dedupeKey": "2b7e62ca1a85c8ca555ce69e046e4091",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/associate-pastor-10/",
+     "isCanonical": false,
+     "rawTitle": "Associate Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "crossroads-church",
+   "title": "Associate Pastor",
+   "lane": "discipleship_pastor",
+   "city": "Hampstead",
+   "state": "MD",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Reproduce church culture. Provide pastoral care and discipleship. Lead worship services with sermon preparation. Develop campus staff. Direct volunteer leaders. Implement new initiatives. Oversee campus operations. Reports to the Campus Pastor and Senior Pastor. Regular evening and weekend availability.",
+   "responsibilities": [
+    "Reproduce church culture",
+    "Provide pastoral care and discipleship",
+    "Lead worship services with sermon preparation",
+    "Develop campus staff",
+    "Direct volunteer leaders",
+    "Implement new initiatives",
+    "Oversee campus operations"
+   ],
+   "qualifications": [
+    "Bachelor's degree required; seminary degree strongly preferred",
+    "Minimum five years Christian ministry experience",
+    "Competency in staff and volunteer leadership and equipping others"
+   ],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/associate-pastor-9/",
+   "dedupeKey": "6b4bf000bdc01b668fb070c0738a5790",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": 50000,
+   "salaryMax": 60000,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/associate-pastor-9/",
+     "isCanonical": false,
+     "rawTitle": "Associate Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "family-bible-church",
+   "title": "Associate Pastor",
+   "lane": null,
+   "city": "Oak Harbor",
+   "state": "WA",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/associate-pastor-7/",
+   "dedupeKey": "cd851960b3d1105207307e9cc4690d4d",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/associate-pastor-7/",
+     "isCanonical": false,
+     "rawTitle": "Associate Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "brookdale-christian-church",
+   "title": "Associate Pastor / Lead Pastor-Designate",
+   "lane": null,
+   "city": "Bloomfield",
+   "state": "NJ",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/associate-pastor-lead-pastor-designate/",
+   "dedupeKey": "cc8fe7caea7eac86353676b33d04023b",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/associate-pastor-lead-pastor-designate/",
+     "isCanonical": false,
+     "rawTitle": "Associate Pastor / Lead Pastor-Designate"
+    }
+   ]
+  },
+  {
+   "churchSlug": "connection-church",
+   "title": "Associate Pastor of Ministries",
+   "lane": "discipleship_pastor",
+   "city": "Sioux Falls",
+   "state": "SD",
+   "employmentType": "UNKNOWN",
+   "descriptionText": "Oversee the Gospel Communities discipleship pathway. Provide pastoral care and spiritual oversight. Design and implement systems for leadership development, member engagement and sustainable growth. Shepherd and equip the body of Christ. A gospel-centered, missional church.",
+   "responsibilities": [
+    "Oversee the Gospel Communities discipleship pathway",
+    "Provide pastoral care and spiritual oversight",
+    "Design and implement systems for leadership development",
+    "Design systems for member engagement and sustainable growth",
+    "Shepherd and equip the body of Christ"
+   ],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/associate-pastor-of-ministries/",
+   "dedupeKey": "b69e561bd8e9236ae5943a000415f9d9",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": 80000,
+   "salaryMax": null,
+   "salaryNote": "$80,000+",
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/associate-pastor-of-ministries/",
+     "isCanonical": false,
+     "rawTitle": "Associate Pastor of Ministries"
+    }
+   ]
+  },
+  {
+   "churchSlug": "true-north-church",
+   "title": "Associate Pastor",
+   "lane": "discipleship_pastor",
+   "city": "Pittsburgh",
+   "state": "PA",
+   "employmentType": "UNKNOWN",
+   "descriptionText": "Lead the creation, implementation and ongoing refinement of the church's discipleship strategy. Oversee guest assimilation, groups and spiritual formation environments. Preach 8-10 times annually during Sunday services. Collaborate with the Church-Life Director on engagement and follow-up systems. Provide pastoral care including weddings, funerals and counseling.",
+   "responsibilities": [
+    "Lead the creation, implementation and refinement of the discipleship strategy",
+    "Oversee guest assimilation, groups and spiritual formation environments",
+    "Preach 8-10 times annually",
+    "Collaborate on engagement and follow-up systems",
+    "Provide pastoral care including weddings, funerals and counseling"
+   ],
+   "qualifications": [
+    "Demonstrated experience in discipleship, leadership development and ministry oversight",
+    "Ability to teach and preach effectively",
+    "Proven ability to build teams, develop systems and lead through others",
+    "Minimum of 3-5 years experience in a similar role"
+   ],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/associate-pastor-5/",
+   "dedupeKey": "3e3c5ae26723a866457e97148c0a2f00",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": "TBD",
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/associate-pastor-5/",
+     "isCanonical": false,
+     "rawTitle": "Associate Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "good-news-bible-church",
+   "title": "Associate Pastor",
+   "lane": "discipleship_pastor",
+   "city": "Green Bay",
+   "state": "WI",
+   "employmentType": "UNKNOWN",
+   "descriptionText": "An internship and church planting opportunity. Preach and teach biblical truths in various church settings. Assist in discipleship and provide pastoral care to members. Support church administration and ministry coordination. Engage in evangelism and outreach as part of the church planting process. Participate in leadership meetings and receive pastoral mentorship from the Senior Pastor. Must affirm the church's Statement of Faith.",
+   "responsibilities": [
+    "Preach and teach in various church settings",
+    "Assist in discipleship and provide pastoral care",
+    "Support church administration and ministry coordination",
+    "Engage in evangelism and outreach as part of church planting",
+    "Receive pastoral mentorship"
+   ],
+   "qualifications": [
+    "Some prior ministry experience",
+    "A strong sense of calling to pastoral ministry and church planting",
+    "Must affirm the church's Statement of Faith"
+   ],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/associate-pastor-11/",
+   "dedupeKey": "528916a48b6b9c89f86e7ce3882fc504",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": "TBD",
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/associate-pastor-11/",
+     "isCanonical": false,
+     "rawTitle": "Associate Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "grace-fellowship",
+   "title": "Campus Pastor",
+   "lane": "campus_pastor",
+   "city": "Columbus",
+   "state": "OH",
+   "employmentType": "UNKNOWN",
+   "descriptionText": "Work in concert with campus staff and central services to maintain a Grace-specific, multisite mindset. Lead campus staff and volunteers to initiate and execute community impact events. Shepherd, invest in, develop and challenge the attendees of the campus. Serve on the teaching team and teach approximately 10-30% of the time. Manage campus staff and ensure they are properly leading and managing their ministry teams.",
+   "responsibilities": [
+    "Maintain a multisite mindset in concert with campus staff and central services",
+    "Lead campus staff and volunteers to execute community impact events",
+    "Shepherd, invest in, develop and challenge campus attendees",
+    "Serve on the teaching team, teaching 10-30% of the time",
+    "Manage campus staff and their ministry teams"
+   ],
+   "qualifications": [
+    "Self-motivated, great with people, growth oriented",
+    "A proven leader with a builder mentality"
+   ],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/campus-pastor-4/",
+   "dedupeKey": "abc2746c3e4b89e9563c8922ccea83c6",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": 70000,
+   "salaryMax": 90000,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/campus-pastor-4/",
+     "isCanonical": false,
+     "rawTitle": "Campus Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "tri-county-church",
+   "title": "Campus Pastor",
+   "lane": "campus_pastor",
+   "city": "Grampian",
+   "state": "PA",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/campus-pastor-3/",
+   "dedupeKey": "565c8ca128504cf4fef4a94b6a8774b8",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/campus-pastor-3/",
+     "isCanonical": false,
+     "rawTitle": "Campus Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "calvary-bible-church",
+   "title": "Campus Pastor",
+   "lane": "campus_pastor",
+   "city": "Derry",
+   "state": "NH",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/campus-pastor-5/",
+   "dedupeKey": "0b38d6f89bb55a36276bff9985affb30",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/campus-pastor-5/",
+     "isCanonical": false,
+     "rawTitle": "Campus Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "monument-community-presbyterian-church",
+   "title": "Director of Christian Formation",
+   "lane": "spiritual_formation_pastor",
+   "city": "Monument",
+   "state": "CO",
+   "employmentType": "UNKNOWN",
+   "descriptionText": "Provide energetic, creative and strategic leadership for the continuity and growth of children's and youth ministries, while also guiding and developing meaningful opportunities for adult formation.",
+   "responsibilities": [
+    "Provide strategic leadership for children's and youth ministries",
+    "Guide and develop meaningful opportunities for adult formation"
+   ],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/director-of-christian-formation-2/",
+   "dedupeKey": "3fe5b33794041a4d071b097b1c5b40f6",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": 40000,
+   "salaryMax": 50000,
+   "salaryNote": "$40-50k depending on experience and qualifications",
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/director-of-christian-formation-2/",
+     "isCanonical": false,
+     "rawTitle": "Director of Christian Formation"
+    }
+   ]
+  },
+  {
+   "churchSlug": "monument-community-presbyterian-church",
+   "title": "Christian Formation Director",
+   "lane": "spiritual_formation_pastor",
+   "city": "Monument",
+   "state": "CO",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/christian-formation-director/",
+   "dedupeKey": "cafb3c6b496fb6cd1b0f43679e20505e",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/christian-formation-director/",
+     "isCanonical": false,
+     "rawTitle": "Christian Formation Director"
+    }
+   ]
+  },
+  {
+   "churchSlug": "new-life-mission-church-of-colorado",
+   "title": "Assistant Pastor (Education Pastor)",
+   "lane": null,
+   "city": "Aurora",
+   "state": "CO",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/assistant-pastor-education-pastor/",
+   "dedupeKey": "055ad1862a593658171b3ee5495ac1b0",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/assistant-pastor-education-pastor/",
+     "isCanonical": false,
+     "rawTitle": "Assistant Pastor (Education Pastor)"
+    }
+   ]
+  },
+  {
+   "churchSlug": "first-presbyterian-church",
+   "title": "Assistant Pastor of Outreach",
+   "lane": null,
+   "city": "Bakersfield",
+   "state": "CA",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/assistant-pastor-of-outreach/",
+   "dedupeKey": "6d7f7ebe11c6d3ae34f78cc8208425dc",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/assistant-pastor-of-outreach/",
+     "isCanonical": false,
+     "rawTitle": "Assistant Pastor of Outreach"
+    }
+   ]
+  },
+  {
+   "churchSlug": "stone-hill-church-of-princeton",
+   "title": "Assistant Pastor of Family Ministry and Local Engagement",
+   "lane": "engagement_pastor",
+   "city": "Princeton",
+   "state": "NJ",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/assistant-pastor-of-family-ministry-and-local-engagement-2/",
+   "dedupeKey": "e269764565c1dcac1ef65b0057fef249",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/assistant-pastor-of-family-ministry-and-local-engagement-2/",
+     "isCanonical": false,
+     "rawTitle": "Assistant Pastor of Family Ministry and Local Engagement"
+    }
+   ]
+  },
+  {
+   "churchSlug": "st-andrew-s-anglican-church",
+   "title": "Curate; Assistant Pastor",
+   "lane": null,
+   "city": "Mt. Pleasant",
+   "state": "SC",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/curate-assistant-pastor/",
+   "dedupeKey": "798aababfaffa6e2e8895caea7e546a1",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/curate-assistant-pastor/",
+     "isCanonical": false,
+     "rawTitle": "Curate; Assistant Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "valley-bible-church",
+   "title": "Executive Pastor",
+   "lane": null,
+   "city": "Haddam",
+   "state": "CT",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/executive-pastor-3/",
+   "dedupeKey": "fd78adf55dd466d16e5285edef110fc3",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/executive-pastor-3/",
+     "isCanonical": false,
+     "rawTitle": "Executive Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "tri-county-church",
+   "title": "Executive Pastor",
+   "lane": null,
+   "city": "DuBois",
+   "state": "PA",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/executive-pastor-7/",
+   "dedupeKey": "b4a8f47f290aae60d83765729b241424",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/executive-pastor-7/",
+     "isCanonical": false,
+     "rawTitle": "Executive Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "grace-bible-church",
+   "title": "Associate Pastor of Next Generation Ministries",
+   "lane": "next_steps_pastor",
+   "city": "Laurel",
+   "state": "MT",
+   "employmentType": "UNKNOWN",
+   "descriptionText": "Provide pastoral leadership, discipleship and oversight for the next generation ministries including student ministries, young adults and children's ministry support. Additional duties encompass teaching, discipleship, leadership development and shepherding within the broader church community. Works closely with the Senior Pastor, elders, ministry staff, parents and volunteer leaders.",
+   "responsibilities": [
+    "Provide pastoral leadership and oversight for next generation ministries",
+    "Lead student ministries and young adults",
+    "Teaching and discipleship",
+    "Leadership development",
+    "Shepherd within the broader church community"
+   ],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/associate-pastor-of-next-generation-ministries/",
+   "dedupeKey": "e11ebc95f58cc8cb16e01327a4a05040",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": 50000,
+   "salaryMax": 65000,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/associate-pastor-of-next-generation-ministries/",
+     "isCanonical": false,
+     "rawTitle": "Associate Pastor of Next Generation Ministries"
+    }
+   ]
+  },
+  {
+   "churchSlug": "grace-point-church-of-paradise",
+   "title": "Family Ministries Pastor",
+   "lane": null,
+   "city": "Paradise",
+   "state": "PA",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/family-ministries-pastor/",
+   "dedupeKey": "552b73beb2877df6c52351f8fcb661e8",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/family-ministries-pastor/",
+     "isCanonical": false,
+     "rawTitle": "Family Ministries Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "calvary-bible-church",
+   "title": "Associate Pastor of Family and Global Ministries",
+   "lane": null,
+   "city": "Kalamazoo",
+   "state": "MI",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/associate-pastor-of-family-and-global-ministries/",
+   "dedupeKey": "e3441e28f715e05372da90b6e120049d",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/associate-pastor-of-family-and-global-ministries/",
+     "isCanonical": false,
+     "rawTitle": "Associate Pastor of Family and Global Ministries"
+    }
+   ]
+  },
+  {
+   "churchSlug": "city-church",
+   "title": "Assistant Pastor for Family Ministries",
+   "lane": null,
+   "city": "Corpus Christi",
+   "state": "TX",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/assistant-pastor-for-family-ministries/",
+   "dedupeKey": "9be6eac59f9401a066aec1fae2cc5787",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/assistant-pastor-for-family-ministries/",
+     "isCanonical": false,
+     "rawTitle": "Assistant Pastor for Family Ministries"
+    }
+   ]
+  },
+  {
+   "churchSlug": "redeemer-christian-church",
+   "title": "Associate Pastor of Youth Ministry",
+   "lane": null,
+   "city": "Denver",
+   "state": "CO",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/associate-pastor-of-youth-ministry/",
+   "dedupeKey": "638975a7345593180ecded05ad9aa0fe",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/associate-pastor-of-youth-ministry/",
+     "isCanonical": false,
+     "rawTitle": "Associate Pastor of Youth Ministry"
+    }
+   ]
+  },
+  {
+   "churchSlug": "mission-hills-church",
+   "title": "Mission Hills Association Director",
+   "lane": null,
+   "city": "Littleton",
+   "state": "CO",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/mission-hills-association-director/",
+   "dedupeKey": "5fc88167c99db2863b7b50242bceb524",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/mission-hills-association-director/",
+     "isCanonical": false,
+     "rawTitle": "Mission Hills Association Director"
+    }
+   ]
+  },
+  {
+   "churchSlug": "seeds-wilderness-way",
+   "title": "Director of Therapeutic Care and Formation",
+   "lane": "spiritual_formation_pastor",
+   "city": "Montrose",
+   "state": "CO",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/director-of-therapeutic-care-and-formation/",
+   "dedupeKey": "23020ac4c2aa8c502cc1e3e5a80fe8d7",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/director-of-therapeutic-care-and-formation/",
+     "isCanonical": false,
+     "rawTitle": "Director of Therapeutic Care and Formation"
+    }
+   ]
+  },
+  {
+   "churchSlug": "crossroads-community-church",
+   "title": "Guest Relations (FIT) Coordinator",
+   "lane": null,
+   "city": "Parker",
+   "state": "CO",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/guest-relations-fit-coordinator/",
+   "dedupeKey": "a277310a9c8047d7ed3a7d03e15e6b57",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/guest-relations-fit-coordinator/",
+     "isCanonical": false,
+     "rawTitle": "Guest Relations (FIT) Coordinator"
+    }
+   ]
+  },
+  {
+   "churchSlug": "new-hope-church",
+   "title": "Pastor of Care & Discipleship",
+   "lane": "discipleship_pastor",
+   "city": "Williston",
+   "state": "ND",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Provide pastoral care through encouragement, prayer, coaching, hospital visits, and follow up. Build and develop a healthy marriage ministry. Provide vision and leadership for men's ministry. Maintain an active presence within the church and the community by building intentional relationships. Invest in the overall spiritual health of the church through shepherding and discipleship.",
+   "responsibilities": [
+    "Provide pastoral care through encouragement, prayer, coaching, hospital visits and follow up",
+    "Build and develop a healthy marriage ministry",
+    "Provide vision and leadership for men's ministry",
+    "Build intentional relationships in the church and community",
+    "Invest in the spiritual health of the church through shepherding and discipleship"
+   ],
+   "qualifications": [
+    "Bachelor's Degree required",
+    "1-5 years experience required"
+   ],
+   "canonicalUrl": "https://justchurchjobs.com/job/6557/pastor-of-care-discipleship",
+   "dedupeKey": "e9cc07ac1417f9cfa0ec19ffe5ad3c2b",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/6557/pastor-of-care-discipleship",
+     "isCanonical": false,
+     "rawTitle": "Pastor of Care & Discipleship"
+    }
+   ]
+  },
+  {
+   "churchSlug": "calvary-baptist-church",
+   "title": "Pastor of Disciple-Making and Care",
+   "lane": "discipleship_pastor",
+   "city": "Beaumont",
+   "state": "TX",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Responsible for planning, leading, and overseeing the disciple-making and care strategy. Oversee the development of the work and annual budget for areas of responsibility. Supervises multiple staff members within the NextGen and International Ministry staff. Oversee, coordinate, and strengthen all Connection Groups and Bible study environments. Provide counseling including marriage, grief and spiritual care as needed.",
+   "responsibilities": [
+    "Plan, lead and oversee the disciple-making and care strategy",
+    "Oversee the development of the work and annual budget for areas of responsibility",
+    "Supervise multiple staff members within the NextGen and International Ministry staff",
+    "Oversee, coordinate and strengthen all Connection Groups and Bible study environments",
+    "Provide counseling including marriage, grief and spiritual care"
+   ],
+   "qualifications": [
+    "A call of God to vocational Christian ministry",
+    "Meets the qualifications of a pastor/elder/overseer as outlined in 1 Timothy 3",
+    "A bachelor's degree in biblical studies, ministry, or related field",
+    "Five years of vocational ministry experience in a local church setting",
+    "A Master of Divinity from a seminary or theology school of similar faith (preferred)"
+   ],
+   "canonicalUrl": "https://justchurchjobs.com/job/6508/pastor-of-disciple-making-and-care",
+   "dedupeKey": "8eb2cd2882838081e1ad304e87aa54b0",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/6508/pastor-of-disciple-making-and-care",
+     "isCanonical": false,
+     "rawTitle": "Pastor of Disciple-Making and Care"
+    }
+   ]
+  },
+  {
+   "churchSlug": "bethany-bible-church",
+   "title": "Youth & Discipleship Director",
+   "lane": "discipleship_director",
+   "city": "Van Buren Township",
+   "state": "MI",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Lead weekly youth gatherings with biblical teaching. Disciple middle and high school students in small groups and one-on-one. Recruit, train and care for volunteer youth leaders. Support children's ministries and strengthen existing small groups across age levels. Help multiply groups by identifying and developing new leaders. Plan camps, service projects and mission opportunities. Oversee the youth ministry budget and establish a school presence.",
+   "responsibilities": [
+    "Lead weekly youth gatherings with biblical teaching",
+    "Disciple students in small groups and one-on-one",
+    "Recruit, train and care for volunteer youth leaders",
+    "Strengthen existing small groups across age levels",
+    "Help multiply groups by identifying and developing new leaders",
+    "Oversee the youth ministry budget"
+   ],
+   "qualifications": [
+    "Ministry experience through church, internship, or parachurch work",
+    "Seminary or ministry training preferred but not required",
+    "Ability to teach, communicate and build relationships"
+   ],
+   "canonicalUrl": "https://justchurchjobs.com/job/1197/youth-discipleship-director-full-or-part-time-option",
+   "dedupeKey": "b866626d0323f228297a678fbbff8062",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": 50000,
+   "salaryMax": 65000,
+   "salaryNote": "Full-time $50-65k with fringe benefits TBD; part-time option 10-15 hours per week",
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/1197/youth-discipleship-director-full-or-part-time-option",
+     "isCanonical": false,
+     "rawTitle": "Youth & Discipleship Director"
+    }
+   ]
+  },
+  {
+   "churchSlug": "faithful-bible-church",
+   "title": "Pastor of Worship and Discipleship",
+   "lane": "discipleship_pastor",
+   "city": "Pinehurst",
+   "state": "NC",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Plan and direct Christ-centered weekly worship services in collaboration with the Lead Pastor. Recruit, train and schedule worship team members. Oversee community group leaders and curriculum development. Help coordinate volunteers for Sunday ministries. Attend weekly staff meetings and all church services. Potential preaching and teaching based on the candidate's abilities. 40+ hours per week.",
+   "responsibilities": [
+    "Plan and direct weekly worship services with the Lead Pastor",
+    "Recruit, train and schedule worship team members",
+    "Oversee community group leaders and curriculum development",
+    "Coordinate volunteers for Sunday ministries",
+    "Potential preaching and teaching"
+   ],
+   "qualifications": [
+    "A follower of Jesus Christ meeting 1 Timothy 3:1-7 and Titus 1:6-9",
+    "Completed or completing a bible college/seminary degree",
+    "Strong theological grounding and musical proficiency",
+    "Mastery of guitar and/or piano",
+    "Leadership experience building teams within local churches"
+   ],
+   "canonicalUrl": "https://justchurchjobs.com/job/105/pastor-of-worship-and-discipleship",
+   "dedupeKey": "27c3d6373ca1ce45666fc9f90d684dbe",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": "Competitive salary based on experience",
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/105/pastor-of-worship-and-discipleship",
+     "isCanonical": false,
+     "rawTitle": "Pastor of Worship and Discipleship"
+    }
+   ]
+  },
+  {
+   "churchSlug": "grace-community-church",
+   "title": "Community Life Pastor",
+   "lane": "community_pastor",
+   "city": "Universal City",
+   "state": "TX",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Build upon and manage the overarching community life ministry strategy. Oversee small group curriculum and volunteer leader development. Plan and coordinate the groups calendar with a focus on offering group opportunities. Manage the budget and coordinate with other ministry leaders. Participate in a 24/7 pastoral on-call rotating schedule. Assist with preaching as requested. Reports to the Executive Pastor.",
+   "responsibilities": [
+    "Build upon and manage the overarching community life ministry strategy",
+    "Oversee small group curriculum and volunteer leader development",
+    "Plan and coordinate the groups calendar",
+    "Manage the budget and coordinate with other ministry leaders",
+    "Participate in the 24/7 pastoral on-call rotating schedule",
+    "Assist with preaching as requested"
+   ],
+   "qualifications": [
+    "Minimum of 3 years of pastoral ministry experience",
+    "Good computer skills and strong organizational abilities",
+    "Great relational skills",
+    "Must tithe or commit to begin tithing"
+   ],
+   "canonicalUrl": "https://justchurchjobs.com/job/1308/community-life-pastor",
+   "dedupeKey": "066df9692023503094b4601f230d2287",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": 46000,
+   "salaryMax": 56000,
+   "salaryNote": "plus benefits",
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/1308/community-life-pastor",
+     "isCanonical": false,
+     "rawTitle": "Community Life Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "riva-trace-baptist-church",
+   "title": "Associate Pastor-Discipleship & Community Life",
+   "lane": "discipleship_pastor",
+   "city": "Davidsonville",
+   "state": "MD",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Develop and grow a healthy, multiplying small group ministry. Identify, train and mentor leaders. Share in pastoral care, regular preaching and teaching, and administrative leadership. The church seeks a growing relationship with Jesus Christ, a heart for discipleship and leader development, and strong relational and communication skills.",
+   "responsibilities": [
+    "Develop and grow a healthy, multiplying small group ministry",
+    "Identify, train and mentor leaders",
+    "Share in pastoral care",
+    "Regular preaching and teaching",
+    "Administrative leadership"
+   ],
+   "qualifications": [
+    "Bachelor's Degree required",
+    "1-5 years experience required",
+    "Heart for discipleship and leader development",
+    "Strong relational and communication skills"
+   ],
+   "canonicalUrl": "https://justchurchjobs.com/job/5652/associate-pastor-discipleship-community-life",
+   "dedupeKey": "9fedbaf9f7e9d8ef486be9e965959e16",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": "Competitive salary and full benefits; amount not stated",
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/5652/associate-pastor-discipleship-community-life",
+     "isCanonical": false,
+     "rawTitle": "Associate Pastor-Discipleship & Community Life"
+    }
+   ]
+  },
+  {
+   "churchSlug": "the-journey-church-nyc",
+   "title": "Pastor of Growth Groups & Teaching Pastor",
+   "lane": "groups_pastor",
+   "city": "New York",
+   "state": "NY",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Leadership, growth and innovation of The Journey's semester-based small groups ministry, with a goal of getting 100% of the church in groups. Recruit new Growth Group Leaders and form new groups each semester. Possible leadership of other ministry areas depending on experience, giftedness and abilities. Contribute to the teaching team. This is an Executive Pastor position serving on the Executive Team.",
+   "responsibilities": [
+    "Lead the growth and innovation of the semester-based small groups ministry, goal of 100% of the church in groups",
+    "Recruit new Growth Group Leaders and form new groups each semester",
+    "Possible leadership of other ministry areas depending on experience and giftedness",
+    "Contribute to the teaching team",
+    "Serve on the Executive Team"
+   ],
+   "qualifications": [
+    "Master's degree or equivalent required",
+    "Leadership experience on a large or growing church staff",
+    "Ability to lead teams effectively and raise up new leaders",
+    "Organizational and administrative skills",
+    "Strong interpersonal skills and team builder",
+    "Solid communicator",
+    "A calling to New York City"
+   ],
+   "canonicalUrl": "https://justchurchjobs.com/job/5837/pastor-of-growth-groups-teaching-pastor-at-the-journey-church-nyc",
+   "dedupeKey": "c71a8669b32a73585aa485e46559b6af",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": 100000,
+   "salaryMax": null,
+   "salaryNote": "Competitive salary in the $100k range; life-stage, experience and expenses taken into consideration",
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/5837/pastor-of-growth-groups-teaching-pastor-at-the-journey-church-nyc",
+     "isCanonical": false,
+     "rawTitle": "Pastor of Growth Groups & Teaching Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "palm-west-community-church",
+   "title": "Associate Pastor of Education & Leadership",
+   "lane": "groups_pastor",
+   "city": "Sun City West",
+   "state": "AZ",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Develop and oversee adult education and small groups ministries. Recruit and train Bible teachers and ministry leaders. Work with the church administrator during transition to retirement. Provide occasional pulpit supply and pastoral support. Full-time split is 60% education, 15% leadership development, 15% administration, 10% pastoral. Reports to the Senior Pastor. The congregation is 55+ senior-oriented.",
+   "responsibilities": [
+    "Develop and oversee adult education and small groups ministries",
+    "Recruit and train Bible teachers and ministry leaders",
+    "Coach and develop ministry leaders",
+    "Provide occasional pulpit supply and pastoral support",
+    "Support church administration through a transition"
+   ],
+   "qualifications": [
+    "Ordained with a bachelor's degree required; graduate theological education preferred",
+    "Proven gifts in teaching, leadership development, organization and administration",
+    "Spiritual maturity, integrity, humility and servant leadership",
+    "Comfort ministering within a 55+ senior-oriented congregation"
+   ],
+   "canonicalUrl": "https://justchurchjobs.com/job/6432/associate-pastor-of-education-leadership",
+   "dedupeKey": "a08bf35e3eb331c2259056cfe59f7e85",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": 65000,
+   "salaryMax": 75000,
+   "salaryNote": "Full-time $65,000-$75,000 plus MMBB retirement and health insurance; part-time option $30-$35/hour at 20-30 hours",
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/6432/associate-pastor-of-education-leadership",
+     "isCanonical": false,
+     "rawTitle": "Associate Pastor of Education & Leadership"
+    }
+   ]
+  },
+  {
+   "churchSlug": "life-church",
+   "title": "Associate Community Pastor",
+   "lane": "community_pastor",
+   "city": "Edmond",
+   "state": "OK",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Support the overall Community ministry and develop to one day step into the lead Community Pastor role. Partner with lead Community Pastors to lead the ministry using the framework of the church's Community Approach to Ministry.",
+   "responsibilities": [
+    "Support the overall Community ministry",
+    "Develop toward stepping into the lead Community Pastor role",
+    "Partner with lead Community Pastors using the Community Approach to Ministry framework"
+   ],
+   "qualifications": [],
+   "canonicalUrl": "https://justchurchjobs.com/job/1076/associate-community-pastor",
+   "dedupeKey": "836ea8d3f4a92abf657092d61db399f6",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/1076/associate-community-pastor",
+     "isCanonical": false,
+     "rawTitle": "Associate Community Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "life-church",
+   "title": "Associate Host Team Pastor",
+   "lane": null,
+   "city": "Edmond",
+   "state": "OK",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://justchurchjobs.com/job/1077/associate-host-team-pastor",
+   "dedupeKey": "69435fadb972eaa04c8f69a487ec6c6d",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/1077/associate-host-team-pastor",
+     "isCanonical": false,
+     "rawTitle": "Associate Host Team Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "norwin-christian-church",
+   "title": "Associate Minister of Small Groups and Outreach",
+   "lane": "groups_pastor",
+   "city": "North Huntingdon",
+   "state": "PA",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Grow and oversee the small groups ministry. Lead current outreach and establish new outreach opportunities and partnerships. Take a leading role in Sunday services as needed. Attend weekly sermon review meetings, bimonthly staff meetings and quarterly leadership council meetings. Collaborate with elders, staff and volunteer leaders. Works under the leadership of the Executive Minister.",
+   "responsibilities": [
+    "Grow and oversee the small groups ministry",
+    "Lead current outreach and establish new outreach opportunities and partnerships",
+    "Take a leading role in Sunday services as needed",
+    "Attend weekly sermon review and quarterly leadership council meetings",
+    "Collaborate with elders, staff and volunteer leaders"
+   ],
+   "qualifications": [
+    "Bachelor's degree in ministry and/or relevant ministry experience",
+    "Organizational and relational leadership abilities",
+    "Skill in casting vision and building partnerships",
+    "Strong written and verbal communication"
+   ],
+   "canonicalUrl": "https://justchurchjobs.com/job/873/associate-minister-of-small-groups-and-outreach",
+   "dedupeKey": "7760c2e271d57e6c8ba4323dfafee3a4",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": "Negotiable based on education and/or experience",
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/873/associate-minister-of-small-groups-and-outreach",
+     "isCanonical": false,
+     "rawTitle": "Associate Minister of Small Groups and Outreach"
+    }
+   ]
+  },
+  {
+   "churchSlug": "living-hope",
+   "title": "Pastor of Latino Ministries",
+   "lane": null,
+   "city": "Willmar",
+   "state": "MN",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Serve as primary teacher in Hispanic church gatherings through expository preaching or mentoring. Lead evangelism efforts and equip members for witness locally and globally. Train and disciple new converts. Visit members in homes, hospitals and prisons. Provide Biblical counseling. Collaborate on unified church initiatives bridging English and Spanish congregations. Participate in strategic planning and budget oversight. Reports to the Lead Pastor.",
+   "responsibilities": [
+    "Serve as primary teacher in Hispanic gatherings through expository preaching",
+    "Lead evangelism and equip members for witness",
+    "Train and disciple new converts",
+    "Visit members in homes, hospitals and prisons",
+    "Provide biblical counseling",
+    "Bridge English and Spanish congregations",
+    "Strategic planning and budget oversight"
+   ],
+   "qualifications": [
+    "Ministry license or ordination required",
+    "Bachelor's degree in ministry minimum; Master's preferred",
+    "Spanish language full to primary fluency proficiency",
+    "English at professional working proficiency",
+    "Broad experience in Hispanic ministries",
+    "5-10 years of experience required"
+   ],
+   "canonicalUrl": "https://justchurchjobs.com/job/6729/pastor-of-latino-ministries",
+   "dedupeKey": "d334d4a8810f66ca0c90e17e80f15262",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/6729/pastor-of-latino-ministries",
+     "isCanonical": false,
+     "rawTitle": "Pastor of Latino Ministries"
+    }
+   ]
+  },
+  {
+   "churchSlug": "the-harbor-church",
+   "title": "Associate Pastor",
+   "lane": null,
+   "city": "West Kingston",
+   "state": "RI",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Preaching, teaching and shepherding. Maintain unity and stability during church plant launches. Expected to develop into a lead pastor role at a future church plant.",
+   "responsibilities": [
+    "Preaching, teaching and shepherding",
+    "Maintain unity and stability during church plant launches",
+    "Develop toward a lead pastor role at a future church plant"
+   ],
+   "qualifications": [
+    "A two- or four-year Bible School degree and/or an M.Div. from an accredited seminary",
+    "Two to five years of internship, eldership or pastoral experience",
+    "Church planting experience preferred"
+   ],
+   "canonicalUrl": "https://justchurchjobs.com/job/6448/associate-pastor",
+   "dedupeKey": "f09aa6fbea38e052b50e31795fb343fd",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/6448/associate-pastor",
+     "isCanonical": false,
+     "rawTitle": "Associate Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "first-central-bible-church",
+   "title": "Associate Pastor",
+   "lane": "discipleship_pastor",
+   "city": "Chicopee",
+   "state": "MA",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Share regular preaching and teaching responsibilities with the Lead Pastor, with a goal of preaching at least once per month. Serve as an elder with shepherding and oversight duties. Lead one or more ministry areas such as discipleship, small groups or youth work. Equip volunteer leaders and provide pastoral care. Collaborate on vision alignment and church initiatives. Reports to the Lead Pastor.",
+   "responsibilities": [
+    "Share preaching and teaching with the Lead Pastor, preaching at least monthly",
+    "Serve as an elder with shepherding and oversight duties",
+    "Lead one or more ministry areas such as discipleship, small groups or youth",
+    "Equip volunteer leaders and provide pastoral care",
+    "Collaborate on vision alignment"
+   ],
+   "qualifications": [
+    "Meet biblical elder qualifications (1 Timothy 3:1-7; Titus 1:5-9)",
+    "Teaching and communication gifts",
+    "A minimum of 5 years of ministry experience in a local church",
+    "Agreement with complementarian pastoral leadership views",
+    "Master of Divinity or similar theological training preferred"
+   ],
+   "canonicalUrl": "https://justchurchjobs.com/job/6131/associate-pastor",
+   "dedupeKey": "eaf8e50bd2b6c90cfc80d1bc9dcc365e",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": "Commensurate with experience and education",
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/6131/associate-pastor",
+     "isCanonical": false,
+     "rawTitle": "Associate Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "west-side-brethren-in-christ-church",
+   "title": "Associate Pastor",
+   "lane": null,
+   "city": "Chambersburg",
+   "state": "PA",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://justchurchjobs.com/job/5242/associate-pastor",
+   "dedupeKey": "2fd426d7b92e9439ba8524ce0eeecebc",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/5242/associate-pastor",
+     "isCanonical": false,
+     "rawTitle": "Associate Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "bell-shoals-church-apollo-beach-campus",
+   "title": "Associate Pastor",
+   "lane": "groups_pastor",
+   "city": "Apollo Beach",
+   "state": "FL",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Oversee Life Groups, Connections and Campus Leadership. Meet with each LIFE Group leader a minimum of two times per year. Lead First Impressions ministries and serve as primary operational leader on Sundays. Preach as directed by the Campus Pastor. Provide pastoral care including weddings, funerals and hospital visits. Build community relationships and develop outreach programs. Support campus budget development. Reports to the Campus Pastor.",
+   "responsibilities": [
+    "Oversee Life Groups, Connections and Campus Leadership",
+    "Meet with each Life Group leader at least twice per year",
+    "Lead First Impressions ministries",
+    "Serve as primary operational leader on Sundays",
+    "Preach as directed by the Campus Pastor",
+    "Provide pastoral care",
+    "Support campus budget development"
+   ],
+   "qualifications": [
+    "Master of Divinity or equivalent is required",
+    "1-5 years experience",
+    "Strong communication and volunteer leadership skills"
+   ],
+   "canonicalUrl": "https://justchurchjobs.com/job/5403/associate-pastor",
+   "dedupeKey": "56a2c93bb354e96a3b28cfe12d8de1e9",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/5403/associate-pastor",
+     "isCanonical": false,
+     "rawTitle": "Associate Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "northbridge-community-church",
+   "title": "Administrative Pastor",
+   "lane": null,
+   "city": "Rochester",
+   "state": "MN",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://justchurchjobs.com/job/975/administrative-pastor",
+   "dedupeKey": "77e7e58e94a839b6dc5bb325766b8758",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/975/administrative-pastor",
+     "isCanonical": false,
+     "rawTitle": "Administrative Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "realife-inc",
+   "title": "Campus Pastor / Director",
+   "lane": "campus_pastor",
+   "city": "Marianna",
+   "state": "FL",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://justchurchjobs.com/job/6235/campus-pastor",
+   "dedupeKey": "b66d152d66c5f03d45de98cb5ede9da9",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/6235/campus-pastor",
+     "isCanonical": false,
+     "rawTitle": "Campus Pastor / Director"
+    }
+   ]
+  },
+  {
+   "churchSlug": "refuge-church-malin",
+   "title": "Campus Pastor",
+   "lane": "campus_pastor",
+   "city": "Malin",
+   "state": "OR",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://justchurchjobs.com/job/6514/campus-pastordirector",
+   "dedupeKey": "644cbba151545e62ebead910cf52d3d4",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/6514/campus-pastordirector",
+     "isCanonical": false,
+     "rawTitle": "Campus Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "the-compass-church-naperville",
+   "title": "Campus Pastor (Naperville)",
+   "lane": "campus_pastor",
+   "city": "Naperville",
+   "state": "IL",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Guide a high-capacity team at the church's largest campus with 2,000+ weekly attendance. Manage a large staff with focus on attracting and retaining ministry leaders. Provide strategic leadership aligning campus ministry with church-wide vision. Develop systems, structures and strategies for ministry effectiveness and growth.",
+   "responsibilities": [
+    "Guide a high-capacity team at the largest campus (2,000+ weekly attendance)",
+    "Manage a large staff, attracting and retaining ministry leaders",
+    "Provide strategic leadership aligning campus ministry with church-wide vision",
+    "Develop systems, structures and strategies for ministry effectiveness and growth"
+   ],
+   "qualifications": [
+    "5-10 years experience required",
+    "Bachelor's Degree required",
+    "Demonstrated track record in large staff management"
+   ],
+   "canonicalUrl": "https://justchurchjobs.com/job/4901/campus-pastor-naperville-the-compass-church",
+   "dedupeKey": "bad93ccb4fc2a16626dee9b9a2e26b3d",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/4901/campus-pastor-naperville-the-compass-church",
+     "isCanonical": false,
+     "rawTitle": "Campus Pastor (Naperville)"
+    }
+   ]
+  },
+  {
+   "churchSlug": "church-of-the-front-range",
+   "title": "Campus Pastor - Colorado Springs",
+   "lane": "campus_pastor",
+   "city": "Colorado Springs",
+   "state": "CO",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Provide vision and purpose for both congregation and staff tightly aligned with the global Revolution Church mission. Model and foster spiritual devotion through worship, prayer and Scripture engagement. Disciple believers toward growth in worship, Bible study, giving and service. Drive outreach, evangelistic and invitational efforts. Welcome newcomers and facilitate their integration into the congregation. Move the congregation toward active volunteerism. Provide pastoral support to those experiencing hardship.",
+   "responsibilities": [
+    "Provide vision and purpose for congregation and staff",
+    "Disciple believers toward growth",
+    "Drive outreach and evangelistic efforts",
+    "Welcome newcomers and facilitate integration into the congregation",
+    "Move the congregation toward active volunteerism",
+    "Provide pastoral support and facilitate reconciliation"
+   ],
+   "qualifications": [
+    "High School Diploma minimum",
+    "1-5 years experience",
+    "Vision casting and team-building capabilities",
+    "Capacity to recruit and empower staff and volunteers"
+   ],
+   "canonicalUrl": "https://justchurchjobs.com/job/267/campus-pastor-colorado-springs",
+   "dedupeKey": "652a4303e59cce1067e9c23dde4507f5",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/267/campus-pastor-colorado-springs",
+     "isCanonical": false,
+     "rawTitle": "Campus Pastor - Colorado Springs"
+    }
+   ]
+  },
+  {
+   "churchSlug": "city-life-church",
+   "title": "Youth and Young Adults Pastor",
+   "lane": "young_adults_pastor",
+   "city": "Grand Rapids",
+   "state": "MI",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Youth Ministry (60%): lead youth group on Sunday nights for 6th-12th grade including programming, teaching, small groups, volunteer recruitment, events, parent work, fundraisers and conferences. Young Adults Ministry (25%): launch a ministry for ages 18-29 with gathering points for two distinct age groups. Adult Discipleship (15%): oversee Life Groups and Bands (accountability groups).",
+   "responsibilities": [
+    "Lead youth group on Sunday nights for 6th-12th grade (60% of role)",
+    "Launch a young adults ministry for ages 18-29 with gathering points for two age groups (25%)",
+    "Oversee Life Groups and Bands accountability groups (15%)",
+    "Recruit volunteers, work with parents, run events and trips"
+   ],
+   "qualifications": [
+    "Bachelor's degree",
+    "Experience in multiethnic church contexts",
+    "Youth ministry leadership experience",
+    "Starter and community builder",
+    "Deep love for the poor and marginalized"
+   ],
+   "canonicalUrl": "https://justchurchjobs.com/job/6708/youth-and-young-adults-pastor-urban-youth-ft-pt-options",
+   "dedupeKey": "b30d6f653a180200318d7156c1b5eee7",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": 50000,
+   "salaryMax": null,
+   "salaryNote": "Base salary approximately $50,000; total compensation including benefits discussed in interview",
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/6708/youth-and-young-adults-pastor-urban-youth-ft-pt-options",
+     "isCanonical": false,
+     "rawTitle": "Youth and Young Adults Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "lizella-baptist",
+   "title": "Young Adult Pastor",
+   "lane": "young_adults_pastor",
+   "city": "Lizella",
+   "state": "GA",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://justchurchjobs.com/job/4451/null",
+   "dedupeKey": "e35896ab5df157071a42946400645417",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/4451/null",
+     "isCanonical": false,
+     "rawTitle": "Young Adult Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "first-baptist-church-of-rock-hill",
+   "title": "High School/College Pastor",
+   "lane": "college_pastor",
+   "city": "Rock Hill",
+   "state": "SC",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://justchurchjobs.com/job/130/high-schoolcollege-pastor",
+   "dedupeKey": "ba890466e18eda2ef7fc472a29e1ecdd",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/130/high-schoolcollege-pastor",
+     "isCanonical": false,
+     "rawTitle": "High School/College Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "summit-church",
+   "title": "Student Ministries Pastor",
+   "lane": null,
+   "city": "Lincoln",
+   "state": "CA",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://justchurchjobs.com/job/6687/student-ministries-pastor",
+   "dedupeKey": "389303d62dceb4c034ee10439bded160",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/6687/student-ministries-pastor",
+     "isCanonical": false,
+     "rawTitle": "Student Ministries Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "concord-baptist-church",
+   "title": "NextGen Pastor",
+   "lane": "next_steps_pastor",
+   "city": "Granite Falls",
+   "state": "NC",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Lead Children's (birth-5th grade) and Youth (6th-12th grade) ministries. Disciple students, equip volunteer teams, build ministry programs and partner with families.",
+   "responsibilities": [
+    "Lead Children's and Youth ministries",
+    "Disciple students",
+    "Equip volunteer teams",
+    "Build ministry programs",
+    "Partner with families"
+   ],
+   "qualifications": [
+    "Bachelor's Degree required",
+    "1-5 years experience needed"
+   ],
+   "canonicalUrl": "https://justchurchjobs.com/job/6109/nextgen-pastor",
+   "dedupeKey": "499b08b545ca3a094aeabb7fc9b2c19d",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/6109/nextgen-pastor",
+     "isCanonical": false,
+     "rawTitle": "NextGen Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "live-oaks-community-church",
+   "title": "Director of Engagement (Executive Director of Discipleship AND Teaching Team)",
+   "lane": "discipleship_director",
+   "city": "The Villages",
+   "state": "FL",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Oversee the church's Discipleship Pathway. Provide leadership to a small group ministry of 900 people across more than 70 groups. Teach approximately 50% of the year as part of the Teaching Team, providing expositional teaching and preaching across three campuses. Serve on the Senior Leadership Team. Core competencies include leading through teams, systems, and ministry leaders, and guiding change with wisdom, clarity, and relational trust.",
+   "responsibilities": [
+    "Oversee the church's Discipleship Pathway",
+    "Provide leadership to a small group ministry of 900 people across 70+ groups",
+    "Teach approximately 50% of the year as part of the Teaching Team",
+    "Provide expositional teaching and preaching across three campuses",
+    "Serve on the Senior Leadership Team",
+    "Lead through teams, systems, and ministry leaders",
+    "Guide change with wisdom, clarity, and relational trust"
+   ],
+   "qualifications": [
+    "Bachelor's Degree required",
+    "5-10 years experience needed"
+   ],
+   "canonicalUrl": "https://justchurchjobs.com/job/6168/director-of-engagement-executive-director-of-discipleship-and-teaching-team",
+   "dedupeKey": "1c8d99c86be02c035c91a50256d20ad5",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/6168/director-of-engagement-executive-director-of-discipleship-and-teaching-team",
+     "isCanonical": false,
+     "rawTitle": "Director of Engagement (Executive Director of Discipleship AND Teaching Team)"
+    }
+   ]
+  },
+  {
+   "churchSlug": "the-journey-church-nyc",
+   "title": "Executive Pastor / Teaching Pastor",
+   "lane": "groups_pastor",
+   "city": "New York",
+   "state": "NY",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Leadership, growth and innovation of The Journey's semester-based small groups ministry. Leadership of staff and other ministry areas depending on giftedness and experience. Contribute to The Journey's teaching team. Requires willingness to relocate to the Manhattan, Brooklyn or Queens area.",
+   "responsibilities": [
+    "Lead the growth and innovation of the semester-based small groups ministry",
+    "Lead staff and other ministry areas depending on giftedness",
+    "Contribute to the teaching team"
+   ],
+   "qualifications": [
+    "Master's degree or equivalent required",
+    "Large or growing church staff leadership experience",
+    "Ability to lead teams effectively and raise up new leaders rapidly",
+    "Willingness to relocate to Manhattan, Brooklyn or Queens"
+   ],
+   "canonicalUrl": "https://justchurchjobs.com/job/5838/executive-pastor-teaching-pastor-at-the-journey-church-nyc",
+   "dedupeKey": "b4bc2a2edc8409132d26ce6416274ce6",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": 100000,
+   "salaryMax": null,
+   "salaryNote": "Competitive salary in the $100k range",
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/5838/executive-pastor-teaching-pastor-at-the-journey-church-nyc",
+     "isCanonical": false,
+     "rawTitle": "Executive Pastor / Teaching Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "silver-creek-church",
+   "title": "Executive Pastor",
+   "lane": null,
+   "city": "Aurora",
+   "state": "OH",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://justchurchjobs.com/job/6459/executive-pastor",
+   "dedupeKey": "db963a5e83e4d1048e8249294e9e2fd9",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/6459/executive-pastor",
+     "isCanonical": false,
+     "rawTitle": "Executive Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "encounter-church",
+   "title": "Executive Pastor",
+   "lane": null,
+   "city": "Ventura",
+   "state": "CA",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://justchurchjobs.com/job/1291/executive-pastor",
+   "dedupeKey": "bc2a7c2da52e5d31ee2722f030243ed7",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/1291/executive-pastor",
+     "isCanonical": false,
+     "rawTitle": "Executive Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "alexandria-covenant-church",
+   "title": "Executive Pastor",
+   "lane": null,
+   "city": "Alexandria",
+   "state": "MN",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://justchurchjobs.com/job/6098/executive-pastor",
+   "dedupeKey": "0920493da8757025a098f8ef067b5af3",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/6098/executive-pastor",
+     "isCanonical": false,
+     "rawTitle": "Executive Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "crossover-church-of-rosedale",
+   "title": "Executive Pastor",
+   "lane": null,
+   "city": "Bakersfield",
+   "state": "CA",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://justchurchjobs.com/job/5319/executive-pastor",
+   "dedupeKey": "0718bbe48cf0093e1bf39f6ec0fd30e4",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/5319/executive-pastor",
+     "isCanonical": false,
+     "rawTitle": "Executive Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "decision-point",
+   "title": "Boston Campus Ministry City Director",
+   "lane": "ministries_director",
+   "city": "Boston",
+   "state": "MA",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobs.ministryhub.org/jobs",
+   "dedupeKey": "63dd4d23c0242460b9e9bfe562ee3171",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": 60000,
+   "salaryMax": 90000,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://jobs.ministryhub.org/jobs",
+     "isCanonical": false,
+     "rawTitle": "Boston Campus Ministry City Director"
+    }
+   ]
+  },
+  {
+   "churchSlug": "st-andrew-presbyterian-church",
+   "title": "Director of Family Ministries",
+   "lane": "ministries_director",
+   "city": "Williamsport",
+   "state": "MD",
+   "employmentType": "PART_TIME",
+   "descriptionText": "Oversee Sunday morning ministries including preschool and K-5th grade Sunday School, choir performances and nursery supervision. Facilitate the Edge youth group for grades 6-12 with monthly events and an annual retreat. Develop new ministries engaging children, youth and families. Maintain the Safe Sanctuaries program and volunteer clearances. Manage budgets. Works under the supervision of the Lead Pastor.",
+   "responsibilities": [
+    "Oversee Sunday morning children's ministries",
+    "Facilitate the Edge youth group for grades 6-12",
+    "Develop new ministries engaging children, youth and families",
+    "Maintain Safe Sanctuaries program and volunteer clearances",
+    "Manage budgets"
+   ],
+   "qualifications": [
+    "High School Diploma or GED",
+    "Early career, 2-5 years of experience",
+    "Background checks and child abuse clearances"
+   ],
+   "canonicalUrl": "https://jobs.ministryhub.org/jobs",
+   "dedupeKey": "e03f3fcb69d35243fc043d2be93e3cf1",
+   "postedDate": null,
+   "deadline": "2024-09-22T00:00:00.000Z",
+   "salaryMin": 15000,
+   "salaryMax": 18000,
+   "salaryNote": "15-20 hours per week, hybrid",
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": "Posting closed 22 September 2024 and is no longer accepting applications.",
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://jobs.ministryhub.org/jobs",
+     "isCanonical": false,
+     "rawTitle": "Director of Family Ministries"
+    }
+   ]
+  },
+  {
+   "churchSlug": "902-church",
+   "title": "Groups & Connections Pastor",
+   "lane": "groups_pastor",
+   "city": "Kinston",
+   "state": "NC",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Oversee the church's discipleship process, develop small group strategies, recruit leaders, assimilate guests, and lead volunteer teams. The church seeks someone relational with a fervor for discipleship and spiritual formation within the community. Non-denominational, 763 members.",
+   "responsibilities": [
+    "Oversee the church's discipleship process",
+    "Develop small group strategies",
+    "Recruit small group leaders",
+    "Assimilate guests into the life of the church",
+    "Lead volunteer teams"
+   ],
+   "qualifications": [
+    "Leadership and self-motivation",
+    "Tech proficiency",
+    "Equipping skills",
+    "A passion for connecting diverse individuals",
+    "Relational and team-oriented"
+   ],
+   "canonicalUrl": "https://www.chemistrystaffing.com/job/902-church-groups-connections-pastor-kinston-nc/",
+   "dedupeKey": "675ff53d6134d607b14718327e4f3530",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://www.chemistrystaffing.com/job/902-church-groups-connections-pastor-kinston-nc/",
+     "isCanonical": false,
+     "rawTitle": "Groups & Connections Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "alliance-church",
+   "title": "Associate Pastor of Adult and Men's Ministries",
+   "lane": "adult_ministries_pastor",
+   "city": "Appleton",
+   "state": "WI",
+   "employmentType": "UNKNOWN",
+   "descriptionText": "Shape and elevate adult, men's and groups ministries at every location, cultivating a culture of discipleship, leadership development and community connection. Remove barriers for ministry leaders by problem-solving challenges. Cultivate healthy culture by championing strong staff relationships. Drive alignment across all locations. Set vision and strategy for Men's Ministry. Coach and equip adult ministry leaders. Provide pastoral care including teaching, counseling and ceremonies. Champion leadership development.",
+   "responsibilities": [
+    "Remove barriers for ministry leaders by problem-solving challenges",
+    "Cultivate healthy culture by championing strong staff relationships",
+    "Drive alignment across all locations",
+    "Set vision and strategy for Men's Ministry",
+    "Coach and equip adult ministry leaders",
+    "Provide pastoral care including teaching, counseling and ceremonies",
+    "Champion leadership development"
+   ],
+   "qualifications": [
+    "A leader of leaders",
+    "Adaptable and emotionally intelligent",
+    "Skilled in management",
+    "Thrives in both large group environments and relational small-group settings",
+    "Energized by equipping others for ministry"
+   ],
+   "canonicalUrl": "https://blog.chemistrystaffing.com/associate-pastor-adult-and-mens-ministries-appleton-wi",
+   "dedupeKey": "f07aed5283f44cbef4a653f8b9b9e689",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://blog.chemistrystaffing.com/associate-pastor-adult-and-mens-ministries-appleton-wi",
+     "isCanonical": false,
+     "rawTitle": "Associate Pastor of Adult and Men's Ministries"
+    }
+   ]
+  },
+  {
+   "churchSlug": "lifebridge-christian-church",
+   "title": "Community Pastor",
+   "lane": "community_pastor",
+   "city": "Longmont",
+   "state": "CO",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Oversee the 10-week Rooted small group experience including facilitator recruitment and training. Build and execute vision for Young Adults 18-30s programming with a community and discipleship focus. Identify and develop emerging leaders through relational investment. Teach Scripture across multiple church settings including Sunday services and group gatherings. Provide vision and leadership for annual events for men, women and couples. Reports to the Discipleship Pastor.",
+   "responsibilities": [
+    "Oversee the 10-week Rooted small group experience, including facilitator recruitment and training",
+    "Build and execute vision for Young Adults (18-30s) programming with community and discipleship focus",
+    "Identify and develop emerging leaders through relational investment",
+    "Teach Scripture across multiple church settings including Sunday services and group gatherings",
+    "Provide vision and leadership for annual events for men, women and couples"
+   ],
+   "qualifications": [
+    "Active Christian faith commitment",
+    "Doctrinal alignment with church beliefs and mission",
+    "Prior discipleship and group ministry background",
+    "Teaching and communication abilities focused on Scripture",
+    "Demonstrated success recruiting and developing volunteer leaders",
+    "Strong organizational and team collaboration skills"
+   ],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/community-pastor/",
+   "dedupeKey": "de7f1cb5a28dcef6472f4d4c2b1f6b64",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/community-pastor/",
+     "isCanonical": false,
+     "rawTitle": "Community Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "rutherford-bible-chapel",
+   "title": "Teaching & Discipleship Pastor",
+   "lane": "discipleship_pastor",
+   "city": "Rutherford",
+   "state": "NJ",
+   "employmentType": "UNKNOWN",
+   "descriptionText": "Lead spiritual formation and provide biblical education. Teach Sunday services. Cultivate a disciple-making culture. Oversee small groups and coordinate discipleship programs. Develop leadership and supervise staff. Enhance communication and offer pastoral care.",
+   "responsibilities": [
+    "Lead spiritual formation",
+    "Provide biblical education and teach Sunday services",
+    "Cultivate a disciple-making culture",
+    "Oversee small groups",
+    "Coordinate discipleship programs",
+    "Develop leadership and supervise staff",
+    "Offer pastoral care"
+   ],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/teaching-discipleship-pastor/",
+   "dedupeKey": "1dc0cf2045ab695894aca346733ea576",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": 70000,
+   "salaryMax": 80000,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/teaching-discipleship-pastor/",
+     "isCanonical": false,
+     "rawTitle": "Teaching & Discipleship Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "elizabethtown-first-church-of-god",
+   "title": "House Church Pastor",
+   "lane": "house_church_pastor",
+   "city": "Elizabethtown",
+   "state": "PA",
+   "employmentType": "PART_TIME",
+   "descriptionText": "Partner with the Elders in implementing the mission and vision of the church. Lead and disciple the house church leaders in the implementation of the mission and vision. Provide administrative and organizational oversight of the large gathering. Provide spiritual oversight in conjunction with the Elders. Provide leadership as the lead pastor on staff with any additional church staff. 12-15 hours per week, salaried. Medical insurance covered by the pastor.",
+   "responsibilities": [
+    "Lead and disciple the house church leaders in implementing the mission and vision",
+    "Provide administrative and organizational oversight of the large gathering",
+    "Provide spiritual oversight in conjunction with the Elders",
+    "Provide leadership as lead pastor on staff with additional church staff"
+   ],
+   "qualifications": [
+    "Current credentialing as recognized by the Churches of God General Conference and Eastern Regional Conference"
+   ],
+   "canonicalUrl": "https://kairos.edu/engage/job-board/",
+   "dedupeKey": "59e94a70ee8845ea745b58822f55d440",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": "12-15 hours per week, salaried; medical insurance covered by the pastor",
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://kairos.edu/engage/job-board/",
+     "isCanonical": false,
+     "rawTitle": "House Church Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "double-oak-community-church",
+   "title": "Discipleship Pastor",
+   "lane": "discipleship_pastor",
+   "city": "Birmingham",
+   "state": "AL",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://www.chemistrystaffing.com/job/double-oak-discipleship-pastor-birmingham-alabama/",
+   "dedupeKey": "3de9487e6718371b5084e091b8b2b9c8",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://www.chemistrystaffing.com/job/double-oak-discipleship-pastor-birmingham-alabama/",
+     "isCanonical": false,
+     "rawTitle": "Discipleship Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "northfield-baptist-church",
+   "title": "Assistant Pastor for Student Ministries, Young Adults, and Outreach",
+   "lane": "young_adults_pastor",
+   "city": "Northfield",
+   "state": "OH",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Direct discipleship programs. Engage in community outreach. Foster a culture of evangelism. Preaching and teaching. Organize training sessions. Manage social media communications. Lead student and young adult ministries. Church of 195 members.",
+   "responsibilities": [
+    "Direct discipleship programs",
+    "Engage in community outreach",
+    "Foster a culture of evangelism",
+    "Preaching and teaching",
+    "Organize training sessions",
+    "Manage social media communications",
+    "Lead student and young adult ministries"
+   ],
+   "qualifications": [
+    "Strong leadership",
+    "Preaching and teaching ability",
+    "Social media skills",
+    "Equipping abilities",
+    "Commitment to missional engagement"
+   ],
+   "canonicalUrl": "https://www.chemistrystaffing.com/job/northfield-baptist-church-assistant-pastor-for-student-ministries-young-adults-and-outreach-northfield-ohio/",
+   "dedupeKey": "0c510d1bfd964d973189b734059d62d5",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://www.chemistrystaffing.com/job/northfield-baptist-church-assistant-pastor-for-student-ministries-young-adults-and-outreach-northfield-ohio/",
+     "isCanonical": false,
+     "rawTitle": "Assistant Pastor for Student Ministries, Young Adults, and Outreach"
+    }
+   ]
+  },
+  {
+   "churchSlug": "creekside-christian-church",
+   "title": "Student Ministries Pastor",
+   "lane": null,
+   "city": "Elk Grove",
+   "state": "CA",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://www.chemistrystaffing.com/job/creekside-christian-church-student-ministries-pastor-elk-grove-ca/",
+   "dedupeKey": "905d42b7515eb89ff2a7cd737a64b082",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://www.chemistrystaffing.com/job/creekside-christian-church-student-ministries-pastor-elk-grove-ca/",
+     "isCanonical": false,
+     "rawTitle": "Student Ministries Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "first-baptist-new-lebanon",
+   "title": "Discipleship / Student Pastor",
+   "lane": "discipleship_pastor",
+   "city": "New Lebanon",
+   "state": "OH",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Deliver biblically sound teaching to middle and high school students. Create spiritually enriching environments for youth. Support the church-wide discipleship pathway and group leader development. Train volunteers and coordinate events. Integrate students into the church's vision. Nurture relationships with both skeptics and believers. Church of 400-440 members.",
+   "responsibilities": [
+    "Deliver biblically sound teaching to middle and high school students",
+    "Support the church-wide discipleship pathway and group leader development",
+    "Train volunteers and coordinate events",
+    "Integrate students into the church's vision"
+   ],
+   "qualifications": [
+    "Passionate about student ministry",
+    "Strong leadership skills",
+    "Heart for relational engagement and discipleship"
+   ],
+   "canonicalUrl": "https://www.chemistrystaffing.com/job/first-baptist-church-discipleship-student-pastor-new-lebanon-ohio/",
+   "dedupeKey": "ebad0e87447f5090fa342074b029a771",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://www.chemistrystaffing.com/job/first-baptist-church-discipleship-student-pastor-new-lebanon-ohio/",
+     "isCanonical": false,
+     "rawTitle": "Discipleship / Student Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "montavilla-church",
+   "title": "Youth & Young Adults Pastor",
+   "lane": "young_adults_pastor",
+   "city": "Portland",
+   "state": "OR",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://montavilla.church/job-openings",
+   "dedupeKey": "0d5a5b9676c465af8fbd10800c181140",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://montavilla.church/job-openings",
+     "isCanonical": false,
+     "rawTitle": "Youth & Young Adults Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "arise-church",
+   "title": "Director of Connection & Care",
+   "lane": "connections_pastor",
+   "city": "Sioux Falls",
+   "state": "SD",
+   "employmentType": "PART_TIME",
+   "descriptionText": "A new role at a church of approximately 120 people in Sioux Falls, SD. Implement the ministry plan. Team building within the church across the Love, Grow, Worship ministry teams. Strong hospitality and connection with guests and current members, not only on Sunday but during the week. Oversee Life Groups within the church focusing on leadership development and identifying gaps. Option to preach 5-10 times a year. The church is gospel centered with a heart for disciple making.",
+   "responsibilities": [
+    "Implement the church ministry plan",
+    "Build teams across the Love, Grow, Worship ministry teams",
+    "Hospitality and connection with guests and current members",
+    "Oversee Life Groups focusing on leadership development",
+    "Identify gaps in the groups system",
+    "Option to preach 5-10 times a year"
+   ],
+   "qualifications": [
+    "Strong administrative skills, organization, process driven",
+    "Strong communication skills",
+    "Detail oriented",
+    "Strong in hospitality and connection"
+   ],
+   "canonicalUrl": "https://kairos.edu/engage/job-board/",
+   "dedupeKey": "81d4ee4b215d5198f7356d9b725cdd41",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": "Flexible hours, most likely at least 25-30 hours per week",
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://kairos.edu/engage/job-board/",
+     "isCanonical": false,
+     "rawTitle": "Director of Connection & Care"
+    }
+   ]
+  },
+  {
+   "churchSlug": "forest-park-church",
+   "title": "Worship and Connections Pastor",
+   "lane": "connections_pastor",
+   "city": "Elizabeth",
+   "state": "NC",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Lead and oversee worship for Sunday services and special events. Build, train, schedule and care for worship, production and tech teams. Collaborate with the Lead Pastor on service planning. Develop musicians and worship leaders. Create spiritually meaningful, accessible worship environments. Reports directly to the Lead Pastor. Approximately 40-45 hours per week.",
+   "responsibilities": [
+    "Lead and oversee worship for Sunday services and special events",
+    "Build, train, schedule and care for worship, production and tech teams",
+    "Collaborate with the Lead Pastor on service planning",
+    "Develop musicians and worship leaders"
+   ],
+   "qualifications": [
+    "Passion for Spirit-sensitive, theologically rich worship",
+    "Team-building and leader development skills",
+    "Comfortable with musical and administrative leadership",
+    "Experienced with Planning Center and worship technology"
+   ],
+   "canonicalUrl": "https://justchurchjobs.com/job/1323/worship-and-connections-pastor",
+   "dedupeKey": "a8f53e27dc9c6c1d4653c9cd60d841f1",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://justchurchjobs.com/job/1323/worship-and-connections-pastor",
+     "isCanonical": false,
+     "rawTitle": "Worship and Connections Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "trinity-lighthouse-hatfield",
+   "title": "Campus Pastor, Hatfield PA",
+   "lane": "campus_pastor",
+   "city": "Hatfield",
+   "state": "PA",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://kairos.edu/engage/job-board/",
+   "dedupeKey": "a4559682fb9cc219019d913ba7ec5b4a",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://kairos.edu/engage/job-board/",
+     "isCanonical": false,
+     "rawTitle": "Campus Pastor, Hatfield PA"
+    }
+   ]
+  },
+  {
+   "churchSlug": "mason-county-reformed-church",
+   "title": "Next Generation Director",
+   "lane": "next_steps_pastor",
+   "city": "Scottville",
+   "state": "MI",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://www.mcrchurch.org/next-gen-director",
+   "dedupeKey": "128fd7958b12cd842fba3435d742f19c",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "manual",
+     "url": "https://www.mcrchurch.org/next-gen-director",
+     "isCanonical": false,
+     "rawTitle": "Next Generation Director"
+    }
+   ]
+  },
+  {
+   "churchSlug": "west-shore-free-church",
+   "title": "Missions Pastor",
+   "lane": null,
+   "city": "Mechanicsburg",
+   "state": "PA",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/missions-pastor/",
+   "dedupeKey": "d064fb55898ce3f3f4e47ff1aaa284cf",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/missions-pastor/",
+     "isCanonical": false,
+     "rawTitle": "Missions Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "fbc-dalton",
+   "title": "Minister / Director of Missions and Community Ministry",
+   "lane": "ministries_director",
+   "city": "Dalton",
+   "state": "GA",
+   "employmentType": "FULL_TIME",
+   "descriptionText": "Foster a balanced mission program across local, state, national and international activities. Lead local strategic initiatives addressing homelessness and hunger within the Dalton community. Direct the church's benevolence ministry and supervise direct mission engagements. Develop and maintain an all-age mission education program. Manage approximately $400,000 in annualized missions funding. Provide bounded pastoral care, counseling and worship visitation support to adults and families.",
+   "responsibilities": [
+    "Foster a balanced mission program across local, state, national and international activities",
+    "Lead local initiatives addressing homelessness and hunger",
+    "Direct the church's benevolence ministry",
+    "Develop and maintain an all-age mission education program",
+    "Manage approximately $400,000 in annualized missions funding",
+    "Provide pastoral care, counseling and visitation"
+   ],
+   "qualifications": [
+    "A visible, mature Christian faith with a verifiable call to missional leadership",
+    "Strong alignment with a big-tent CBF-affiliated church profile",
+    "Proven experience as a community organizer",
+    "A bachelor's degree in Missions, Theology, Social Work or Christian Education required, Master of Divinity highly preferred"
+   ],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/minister-director-of-missions-and-community-ministry/",
+   "dedupeKey": "04fda47707e186a0e35e0f74eaa1a685",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": 55000,
+   "salaryMax": 70000,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/minister-director-of-missions-and-community-ministry/",
+     "isCanonical": false,
+     "rawTitle": "Minister / Director of Missions and Community Ministry"
+    }
+   ]
+  },
+  {
+   "churchSlug": "northside-community-church",
+   "title": "Church Planting Resident",
+   "lane": "house_church_pastor",
+   "city": "Knightdale",
+   "state": "NC",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/church-planting-resident-2/",
+   "dedupeKey": "4a41ae1356516a4ebbe1c5835aea973c",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/church-planting-resident-2/",
+     "isCanonical": false,
+     "rawTitle": "Church Planting Resident"
+    }
+   ]
+  },
+  {
+   "churchSlug": "shoestring-valley-community-church",
+   "title": "Teaching Elder",
+   "lane": null,
+   "city": "Onalaska",
+   "state": "WA",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/teaching-elder/",
+   "dedupeKey": "5cbab26058841bcc4ff662455aaaf5fe",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/teaching-elder/",
+     "isCanonical": false,
+     "rawTitle": "Teaching Elder"
+    }
+   ]
+  },
+  {
+   "churchSlug": "southside-christian-church",
+   "title": "Associate Pastor",
+   "lane": null,
+   "city": "Spokane",
+   "state": "WA",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/",
+   "dedupeKey": "66cf16c5de6c65ac49dafca712c44544",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/",
+     "isCanonical": false,
+     "rawTitle": "Associate Pastor"
+    }
+   ]
+  },
+  {
+   "churchSlug": "clear-creek-rock-house",
+   "title": "Mentoring Coordinator",
+   "lane": null,
+   "city": "Idaho Springs",
+   "state": "CO",
+   "employmentType": "UNKNOWN",
+   "descriptionText": null,
+   "responsibilities": [],
+   "qualifications": [],
+   "canonicalUrl": "https://jobboard.denverseminary.edu/job/mentoring-coordinator/",
+   "dedupeKey": "33f2fe024f4f07292b0c77389c73d19f",
+   "postedDate": null,
+   "deadline": null,
+   "salaryMin": null,
+   "salaryMax": null,
+   "salaryNote": null,
+   "benefits": [],
+   "housingNote": null,
+   "relocationNote": null,
+   "statusNote": null,
+   "sources": [
+    {
+     "source": "denominational_board",
+     "url": "https://jobboard.denverseminary.edu/job/mentoring-coordinator/",
+     "isCanonical": false,
+     "rawTitle": "Mentoring Coordinator"
+    }
+   ]
+  }
+ ]
+}

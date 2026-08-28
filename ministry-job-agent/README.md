@@ -95,6 +95,8 @@ gate. They never touch the candidate profile, theology, or answer bank.
 | --- | --- |
 | `npm run dev` | Dashboard on :3100 |
 | `npm run setup` | Create the database and seed structure (safe to re-run) |
+| `npm run seed:openings` | Restore discovered openings and church research from `data-seed/` |
+| `npm run export:openings` | Write current openings and research back to `data-seed/` |
 | `npm run discover` | Run a discovery pass; prints manual work items for restricted sources |
 | `npm run import` | Import postings and source documents from `./inbox` |
 | `npm run score` | Score unscored opportunities (`-- --all` to re-score) |
@@ -124,6 +126,15 @@ discover → import → score → report → prepare package
 are fetched; everything else produces a manual work item with ready-to-paste
 queries. Job boards that prohibit automated access are respected, not routed
 around. See Settings in the dashboard for the current policy per source.
+
+**Surviving a fresh checkout.** The database is gitignored and a cloud session's
+disk is ephemeral, so discovery work is exported to `data-seed/openings.json`,
+which *is* committed. It holds public job-posting data only — church names,
+titles, locations, salaries and URLs as published, plus research claims with
+their sources. No candidate information. `npm run seed:openings` restores it
+idempotently; scores are not stored because they are derived, so run
+`npm run score -- --all` afterwards. Run `npm run export:openings` and commit
+after any import or research pass.
 
 **Import.** Drop files into `./inbox`. Postings (`.json`) become opportunities,
 deduplicated against what is already known. Source documents (`.pdf`, `.docx`,

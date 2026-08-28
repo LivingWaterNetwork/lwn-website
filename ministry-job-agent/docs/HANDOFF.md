@@ -1,221 +1,202 @@
-# Handoff prompt — Ministry Job Agent, session 2
+# Handoff prompt
 
-Paste everything below the line into the next session. Attach your resumes to
-that same message.
+Paste everything below the horizontal rule into a fresh Claude Code session.
+Attach your resumes to that same message if you have them ready.
 
 ---
 
-## Context
-
-I'm Omar J. Fandino. In a previous session we built a **Ministry Job Agent** — a
-local-first system that discovers church and ministry positions, researches the
-churches, scores them against an approved rubric, and prepares application
-materials behind hard human-approval gates.
+I'm Omar J. Fandino. Continue work on the **Ministry Job Agent** built in a
+previous session.
 
 **Repo:** `LivingWaterNetwork/lwn-website`
 **Branch:** `claude/ministry-job-agent-build-28alem`
-**App lives in:** `ministry-job-agent/` (standalone — its own package.json,
-SQLite database, and build; deliberately isolated from the LWN website and
-excluded from the site's tsconfig and Vercel deploys)
+**App:** `ministry-job-agent/` — standalone, own package.json and SQLite
+database, deliberately isolated from the LWN website
 
-Read `ministry-job-agent/CLAUDE.md` first. It holds the permanent operating
-rules and they are not negotiable. Then `README.md` and `docs/phase-2.md`.
-
-**Review page (snapshot of all findings):**
-https://claude.ai/code/artifact/22f77741-96f1-4b50-b4f3-3a5ee3d2340e
-
-## The rules you must not break
-
-These are enforced in code and covered by tests. Do not weaken them, do not add
-a flag that bypasses them, and do not "helpfully" fill a gap.
-
-1. **Never invent candidate information.** Not employment history, dates,
-   titles, degrees, ordination, credentials, attendance numbers, budgets, team
-   sizes, salary, references, or ministry metrics. If it isn't in the approved
-   database, it does not exist.
-2. **Unknown = HUMAN INPUT REQUIRED.** Stop and ask. Never estimate, infer, or
-   extrapolate to fill a blank.
-3. **Never compose theology.** Every topic is NOT_YET_DEFINED until I write it.
-   Doctrinal questions return THEOLOGICAL REVIEW REQUIRED.
-4. **Nothing is submitted without my explicit approval.** No emails, no
-   messages, no contacting references, no signing, no affirming statements of
-   faith.
-5. **Never bypass CAPTCHAs, logins, MFA, or any site's terms.** LinkedIn,
-   Indeed, and ChurchStaffing were deliberately not touched.
-
-The two files that carry these: `src/lib/answers/resolver.ts` (the only code
-that decides whether a question can be answered without me) and
-`src/lib/application/approval-gate.ts` (the only code that can authorize a
-submission — it fails closed).
-
-## Where things stand
-
-**Found and scored: 98 openings across 95 churches.** 48 postings fully read,
-50 captured from board listings and not yet read. 4 churches researched.
-
-Top of the list, both with reports written and packages prepared:
-- **Garden Church** — Associate Pastor, Discipleship and House Churches ·
-  Huntington Beach, CA · $80–85k · **77/100**
-- **Ridgeway Alliance Church** — Pastor of Spiritual Formation & Missions ·
-  White Plains, NY · $85–100k · **72/100**
-
-**My profile is completely empty, and that is the bottleneck:**
-
-| | |
-|---|---|
-| Approved candidate facts | **0 of 25** |
-| Employment / ministry / education records | **0** |
-| Theology positions defined | **0 of 25** (my choice for now — leave it) |
-| Answer bank entries approved | **0 of 56** |
-| Resume variants supplied | **0 of 6** |
-| Applications approved or submitted | **0** |
-
-Both prepared packages sit at `WAITING_FOR_HUMAN_INPUT` with 6 open items.
-Their cover letter drafts contain `[NEEDS: approved ministry history]` markers —
-that's the drafter refusing to invent my background, and a draft carrying a
-marker cannot pass the approval gate.
-
-## What I'm giving you
-
-**My resumes** (attached to this message).
-
-## What I want you to do
-
-### 1. Import them properly — do not shortcut this
+## First, get running
 
 ```bash
 cd ministry-job-agent
 npm install
 cp .env.example .env
-npm run setup          # safe to re-run; creates structure, populates nothing
+npm run setup            # creates the database structure; populates nothing
+npm run seed:openings    # restores the 98 discovered openings + church research
+npm run score -- --all   # scores are derived, not stored in the seed
+npm run report -- --prepare
+npm run dev              # dashboard at localhost:3100
 ```
 
-Put the resume files in `ministry-job-agent/inbox/` and run:
+The database is gitignored and cloud sessions are ephemeral, so
+`npm run seed:openings` is how the discovery work survives. It's idempotent.
+After any new import or research, run `npm run export:openings` and commit
+`data-seed/openings.json` so the next session inherits it.
 
-```bash
-npm run import
-```
+**Then read `ministry-job-agent/CLAUDE.md`.** It holds the permanent operating
+rules. Then `README.md`, and `docs/phase-2.md` for what's missing.
 
-The importer extracts candidate claims conservatively (pattern-based, not
-model-based) and files every one as `UNVERIFIED_IMPORT` with the sentence it
-came from. **Importing a document does not make anything in it true about me.**
+## The rules you must not break
 
-### 2. Walk me through approving the facts
+Enforced in code, covered by tests. Do not weaken them, do not add a flag that
+bypasses them, do not helpfully fill a gap.
 
-Show me what was extracted, grouped, with the source sentence for each. I
-approve or correct each one. Then persist the approved data as:
+1. **Never invent candidate information** — employment, dates, titles, degrees,
+   ordination, credentials, attendance, budgets, team sizes, salary,
+   references, ministry metrics. Not in the approved database means it does not
+   exist.
+2. **Unknown = HUMAN INPUT REQUIRED.** Stop and ask. Never estimate or infer.
+3. **Never compose theology.** Every topic is NOT_YET_DEFINED until I write it.
+4. **Nothing submitted without my explicit approval** — no emails, messages,
+   contacting references, signing, or affirming statements of faith.
+5. **Never bypass CAPTCHAs, logins, MFA, or a site's terms.** LinkedIn, Indeed,
+   ChurchStaffing and Vanderbloemen were deliberately not touched. Keep it that
+   way.
 
-**Records** (`CandidateRecord`, one row per item) — the shapes are defined in
-`src/lib/candidate/schema.ts`:
+Two files carry these: `src/lib/answers/resolver.ts` (the only code that decides
+whether a question can be answered without me) and
+`src/lib/application/approval-gate.ts` (the only code that can authorize a
+submission — it fails closed).
 
-| kind | fields |
+## Where things stand
+
+**98 openings across 95 churches.** 48 postings fully read and scored, 50
+captured from board listings and not yet read. 4 churches researched. 145 tests
+passing, typecheck clean.
+
+Top two, both with reports written and packages prepared:
+- **Garden Church** — Associate Pastor, Discipleship and House Churches ·
+  Huntington Beach, CA · $80–85k · **77/100**
+- **Ridgeway Alliance Church** — Pastor of Spiritual Formation & Missions ·
+  White Plains, NY · $85–100k · **72/100**
+
+Review page (snapshot):
+https://claude.ai/code/artifact/22f77741-96f1-4b50-b4f3-3a5ee3d2340e
+
+**My profile is empty, and that is the bottleneck:**
+
+| | |
 |---|---|
-| `employment` | employer, title, start, end, location, summary |
-| `ministry` | organization, role, start, end, location, summary |
-| `education` | institution, credential, field, start, end, completed |
-| `credential` | name, issuer, issued, expires, status |
-| `ordination` | body, type, date, status |
-| `leadership` | context, description, start, end |
-| `teaching` | context, description, frequency, start, end |
-| `metric` | claim, value, context, period |
-| `skill` | name, context |
-| `reference` | name, relationship, organization, email, phone, permission_to_contact |
-| `link` | label, url |
+| Approved candidate facts | **0 of 25** |
+| Employment / ministry / education records | **0** |
+| Theology positions | **0 of 25** — my choice, leave it |
+| Answer bank | **0 of 56** |
+| Resume variants supplied | **0 of 6** |
+| Applications approved or submitted | **0** |
 
-**Facts** (`CandidateFact`, by exact path) — the ones the resumes should cover:
+Both packages sit at `WAITING_FOR_HUMAN_INPUT` with 6 open items. Their cover
+letters carry `[NEEDS: approved ministry history]` markers — the drafter
+refusing to invent my background. A draft with a marker cannot pass the gate.
 
-```
-identity.full_name              identity.preferred_name
-contact.email                   contact.phone            [both sensitive]
-location.city                   location.state
-credentials.highest_education   credentials.ordination_status
-ministry.preaching_frequency
-organization.living_water_network_role
-organization.living_water_network_founding
-links.website  links.linkedin  links.preaching_samples  links.portfolio
-```
+## What I want next
 
-**Be strict about numbers.** Any metric on a resume ("led 250 students") gets
-flagged `UNVERIFIED METRIC` on import. Ask me to confirm each one individually
-before it becomes an approved fact. I would rather have no number than a number
-I can't defend in an interview.
+**Priority one: my resumes.** I'm attaching them (or will next message).
 
-### 3. Build the six resume variants
+1. Put them in `ministry-job-agent/inbox/` and run `npm run import`. The
+   importer extracts claims conservatively and files every one as
+   `UNVERIFIED_IMPORT` with the source sentence. Importing does not make
+   anything true about me.
+2. Show me what was extracted, grouped, with each source sentence. I approve or
+   correct each one.
+3. Persist approved data as `CandidateRecord` rows and `CandidateFact` values.
+   Exact shapes are in `src/lib/candidate/schema.ts`:
 
-Files go at these exact paths (the registry in `src/lib/resumes/variants.ts`
-reads them, and a variant stays `NOT_PROVIDED` until its file exists):
+   | kind | fields |
+   |---|---|
+   | `employment` | employer, title, start, end, location, summary |
+   | `ministry` | organization, role, start, end, location, summary |
+   | `education` | institution, credential, field, start, end, completed |
+   | `credential` | name, issuer, issued, expires, status |
+   | `ordination` | body, type, date, status |
+   | `leadership` | context, description, start, end |
+   | `teaching` | context, description, frequency, start, end |
+   | `metric` | claim, value, context, period |
+   | `skill` | name, context |
+   | `reference` | name, relationship, organization, email, phone, permission_to_contact |
+   | `link` | label, url |
 
-| Variant | Markdown | ATS plain text |
-|---|---|---|
-| Young Adults | `resumes/young-adults/resume.md` | `resume-ats.txt` |
-| Discipleship | `resumes/discipleship/resume.md` | `resume-ats.txt` |
-| Groups / Community | `resumes/groups-community/resume.md` | `resume-ats.txt` |
-| Connections / Next Steps | `resumes/connections-next-steps/resume.md` | `resume-ats.txt` |
-| Associate Pastor | `resumes/associate-pastor/resume.md` | `resume-ats.txt` |
-| Campus / Adult Ministries | `resumes/campus-adult-ministry/resume.md` | `resume-ats.txt` |
+   Fact paths the resumes should cover:
+   ```
+   identity.full_name              identity.preferred_name
+   contact.email                   contact.phone            [sensitive]
+   location.city                   location.state
+   credentials.highest_education   credentials.ordination_status
+   ministry.preaching_frequency
+   organization.living_water_network_role
+   organization.living_water_network_founding
+   links.website  links.linkedin  links.preaching_samples  links.portfolio
+   ```
 
-Also keep a master at `resumes/master/resume.md`.
+   **Be strict about numbers.** Any metric ("led 250 students") is flagged
+   `UNVERIFIED METRIC` on import. Ask me to confirm each individually. I would
+   rather have no number than one I can't defend in an interview.
 
-**Tailoring may:** reorder bullets, change emphasis, adjust the summary, select
-which accomplishments to feature, choose portfolio items, and work in
-job-specific keywords naturally.
+4. **Build the six resume variants.** These exact paths — a variant stays
+   `NOT_PROVIDED` until its file exists:
 
-**Tailoring may never:** invent accomplishments, inflate metrics, change dates,
-alter titles, create responsibilities I did not perform, or fabricate growth.
+   | Variant | Markdown | ATS plain text |
+   |---|---|---|
+   | Young Adults | `resumes/young-adults/resume.md` | `resume-ats.txt` |
+   | Discipleship | `resumes/discipleship/resume.md` | `resume-ats.txt` |
+   | Groups / Community | `resumes/groups-community/resume.md` | `resume-ats.txt` |
+   | Connections / Next Steps | `resumes/connections-next-steps/resume.md` | `resume-ats.txt` |
+   | Associate Pastor | `resumes/associate-pastor/resume.md` | `resume-ats.txt` |
+   | Campus / Adult Ministries | `resumes/campus-adult-ministry/resume.md` | `resume-ats.txt` |
 
-Mark each variant `APPROVED` in the database only after I've read it.
+   Plus a master at `resumes/master/resume.md`.
 
-### 4. My positioning
+   **Tailoring may:** reorder bullets, change emphasis, adjust the summary,
+   select accomplishments and portfolio items, work in job-specific keywords
+   naturally. **Tailoring may never:** invent accomplishments, inflate metrics,
+   change dates, alter titles, create responsibilities I did not perform.
+
+   Mark a variant `APPROVED` only after I've read it.
+
+5. **Re-score and show me the two packages** at `/queue` and `/approve/<id>`.
+   I want Garden Church and Ridgeway with real resume selections and cover
+   letters with no `[NEEDS:]` markers.
+
+**Then, if there's room:** read the 50 unread postings (they're marked
+`posting not yet read`) and research the churches flagged
+`researchRecommended` — several are held below the bar only by missing
+research, not by being weak roles.
+
+## My positioning
 
 Not an event planner or program manager. A pastoral leader focused on spiritual
 formation, discipleship, young adults, leadership development, and building
 healthy relational ministry cultures.
 
-The through-line:
 **formation → discipleship → community → leadership development → multiplication**
 
-Portfolio to draw on (summaries already registered in the system — no scale,
-budget, or reach claims unless I approve them as facts):
-- **Living Water Network Inc.** — the organization I founded, formerly Living
+Portfolio already registered (summaries only — no scale, budget or reach claims
+unless I approve them as facts):
+- **Living Water Network Inc.** — organization I founded, formerly Living
   Hydatos Ministries Inc.
 - **At the Table** — spiritual and emotional formation framework for Kingdom
   leaders: spiritual, mental, emotional, physical, relational health, stewardship
 - **Young Adults Network (YAN)** — Connect, Collaborate, Pray, Impact
-- **GATHER** — young-adult discipleship curriculum through Titus;
+- **GATHER** — young-adult discipleship curriculum through Titus,
   "Hey Stranger → Hey Neighbor"
-
-### 5. Then re-run the pipeline and show me the two packages
-
-```bash
-npm run score -- --all
-npm run report -- --prepare
-npm run dev            # dashboard at localhost:3100
-```
-
-Open `/queue` for the human-input items and `/approve/<id>` for the approval
-screens. I want to see Garden Church and Ridgeway with real resume selections
-and cover letters that no longer carry `[NEEDS:]` markers.
 
 ## Things that will trip you up
 
-- **Nothing scores above ~77** and PRIORITY is unreachable, because theology
-  alignment caps at 12/20 with my positions undefined. That's my decision for
-  now. Don't "fix" it by writing positions for me.
-- **13 openings carry a `CREDENTIAL_GAP` flag at MINOR severity** purely because
-  my credentials are empty. Once you load real credentials, re-score — several
-  will correctly become MAJOR (Ridgeway wants an MDiv; Bell Shoals requires one;
-  Monument Bible needs ordination for its housing allowance).
-- **Two flagged as `SPECIALIZED_SKILL_REQUIRED`** — one needs guitar/piano
-  mastery, one needs full Spanish fluency. If I actually have either, record it
-  as an approved `skill` and the flag suppresses itself.
-- **Don't commit candidate data.** `data/`, `inbox/`, `candidate/`, `resumes/`,
-  `jobs/`, `logs/` are gitignored on purpose. Structure is versioned; content
-  is not.
-- **The database is local and ephemeral in a cloud session.** If `data/` is
-  empty, run `npm run setup` and re-import. The 98 openings will need
-  re-importing from `inbox/` if that directory didn't persist — check first.
-- **145 tests pass and typecheck is clean.** Keep it that way. If you change a
-  scoring rule, change its test deliberately and say why.
+- **Nothing scores above ~77 and PRIORITY is unreachable** because theological
+  alignment caps at 12/20 with my positions undefined. That's my decision. Do
+  not "fix" it by writing positions for me.
+- **13 openings carry `CREDENTIAL_GAP` at MINOR severity** only because my
+  credentials are empty. Once real ones load, re-score — several should
+  correctly become MAJOR. Ridgeway wants an MDiv, Bell Shoals requires one,
+  Monument Bible needs ordination for its housing allowance. That is the system
+  working, not a regression.
+- **Two flagged `SPECIALIZED_SKILL_REQUIRED`** — one needs guitar/piano mastery,
+  one needs full Spanish fluency. If I have either, record it as an approved
+  `skill` and the flag suppresses itself.
+- **One posting is flagged `POSTING_CLOSED`** (St. Andrew Presbyterian, closed
+  Sept 2024, still listed on the board). Expect more as listings age.
+- **Never commit candidate data.** `data/`, `inbox/`, `candidate/`, `resumes/`,
+  `jobs/`, `logs/` are gitignored on purpose. `data-seed/openings.json` is the
+  one exception and holds public posting data only.
+- **Keep 145 tests passing and typecheck clean.** If you change a scoring rule,
+  change its test deliberately and tell me why.
 
 ## What I do NOT want
 
@@ -224,5 +205,5 @@ and cover letters that no longer carry `[NEEDS:]` markers.
 - Do not invent a single fact to make a resume read better.
 - Do not touch LinkedIn, Indeed, ChurchStaffing, or Vanderbloemen.
 
-Start by reading `CLAUDE.md`, then tell me what you found in the resumes before
-you write anything.
+Start by reading `CLAUDE.md`, get the pipeline restored, then tell me what you
+found in the resumes before writing anything.

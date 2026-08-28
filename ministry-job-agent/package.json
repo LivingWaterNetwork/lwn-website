@@ -2,7 +2,7 @@
   "name": "ministry-job-agent",
   "version": "1.0.0",
   "private": true,
-  "description": "Ministry Job Agent — discovery, research, scoring, and human-gated application preparation for church and Christian ministry positions.",
+  "description": "Ministry Job Agent \u2014 discovery, research, scoring, and human-gated application preparation for church and Christian ministry positions.",
   "scripts": {
     "dev": "next dev -p 3100",
     "build": "prisma generate && next build",
@@ -15,6 +15,8 @@
     "setup": "prisma generate && prisma db push && tsx scripts/seed-real.ts",
     "seed:real": "tsx scripts/seed-real.ts",
     "seed:fixtures": "tsx scripts/seed-fixtures.ts",
+    "seed:openings": "tsx scripts/seed-openings.ts",
+    "export:openings": "tsx scripts/export-openings.ts",
     "discover": "tsx scripts/discover.ts",
     "score": "tsx scripts/score.ts",
     "report": "tsx scripts/report.ts",
