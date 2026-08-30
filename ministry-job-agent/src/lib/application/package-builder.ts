@@ -94,6 +94,29 @@ export async function buildPackage(
   const callingEntry = ctx.answerBank.find((a) => a.category === "pastoral_calling");
   const philosophyEntry = ctx.answerBank.find((a) => a.category === "ministry_philosophy");
 
+  // APPROVED ministry and employment records for the cover letter's experience
+  // paragraph. Ministry roles lead because they are what a search team is
+  // reading for. Only APPROVED rows are ever loaded — an UNVERIFIED_IMPORT row
+  // is treated as absent, exactly as it is everywhere else.
+  const approvedRecords = await prisma.candidateRecord.findMany({
+    where: { status: "APPROVED", kind: { in: ["ministry", "employment"] } },
+    orderBy: { sortOrder: "asc" },
+  });
+  // Ministry roles lead regardless of storage order — a search team reads for
+  // those first, and alphabetical ordering would put "employment" ahead of them.
+  const approvedExperience = [
+    ...approvedRecords.filter((r) => r.kind === "ministry"),
+    ...approvedRecords.filter((r) => r.kind === "employment"),
+  ]
+    .map((r) => {
+      const payload = JSON.parse(r.payload) as Record<string, string | null>;
+      const role = r.kind === "ministry" ? payload.role : payload.title;
+      const organization = r.kind === "ministry" ? payload.organization : payload.employer;
+      if (!role || !organization) return null;
+      return { role, organization, start: payload.start ?? null, end: payload.end ?? null };
+    })
+    .filter((e): e is NonNullable<typeof e> => e !== null);
+
   const letter = draftCoverLetter({
     churchName: opp.church.name,
     roleTitle: opp.title,
@@ -103,6 +126,7 @@ export async function buildPackage(
     approvedFacts,
     callingStatement: callingEntry?.approvedAnswer || null,
     ministryPhilosophy: philosophyEntry?.approvedAnswer || null,
+    approvedExperience,
   });
 
   const pkg = await prisma.applicationPackage.upsert({
@@ -129,6 +153,10 @@ export async function buildPackage(
 
   // Resolve captured form questions.
   const attestations: string[] = [];
+  // Every blocker this rebuild still considers outstanding. Anything OPEN for
+  // this package and absent from this set has been satisfied since it was
+  // raised, and is retired below rather than blocking the package forever.
+  const stillNeeded = new Set<string>();
   if (options.capturedQuestions?.length) {
     await prisma.applicationQuestion.deleteMany({ where: { packageId: pkg.id } });
 
@@ -159,6 +187,7 @@ export async function buildPackage(
               ? "ATTESTATION"
               : "APPLICATION_QUESTION";
 
+        stillNeeded.add(q.questionText);
         const existing = await prisma.humanInputRequest.findFirst({
           where: { packageId: pkg.id, question: q.questionText, status: "OPEN" },
         });
@@ -187,6 +216,7 @@ export async function buildPackage(
   // Cover-letter gaps are human input too — an unfinished letter must not slip through.
   for (const need of letter.needs) {
     const question = `Cover letter needs: ${need}`;
+    stillNeeded.add(question);
     const existing = await prisma.humanInputRequest.findFirst({
       where: { packageId: pkg.id, question, status: "OPEN" },
     });
@@ -198,6 +228,29 @@ export async function buildPackage(
         context: `Draft cover letter for ${opp.church.name} — ${opp.title} contains a [NEEDS:] marker that must be filled before this can be approved.`,
         opportunityId,
         packageId: pkg.id,
+      },
+    });
+  }
+
+  // A blocker is only retired when this rebuild no longer raises it — i.e. the
+  // approved data it was waiting on now exists. Nothing here answers a question
+  // on the candidate's behalf; it only stops asking one that is already met.
+  // Captured-question blockers are reconsidered only when questions were
+  // actually captured this run, so a prepare without capture never clears them.
+  const staleKinds = options.capturedQuestions?.length
+    ? ["CANDIDATE_FACT", "APPLICATION_QUESTION", "THEOLOGY", "ATTESTATION"]
+    : ["CANDIDATE_FACT"];
+  const openForPackage = await prisma.humanInputRequest.findMany({
+    where: { packageId: pkg.id, status: "OPEN", kind: { in: staleKinds } },
+  });
+  for (const req of openForPackage) {
+    if (stillNeeded.has(req.question)) continue;
+    await prisma.humanInputRequest.update({
+      where: { id: req.id },
+      data: {
+        status: "DISMISSED",
+        respondedAt: new Date(),
+        response: "Retired automatically: the approved data this was waiting on now exists.",
       },
     });
   }

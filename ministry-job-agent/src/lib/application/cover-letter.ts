@@ -28,6 +28,20 @@ export interface CoverLetterInput {
   /** Approved answer-bank text for calling / philosophy, if it exists. */
   callingStatement?: string | null;
   ministryPhilosophy?: string | null;
+  /**
+   * APPROVED ministry/employment records, most relevant first. The experience
+   * paragraph is assembled from these verbatim — role, organization and dates
+   * exactly as approved. When this is empty the paragraph stays a [NEEDS:]
+   * marker; nothing here is ever summarised into a claim the records do not make.
+   */
+  approvedExperience?: ApprovedExperience[];
+}
+
+export interface ApprovedExperience {
+  role: string;
+  organization: string;
+  start?: string | null;
+  end?: string | null;
 }
 
 export interface CoverLetterDraft {
@@ -95,9 +109,14 @@ export function draftCoverLetter(input: CoverLetterInput): CoverLetterDraft {
     ? `Two pieces of my own work speak most directly to this role. ${portfolioSentences.join(" ")} I am glad to walk through either in conversation.`
     : "";
 
-  const experienceParagraph = need(
-    "approved ministry history — the specific roles and responsibilities to cite here",
-  );
+  // Built only from APPROVED records, cited exactly as approved. No record, no
+  // paragraph — the marker stands rather than a summary of history we lack.
+  const experience = (input.approvedExperience ?? []).slice(0, 3);
+  const experienceParagraph = experience.length
+    ? `The work I would bring to this is not theoretical: ${joinClauses(
+        experience.map((e) => `${e.role} at ${e.organization}${formatSpan(e)}`),
+      )}. I am glad to walk through any of it in detail.`
+    : need("approved ministry history — the specific roles and responsibilities to cite here");
 
   const body = [
     `Dear ${input.churchName} Search Team,`,
@@ -121,6 +140,39 @@ export function draftCoverLetter(input: CoverLetterInput): CoverLetterDraft {
     .join("\n");
 
   return { angle: `${angle} (${lane})`, body, needs, citations };
+}
+
+const MONTHS = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
+
+/**
+ * Renders a stored date for prose. `2023-04` becomes `April 2023`; a bare year
+ * stays a bare year. The value is only reformatted, never completed — a record
+ * storing only a year never gains a month it did not state.
+ */
+function formatDate(value: string): string {
+  const match = /^(\d{4})-(\d{2})$/.exec(value);
+  if (!match) return value;
+  const month = MONTHS[Number(match[2]) - 1];
+  return month ? `${month} ${match[1]}` : value;
+}
+
+/**
+ * Renders an approved record's dates. Only what the record states is shown: a
+ * record with no start date renders no span rather than a guessed one.
+ */
+function formatSpan(e: ApprovedExperience): string {
+  if (!e.start) return "";
+  return ` (${formatDate(e.start)}${e.end ? `–${formatDate(e.end)}` : "–present"})`;
+}
+
+/** Joins clauses into readable prose: "a", "a and b", "a, b, and c". */
+function joinClauses(parts: string[]): string {
+  if (parts.length <= 1) return parts[0] ?? "";
+  if (parts.length === 2) return `${parts[0]} and ${parts[1]}`;
+  return `${parts.slice(0, -1).join(", ")}, and ${parts[parts.length - 1]}`;
 }
 
 function deriveAngle(lane: string | null): string {

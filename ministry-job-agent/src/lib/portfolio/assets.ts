@@ -25,7 +25,7 @@ export const PORTFOLIO_ASSETS: PortfolioAssetSpec[] = [
     key: "living-water-network",
     name: "Living Water Network",
     summary:
-      "The ministry organization Omar founded, which began as Living Hydatos Ministries Inc. and later changed its legal name to Living Water Network Inc.",
+      "The ministry organization I founded, which began as Living Hydatos Ministries Inc. and later changed its legal name to Living Water Network Inc.",
     detail:
       "Supports a ministry narrative around spiritual formation, discipleship, leadership development, ministry and marketplace leaders, young-adult ministry, community, equipping leaders, and holistic formation. Organizational scale, staffing, budget, reach, and tax status are NOT PROVIDED and must never be inferred.",
     bestFor: [
