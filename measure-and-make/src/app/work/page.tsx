@@ -27,9 +27,9 @@ export default function WorkPage() {
       />
 
       <section className="bg-limestone">
-        <Container className="py-16 sm:py-20">
+        <Container className="py-14 sm:py-16 lg:py-20">
           {projects.length > 0 ? (
-            <div className="grid gap-6 lg:grid-cols-2">
+            <div className="grid gap-6 md:grid-cols-2">
               {projects.map((project, index) => (
                 <Reveal key={project.slug} delay={index * 0.06}>
                   <ProjectCard project={project} />
@@ -48,7 +48,7 @@ export default function WorkPage() {
             <h2 className="font-display text-3xl leading-tight text-forest sm:text-4xl">
               Let&rsquo;s clarify what&rsquo;s next.
             </h2>
-            <div className="mt-8 flex justify-center">
+            <div className="mt-8 flex justify-center px-6 sm:px-0">
               <CtaLink href={CTA.primary.href}>{CTA.primary.label}</CtaLink>
             </div>
           </Reveal>

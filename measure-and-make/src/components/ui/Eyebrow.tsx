@@ -6,9 +6,7 @@ export function Eyebrow({
   tone?: "dark" | "light";
 }) {
   return (
-    <p
-      className={`eyebrow ${tone === "light" ? "text-sage" : "text-field"}`}
-    >
+    <p className={`eyebrow ${tone === "light" ? "text-sage" : "text-field"}`}>
       {children}
     </p>
   );

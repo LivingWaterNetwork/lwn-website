@@ -1,122 +1,128 @@
 # Measure & Make — marketing website
 
-A standalone Next.js (App Router) application for Measure & Make. It lives in
-this repository for convenience but is a separate application: it has its own
-`package.json`, dependencies, Tailwind config, and build. Nothing in the Living
-Water Network site or its `/yan` routes is imported, modified, or shared.
+A Next.js (App Router) application for Measure & Make. It lives in this
+repository but is a separate application with its own `package.json`,
+dependencies, Tailwind config, and build. Nothing in the Living Water Network
+site or its `/yan` routes is imported or modified.
+
+Every route is served under `/measure-and-make` (`basePath` in
+`next.config.mjs`), matching where the site sits on the Living Water Network
+domain while it shares that infrastructure.
+
+## Routes
+
+| Route                           | What it is                                                                                            |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `/measure-and-make`             | Landing page: hero, why, four capabilities, four-stage process, featured work, closing call to action |
+| `/measure-and-make/about`       | Company-led narrative: lead, origin, philosophy, company stage, brand meaning, LWN relationship       |
+| `/measure-and-make/work`        | All Public + Approved projects                                                                        |
+| `/measure-and-make/work/[slug]` | Case study, one per approved project (three)                                                          |
+| `/measure-and-make/services`    | The four capabilities in full, then the four-stage process                                            |
+| `/measure-and-make/start`       | The inquiry form — the only contact route on the site                                                 |
+| `/measure-and-make/privacy`     | Privacy Policy (complete; `noindex` pending legal approval)                                           |
+| `/measure-and-make/terms`       | Terms of Service (complete; `noindex` pending legal approval)                                         |
+| `/measure-and-make/sitemap.xml` | Static routes plus approved project slugs                                                             |
+| `/measure-and-make/robots.txt`  | Allow-all, pointing at the sitemap                                                                    |
+| 404                             | Any other path, including every unapproved project slug                                               |
 
 ## Source of truth
 
-All brand rules, copy, project data, and factual constraints come from the
-approved content package ("Measure and Make Content Package"). Nothing on this
-site may be invented, supplemented, or inferred beyond it:
+All brand rules, copy, and project data come from the approved content package
+("Measure and Make Content Package"), except the About-page narrative and the
+legal documents, which the owner supplied and approved directly.
 
-| Package file | What it governs here |
-|---|---|
-| `01-BRAND-FOUNDATION.md` | Palette (`tailwind.config.ts`), voice, logo rules, disclosure language |
-| `02-WEBSITE-COPY.md` | `src/content/copy.ts`, `capabilities.ts`, `process.ts` |
-| `03-PROJECT-REGISTRY.json` | `src/content/projects.ts` — transcribed verbatim |
-| `04-CLAIMS-REGISTER.md` | Which factual claims may appear at all |
-| `05-ASSET-INVENTORY.md` | `public/brand/` (see `public/brand/README-ASSETS.md`) |
-| `07-DEVELOPER-CONTENT-MAP.md` | Route map, component requirements, the publication gate |
+| Package file                  | What it governs here                                                   |
+| ----------------------------- | ---------------------------------------------------------------------- |
+| `01-BRAND-FOUNDATION.md`      | Palette (`tailwind.config.ts`), voice, logo rules, disclosure language |
+| `02-WEBSITE-COPY.md`          | `src/content/copy.ts`, `capabilities.ts`, `process.ts`                 |
+| `03-PROJECT-REGISTRY.json`    | `src/content/projects.ts` — transcribed verbatim                       |
+| `04-CLAIMS-REGISTER.md`       | Which factual claims may appear at all                                 |
+| `05-ASSET-INVENTORY.md`       | `public/brand/` — see `public/brand/INSTALLED-ASSETS.md`               |
+| `07-DEVELOPER-CONTENT-MAP.md` | Component requirements and the publication gate                        |
 
 ## The publication gate
 
 Only registry records with `visibility: "Public"` **and** a
 `publicationApprovalStatus` beginning with `"Approved"` may reach a route, the
-sitemap, structured data, an API response, or a client-side payload.
+sitemap, structured data, an API response, or a client-side payload. Current
+classifications, all enforced by one filter:
 
-- The filter lives at the data layer, in `src/content/projects.ts` — not in the UI.
+| Project                                     | Classification                 | On the site                                                    |
+| ------------------------------------------- | ------------------------------ | -------------------------------------------------------------- |
+| Living Water Network Digital Platform       | Public / Live                  | Yes                                                            |
+| Young Adults Network (YAN) Digital Platform | Public / Live                  | Yes                                                            |
+| Organizational Operating System             | Public / Foundation & Strategy | Yes, as vision and architecture only — never as built software |
+| Radiant Events Planning                     | Draft / In Development         | No                                                             |
+| Estate cleanout and junk-removal business   | Private / In Development       | No                                                             |
+
+How that is enforced:
+
+- The filter lives at the data layer, in `src/content/projects.ts`, not in the UI.
 - That module starts with `import "server-only"`, so the build fails if it is
   ever pulled into a client component. That is what keeps Draft and Private
   records out of every client bundle.
 - Components accept the `PublicProject` type, which only the gate can produce.
-- `tests/publication-gate.test.ts` asserts the gate's behavior, including that a
-  Draft or Private slug is indistinguishable from a slug that does not exist.
+- `generateStaticParams` enumerates approved slugs only, and `dynamicParams` is
+  off, so an unapproved slug 404s rather than rendering anything.
+- No structured data is emitted for any project, approved or not.
+- `tests/publication-gate.test.ts` pins all of it.
 
-## Contact form and its destination
+## Contact form
 
-The form on `/contact` has a real destination: submissions are stored in
-Airtable and the inbox is notified. There is deliberately **no database and no
-Prisma model** for it, and Living Water Network's database is not touched.
+`/measure-and-make/start` is the only contact route. The site publishes no email
+address, telephone number, or postal address, and does not route Measure & Make's
+commercial inquiries to Living Water Network's nonprofit inbox.
+`tests/no-public-contact-details.test.ts` fails the build if any of that is
+reintroduced.
 
 Path of a submission:
 
-1. The client posts to `POST /api/contact`.
-2. `src/app/api/contact/route.ts` rate-limits per IP, then validates with Zod
+1. The client posts to `POST /measure-and-make/api/contact`.
+2. The route rate-limits per IP, validates with Zod server-side
    (`src/lib/contact-schema.ts`) — client-side validation is never trusted — and
    rejects any submission whose honeypot field is filled.
 3. `src/lib/airtable.ts` writes a record to the **Measure & Make** base, table
-   **Inquiries** (`appKznUQ11agoIbcs` / `tblgc13tluLMgJHgo`).
-4. Airtable's own `Email new inquiry to info@lwnetwork.org` automation emails the
-   inbox on record creation. `src/lib/notify.ts` can send a second notification
-   through Resend, but only if `RESEND_API_KEY` and `CONTACT_FROM_EMAIL` are set;
-   a failure there never fails a submission that was already saved.
+   **Inquiries**.
+4. Airtable's own automation emails the inbox on record creation.
 
-The success message appears only when the server confirms the record was
-written. Every other outcome says what actually happened and points to
-`info@lwnetwork.org`:
+The thank-you message appears only when the server confirms the record was
+written. Every other outcome states what actually happened.
 
-| Server result | What the visitor sees |
-|---|---|
-| `ok` | The approved thank-you message |
-| `invalid` | The validation error, with the offending fields marked |
-| `rate-limited` | Too many messages from this connection; not sent |
-| `not-configured` | The form is not connected to its inbox here; nothing was saved |
-| `failed` | Something went wrong on our end; not sent |
-
-Copy `.env.example` to `.env.local` and fill in `AIRTABLE_API_KEY` to make the
-form live locally. With it unset, the form reports `not-configured` rather than
-faking a delivery.
+**Setup and the post-configuration test procedure:
+[`docs/CONTACT-FORM-SETUP.md`](docs/CONTACT-FORM-SETUP.md).**
 
 ## Getting started
 
 ```bash
 npm install
-npm run dev     # http://localhost:3000
-npm run build
-npm test        # publication-gate and brand-rule tests
-npm run lint
+npm run dev        # http://localhost:3000/measure-and-make
+npm run verify     # format:check, lint, typecheck, test, build
 ```
 
-## Build status
+Individually: `npm run format`, `npm run lint`, `npm run typecheck`,
+`npm test`, `npm run build`.
 
-- **Phase 1 (site shell)** — complete: layout, navigation, footer with the
-  shared `RelationshipDisclosure`, palette and type, approved logo lockup.
-- **Phase 2 (landing page)** — complete: hero, capability cards, process,
-  featured work from the gate, closing call to action, 404 page.
-- **Phase 3 (remaining routes)** — complete: `/work`, `/work/[slug]`,
-  `/capabilities`, `/process`, `/about`, `/contact`, `/privacy`, `/terms`,
-  `sitemap.xml`, `robots.txt`, 404, Organization JSON-LD, and the contact form
-  with its Airtable destination.
+## Relationship to the Living Water Network app
 
-## Known gaps, deliberately left open
+This app is built and deployed separately from the Living Water Network site in
+the repository root. The root `tsconfig.json` excludes `measure-and-make` so the
+two type-check independently — without that exclusion, the root build resolves
+this app's `@/*` imports against the root `src/` and fails.
 
-These are unresolved in the content package and are not filled in with
-plausible-sounding substitutes:
+## Remaining production-launch requirements
 
-- **`info@lwnetwork.org` is the only contact detail that exists.** No phone
-  number and no physical address were supplied, so neither appears anywhere.
-- **Two switches are still off**, and the form cannot deliver until both are on:
-  `AIRTABLE_API_KEY` must be set in the deployment environment, and the
-  Airtable automation is saved as a draft — it must be reviewed and turned on in
-  the Airtable UI before it sends anything.
-- **No Airtable form share link.** Airtable form views cannot be created through
-  the API. Set `NEXT_PUBLIC_AIRTABLE_FORM_URL` to a real share link and the
-  contact page will offer it as an alternative; unset, no link renders.
-- **The live Airtable write is untested from this environment** — no API token
-  was available here. The field names in `src/lib/airtable.ts` match the table
-  as created, and the route's behavior is covered by
-  `tests/contact-route.test.ts` against a mocked Airtable.
-- **Reverse and stacked lockups and all PNG exports are missing** from the Drive
-  package. Brand-lockup areas therefore sit on light grounds so the supplied
-  dark-ink lockup renders as drawn. No reverse version has been recreated.
-- **About page founder narrative and company-stage language** are visible
-  placeholders (Open Decisions #2).
-- **Privacy Policy and Terms of Service** are placeholders and are a hard launch
-  blocker (Open Decisions #6) — more so now that the contact form collects
-  personal information. Both pages carry a visible pending marker, are excluded
-  from the sitemap, and are set to `noindex` until the copy is real.
-- **No analytics and no consent banner** (Open Decisions #5).
-- **No testimonials, metrics, ratings, team size, or years of experience**
-  anywhere, and no review/rating structured data.
+1. **Install `AIRTABLE_API_KEY`** in the deployment environment, then run the
+   test procedure in `docs/CONTACT-FORM-SETUP.md`.
+2. **Enable the Airtable notification automation**, after changing its recipient
+   to a Measure & Make address.
+3. **Owner and attorney approval of the Privacy Policy and Terms of Service**,
+   then remove the `noindex` on both pages and add them to the sitemap. See
+   `docs/LEGAL-REVIEW-HANDOFF.md`.
+4. **Install the remaining brand files** from
+   `Measure-and-Make-Concept-03-5.zip` — the reverse and stacked lockups and the
+   four PNG exports have not reached this repository. See
+   `public/brand/INSTALLED-ASSETS.md`. Nothing has been substituted for them.
+
+By design and not pending anything: there is no telephone number, postal
+address, public email address, analytics, cookie banner, testimonial, rating,
+metric, team-size claim, or years-of-experience claim anywhere on this site.

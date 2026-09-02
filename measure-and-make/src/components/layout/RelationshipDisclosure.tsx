@@ -1,7 +1,4 @@
-import {
-  HOSTING_STATEMENT,
-  RELATIONSHIP_DISCLOSURE,
-} from "@/content/site";
+import { HOSTING_STATEMENT, RELATIONSHIP_DISCLOSURE } from "@/content/site";
 
 /**
  * The single source of truth for the Living Water Network relationship language

@@ -6,7 +6,7 @@ export interface ProcessStage {
   name: string;
   /** Short form used on the home page. */
   summary: string;
-  /** Full form used on /process. */
+  /** Full form used on /services. */
   body: string;
 }
 

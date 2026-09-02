@@ -29,8 +29,7 @@ const registry: ProjectRecord[] = [
     verifiedOutcomes: [
       'Site is live in production and actively processes real donor payments and real program/cohort/partnership inquiries (per the project\'s own README: "real donors process payments through it and real applicants submit program/cohort inquiries").',
     ],
-    year:
-      "2025–2026 (build and ongoing iteration; exact start/launch dates not confirmed — see Claims Register)",
+    year: "2025–2026 (build and ongoing iteration; exact start/launch dates not confirmed — see Claims Register)",
     approvedImages: [],
     externalUrl: "https://www.lwnetwork.org",
     visibility: "Public",
@@ -55,10 +54,11 @@ const registry: ProjectRecord[] = [
     challenge:
       "Living Water Network wanted to connect young-adult ministries across multiple cities under one platform, without a heavy new backend, and without ever presenting an unlaunched city as though it were fully active.",
     approach:
-      'Built inside the existing lwn-website Next.js/Tailwind/Framer Motion/Prisma/Postgres/Resend stack — no new backend infrastructure or CMS introduced. A single source-of-truth file governs every city\'s slug, name, status (live vs. launching-soon), stage badge, tagline, and hero imagery, so a new city can be added honestly labeled (e.g., "New Hub — Join the Launch Team") rather than faked. Every route has a real empty state so the platform functions correctly whether a city\'s data is fully populated or brand new.',
+      "Built inside the existing lwn-website Next.js/Tailwind/Framer Motion/Prisma/Postgres/Resend stack — no new backend infrastructure or CMS introduced. A single source-of-truth file governs every city's slug, name, status (live vs. launching-soon), stage badge, tagline, and hero imagery, so a new city can be added honestly labeled (e.g., \"New Hub — Join the Launch Team\") rather than faked. Every route has a real empty state so the platform functions correctly whether a city's data is fully populated or brand new.",
     workCompleted:
       'A YAN-branded shell with a national landing page and a city chooser; Atlanta live as the founding hub, with New York City, Los Angeles, and Phoenix built as additional city hubs; eleven Prisma data models covering Network (ministry/group directory with map view and add-your-group form), Events (listings, detail pages, registration, waitlist, calendar export), Leaders (spotlights with a nomination form), Pray (prayer themes and private-by-default request submission with crisis-line language), Resources (library with submission form), Stories (testimonies requiring explicit consent), Join (a six-pathway application flow), and Newsletter subscription; an admin panel at /yan/admin for content review, with all public submissions created as "pending" pending manual approval; a return path back to lwnetwork.org.',
-    currentStage: "Live production platform; ongoing city-by-city content growth",
+    currentStage:
+      "Live production platform; ongoing city-by-city content growth",
     status: "Live",
     services: [
       "Websites & Digital Platforms",

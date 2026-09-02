@@ -2,10 +2,7 @@
 // wrong, fix the registry — never hand-author project facts in a component.
 
 export type ProjectStatus =
-  | "Live"
-  | "In Development"
-  | "Foundation & Strategy"
-  | "Archived";
+  "Live" | "In Development" | "Foundation & Strategy" | "Archived";
 
 export type ProjectVisibility = "Public" | "Draft" | "Private";
 

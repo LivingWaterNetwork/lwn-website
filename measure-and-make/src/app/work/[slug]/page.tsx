@@ -5,10 +5,7 @@ import { CtaLink } from "@/components/ui/CtaLink";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
 import { work as copy } from "@/content/copy";
-import {
-  getProjectBySlug,
-  getPublicProjectSlugs,
-} from "@/content/projects";
+import { getProjectBySlug, getPublicProjectSlugs } from "@/content/projects";
 import { CTA } from "@/content/site";
 
 interface Params {
@@ -56,7 +53,7 @@ export default function ProjectDetailPage({ params }: Params) {
   return (
     <>
       <section className="border-b border-forest/10 bg-limestone-light">
-        <Container className="py-16 sm:py-20">
+        <Container className="py-14 sm:py-16 lg:py-20">
           <Reveal className="max-w-3xl">
             <Eyebrow>{project.organizationOrClient}</Eyebrow>
             <h1 className="mt-5 font-display text-4xl leading-tight text-forest sm:text-5xl">
@@ -70,7 +67,7 @@ export default function ProjectDetailPage({ params }: Params) {
                 {project.projectType}
               </span>
             </div>
-            <p className="mt-8 max-w-prose font-sans text-xl leading-relaxed text-forest/85">
+            <p className="mt-7 max-w-prose font-sans text-lg leading-relaxed text-forest/85 sm:text-xl">
               {project.publicSummary}
             </p>
             {project.externalUrl ? (
@@ -89,7 +86,7 @@ export default function ProjectDetailPage({ params }: Params) {
       </section>
 
       <section className="bg-limestone">
-        <Container className="py-16 sm:py-20">
+        <Container className="py-14 sm:py-16 lg:py-20">
           <div className="max-w-3xl space-y-12">
             <Reveal>
               <Block label={copy.detailLabels.challenge}>
@@ -97,7 +94,9 @@ export default function ProjectDetailPage({ params }: Params) {
               </Block>
             </Reveal>
             <Reveal>
-              <Block label={copy.detailLabels.approach}>{project.approach}</Block>
+              <Block label={copy.detailLabels.approach}>
+                {project.approach}
+              </Block>
             </Reveal>
             <Reveal>
               <Block label={copy.detailLabels.workCompleted}>
@@ -124,7 +123,10 @@ export default function ProjectDetailPage({ params }: Params) {
                         key={outcome}
                         className="flex gap-4 font-sans text-lg leading-relaxed text-field"
                       >
-                        <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 bg-brass" />
+                        <span
+                          aria-hidden="true"
+                          className="mt-2 h-1.5 w-1.5 shrink-0 bg-brass"
+                        />
                         <span className="max-w-prose">{outcome}</span>
                       </li>
                     ))}
@@ -137,9 +139,9 @@ export default function ProjectDetailPage({ params }: Params) {
       </section>
 
       <section className="border-t border-forest/10 bg-limestone-dark">
-        <Container className="py-16 text-center sm:py-20">
+        <Container className="py-14 text-center sm:py-16 lg:py-20">
           <Reveal>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <CtaLink href={CTA.primary.href}>{CTA.primary.label}</CtaLink>
               <CtaLink href={CTA.secondary.href} variant="secondary">
                 {CTA.secondary.label}

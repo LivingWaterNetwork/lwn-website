@@ -79,11 +79,18 @@ export const contact = {
   headline: "Let's find out what your organization actually needs.",
   body: "Tell us a little about where things stand. We'll follow up to schedule a conversation.",
   submitLabel: "Send",
+  sendingLabel: "Just a moment.",
+  successHeadline:
+    "Thank you \u2014 we\u2019ve received your message and will follow up soon.",
+  successBody:
+    "Your details are saved and our inbox has been notified. If anything is missing, we\u2019ll ask when we reply.",
   validationError: "Please check the highlighted fields and try again.",
-} as const;
-
-export const legalPlaceholder = {
-  body: "This page is being finalized. In the meantime, if you have a question about how Measure & Make handles information or agreements, please contact us directly.",
+  rateLimitedError:
+    "That\u2019s several messages from this connection in a short window, so this one wasn\u2019t sent. Please try again in a few minutes.",
+  submissionError:
+    "Something went wrong on our end, so your message wasn\u2019t sent and nothing was saved. Please try again in a few minutes.",
+  notConfiguredError:
+    "This form isn\u2019t connected to its inbox in this environment yet, so your message wasn\u2019t sent and nothing was saved. Please try again later.",
 } as const;
 
 export const notFound = {

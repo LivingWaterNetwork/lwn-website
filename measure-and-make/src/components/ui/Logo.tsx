@@ -1,3 +1,5 @@
+import { assetPath } from "@/lib/asset-path";
+
 /**
  * The approved production lockups, used as supplied. Nothing here redraws,
  * re-fonts, or recolors them (01-BRAND-FOUNDATION.md §6).
@@ -23,7 +25,7 @@ export function Logo({
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        src="/brand/measure-make-makers-seal.svg"
+        src={assetPath("/brand/measure-make-makers-seal.svg")}
         alt=""
         aria-hidden="true"
         width={40}
@@ -36,7 +38,7 @@ export function Logo({
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src="/brand/measure-make-03-5-horizontal.svg"
+      src={assetPath("/brand/measure-make-03-5-horizontal.svg")}
       alt="Measure & Make"
       width={1125}
       height={225}

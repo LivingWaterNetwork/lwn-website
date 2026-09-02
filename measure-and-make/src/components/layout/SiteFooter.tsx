@@ -2,16 +2,12 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
 import { RelationshipDisclosure } from "./RelationshipDisclosure";
-import {
-  CAPABILITY_LINE,
-  LEGAL_LINKS,
-  NAV_LINKS,
-} from "@/content/site";
+import { CAPABILITY_LINE, LEGAL_LINKS, NAV_LINKS } from "@/content/site";
 
 export function SiteFooter() {
   return (
     <footer className="border-t border-forest/10 bg-limestone-dark">
-      <Container className="py-14">
+      <Container className="py-12 sm:py-14">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_auto]">
           <div>
             {/* The supplied lockup already carries the Maker's Seal alongside

@@ -48,10 +48,13 @@ export async function createInquiryRecord(
               Organization: submission.organization,
               Email: submission.email,
               Phone: submission.phone || undefined,
+              Website: submission.website || undefined,
               "Organization Type": submission.organizationType || undefined,
               Interests: submission.interests.length
                 ? submission.interests
                 : undefined,
+              Timeline: submission.timeline || undefined,
+              "Budget Range": submission.budget || undefined,
               Message: submission.message || undefined,
               "Submitted At": new Date().toISOString(),
               Status: "New",

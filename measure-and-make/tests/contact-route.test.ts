@@ -10,8 +10,11 @@ const VALID = {
   organization: "Cedar Street Church",
   email: "jordan@example.org",
   phone: "",
+  website: "cedarstreet.example.org",
   organizationType: "Church / Ministry",
   interests: ["Websites & Digital Platforms"],
+  timeline: "Next 1-3 months",
+  budget: "$5,000-$15,000",
   message: "We need to replace a site nobody can edit.",
   [HONEYPOT_FIELD]: "",
 };
@@ -56,12 +59,18 @@ describe("POST /api/contact", () => {
       string,
       RequestInit,
     ];
-    expect(url).toContain("api.airtable.com/v0/appKznUQ11agoIbcs/tblgc13tluLMgJHgo");
+    expect(url).toContain(
+      "api.airtable.com/v0/appKznUQ11agoIbcs/tblgc13tluLMgJHgo",
+    );
     const sent = JSON.parse(String(init.body));
     expect(sent.records[0].fields).toMatchObject({
       Name: VALID.name,
       Organization: VALID.organization,
       Email: VALID.email,
+      Website: VALID.website,
+      Timeline: VALID.timeline,
+      "Budget Range": VALID.budget,
+      Message: VALID.message,
       Status: "New",
     });
   });
@@ -108,14 +117,34 @@ describe("POST /api/contact", () => {
     vi.stubGlobal("fetch", vi.fn());
 
     const response = await post(
-      { ...VALID, name: "", email: "not-an-email" },
+      { ...VALID, name: "", email: "not-an-email", message: "" },
       nextIp(),
     );
     expect(response.status).toBe(400);
-    const body = (await response.json()) as { status: string; fields: string[] };
+    const body = (await response.json()) as {
+      status: string;
+      fields: string[];
+    };
     expect(body.status).toBe("invalid");
     expect(body.fields).toContain("name");
     expect(body.fields).toContain("email");
+    expect(body.fields).toContain("message");
+  });
+
+  it("names an invalid website without rejecting a blank one", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => new Response("{}", { status: 200 })),
+    );
+
+    const bad = await post({ ...VALID, website: "not a url at all" }, nextIp());
+    expect(bad.status).toBe(400);
+    expect(((await bad.json()) as { fields: string[] }).fields).toContain(
+      "website",
+    );
+
+    const blank = await post({ ...VALID, website: "" }, nextIp());
+    expect(blank.status).toBe(200);
   });
 
   it("rate-limits repeated submissions from one address", async () => {

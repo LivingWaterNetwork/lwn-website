@@ -3,10 +3,7 @@ import type { Config } from "tailwindcss";
 // Palette is Concept 03.5, verbatim from 01-BRAND-FOUNDATION.md §6. No other
 // colors belong in this build — no gradients, no SaaS blues, no neon accents.
 const config: Config = {
-  content: [
-    "./src/components/**/*.{ts,tsx}",
-    "./src/app/**/*.{ts,tsx}",
-  ],
+  content: ["./src/components/**/*.{ts,tsx}", "./src/app/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {

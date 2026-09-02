@@ -22,10 +22,9 @@ export const SITE_URL = "https://www.lwnetwork.org/measure-and-make";
 export const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/work", label: "Work" },
-  { href: "/capabilities", label: "Capabilities" },
-  { href: "/process", label: "Process" },
+  { href: "/services", label: "Services" },
   { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/start", label: "Start" },
 ] as const;
 
 export const LEGAL_LINKS = [
@@ -34,7 +33,7 @@ export const LEGAL_LINKS = [
 ] as const;
 
 export const CTA = {
-  primary: { label: "Start a Conversation", href: "/contact" },
+  primary: { label: "Start a Conversation", href: "/start" },
   secondary: { label: "Explore Our Work", href: "/work" },
 } as const;
 
@@ -62,8 +61,13 @@ export const MICROCOPY = {
 } as const;
 
 /**
- * Supplied by the founder, resolving Claims Register row 20 / Open Decisions #3.
- * This is the only contact detail that exists — no phone number and no physical
- * address have been supplied, so neither appears anywhere on the site.
+ * The only route to Measure & Make is the form at /start. By design the site
+ * publishes no email address, telephone number, or postal address: Living Water
+ * Network's nonprofit inbox must not receive Measure & Make's commercial
+ * inquiries, and no separate Measure & Make address is in service. Anything that
+ * needs to point somewhere points here.
  */
-export const CONTACT_EMAIL = "info@lwnetwork.org";
+export const CONTACT_PATH = "/start";
+
+/** Effective date carried by both legal pages. */
+export const LEGAL_EFFECTIVE_DATE = "September 2, 2026";

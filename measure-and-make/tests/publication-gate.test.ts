@@ -27,7 +27,9 @@ describe("the publication gate", () => {
   it("only ever exposes Public records whose approval status starts with Approved", () => {
     for (const project of getPublicProjects()) {
       expect(project.visibility).toBe("Public");
-      expect(project.publicationApprovalStatus.startsWith("Approved")).toBe(true);
+      expect(project.publicationApprovalStatus.startsWith("Approved")).toBe(
+        true,
+      );
     }
   });
 
@@ -66,9 +68,14 @@ describe("sitemap", () => {
     for (const slug of WITHHELD_SLUGS) {
       expect(urls.some((url) => url.includes(slug))).toBe(false);
     }
-    // Placeholder legal pages stay out while they are still placeholder text.
+    // The legal pages are complete but noindex until owner and counsel sign
+    // off, so they stay out of the sitemap. See docs/LEGAL-REVIEW-HANDOFF.md.
     expect(urls.some((url) => url.endsWith("/privacy"))).toBe(false);
     expect(urls.some((url) => url.endsWith("/terms"))).toBe(false);
+    // Every live route is listed.
+    for (const path of ["", "/work", "/services", "/about", "/start"]) {
+      expect(urls).toContain(`${SITE_URL}${path}`);
+    }
   });
 });
 

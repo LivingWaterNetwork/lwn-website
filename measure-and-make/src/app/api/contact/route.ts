@@ -5,7 +5,6 @@ import {
   type ContactResult,
 } from "@/lib/contact-schema";
 import { createInquiryRecord, getAirtableConfig } from "@/lib/airtable";
-import { sendInquiryNotification } from "@/lib/notify";
 import { allowRequest } from "@/lib/rate-limit";
 
 function result(body: ContactResult, status: number) {
@@ -62,13 +61,9 @@ export async function POST(request: Request) {
     return result({ status: "failed" }, 502);
   }
 
-  // The inquiry is saved at this point. A notification failure must not turn a
-  // saved inquiry into an error the visitor sees.
-  try {
-    await sendInquiryNotification(parsed.data);
-  } catch (error) {
-    console.error("[contact] notification email failed", error);
-  }
+  // Notification is Airtable's job: the base's own automation emails the inbox
+  // on record creation. Nothing else needs to happen here, and nothing about
+  // notification can turn a saved inquiry into an error the visitor sees.
 
   return result({ status: "ok" }, 200);
 }

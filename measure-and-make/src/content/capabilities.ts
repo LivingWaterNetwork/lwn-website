@@ -9,7 +9,7 @@ export interface Capability {
   /** One-line summary used on the home page cards. */
   summary: string;
   tagline: string;
-  /** Full body used on /capabilities. */
+  /** Full body used on /services. */
   body: string;
 }
 

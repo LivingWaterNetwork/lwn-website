@@ -13,15 +13,15 @@ export function PageHeader({
 }) {
   return (
     <section className="border-b border-forest/10 bg-limestone-light">
-      <Container className="py-16 sm:py-20">
+      <Container className="py-12 sm:py-16 lg:py-20">
         <Reveal className="max-w-3xl">
           <Eyebrow>{eyebrow}</Eyebrow>
-          <h1 className="mt-5 font-display text-4xl leading-tight text-forest sm:text-5xl">
+          <h1 className="mt-5 font-display text-3xl leading-tight text-forest sm:text-4xl lg:text-5xl">
             {headline}
           </h1>
           <div className="mt-6 rule-brass" />
           {intro ? (
-            <p className="mt-6 max-w-prose font-sans text-lg leading-relaxed text-field">
+            <p className="mt-6 max-w-prose font-sans text-base leading-relaxed text-field sm:text-lg">
               {intro}
             </p>
           ) : null}
