@@ -5,6 +5,7 @@ import {
   getPublicProjectSlugs,
   getPublicProjects,
 } from "@/content/projects";
+import { SITE_URL } from "@/content/site";
 
 // The publication gate is the one rule that overrides everything else in this
 // build (07-DEVELOPER-CONTENT-MAP.md). These tests fail loudly if a record ever
@@ -53,3 +54,24 @@ describe("brand rules that are easy to break in code", () => {
     expect(text).not.toMatch(/\bM\s?&\s?M\b/);
   });
 });
+
+describe("sitemap", () => {
+  it("lists only static routes and approved project slugs", async () => {
+    const { default: sitemap } = await import("@/app/sitemap");
+    const urls = sitemap().map((entry) => entry.url);
+
+    for (const slug of APPROVED_SLUGS) {
+      expect(urls).toContain(`${SITE_URL}/work/${slug}`);
+    }
+    for (const slug of WITHHELD_SLUGS) {
+      expect(urls.some((url) => url.includes(slug))).toBe(false);
+    }
+    // Placeholder legal pages stay out while they are still placeholder text.
+    expect(urls.some((url) => url.endsWith("/privacy"))).toBe(false);
+    expect(urls.some((url) => url.endsWith("/terms"))).toBe(false);
+  });
+});
+
+// /work/[slug] cannot be imported here (the page is TSX and this suite runs
+// without a JSX transform), but its generateStaticParams is a direct call to
+// getPublicProjectSlugs(), which the first test above pins exactly.

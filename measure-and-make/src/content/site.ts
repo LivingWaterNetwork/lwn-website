@@ -62,10 +62,8 @@ export const MICROCOPY = {
 } as const;
 
 /**
- * Contact details are deliberately absent. No email, phone, or address has been
- * supplied (Claims Register row 20 / Open Decisions #3), and inventing a
- * plausible one would be a fabricated claim. Anything that needs to display
- * contact details should render this pending note instead.
+ * Supplied by the founder, resolving Claims Register row 20 / Open Decisions #3.
+ * This is the only contact detail that exists — no phone number and no physical
+ * address have been supplied, so neither appears anywhere on the site.
  */
-export const CONTACT_DETAILS_PENDING =
-  "A direct contact address for Measure & Make has not been set yet. This will be published here once it is.";
+export const CONTACT_EMAIL = "info@lwnetwork.org";

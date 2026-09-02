@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { CtaLink } from "@/components/ui/CtaLink";
@@ -8,6 +9,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CapabilityCard } from "@/components/CapabilityCard";
 import { ProcessStep } from "@/components/ProcessStep";
 import { ProjectCard } from "@/components/ProjectCard";
+import { OrganizationSchema } from "@/components/OrganizationSchema";
 import { capabilities } from "@/content/capabilities";
 import { home, work } from "@/content/copy";
 import {
@@ -15,13 +17,20 @@ import {
   processStages,
 } from "@/content/process";
 import { getFeaturedProjects } from "@/content/projects";
-import { CAPABILITY_LINE, CTA } from "@/content/site";
+import { CAPABILITY_LINE, CTA, META_DESCRIPTION } from "@/content/site";
+
+export const metadata: Metadata = {
+  description: META_DESCRIPTION,
+  alternates: { canonical: "/" },
+};
 
 export default function HomePage() {
   const featured = getFeaturedProjects();
 
   return (
     <>
+      <OrganizationSchema />
+
       {/* Hero */}
       <section className="bg-limestone">
         <Container className="py-20 sm:py-28 lg:py-32">
