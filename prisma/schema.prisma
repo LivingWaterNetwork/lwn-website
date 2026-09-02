@@ -324,3 +324,25 @@ model GalaSponsorshipInquiry {
 
   @@map("gala_sponsorship_inquiries")
 }
+
+model CatalystInquiry {
+  id             String   @id @default(cuid())
+  name           String
+  email          String
+  phone          String?
+  organization   String?
+  currentWebsite String?
+  orgType        String?
+  building       String
+  problem        String?
+  services       String?  // comma-separated selection from the four capability areas
+  projectStage   String?
+  timeline       String?
+  budgetRange    String?
+  referral       String?
+  additional     String?
+  status         String   @default("new")
+  createdAt      DateTime @default(now())
+
+  @@map("catalyst_inquiries")
+}

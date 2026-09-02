@@ -288,3 +288,140 @@
     }
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * Living Water Catalyst component layer — used only under /catalyst. This is
+ * an extension of the LWN system above (same tokens, same fonts), not a fork:
+ * the palette is identical, but the section leans more architectural — flatter
+ * surfaces, hairline rules, tighter tracking, and grid structure instead of
+ * the softer card-and-shadow treatment used on the main site.
+ * ------------------------------------------------------------------------- */
+
+@layer components {
+  .cat-eyebrow {
+    @apply font-sans font-extrabold text-[11px] uppercase tracking-[0.22em] text-[#0A77BC];
+  }
+
+  .cat-eyebrow-dark {
+    @apply text-spring;
+  }
+
+  .cat-h1 {
+    @apply font-serif font-semibold text-4xl sm:text-5xl lg:text-6xl leading-[1.05] tracking-[-0.02em];
+  }
+
+  .cat-h2 {
+    @apply font-serif font-semibold text-3xl md:text-4xl leading-[1.15] tracking-[-0.015em];
+  }
+
+  .cat-h3 {
+    @apply font-serif font-semibold text-xl md:text-2xl leading-snug;
+  }
+
+  .cat-lede {
+    @apply font-sans text-lg md:text-xl leading-relaxed text-slate;
+  }
+
+  .cat-body {
+    @apply font-sans text-base leading-relaxed text-slate;
+  }
+
+  /* Flat, rule-bounded panel. Deliberately not `.card` — no lift, no shadow;
+     structure comes from the border and the grid it sits in. */
+  .cat-panel {
+    @apply bg-white border border-navy/10 rounded-lg p-6 md:p-8 transition-colors duration-300 hover:border-navy/25;
+  }
+
+  .cat-panel-dark {
+    @apply border border-white/12 rounded-lg p-6 md:p-8 bg-white/[0.03] transition-colors duration-300 hover:border-white/25;
+  }
+
+  /* Numeral that anchors a process step or capability area. */
+  .cat-index {
+    @apply font-serif text-sm font-semibold text-[#0A77BC] tabular-nums;
+  }
+
+  .cat-rule {
+    @apply border-t border-navy/10;
+  }
+
+  .cat-rule-dark {
+    @apply border-t border-white/12;
+  }
+
+  /* Status chips for portfolio work. Each status reads as its own state so
+     in-progress work is never mistaken for finished work. */
+  .cat-status {
+    @apply inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-sans font-semibold uppercase tracking-[0.08em];
+  }
+
+  .cat-status-live {
+    @apply border-emerald-600/30 bg-emerald-50 text-emerald-800;
+  }
+
+  .cat-status-in-development {
+    @apply border-copper/30 bg-copper/[0.07] text-copper-dark;
+  }
+
+  .cat-status-foundation-strategy {
+    @apply border-[#0A77BC]/30 bg-[#0A77BC]/[0.07] text-deep-sea;
+  }
+
+  .cat-status-private,
+  .cat-status-archived {
+    @apply border-slate/25 bg-slate/[0.06] text-slate;
+  }
+
+  /* Filter pill used on the work index. */
+  .cat-filter {
+    @apply inline-flex items-center rounded-full border border-navy/15 bg-white px-4 py-1.5 text-sm font-sans font-medium text-slate transition-colors hover:border-navy/35 hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A77BC] focus-visible:ring-offset-2;
+  }
+
+  .cat-filter-active {
+    @apply border-navy bg-navy text-white hover:border-navy hover:text-white;
+  }
+
+  .cat-empty {
+    @apply text-center py-16 px-6 rounded-lg border border-dashed border-navy/20 bg-white/60;
+  }
+
+  /* Meta term/definition pairs on a project detail page. */
+  .cat-meta-term {
+    @apply font-sans text-[11px] font-extrabold uppercase tracking-[0.16em] text-slate/70;
+  }
+
+  .cat-meta-value {
+    @apply font-sans text-sm text-navy mt-1;
+  }
+}
+
+@layer utilities {
+  /* Faint architectural grid used behind dark Catalyst sections. */
+  .cat-grid-bg {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+
+  @keyframes cat-rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .cat-animate-rise {
+    animation: cat-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cat-animate-rise {
+      animation: none;
+    }
+  }
+}

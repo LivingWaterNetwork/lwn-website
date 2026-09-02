@@ -64,6 +64,23 @@ export const galaSponsorshipSchema = z.object({
   message: optionalText(5000),
 });
 
+export const catalystInquirySchema = z.object({
+  name,
+  email,
+  phone: optionalPhone,
+  organization: optionalText(200),
+  currentWebsite: optionalText(300),
+  orgType: optionalText(120),
+  building: z.string().trim().min(1, "Please tell us what you're building.").max(5000),
+  problem: optionalText(5000),
+  services: optionalText(400),
+  projectStage: optionalText(120),
+  timeline: optionalText(120),
+  budgetRange: optionalText(120),
+  referral: optionalText(200),
+  additional: optionalText(5000),
+});
+
 export const businessStewardshipDiscoverySchema = z.object({
   clientSlug: z.string().trim().min(1).max(60).default("dante"),
   name,

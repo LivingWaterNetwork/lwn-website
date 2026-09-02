@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/blog";
+import { getAllProjects } from "@/lib/catalyst";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://lwnetwork.org";
 
@@ -61,6 +62,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/yan/stories/los-angeles", priority: 0.4, changeFrequency: "weekly" },
     { path: "/yan/stories/phoenix", priority: 0.4, changeFrequency: "weekly" },
     { path: "/yan/join", priority: 0.6, changeFrequency: "monthly" },
+    { path: "/catalyst", priority: 0.8, changeFrequency: "monthly" },
+    { path: "/catalyst/work", priority: 0.7, changeFrequency: "monthly" },
+    { path: "/catalyst/services", priority: 0.7, changeFrequency: "monthly" },
+    { path: "/catalyst/start", priority: 0.6, changeFrequency: "monthly" },
     { path: "/privacy", priority: 0.2, changeFrequency: "yearly" },
     { path: "/terms", priority: 0.2, changeFrequency: "yearly" },
   ];
@@ -85,5 +90,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     blogEntries = [];
   }
 
-  return [...staticEntries, ...blogEntries];
+  // Only published projects — getAllProjects() filters out `draft` and
+  // `private` visibility, so unapproved work can never appear in the sitemap.
+  let catalystEntries: MetadataRoute.Sitemap = [];
+  try {
+    catalystEntries = getAllProjects().map((project) => ({
+      url: `${SITE_URL}/catalyst/work/${project.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    }));
+  } catch {
+    catalystEntries = [];
+  }
+
+  return [...staticEntries, ...blogEntries, ...catalystEntries];
 }

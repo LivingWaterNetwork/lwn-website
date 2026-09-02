@@ -24,6 +24,7 @@ const PROGRAM_INQUIRY_TABLE = "Program Inquiries";
 const PARTNERSHIP_INQUIRY_TABLE = "Partnership Inquiries";
 const PLEDGE_INQUIRY_TABLE = "Multi-Year Pledge Inquiries";
 const GALA_SPONSORSHIP_TABLE = "Gala Sponsorship Inquiries";
+const CATALYST_INQUIRY_TABLE = "Catalyst Inquiries";
 
 const AIRTABLE_BASE_URL = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}`;
 
@@ -234,6 +235,65 @@ export async function pushGalaSponsorshipInquiry(data: {
     "Sponsorship Level": data.sponsorshipLevel ?? "",
     "Ticket Count": data.ticketCount ?? "",
     Message: data.message ?? "",
+    Status: "New",
+    "Submitted At": new Date().toISOString().split("T")[0],
+  });
+}
+
+// ─── Catalyst Inquiries ───────────────────────────────────────────────────────
+// NOTE: This table does not exist in the Airtable base yet — it has to be created
+// before these records will land. Until it is, `createRecord` throws, the route
+// logs the failure, and the submission still persists to the database and sends
+// the notification email (the push is wrapped in its own try/catch, same as every
+// other funnel). Create a table named exactly "Catalyst Inquiries" with:
+//   Name              Single line text
+//   Email             Email
+//   Phone             Phone number
+//   Organization      Single line text
+//   Current Website   URL
+//   Organization Type Single line text
+//   Building          Long text
+//   Problem           Long text
+//   Services          Long text
+//   Project Stage     Single line text
+//   Timeline          Single line text
+//   Budget Range      Single line text
+//   Referral Source   Single line text
+//   Additional        Long text
+//   Status            Single select  (New, In Progress, Responded)
+//   Submitted At      Date
+
+export async function pushCatalystInquiry(data: {
+  name: string;
+  email: string;
+  phone?: string;
+  organization?: string;
+  currentWebsite?: string;
+  orgType?: string;
+  building: string;
+  problem?: string;
+  services?: string;
+  projectStage?: string;
+  timeline?: string;
+  budgetRange?: string;
+  referral?: string;
+  additional?: string;
+}) {
+  return createRecord(CATALYST_INQUIRY_TABLE, {
+    Name: data.name,
+    Email: data.email,
+    Phone: data.phone ?? "",
+    Organization: data.organization ?? "",
+    "Current Website": data.currentWebsite ?? "",
+    "Organization Type": data.orgType ?? "",
+    Building: data.building,
+    Problem: data.problem ?? "",
+    Services: data.services ?? "",
+    "Project Stage": data.projectStage ?? "",
+    Timeline: data.timeline ?? "",
+    "Budget Range": data.budgetRange ?? "",
+    "Referral Source": data.referral ?? "",
+    Additional: data.additional ?? "",
     Status: "New",
     "Submitted At": new Date().toISOString().split("T")[0],
   });

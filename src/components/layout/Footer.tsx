@@ -55,6 +55,7 @@ export function Footer() {
                 { href: "/events", label: "Events" },
                 { href: "/yan", label: "YAN — Young Adults Network" },
                 { href: "/partnership", label: "Partner With Us" },
+                { href: "/catalyst", label: "Living Water Catalyst" },
                 { href: "/theory-of-change", label: "Theory of Change" },
                 { href: "/faq", label: "FAQ" },
                 { href: "/blog", label: "Blog" },

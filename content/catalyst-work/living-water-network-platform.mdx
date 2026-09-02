@@ -1,0 +1,56 @@
+---
+title: Living Water Network Digital Platform
+slug: living-water-network-platform
+client: Living Water Network
+organization: Living Water Network Inc.
+projectType: Website & Digital Platform
+summary: A production website and operational backend for a nonprofit ministry — program presentation, application and inquiry funnels, donation infrastructure, and the content system behind it.
+challenge: >-
+  Living Water Network's work spans counseling, mentorship, coaching, missions, speaking,
+  church advisory, a leadership cohort, and a partnership program. Each of those needed a
+  clear public explanation and its own way for someone to raise a hand — and each inquiry
+  needed to land somewhere the team could actually work it, not in an inbox. The
+  organization needed one platform that could hold all of it without a separate tool per
+  program.
+approach: >-
+  We built a single Next.js application with a shared design system, so every program page
+  is recognisably part of the same organization while carrying its own tailored intake
+  questions. Form submissions follow one consistent path — validated on the server, written
+  to the database, pushed to the team's Airtable workspace for follow-up, and announced by
+  email — so adding a new funnel is a known quantity rather than a new integration.
+workCompleted:
+  - Full site architecture and build on Next.js App Router with TypeScript
+  - Design system covering typography, color, buttons, cards, and form controls
+  - Program pages for counseling, mentorship, coaching, missions, speaking, and church advisory
+  - Cohort application, contact, partnership, pledge, and gala sponsorship funnels
+  - Shared server-side validation, honeypot spam mitigation, and per-route rate limiting
+  - Database persistence with Prisma and Postgres, plus Airtable sync for team follow-up
+  - Transactional and notification email delivery
+  - Donation flow with Stripe checkout, webhook handling, and receipt generation
+  - MDX-based blog with scheduled publishing
+  - SEO foundation — per-page metadata, canonical URLs, structured data, sitemap, and robots
+  - Responsive layouts and accessibility work including skip links, focus states, and keyboard-navigable menus
+currentStage: Live in production and actively maintained. New sections and funnels are added to the same platform as the organization's work grows.
+status: live
+services:
+  - Websites & Digital Experiences
+  - Strategy & Organizational Architecture
+  - Operations, AI & Automation
+outcomes:
+  - Every program has a public page and a working intake path
+  - Inquiries persist to the database and reach the team through Airtable and email
+  - New funnels reuse the existing validation, storage, and notification pattern
+  - One codebase now carries the main site, a separate initiative mini-site, and client-facing tools
+year: "2025"
+images: []
+externalUrl: https://lwnetwork.org
+visibility: public
+featured: true
+displayOrder: 1
+nextPhase: Continued expansion of the platform as new initiatives and programs come online.
+---
+
+The platform is the reference implementation for how Catalyst builds: one system, shared
+conventions, and room to grow. Each new section added since launch — a separate initiative
+mini-site, client-facing intake tools — reuses the same validation, storage, notification,
+and design foundations rather than starting over.
