@@ -4,7 +4,7 @@ import { CtaLink } from "@/components/ui/CtaLink";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Reveal } from "@/components/ui/Reveal";
-import { ProjectCard } from "@/components/ProjectCard";
+import { ProjectTile } from "@/components/ProjectTile";
 import { work as copy } from "@/content/copy";
 import { getPublicProjects } from "@/content/projects";
 import { CTA } from "@/content/site";
@@ -29,10 +29,20 @@ export default function WorkPage() {
       <section className="bg-limestone">
         <Container className="py-14 sm:py-16 lg:py-20">
           {projects.length > 0 ? (
-            <div className="grid gap-6 md:grid-cols-2">
+            /* A gallery: the lead project takes the full width of the grid,
+               everything after it sits two-up. Composition follows the
+               registry's own display order — no project is promoted here. */
+            <div className="grid gap-5 sm:gap-6 lg:grid-cols-2">
               {projects.map((project, index) => (
-                <Reveal key={project.slug} delay={index * 0.06}>
-                  <ProjectCard project={project} />
+                <Reveal
+                  key={project.slug}
+                  delay={index * 0.06}
+                  className={index === 0 ? "lg:col-span-2" : ""}
+                >
+                  <ProjectTile
+                    project={project}
+                    variant={index === 0 ? "wide" : "standard"}
+                  />
                 </Reveal>
               ))}
             </div>

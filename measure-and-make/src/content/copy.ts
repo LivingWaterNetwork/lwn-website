@@ -38,6 +38,11 @@ export const work = {
     "Every project below started the same way — by listening first. What follows is what we've verified, built, and shipped; where something is still in progress, we say so.",
   emptyState:
     "We're building our public portfolio carefully — every case study here is verified before it's published. Check back soon, or start a conversation about your own project.",
+  // Interface labels for the /work gallery. Chrome only — nothing here
+  // describes a project, so no gallery label can outrun the registry.
+  gallery: {
+    tileLink: "View the case study",
+  },
   detailLabels: {
     challenge: "The Challenge",
     approach: "Our Approach",
