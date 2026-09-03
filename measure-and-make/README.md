@@ -184,6 +184,33 @@ the repository root. The root `tsconfig.json` excludes `measure-and-make` so the
 two type-check independently — without that exclusion, the root build resolves
 this app's `@/*` imports against the root `src/` and fails.
 
+## Hosting: how this reaches www.lwnetwork.org/measure-and-make
+
+Decided September 3 2026. This app stays a separate Vercel project
+(`measure-and-make`, root directory `measure-and-make`), and the root Living
+Water Network app rewrites the prefix to it. The whole integration is in the
+root `next.config.mjs`:
+
+- `/measure-and-make` and `/measure-and-make/:path*` rewrite (`beforeFiles`) to
+  the Measure & Make deployment. That app's `basePath` means its pages, its API
+  route, and its `/_next` assets all already carry the prefix, so everything
+  passes through unchanged — verified route by route, including the sitemap,
+  `robots.txt`, the brand SVG byte-for-byte, and a withheld slug still 404ing.
+- `/measure&make`, `/measure&make/:path*`, and `/measure-make` redirect (307) to
+  the canonical `/measure-and-make`. `&` is legal in a path but breaks link
+  detection in messaging apps, analytics, and anything that reads a path as a
+  query string, so it forwards rather than serving the site.
+
+No Living Water Network route, page, or data is touched, and nothing in that
+config runs for a path outside the prefix. The root app's own middleware is
+scoped to `/yan/admin`, `/api/yan/admin`, and `/discovery/dante`, so it never
+sees these requests.
+
+Two consequences worth remembering: the rewrite targets the Measure & Make
+project's **production** deployment, so a change is only public once it is
+promoted there; and the rewrite reaches the domain only once this branch is
+merged, because the root app deploys from `main`.
+
 ## Remaining production-launch requirements
 
 1. **Install `AIRTABLE_API_KEY`** in the deployment environment, then run the
