@@ -51,9 +51,18 @@ classifications, all enforced by one filter:
 | ------------------------------------------- | ------------------------------ | -------------------------------------------------------------- |
 | Living Water Network Digital Platform       | Public / Live                  | Yes                                                            |
 | Young Adults Network (YAN) Digital Platform | Public / Live                  | Yes                                                            |
+| Hand of Life Renovations                    | Public / Live                  | Yes                                                            |
+| Redemption Cleanout Services                | Public / Live                  | Yes                                                            |
+| Radiant Events Planning                     | Public / In Development        | Yes, with no outbound link — no live address is confirmed      |
 | Organizational Operating System             | Public / Foundation & Strategy | Yes, as vision and architecture only — never as built software |
-| Radiant Events Planning                     | Draft / In Development         | No                                                             |
-| Estate cleanout and junk-removal business   | Private / In Development       | No                                                             |
+
+Hand of Life Renovations, Redemption Cleanout Services, and Radiant Events
+Planning were approved for publication by the founder on 2026-09-03; the
+Redemption record supersedes the earlier Private "Estate Cleanout &
+Full-Property Services Website" record, whose slug now 404s like any other slug
+that does not exist. Approval moved those records through the same gate as
+everything else — it did not bypass it, and each record still carries the
+claims it may not make.
 
 How that is enforced:
 

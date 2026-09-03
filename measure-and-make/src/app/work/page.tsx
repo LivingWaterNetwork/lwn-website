@@ -29,22 +29,30 @@ export default function WorkPage() {
       <section className="bg-limestone">
         <Container className="py-14 sm:py-16 lg:py-20">
           {projects.length > 0 ? (
-            /* A gallery: the lead project takes the full width of the grid,
-               everything after it sits two-up. Composition follows the
-               registry's own display order — no project is promoted here. */
+            /* A gallery: the lead project takes the full width of the grid and
+               everything after it sits two-up, with the last tile widening
+               when an odd count would otherwise leave it stranded. Composition
+               follows the registry's own display order — this is a layout rule,
+               and no project is promoted by it. */
             <div className="grid gap-5 sm:gap-6 lg:grid-cols-2">
-              {projects.map((project, index) => (
-                <Reveal
-                  key={project.slug}
-                  delay={index * 0.06}
-                  className={index === 0 ? "lg:col-span-2" : ""}
-                >
-                  <ProjectTile
-                    project={project}
-                    variant={index === 0 ? "wide" : "standard"}
-                  />
-                </Reveal>
-              ))}
+              {projects.map((project, index) => {
+                const wide =
+                  index === 0 ||
+                  (index === projects.length - 1 && index % 2 === 1);
+
+                return (
+                  <Reveal
+                    key={project.slug}
+                    delay={index * 0.06}
+                    className={wide ? "lg:col-span-2" : ""}
+                  >
+                    <ProjectTile
+                      project={project}
+                      variant={wide ? "wide" : "standard"}
+                    />
+                  </Reveal>
+                );
+              })}
             </div>
           ) : (
             <EmptyState message={copy.emptyState} />

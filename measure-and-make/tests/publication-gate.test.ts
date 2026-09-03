@@ -14,13 +14,19 @@ import { SITE_URL } from "@/content/site";
 const APPROVED_SLUGS = [
   "living-water-network-digital-platform",
   "young-adults-network-platform",
+  "hand-of-life-renovations",
+  "redemption-cleanout-services",
+  "radiant-events-planning",
   "organizational-operating-system",
 ];
 
-const WITHHELD_SLUGS = ["radiant-events-planning", "estate-cleanout-services"];
+// Slugs that must behave exactly like slugs that never existed: the retired
+// Private "estate cleanout" record, superseded on 2026-09-03 by the named
+// Redemption Cleanout Services record, and anything else.
+const WITHHELD_SLUGS = ["estate-cleanout-services"];
 
 describe("the publication gate", () => {
-  it("exposes exactly the three approved records, in display order", () => {
+  it("exposes exactly the approved records, in display order", () => {
     expect(getPublicProjectSlugs()).toEqual(APPROVED_SLUGS);
   });
 
@@ -33,7 +39,7 @@ describe("the publication gate", () => {
     }
   });
 
-  it("treats a Draft or Private slug exactly like a slug that does not exist", () => {
+  it("treats a retired, withheld, or unknown slug exactly like a slug that does not exist", () => {
     for (const slug of WITHHELD_SLUGS) {
       expect(getProjectBySlug(slug)).toBeUndefined();
     }

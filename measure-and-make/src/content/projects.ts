@@ -87,8 +87,12 @@ const registry: ProjectRecord[] = [
   {
     title: "Radiant Events Planning — Website & Brand Build",
     slug: "radiant-events-planning",
-    organizationOrClient:
-      'Radiant Events Planning (Atlanta-based event planning and design company; note its own site-config.ts uses the shorter "Radiant Events" as the on-site brand name — Radiant Events Planning is the confirmed correct business name per the founder)',
+    // The business's own site-config.ts uses the shorter "Radiant Events" as its
+    // on-site brand name. Radiant Events Planning is the confirmed correct
+    // business name per the founder, and is what renders here. The
+    // misspelling that tests/no-public-contact-details.test.ts bans must never
+    // appear anywhere, including in a comment like this one.
+    organizationOrClient: "Radiant Events Planning",
     projectType: "Brand implementation, website design & development",
     publicSummary:
       "A from-scratch brand implementation and production website for an Atlanta-area event planning and design company, covering planning and coordination, room design and styling, and signature installation services.",
@@ -97,7 +101,7 @@ const registry: ProjectRecord[] = [
     approach:
       "Built on Next.js (App Router), TypeScript, Tailwind CSS, and Framer Motion, implementing the brand's supplied color system (aubergine, cream, tangerine, blush, coral, ink, taupe, stone), its Cormorant Garamond / Montserrat type pairing, and a consistent motion language that respects prefers-reduced-motion. Content is organized as typed local data (services, portfolio, journal) behind typed getter functions, so it can move to a headless CMS later without touching page components.",
     workCompleted:
-      "24 routes building successfully with clean lint and no TypeScript errors; full service architecture across three services — Planning + Coordination, Design + Room Styling, and Signature Installations (balloon installations, tablescapes, draping/room styling, custom backdrops) — each with its own outcomes, inclusions, process steps, and FAQ; a client-side-validated contact form (Zod + React Hook Form) with a honeypot field; a documented brand implementation system; portfolio and about-page scaffolding built and clearly marked as placeholder pending real content.",
+      "24 routes building successfully with clean lint and no TypeScript errors; full service architecture across three services — Planning + Coordination, Design + Room Styling, and Signature Installations (balloon installations, tablescapes, draping/room styling, custom backdrops) — each with its own outcomes, inclusions, process steps, and FAQ; a client-side-validated contact form (Zod + React Hook Form) with a honeypot field; a documented brand implementation system; and portfolio and about-page structures built and waiting on the business's own photography and copy.",
     currentStage:
       "Feature-complete for its current scope; not yet publicly launched; owner-supplied content and approvals still outstanding",
     status: "In Development",
@@ -108,18 +112,20 @@ const registry: ProjectRecord[] = [
     verifiedOutcomes: [],
     year: "2026",
     approvedImages: [],
+    // No outbound link: radianteventsplanning.com currently serves an expired
+    // Squarespace page, not this build, and no other address is confirmed.
     externalUrl: null,
-    visibility: "Draft",
+    visibility: "Public",
     featured: false,
     displayOrder: 10,
     nextPhase:
       "Owner sign-off on real contact information, portfolio photography, testimonials, pricing disclosure, founder biography, and legal copy (Privacy Policy, Terms of Service) before any public launch or public case-study presentation.",
     claimsRequiringVerification: [
-      "All contact details, service boundaries, pricing, geographic service area, imagery, testimonials, and results — none are confirmed for publication per the project's own CONTENT_NEEDED.md file.",
-      "Whether this case study, its wording, its imagery, and the deliverables shown have been explicitly approved by the business owner.",
+      "All contact details, service boundaries, pricing, geographic service area, imagery, testimonials, and results — none are confirmed for publication per the project's own CONTENT_NEEDED.md file, so none may be added to this record.",
+      "The live public address of this site. radianteventsplanning.com serves an expired Squarespace page, not this build; externalUrl stays null until the founder confirms the real address.",
     ],
     publicationApprovalStatus:
-      "Not approved for the public Measure & Make portfolio. Must remain excluded from production pages, metadata, structured data, sitemaps, search, and client-side payloads until the owner explicitly approves the case study, its wording, its imagery, and the deliverables being shown.",
+      "Approved for public portfolio presentation by the founder on 2026-09-03, limited to the facts already in this record. No imagery, testimonial, pricing, or result may be added, and this record must keep stating that the site is not yet publicly launched for as long as that is true.",
   },
   {
     title: "Organizational Operating System",
@@ -155,21 +161,63 @@ const registry: ProjectRecord[] = [
       "No internal governance documents, theological source materials, security architecture, prompts, schemas, credentials, decision ledgers, or sprint materials may be referenced, quoted, or summarized in any public-facing description.",
     ],
     publicationApprovalStatus:
-      "Approved for public presentation only as an approved vision and architecture direction, in the terms above — nothing more specific, until further materials exist and are reviewed. Per the founder's original brief, this project is Public/Foundation & Strategy (unlike Radiant Events Planning and the Estate Cleanout project, which remain unapproved for publication).",
+      "Approved for public presentation only as an approved vision and architecture direction, in the terms above — nothing more specific, until further materials exist and are reviewed. Per the founder's original brief, this project is Public/Foundation & Strategy, and must never be described as built software.",
+  },
+  // Hand of Life Renovations and Redemption Cleanout Services were both
+  // verified against their own live sites on 2026-09-03 (both Next.js
+  // applications served from Vercel). Every fact below is either something the
+  // live site states about itself or something about the build. Neither
+  // record repeats a client's own business claims — years of experience,
+  // licensing, response times, testimonials — as a Measure & Make result, and
+  // no client telephone number, address, or financial arrangement appears
+  // here or anywhere on this site.
+  {
+    title: "Hand of Life Renovations — Website Design & Build",
+    slug: "hand-of-life-renovations",
+    organizationOrClient: "Hand of Life Renovations",
+    projectType: "Website design & development",
+    publicSummary:
+      "A production website for an Atlanta-area renovation contractor that sells to two different audiences — homeowners commissioning residential renovations and property owners commissioning multifamily work — from a single site that ends in one structured quote request.",
+    challenge:
+      "Homeowners and multifamily property partners come to a contractor with different questions and decide on different timelines. The business needed one site that addressed both audiences without burying either, and that turned interest into a structured request rather than an unstructured inquiry.",
+    approach:
+      "Built as a Next.js application deployed on Vercel, with a distinct path for each audience — residential and multifamily — sharing one visual system, one gallery of completed work, and one quote-request flow reachable from the site's main navigation.",
+    workCompleted:
+      "Home, Residential, Multifamily, About, Gallery, Contact, and Quote pages, together with a Privacy Policy and Terms of Service; a gallery presenting the company's own project photography; and a structured quote-request path carried in the primary navigation.",
+    currentStage: "Live production site",
+    status: "Live",
+    services: ["Websites & Digital Platforms"],
+    verifiedOutcomes: [],
+    year: "Build and launch dates not confirmed — see Claims Register.",
+    approvedImages: [],
+    externalUrl: "https://www.holrenovations.com",
+    visibility: "Public",
+    featured: false,
+    displayOrder: 3,
+    nextPhase: "None confirmed for public statement.",
+    claimsRequiringVerification: [
+      "The claims the client's own site makes about its business — combined years of experience, licensed/bonded/insured status, quote response time, and its customer testimonials — are the client's claims about itself, not Measure & Make outcomes. They must never be repeated here or presented as results of this engagement.",
+      "Build start and launch dates, the scope of any ongoing maintenance, and any lead, enquiry, or conversion figure — none supplied, none may be published.",
+    ],
+    publicationApprovalStatus:
+      "Approved for public portfolio presentation by the founder on 2026-09-03, limited to what the live site is and what was built. No metric, testimonial, or client outcome may be added.",
   },
   {
-    title: "Estate Cleanout & Full-Property Services Website",
-    slug: "estate-cleanout-services",
-    organizationOrClient: "[Withheld — private client]",
+    title: "Redemption Cleanout Services — Brand & Website Build",
+    slug: "redemption-cleanout-services",
+    organizationOrClient: "Redemption Cleanout Services",
     projectType:
-      "Business strategy, brand development, and website build (private client)",
-    publicSummary: "Withheld pending client approval.",
-    challenge: "Withheld.",
-    approach: "Withheld.",
-    workCompleted: "Withheld from any public record.",
-    currentStage:
-      "Feature-complete and tested; not deployed; blocked on third-party configuration (lead-capture embed, analytics, review links) and on the client's content approvals — not on code.",
-    status: "In Development",
+      "Business strategy, brand development, website design & development",
+    publicSummary:
+      "A brand and production website for a Metro Detroit property cleanout and demolition company, built to make sense of jobs that look nothing alike, to state exactly where the company works county by county, and to start every job from a photo-based estimate.",
+    challenge:
+      "Cleanout work spans jobs with little in common — an estate, a foreclosure, a hoarding-related clearance, a full structure teardown — and the people hiring for it need two answers before anything else: whether the company works their county, and how a price gets set. The business needed a site that answered both directly, and that stood on its own before it had a volume of public reviews behind it.",
+    approach:
+      "Built as a Next.js application deployed on Vercel, organized around two service lines and a page for each county in the stated service area, with the estimate process — a photo estimate first, an on-site final — stated plainly on the site instead of left to a phone call.",
+    workCompleted:
+      "Two service pages, full property cleanouts and demolition; seven county pages covering the company's stated Metro Detroit service area; How It Works, Projects, Reviews, Resources, FAQ, About, and Contact pages; a walkthrough-request path; and an accessibility statement, Privacy Policy, and Terms of Service.",
+    currentStage: "Live production site",
+    status: "Live",
     services: [
       "Strategy & Organizational Architecture",
       "Websites & Digital Platforms",
@@ -177,17 +225,18 @@ const registry: ProjectRecord[] = [
     verifiedOutcomes: [],
     year: "2026",
     approvedImages: [],
-    externalUrl: null,
-    visibility: "Private",
+    externalUrl: "https://redemptioncleanoutservices.com",
+    visibility: "Public",
     featured: false,
-    displayOrder: 30,
-    nextPhase:
-      "Not applicable at Private visibility — do not plan public next steps for this record.",
+    displayOrder: 4,
+    nextPhase: "None confirmed for public statement.",
     claimsRequiringVerification: [
-      "Client identity, business name, principal's name, address, licensing claims, and financial arrangement must never appear in any Public or Draft record.",
+      "The claims the client's own site makes about its business — its principal's years in real estate, its service radius, and its quoting turnaround — are the client's claims about itself, not Measure & Make outcomes, and must never be repeated here as results of this engagement.",
+      "The client's telephone number, address, principal's name, and financial arrangement must never appear in this record or anywhere on the Measure & Make site.",
+      "Build start and launch dates, job volume, and any revenue or lead figure — none supplied, none may be published.",
     ],
     publicationApprovalStatus:
-      "Not approved for any public or draft presentation. Client identity, financial arrangement, documents, credentials, and private details must not be published under any circumstances without the client's explicit, separate consent.",
+      "Approved for public portfolio presentation by the founder on 2026-09-03, on the founder's confirmation that the client consents to being named in this case study. This record supersedes the earlier Private 'Estate Cleanout & Full-Property Services Website' record for the same engagement; the client's contact details, financial arrangement, and private documents remain excluded from it.",
   },
 ];
 
