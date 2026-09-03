@@ -6,6 +6,7 @@ import { Eyebrow } from "@/components/ui/Eyebrow";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { BrandIntro } from "@/components/BrandIntro";
 import { CapabilityCard } from "@/components/CapabilityCard";
 import { ProcessStep } from "@/components/ProcessStep";
 import { ProjectCard } from "@/components/ProjectCard";
@@ -28,25 +29,37 @@ export default function HomePage() {
     <>
       <OrganizationSchema />
 
+      {/* The first-load brand reveal, homepage only, once per session. It is a
+          visual overlay over the page below, which renders and works exactly
+          the same with the overlay gone. */}
+      <BrandIntro />
+
       {/* Hero */}
       <section className="bg-limestone">
         <Container className="py-16 sm:py-24 lg:py-32">
           <Reveal className="max-w-4xl">
-            <Eyebrow>{home.eyebrow}</Eyebrow>
-            <h1 className="mt-6 font-display text-4xl leading-[1.1] text-forest sm:text-5xl lg:text-6xl">
-              {home.headline}
-            </h1>
-            <p className="mt-8 max-w-prose font-sans text-lg leading-relaxed text-field sm:text-xl">
-              {home.supporting}
-            </p>
-            <p className="mt-8 font-display text-lg text-brass-dark">
-              {CAPABILITY_LINE}
-            </p>
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
-              <CtaLink href={CTA.secondary.href}>{CTA.secondary.label}</CtaLink>
-              <CtaLink href={CTA.primary.href} variant="secondary">
-                {CTA.primary.label}
-              </CtaLink>
+            {/* data-mm-hero marks the block the reveal staggers in as the
+                Deep Forest field retracts. With no reveal playing — any later
+                page in the session, or reduced motion — it does nothing. */}
+            <div data-mm-hero>
+              <Eyebrow>{home.eyebrow}</Eyebrow>
+              <h1 className="mt-6 font-display text-4xl leading-[1.1] text-forest sm:text-5xl lg:text-6xl">
+                {home.headline}
+              </h1>
+              <p className="mt-8 max-w-prose font-sans text-lg leading-relaxed text-field sm:text-xl">
+                {home.supporting}
+              </p>
+              <p className="mt-8 font-display text-lg text-brass-dark">
+                {CAPABILITY_LINE}
+              </p>
+              <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+                <CtaLink href={CTA.secondary.href}>
+                  {CTA.secondary.label}
+                </CtaLink>
+                <CtaLink href={CTA.primary.href} variant="secondary">
+                  {CTA.primary.label}
+                </CtaLink>
+              </div>
             </div>
           </Reveal>
         </Container>

@@ -76,6 +76,43 @@ How that is enforced:
 - No structured data is emitted for any project, approved or not.
 - `tests/publication-gate.test.ts` pins all of it.
 
+## First-load brand reveal
+
+`src/components/BrandIntro.tsx` with its stylesheet in `src/app/globals.css`.
+A Deep Forest field, the Maker's Seal, the full Measure & Make lockup on a
+Limestone plate with an Aged Brass rule and the line "Clarity before
+construction.", then the field parts into two panels and retracts into the
+homepage while the hero staggers in. Roughly 1.64s to a clear page and 1.8s to
+a settled hero on desktop; 1.4s and 1.56s on a narrow screen.
+
+- **Where.** The homepage only, once per browsing session (`sessionStorage`).
+  No other Measure & Make route renders it, and nothing outside this app is
+  touched.
+- **Why it is CSS.** Every stage is a CSS animation that ends in its finished
+  state, so the sequence completes even if the JavaScript fails or is off — the
+  overlay cannot get stuck over the page. Script only decides whether to play
+  it, holds scrolling while it does, and removes the node afterwards.
+- **No fake loading.** The real page is server-rendered behind the overlay and
+  waits on nothing — no font, image, API call, or hydration gate, and no
+  spinner or percentage, because there is no progress to report. A brand asset
+  stalled for 3s does not delay the retraction (checked in the QA sweep).
+- **Accessibility.** `aria-hidden`, nothing focusable, no pointer events, so it
+  can neither trap focus nor swallow a click; keyboard navigation works while
+  it plays. With `prefers-reduced-motion: reduce` there is no sequence at all —
+  every delay is cleared and the overlay is gone in one step.
+- **Two things to know.** The reverse and stacked lockups still are not in the
+  repository, so the name is revealed on a Limestone plate — the ground the
+  supplied dark-ink artwork is drawn for — and nothing is filtered or inverted
+  to fake a reverse version. And the seal precedes the lockup by ~500ms per the
+  founder's brief for this sequence; the company is never introduced by the
+  seal alone, and the seal has dissolved before the name inks in, so the mark
+  is never on screen beside the lockup's own copy of it.
+
+Sections 7 and 8 of `scripts/qa.mjs` pin the invariants: aria-hidden, nothing
+focusable, no pointer events, removed from the DOM, scrolling restored, hero
+settled, no replay in the same session, nothing held under reduced motion, and
+no reveal on any other route.
+
 ## Contact form
 
 `/measure-and-make/start` is the only contact route. The site publishes no email

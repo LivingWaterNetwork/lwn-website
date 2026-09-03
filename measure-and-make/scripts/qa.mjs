@@ -7,7 +7,9 @@
 // hydration errors and horizontal overflow, then checks keyboard order and
 // focus visibility, the mobile menu's disclosure behavior, reduced motion,
 // accessible per-field form errors, that success is never shown without a
-// confirmed write, and that the brand lockups actually decode.
+// confirmed write, that the brand lockups actually decode, and that the
+// first-load brand reveal cannot trap focus, block input, stay stuck over the
+// page, hold a reduced-motion visitor, or replay around the site.
 import { chromium } from "playwright";
 const BASE = "http://localhost:4330/measure-and-make";
 // /nope is the deliberate 404 check; its own 404 response is not a defect.
@@ -17,6 +19,9 @@ const ROUTES = [
   "/work",
   "/work/living-water-network-digital-platform",
   "/work/young-adults-network-platform",
+  "/work/hand-of-life-renovations",
+  "/work/redemption-cleanout-services",
+  "/work/radiant-events-planning",
   "/work/organizational-operating-system",
   "/services",
   "/start",
@@ -266,6 +271,107 @@ for (const [label, width, height] of [
   if (failed.length)
     problems.push(`brand asset requests failed: ${failed.join(", ")}`);
   await page.close();
+}
+
+// 7. The first-load brand reveal: it must never be able to trap anyone, hide
+// the page, or replay itself around the site. See src/components/BrandIntro.tsx.
+{
+  const ctx = await browser.newContext({
+    viewport: { width: 1440, height: 900 },
+  });
+  const page = await ctx.newPage();
+  await page.goto(BASE, { waitUntil: "commit" });
+  await page.waitForTimeout(300);
+
+  const live = await page.evaluate(() => {
+    const el = document.querySelector(".mm-intro");
+    if (!el) return null;
+    return {
+      ariaHidden: el.getAttribute("aria-hidden"),
+      pointerEvents: getComputedStyle(el).pointerEvents,
+      focusable: el.querySelectorAll(
+        'a, button, input, select, textarea, [tabindex], [contenteditable="true"]',
+      ).length,
+    };
+  });
+  if (!live) {
+    problems.push("brand reveal did not render on a first homepage visit");
+  } else {
+    if (live.ariaHidden !== "true")
+      problems.push("brand reveal is not aria-hidden");
+    if (live.pointerEvents !== "none")
+      problems.push(
+        `brand reveal takes pointer events (${live.pointerEvents})`,
+      );
+    if (live.focusable !== 0)
+      problems.push(
+        `brand reveal holds ${live.focusable} focusable element(s)`,
+      );
+  }
+
+  // Keyboard access is never blocked while it plays.
+  await page.keyboard.press("Tab");
+  const focusTrapped = await page.evaluate(
+    () =>
+      !!document.querySelector(".mm-intro")?.contains(document.activeElement),
+  );
+  if (focusTrapped) problems.push("focus entered the brand reveal");
+
+  // It comes down on its own, and scrolling comes back with it.
+  await page.waitForTimeout(2300);
+  const after = await page.evaluate(() => ({
+    inDom: !!document.querySelector(".mm-intro"),
+    overflow: document.documentElement.style.overflow,
+    heroOpacity: getComputedStyle(document.querySelector("h1")).opacity,
+  }));
+  if (after.inDom) problems.push("brand reveal was still in the DOM at 2.6s");
+  if (after.overflow && after.overflow !== "visible")
+    problems.push(`scrolling was not restored (overflow: ${after.overflow})`);
+  if (after.heroOpacity !== "1")
+    problems.push(
+      `hero headline was not settled (opacity ${after.heroOpacity})`,
+    );
+
+  // Second visit in the same session: no replay, not even a frame of it.
+  await page.reload({ waitUntil: "commit" });
+  await page.waitForTimeout(120);
+  const replayed = await page.evaluate(() => {
+    const el = document.querySelector(".mm-intro");
+    return el ? getComputedStyle(el).display !== "none" : false;
+  });
+  if (replayed) problems.push("brand reveal replayed inside the same session");
+  await ctx.close();
+}
+
+// 8. Reduced motion is never held in the sequence, and no other route plays it.
+{
+  const ctx = await browser.newContext({
+    viewport: { width: 1440, height: 900 },
+    reducedMotion: "reduce",
+  });
+  const page = await ctx.newPage();
+  await page.goto(BASE, { waitUntil: "commit" });
+  await page.waitForTimeout(400);
+  const held = await page.evaluate(() => {
+    const el = document.querySelector(".mm-intro");
+    if (!el) return false;
+    const s = getComputedStyle(el);
+    return s.visibility !== "hidden" && s.opacity !== "0";
+  });
+  if (held)
+    problems.push(
+      "reduced motion was still covered by the brand reveal at 400ms",
+    );
+
+  for (const route of ["/work", "/about", "/services", "/start"]) {
+    await page.goto(BASE + route, { waitUntil: "commit" });
+    await page.waitForTimeout(100);
+    const present = await page.evaluate(
+      () => !!document.querySelector(".mm-intro"),
+    );
+    if (present) problems.push(`brand reveal rendered on ${route}`);
+  }
+  await ctx.close();
 }
 
 await browser.close();
