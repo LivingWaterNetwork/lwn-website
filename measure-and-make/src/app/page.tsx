@@ -34,13 +34,21 @@ export default function HomePage() {
           the same with the overlay gone. */}
       <BrandIntro />
 
-      {/* Hero */}
+      {/* Hero.
+          Deliberately NOT wrapped in Reveal. Everything above the fold is
+          painted at full strength with no JavaScript involved: no
+          IntersectionObserver, no scroll listener, no animation library, and
+          nothing that can be left part-way through. The homepage's first
+          impression must not depend on an observer firing.
+
+          data-mm-hero marks the block the first-load reveal staggers in as the
+          Deep Forest field retracts, in CSS. That rule only matches while
+          :root carries data-mm-intro="play" — so on any later page in the
+          session, under reduced motion, or with JavaScript off, this block has
+          no animation at all and is simply visible. See globals.css. */}
       <section className="bg-limestone">
         <Container className="py-16 sm:py-24 lg:py-32">
-          <Reveal className="max-w-4xl">
-            {/* data-mm-hero marks the block the reveal staggers in as the
-                Deep Forest field retracts. With no reveal playing — any later
-                page in the session, or reduced motion — it does nothing. */}
+          <div className="max-w-4xl">
             <div data-mm-hero>
               <Eyebrow>{home.eyebrow}</Eyebrow>
               <h1 className="mt-6 font-display text-4xl leading-[1.1] text-forest sm:text-5xl lg:text-6xl">
@@ -61,7 +69,7 @@ export default function HomePage() {
                 </CtaLink>
               </div>
             </div>
-          </Reveal>
+          </div>
         </Container>
       </section>
 

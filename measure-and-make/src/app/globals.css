@@ -445,6 +445,20 @@
   }
 }
 
+/* Reveal's server HTML always carries framer-motion's initial `opacity: 0`,
+   because the server cannot know a visitor's motion preference. A client that
+   asks for reduced motion renders a plain <div> instead, and React leaves that
+   server-set inline style in place — which would hide the content for good.
+   !important is deliberate here: it is the one thing that outranks an inline
+   style, it resolves before first paint, and it needs no JavaScript. See
+   src/components/ui/Reveal.tsx. */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
 /* Motion is opt-in and quiet. Anyone who has asked their system for less of it
    gets none of it. (01-BRAND-FOUNDATION.md §6: avoid excessive animation.) */
 @media (prefers-reduced-motion: reduce) {

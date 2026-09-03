@@ -9,7 +9,8 @@
 // accessible per-field form errors, that success is never shown without a
 // confirmed write, that the brand lockups actually decode, and that the
 // first-load brand reveal cannot trap focus, block input, stay stuck over the
-// page, hold a reduced-motion visitor, or replay around the site.
+// page, hold a reduced-motion visitor, or replay around the site, and that the
+// homepage hero always settles fully opaque without anyone scrolling.
 import { chromium } from "playwright";
 const BASE = "http://localhost:4330/measure-and-make";
 // /nope is the deliberate 404 check; its own 404 response is not a defect.
@@ -152,27 +153,37 @@ for (const [label, width, height] of [
     viewport: { width: 1440, height: 900 },
     reducedMotion: "reduce",
   });
-  await page.goto(BASE, { waitUntil: "load" });
-  await page.waitForTimeout(800);
-  const hidden = await page.evaluate(() => {
-    const out = [];
-    document.querySelectorAll("h2, h3, article, li").forEach((el) => {
-      const s = getComputedStyle(el);
-      if (
-        parseFloat(s.opacity) < 0.99 ||
-        (s.transform !== "none" && s.transform !== "matrix(1, 0, 0, 1, 0, 0)")
-      ) {
-        out.push(
-          `${el.tagName}:${(el.textContent || "").trim().slice(0, 24)} opacity=${s.opacity} transform=${s.transform}`,
-        );
-      }
+  // Every content route, not just the homepage: the wrappers that strand an
+  // opacity are on every page.
+  for (const route of ["", "/work", "/about", "/services", "/start"]) {
+    await page.goto(BASE + route, { waitUntil: "load" });
+    await page.waitForTimeout(800);
+    // [data-reveal] is the important one: those wrappers carry the server-set
+    // opacity: 0, and checking only their children misses it entirely — a
+    // child reads opacity 1 while the wrapper above it hides the whole block.
+    const hidden = await page.evaluate(() => {
+      const out = [];
+      document
+        .querySelectorAll("[data-reveal], h1, h2, h3, p, article, li")
+        .forEach((el) => {
+          const s = getComputedStyle(el);
+          if (
+            parseFloat(s.opacity) < 0.99 ||
+            (s.transform !== "none" &&
+              s.transform !== "matrix(1, 0, 0, 1, 0, 0)")
+          ) {
+            out.push(
+              `${el.tagName}:${(el.textContent || "").trim().slice(0, 24)} opacity=${s.opacity} transform=${s.transform}`,
+            );
+          }
+        });
+      return out.slice(0, 5);
     });
-    return out.slice(0, 5);
-  });
-  if (hidden.length)
-    problems.push(
-      `reduced motion left content animated/hidden: ${hidden.join(" | ")}`,
-    );
+    if (hidden.length)
+      problems.push(
+        `reduced motion left content animated/hidden on ${route || "/"}: ${hidden.join(" | ")}`,
+      );
+  }
   await page.close();
 }
 
@@ -372,6 +383,75 @@ for (const [label, width, height] of [
     if (present) problems.push(`brand reveal rendered on ${route}`);
   }
   await ctx.close();
+}
+
+// 9. The hero lands fully opaque and untransformed, with no scrolling and no
+// interaction — on the visit that plays the reveal, on a later visit that does
+// not, and under reduced motion. This is the regression guard for a hero left
+// part-way through an entrance animation.
+{
+  const readHero = `() => {
+    const hero = document.querySelector("[data-mm-hero]");
+    if (!hero) return { missing: true };
+    const faded = [];
+    // Every ancestor up to the document, since opacity multiplies down.
+    for (let el = hero; el && el !== document.documentElement; el = el.parentElement) {
+      const s = getComputedStyle(el);
+      const t = s.transform;
+      if (parseFloat(s.opacity) < 0.999 || (t !== "none" && t !== "matrix(1, 0, 0, 1, 0, 0)"))
+        faded.push(el.tagName + "." + String(el.className).slice(0, 20) + " opacity=" + s.opacity + " transform=" + t);
+    }
+    // And every element inside it: headline, copy, capability line, both CTAs.
+    for (const el of hero.querySelectorAll("*")) {
+      const s = getComputedStyle(el);
+      const t = s.transform;
+      if (parseFloat(s.opacity) < 0.999 || (t !== "none" && t !== "matrix(1, 0, 0, 1, 0, 0)"))
+        faded.push(el.tagName + ":" + (el.textContent || "").trim().slice(0, 18) + " opacity=" + s.opacity);
+    }
+    // A leftover inline opacity/transform means something scripted the hero
+    // and did not finish; nothing should be writing inline style here at all.
+    const inline = [hero, ...hero.parentElement ? [hero.parentElement] : []]
+      .map((el) => el.getAttribute("style"))
+      .filter((s) => s && /opacity|transform/.test(s));
+    return { faded, inline, count: hero.querySelectorAll("*").length };
+  }`;
+
+  for (const [label, opts, settle, reload] of [
+    ["first visit", { viewport: { width: 1440, height: 900 } }, 2600, false],
+    ["later visit", { viewport: { width: 1440, height: 900 } }, 600, true],
+    [
+      "reduced motion",
+      { viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" },
+      600,
+      false,
+    ],
+    ["mobile", { viewport: { width: 390, height: 844 } }, 2200, false],
+  ]) {
+    const ctx = await browser.newContext(opts);
+    const page = await ctx.newPage();
+    await page.goto(BASE, { waitUntil: "commit" });
+    if (reload) {
+      await page.waitForTimeout(2400);
+      await page.reload({ waitUntil: "commit" });
+    }
+    await page.waitForTimeout(settle);
+    const hero = await page.evaluate(eval(readHero));
+    if (hero.missing) {
+      problems.push(`[${label}] hero block not found`);
+    } else {
+      if (!hero.count)
+        problems.push(`[${label}] hero block is empty — nothing to check`);
+      if (hero.faded.length)
+        problems.push(
+          `[${label}] hero did not settle: ${hero.faded.slice(0, 4).join(" | ")}`,
+        );
+      if (hero.inline.length)
+        problems.push(
+          `[${label}] hero carries scripted inline style: ${hero.inline.join(" | ")}`,
+        );
+    }
+    await ctx.close();
+  }
 }
 
 await browser.close();
