@@ -1,24 +1,28 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 /**
- * A single, quiet entrance. Anyone whose system asks for reduced motion gets the
- * content with no animation at all — not a faster version of it.
+ * A single, quiet entrance — in CSS, with no JavaScript involved at all.
  *
- * `data-reveal` is load-bearing, not a hook for styling. The server cannot know
- * anyone's motion preference, so this always renders with framer-motion's
- * `initial` inline style — `opacity: 0` — in the server HTML. On a client that
- * asks for reduced motion the branch below then returns a plain <div> with no
- * style prop, and React does not clear an inline style it never rendered: the
- * server's `opacity: 0` stays on the element permanently and the content is
- * never seen. The rule in globals.css keyed to this attribute overrides that
- * before first paint, with no JavaScript involved.
+ * This used to be framer-motion `whileInView`, and that was the wrong shape for
+ * a content site. It server-rendered every wrapper at `opacity: 0` and only
+ * animated it up once an IntersectionObserver fired, so all of a page's
+ * headings and copy were invisible until the JavaScript loaded, hydrated, and
+ * the observer reported. Anything that interrupted that chain left real
+ * visitors on a blank page — and even in the happy path, `margin: "-80px"`
+ * held content that was plainly on screen at the bottom of the first viewport
+ * at zero opacity until someone scrolled.
  *
- * Nothing above the fold should use this at all — see the homepage hero, whose
- * entrance is CSS only. An entrance that needs an observer to finish does not
- * belong on content that is visible the moment the page opens.
+ * Now: no observer, no scroll listener, no animation library, and no `initial`
+ * inline style in the server HTML. `delay` staggers a group by passing a custom
+ * property to the stylesheet.
+ *
+ * The one rule worth keeping in mind if you edit globals.css: the hidden state
+ * lives ONLY inside the `@keyframes` `from` step, never in a static rule. If
+ * the animation cannot run for any reason, the content is simply visible. That
+ * is the property that makes this safe, and it is deliberately the opposite of
+ * how the old version failed.
+ *
+ * This is a server component. Nothing here ships to the browser.
  */
 export function Reveal({
   children,
@@ -26,29 +30,20 @@ export function Reveal({
   className = "",
 }: {
   children: ReactNode;
+  /** Stagger, in seconds, to match how the old prop was called. */
   delay?: number;
   className?: string;
 }) {
-  const reduceMotion = useReducedMotion();
-
-  if (reduceMotion) {
-    return (
-      <div data-reveal className={className}>
-        {children}
-      </div>
-    );
-  }
+  const style =
+    delay > 0
+      ? ({
+          "--mm-reveal-delay": `${Math.round(delay * 1000)}ms`,
+        } as CSSProperties)
+      : undefined;
 
   return (
-    <motion.div
-      data-reveal
-      className={className}
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
-    >
+    <div data-reveal className={className} style={style}>
       {children}
-    </motion.div>
+    </div>
   );
 }

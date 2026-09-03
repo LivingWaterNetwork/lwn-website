@@ -9,8 +9,9 @@
 // accessible per-field form errors, that success is never shown without a
 // confirmed write, that the brand lockups actually decode, and that the
 // first-load brand reveal cannot trap focus, block input, stay stuck over the
-// page, hold a reduced-motion visitor, or replay around the site, and that the
-// homepage hero always settles fully opaque without anyone scrolling.
+// page, hold a reduced-motion visitor, or replay around the site, and that
+// every route's content — not just the homepage hero — always settles fully
+// opaque without anyone scrolling.
 import { chromium } from "playwright";
 const BASE = "http://localhost:4330/measure-and-make";
 // /nope is the deliberate 404 check; its own 404 response is not a defect.
@@ -448,6 +449,61 @@ for (const [label, width, height] of [
       if (hero.inline.length)
         problems.push(
           `[${label}] hero carries scripted inline style: ${hero.inline.join(" | ")}`,
+        );
+    }
+    await ctx.close();
+  }
+}
+
+// 10. Every route's content settles fully opaque on load, with normal motion
+// settings, no scrolling and no interaction — and the server HTML contains no
+// inline opacity at all. This is the regression guard for content stranded
+// behind an entrance animation, on every page rather than just the homepage.
+{
+  const readContent = `() => {
+    const stuck = [];
+    for (const el of document.querySelectorAll("[data-reveal], h1, h2, h3, p, article, li")) {
+      const s = getComputedStyle(el);
+      const t = s.transform;
+      if (parseFloat(s.opacity) < 0.999 || (t !== "none" && t !== "matrix(1, 0, 0, 1, 0, 0)"))
+        stuck.push(el.tagName + (el.hasAttribute("data-reveal") ? "[data-reveal]" : "") + ":" + (el.textContent || "").trim().slice(0, 22) + " opacity=" + s.opacity);
+    }
+    // Nothing on the page should be carrying a scripted opacity/transform.
+    const inline = [...document.querySelectorAll('[style*="opacity"], [style*="transform"]')]
+      .map((el) => el.tagName + " " + el.getAttribute("style"));
+    return { stuck, inline, reveals: document.querySelectorAll("[data-reveal]").length };
+  }`;
+
+  for (const [label, opts, settle] of [
+    ["desktop", { viewport: { width: 1440, height: 900 } }, 2600],
+    ["mobile", { viewport: { width: 390, height: 844 } }, 2400],
+    [
+      "reduced motion",
+      { viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" },
+      900,
+    ],
+  ]) {
+    const ctx = await browser.newContext(opts);
+    const page = await ctx.newPage();
+    for (const route of ROUTES.filter((r) => r !== "/nope")) {
+      await page.goto(BASE + route, { waitUntil: "load", timeout: 60000 });
+
+      // The served markup itself must not hide anything.
+      const html = await page.content();
+      if (/style="opacity:\s*0/.test(html))
+        problems.push(
+          `[${label}] ${route || "/"} server HTML contains inline opacity: 0`,
+        );
+
+      await page.waitForTimeout(settle);
+      const r = await page.evaluate(eval(readContent));
+      if (r.stuck.length)
+        problems.push(
+          `[${label}] ${route || "/"} content never settled (${r.stuck.length}): ${r.stuck.slice(0, 3).join(" | ")}`,
+        );
+      if (r.inline.length)
+        problems.push(
+          `[${label}] ${route || "/"} carries inline opacity/transform: ${r.inline.slice(0, 2).join(" | ")}`,
         );
     }
     await ctx.close();

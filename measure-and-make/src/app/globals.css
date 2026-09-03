@@ -445,17 +445,38 @@
   }
 }
 
-/* Reveal's server HTML always carries framer-motion's initial `opacity: 0`,
-   because the server cannot know a visitor's motion preference. A client that
-   asks for reduced motion renders a plain <div> instead, and React leaves that
-   server-set inline style in place — which would hide the content for good.
-   !important is deliberate here: it is the one thing that outranks an inline
-   style, it resolves before first paint, and it needs no JavaScript. See
-   src/components/ui/Reveal.tsx. */
-@media (prefers-reduced-motion: reduce) {
+/* Reveal's entrance — see src/components/ui/Reveal.tsx.
+ *
+ * Two properties matter here, and both are the point of the rule rather than
+ * incidental to it:
+ *
+ * 1. The hidden state exists ONLY in the keyframes' `from` step, reached
+ *    through animation-fill-mode. There is no static rule anywhere that sets
+ *    opacity: 0 on this content, so if the animation cannot run — animations
+ *    unsupported, the stylesheet rule dropped, anything at all — the content
+ *    is visible rather than hidden. Never move the hidden state out of the
+ *    keyframes.
+ * 2. It is entirely CSS. No IntersectionObserver, no scroll listener, no
+ *    hydration, nothing that can fail to fire and strand a heading at zero.
+ *
+ * Content below the fold therefore settles on load rather than on scroll. That
+ * is the intended trade: a scroll-in flourish is not worth a page whose text
+ * can fail to appear. */
+@media (prefers-reduced-motion: no-preference) {
   [data-reveal] {
-    opacity: 1 !important;
-    transform: none !important;
+    animation: mm-reveal-in 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--mm-reveal-delay, 0ms);
+  }
+}
+
+@keyframes mm-reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 

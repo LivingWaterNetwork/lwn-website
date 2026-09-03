@@ -113,6 +113,35 @@ focusable, no pointer events, removed from the DOM, scrolling restored, hero
 settled, no replay in the same session, nothing held under reduced motion, and
 no reveal on any other route.
 
+## Entrance animations: CSS only, never JavaScript
+
+Content must never depend on JavaScript to become visible. `Reveal`
+(`src/components/ui/Reveal.tsx`) is a server component whose entrance is a CSS
+animation; the homepage hero has its own CSS entrance and is not wrapped in
+`Reveal` at all. There is no animation library in the app — `framer-motion` was
+removed, which also took ~41 kB off first-load JS.
+
+`Reveal` used to be `framer-motion` `whileInView`. That server-rendered every
+wrapper at `opacity: 0` and only animated it up once an `IntersectionObserver`
+fired, so every page's headings and copy were invisible until the JavaScript
+loaded, hydrated, and the observer reported. In production that showed up as
+blank headings on `/privacy`, `/terms`, and `/about`, and pages rendered nothing
+readable with JavaScript off.
+
+Two rules follow from that, and they are the whole point:
+
+- **The hidden state lives only inside `@keyframes`**, reached through
+  `animation-fill-mode`. No static rule anywhere sets `opacity: 0` on content.
+  If an animation cannot run, the content is visible rather than stranded.
+- **Nothing above the fold waits on anything.** Entrances run on load, not on
+  scroll, so content below the fold has settled before it is reached.
+
+`tests/hero-entrance.test.ts` and `tests/reveal-entrance.test.ts` guard this at
+the source level; section 10 of `scripts/qa.mjs` checks the painted result on
+every route at desktop and mobile widths and under reduced motion — every
+`[data-reveal]`, heading, and paragraph fully opaque with no scrolling, and no
+inline opacity in the served HTML.
+
 ## Contact form
 
 `/measure-and-make/start` is the only contact route. The site publishes no email
