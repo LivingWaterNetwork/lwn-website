@@ -21,7 +21,7 @@ export function ProjectCard({ project }: { project: PublicProject }) {
       <h3 className="mt-5 font-display text-2xl leading-snug text-forest">
         <Link
           href={`/work/${project.slug}`}
-          className="group inline-flex items-baseline gap-2 transition-colors hover:text-brass-dark"
+          className="mm-draw inline-flex items-baseline gap-2 transition-colors hover:text-brass-dark"
         >
           {project.title}
           <span

@@ -24,7 +24,10 @@ export function SiteFooter() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="font-sans text-sm text-forest/70 transition-colors hover:text-forest"
+                    aria-label={
+                      "accessibleName" in link ? link.accessibleName : undefined
+                    }
+                    className="mm-draw font-sans text-sm text-forest/70 transition-colors hover:text-forest"
                   >
                     {link.label}
                   </Link>

@@ -22,17 +22,27 @@ import type { CSSProperties, ReactNode } from "react";
  * is the property that makes this safe, and it is deliberately the opposite of
  * how the old version failed.
  *
+ * `as` exists for one reason: a wrapper div between <ol> and its <li> breaks
+ * the list. Screen readers stop announcing "list, 4 items" and stop announcing
+ * each item's position, because the <li> elements are no longer children of the
+ * list — which is exactly what happened here, and Lighthouse flagged it as two
+ * separate failures (`list` and `listitem`). Inside a list, render the Reveal
+ * AS the item: <Reveal as="li"> with a plain block inside it.
+ *
  * This is a server component. Nothing here ships to the browser.
  */
 export function Reveal({
   children,
   delay = 0,
   className = "",
+  as: Tag = "div",
 }: {
   children: ReactNode;
   /** Stagger, in seconds, to match how the old prop was called. */
   delay?: number;
   className?: string;
+  /** Use "li" inside a <ul>/<ol> so the list keeps its semantics. */
+  as?: "div" | "li";
 }) {
   const style =
     delay > 0
@@ -42,8 +52,8 @@ export function Reveal({
       : undefined;
 
   return (
-    <div data-reveal className={className} style={style}>
+    <Tag data-reveal className={className} style={style}>
       {children}
-    </div>
+    </Tag>
   );
 }

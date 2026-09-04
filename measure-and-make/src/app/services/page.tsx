@@ -76,8 +76,12 @@ export default function CapabilitiesPage() {
 
           <ol className="mt-12 space-y-10">
             {processStages.map((stage) => (
-              <Reveal key={stage.number}>
-                <li className="grid gap-6 border-t border-limestone/20 pt-8 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-10">
+              <Reveal
+                as="li"
+                key={stage.number}
+                className="grid gap-6 border-t border-limestone/20 pt-8 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-10"
+              >
+                <div className="contents">
                   <div className="flex items-baseline gap-4">
                     <span
                       aria-hidden="true"
@@ -92,7 +96,7 @@ export default function CapabilitiesPage() {
                   <p className="max-w-prose font-sans text-base leading-relaxed text-sage sm:text-lg">
                     {stage.body}
                   </p>
-                </li>
+                </div>
               </Reveal>
             ))}
           </ol>

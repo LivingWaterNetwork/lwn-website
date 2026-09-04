@@ -1,5 +1,11 @@
 import type { ProcessStage } from "@/content/process";
 
+/**
+ * Renders the step's contents, NOT the list item. Every caller sits inside an
+ * <ol>, and the entrance wrapper around it is the <li> — see Reveal's `as`
+ * prop. A wrapper between <ol> and <li> is what broke the list's semantics
+ * before, so the item element belongs to whatever is outermost, not here.
+ */
 export function ProcessStep({
   stage,
   detail = "summary",
@@ -8,7 +14,7 @@ export function ProcessStep({
   detail?: "summary" | "full";
 }) {
   return (
-    <li className="flex gap-6 border-t border-limestone/20 pt-6">
+    <div className="flex gap-6 border-t border-limestone/20 pt-6">
       <span
         aria-hidden="true"
         className="mt-1 font-display text-2xl leading-none text-brass"
@@ -21,6 +27,6 @@ export function ProcessStep({
           {detail === "full" ? stage.body : stage.summary}
         </p>
       </div>
-    </li>
+    </div>
   );
 }

@@ -24,7 +24,11 @@ export function CtaLink({
   return (
     <Link
       href={href}
-      className={`inline-flex items-center justify-center px-7 py-3.5 text-center font-sans text-sm font-semibold tracking-wide transition-colors duration-200 ${styles[variant]} ${className}`}
+      // mm-draw-button is the site's one hover gesture — a brass rule drawing
+      // in from the left along the bottom edge. It is the same gesture the text
+      // links use (mm-draw), so every clickable thing on the site behaves the
+      // same way. See globals.css.
+      className={`mm-draw-button inline-flex items-center justify-center px-7 py-3.5 text-center font-sans text-sm font-semibold tracking-wide transition-colors duration-200 ${styles[variant]} ${className}`}
     >
       {children}
     </Link>

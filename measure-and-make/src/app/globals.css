@@ -480,9 +480,181 @@
   }
 }
 
+/* ---------------------------------------------------------------------------
+ * Composed type — see src/components/ui/SplitText.tsx.
+ *
+ * Each word rises out from behind its own mask, staggered, so a headline
+ * arrives as type being set rather than as a box being faded in. Same two
+ * invariants as Reveal, for the same reason: the hidden state exists only in
+ * the keyframes' `from` step, so a word whose animation cannot run is simply at
+ * its resting position; and there is no observer, listener or frame loop
+ * anywhere in it.
+ * ------------------------------------------------------------------------- */
+
+.mm-split__mask {
+  display: inline-block;
+  /* The mask has to clip the word's travel without clipping the word. Source
+     Serif's descenders (p, g, y) and its ascenders both overshoot the line box,
+     so the box is opened up and the extra pulled back out of the layout — the
+     heading's line height and rhythm are unchanged. */
+  padding: 0.12em 0 0.2em;
+  margin: -0.12em 0 -0.2em;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.mm-split__word {
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Below the hero: plays on load, once, wherever the heading sits on the
+     page. 34ms between words is enough to read as a stagger and short enough
+     that a six-word headline is fully set in well under a second. */
+  [data-mm-split="section"] .mm-split__word {
+    animation: mm-split-in 620ms var(--mm-ease) both;
+    animation-delay: calc(var(--mm-split-base, 0ms) + 34ms * var(--mm-word, 0));
+  }
+
+  /* The hero, gated on the first-load reveal actually playing — so a later
+     page view in the session, a reduced-motion visitor and a visitor with
+     JavaScript off all get the headline with no animation applied at all. It
+     starts with the hero block it sits in, so the block arrives and the name
+     of the thing sets itself as it lands. */
+  :root[data-mm-intro="play"] [data-mm-split="hero"] .mm-split__word {
+    animation: mm-split-in 560ms var(--mm-ease) both;
+    animation-delay: calc(var(--mm-hero-delay) + 30ms * var(--mm-word, 0));
+  }
+}
+
+@keyframes mm-split-in {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Paper grain.
+ *
+ * The palette is right but every surface was a flat fill, which is the
+ * difference between "warm, editorial" and "flat, corporate" at these exact
+ * values. This is one tiled SVG of fractal noise blended into the background
+ * only — background-blend-mode, not an overlay element — so it can never sit
+ * over type, never wash out contrast, never intercept a pointer, and adds no
+ * DOM. It is inert for anything that does not paint backgrounds.
+ *
+ * No colour is introduced: the noise is neutral and the blend is soft-light at
+ * low contrast, so the Concept 03.5 values underneath are unchanged.
+ * ------------------------------------------------------------------------- */
+
+:root {
+  --mm-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)' opacity='0.42'/%3E%3C/svg%3E");
+}
+
+.mm-grain {
+  background-image: var(--mm-grain);
+  background-repeat: repeat;
+  background-size: 160px 160px;
+  background-blend-mode: soft-light;
+}
+
+/* The Deep Forest field takes the grain harder than the light grounds do —
+   a dark flat fill is where flatness shows most. */
+.mm-grain-dark {
+  background-image: var(--mm-grain);
+  background-repeat: repeat;
+  background-size: 160px 160px;
+  background-blend-mode: overlay;
+}
+
+/* ---------------------------------------------------------------------------
+ * The signature interaction: a link's underline draws in from the left.
+ *
+ * One gesture, applied to every text link and every button on the site, is
+ * what reads as intentional — variety is what reads as decoration. It is a
+ * scaled pseudo-element, so it composites on the GPU and moves no layout.
+ *
+ * Focus is untouched: the :focus-visible ring in the base layer still does the
+ * accessibility work. This is a hover affordance sitting on top of it, never a
+ * replacement for it, and a keyboard visitor loses nothing by never hovering.
+ * ------------------------------------------------------------------------- */
+
+.mm-draw {
+  position: relative;
+}
+
+.mm-draw::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.15em;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 320ms var(--mm-ease);
+}
+
+.mm-draw:hover::after,
+.mm-draw:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* On a button the rule draws along the inside of the bottom edge instead, so
+   the same gesture reads on a bordered box as on a bare text link. */
+.mm-draw-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.mm-draw-button::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: #c7974d;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 320ms var(--mm-ease);
+}
+
+.mm-draw-button:hover::after,
+.mm-draw-button:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* A pointer that cannot hover gets no half-applied hover state. */
+@media (hover: none) {
+  .mm-draw::after,
+  .mm-draw-button::after {
+    display: none;
+  }
+}
+
 /* Motion is opt-in and quiet. Anyone who has asked their system for less of it
    gets none of it. (01-BRAND-FOUNDATION.md §6: avoid excessive animation.) */
 @media (prefers-reduced-motion: reduce) {
+  /* Cleared explicitly rather than left to the durations below: those zero a
+     duration but not a delay, and a delay left in place on a `both`-filled
+     animation would hold a word at translateY(110%) — off its own line — for
+     the length of the stagger. */
+  [data-mm-split] .mm-split__word {
+    animation: none;
+    transform: none;
+  }
+
+  /* No underline animates in; it is simply there on hover, at once. */
+  .mm-draw::after,
+  .mm-draw-button::after {
+    transition: none;
+  }
+
   *,
   *::before,
   *::after {

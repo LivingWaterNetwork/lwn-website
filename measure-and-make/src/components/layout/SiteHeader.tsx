@@ -55,11 +55,18 @@ export function SiteHeader() {
               <li key={link.href}>
                 <Link
                   href={link.href}
+                  aria-label={
+                    "accessibleName" in link ? link.accessibleName : undefined
+                  }
                   aria-current={isCurrent(link.href) ? "page" : undefined}
+                  // The current page keeps its own solid brass underline —
+                  // that is an orientation signal, not decoration, so it is
+                  // not replaced by a hover gesture. Every other nav link gets
+                  // the site's drawn underline (mm-draw).
                   className={`font-sans text-sm font-medium transition-colors hover:text-forest ${
                     isCurrent(link.href)
                       ? "text-forest underline decoration-brass decoration-2 underline-offset-8"
-                      : "text-forest/75"
+                      : "mm-draw text-forest/75"
                   }`}
                 >
                   {link.label}
@@ -106,6 +113,9 @@ export function SiteHeader() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
+                    aria-label={
+                      "accessibleName" in link ? link.accessibleName : undefined
+                    }
                     aria-current={isCurrent(link.href) ? "page" : undefined}
                     className={`block py-3.5 font-sans text-base transition-colors hover:text-brass-dark ${
                       isCurrent(link.href)

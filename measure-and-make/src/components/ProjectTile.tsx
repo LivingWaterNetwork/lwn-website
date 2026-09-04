@@ -55,13 +55,19 @@ export function ProjectTile({
         <div className={wide ? "lg:grid lg:grid-cols-5 lg:gap-10" : ""}>
           <div className={wide ? "lg:col-span-2" : ""}>
             <p className="eyebrow">{project.organizationOrClient}</p>
-            <h3
+            {/* h2, not h3: on /work these tiles are the first headings under
+                the page's h1, and its only caller is that gallery. Skipping a
+                level (h1 straight to h3) is what someone navigating by heading
+                hears as a missing section, and it was a real Lighthouse
+                heading-order failure. If this tile is ever reused under a
+                section heading, this needs to take its level as a prop. */}
+            <h2
               className={`mt-4 font-display leading-snug text-forest ${
                 wide ? "text-3xl sm:text-4xl" : "text-2xl"
               }`}
             >
               {project.title}
-            </h3>
+            </h2>
             <span
               aria-hidden="true"
               className="rule-brass mt-6 block transition-all duration-300 group-hover:w-20"

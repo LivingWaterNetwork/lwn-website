@@ -24,7 +24,16 @@ export const NAV_LINKS = [
   { href: "/work", label: "Work" },
   { href: "/services", label: "Services" },
   { href: "/about", label: "About" },
-  { href: "/start", label: "Start" },
+  // `accessibleName` exists only where the visible label is a single generic
+  // word. "Start" on its own tells someone listing a page's links, or hearing
+  // them read out, nothing about where it goes. The visible word is unchanged
+  // and the accessible name begins with it, so voice control still matches on
+  // what is actually on screen.
+  {
+    href: "/start",
+    label: "Start",
+    accessibleName: "Start a conversation",
+  },
 ] as const;
 
 export const LEGAL_LINKS = [
