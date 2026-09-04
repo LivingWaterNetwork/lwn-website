@@ -13,7 +13,16 @@
 // every route's content — not just the homepage hero — always settles fully
 // opaque without anyone scrolling.
 import { chromium } from "playwright";
-const BASE = "http://localhost:4330/measure-and-make";
+// Defaults to a local production build. QA_BASE points the whole sweep at
+// another origin instead — a Vercel preview, or the production alias — which is
+// the only way to check what a given deployment actually serves rather than
+// what the working tree would serve if it were deployed. A "fixed" commit and a
+// promoted deployment are different facts; section 10 in particular is the
+// check that tells them apart.
+//
+//   QA_BASE=https://measure-and-make-henna.vercel.app/measure-and-make \
+//     node scripts/qa.mjs
+const BASE = process.env.QA_BASE || "http://localhost:4330/measure-and-make";
 // /nope is the deliberate 404 check; its own 404 response is not a defect.
 const ROUTES = [
   "",
@@ -471,16 +480,34 @@ for (const [label, width, height] of [
     // Nothing on the page should be carrying a scripted opacity/transform.
     const inline = [...document.querySelectorAll('[style*="opacity"], [style*="transform"]')]
       .map((el) => el.tagName + " " + el.getAttribute("style"));
-    return { stuck, inline, reveals: document.querySelectorAll("[data-reveal]").length };
+    return {
+      stuck,
+      inline,
+      reveals: document.querySelectorAll("[data-reveal]").length,
+      // Guards against the check passing for the wrong reason. If anything
+      // scrolled the page — a wheel event, a scrollIntoView, a focus jump, an
+      // anchor — then "settled without scrolling" was never actually tested,
+      // and a scroll-gated entrance would pass. The count is wired up on load
+      // below, before the page can have moved.
+      scrollY: Math.round(window.scrollY),
+      scrolls: window.__qaScrollEvents || 0,
+    };
+  }`;
+
+  // Installed before any settling wait, so it observes the whole window in
+  // which the entrance is supposed to complete on its own.
+  const countScrolls = `() => {
+    window.__qaScrollEvents = 0;
+    addEventListener("scroll", () => { window.__qaScrollEvents++; }, { passive: true });
   }`;
 
   for (const [label, opts, settle] of [
-    ["desktop", { viewport: { width: 1440, height: 900 } }, 2600],
-    ["mobile", { viewport: { width: 390, height: 844 } }, 2400],
+    ["desktop", { viewport: { width: 1440, height: 900 } }, 6000],
+    ["mobile", { viewport: { width: 390, height: 844 } }, 6000],
     [
       "reduced motion",
       { viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" },
-      900,
+      3000,
     ],
   ]) {
     const ctx = await browser.newContext(opts);
@@ -495,11 +522,25 @@ for (const [label, width, height] of [
           `[${label}] ${route || "/"} server HTML contains inline opacity: 0`,
         );
 
+      await page.evaluate(eval(countScrolls));
+
+      // Deliberately no scrolling, no clicking, no hovering, no focusing, and
+      // no synthetic events of any kind between load and this read. The whole
+      // point of the check is that the entrance completes on its own; anything
+      // that nudges the page would hide a scroll-gated entrance.
+      //
+      // The wait is long past the 600ms entrance plus the homepage's ~1.64s
+      // first-load reveal, so "settled" means settled, not "caught mid-flight".
       await page.waitForTimeout(settle);
       const r = await page.evaluate(eval(readContent));
+
+      if (r.scrollY !== 0 || r.scrolls !== 0)
+        problems.push(
+          `[${label}] ${route || "/"} moved during the no-scroll check (scrollY=${r.scrollY}, ${r.scrolls} scroll events) — the settle result below cannot be trusted`,
+        );
       if (r.stuck.length)
         problems.push(
-          `[${label}] ${route || "/"} content never settled (${r.stuck.length}): ${r.stuck.slice(0, 3).join(" | ")}`,
+          `[${label}] ${route || "/"} content never settled (${r.stuck.length} of ${r.reveals} [data-reveal] on the page): ${r.stuck.slice(0, 3).join(" | ")}`,
         );
       if (r.inline.length)
         problems.push(

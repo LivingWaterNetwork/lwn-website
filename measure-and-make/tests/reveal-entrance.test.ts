@@ -78,6 +78,83 @@ describe("Reveal's entrance", () => {
     expect(staticRules).toEqual([]);
   });
 
+  it("is gated on nothing that has to fire, and reads no scroll position", () => {
+    // The class of bug, stated as a rule: an entrance whose finished state
+    // depends on an event is an entrance that can fail to finish. An observer
+    // callback, a wheel gesture and a scroll-position read are the same defect
+    // wearing different clothes, so all of them are banned across the app
+    // rather than only in Reveal.
+    //
+    // requestAnimationFrame is deliberately NOT on this list. A frame callback
+    // cannot gate anything on visibility by itself, and ContactForm uses one
+    // for a real accessibility reason — moving focus to the status region after
+    // a submit, once React has committed it. Banning that would trade an
+    // accessibility feature for nothing. What makes rAF dangerous is pairing it
+    // with a position read, which the next assertion covers.
+    const gated =
+      /IntersectionObserver|whileInView|addEventListener\(\s*["'`](?:scroll|wheel|touchmove|mousewheel)|onScroll=|scrollIntoView|window\.scrollTo|\.scrollY|\.scrollTop|getBoundingClientRect/;
+    const offenders = sourceFiles("src").filter((file) =>
+      gated.test(code(readFileSync(file, "utf8"))),
+    );
+    expect(offenders).toEqual([]);
+  });
+
+  it("never pairs a frame callback with a geometry read", () => {
+    // rAF is allowed on its own; a rAF that measures where something is on
+    // screen is a hand-rolled IntersectionObserver, which is the banned thing
+    // rebuilt by hand.
+    const offenders = sourceFiles("src").filter((file) => {
+      const body = code(readFileSync(file, "utf8"));
+      return (
+        /requestAnimationFrame/.test(body) &&
+        /getBoundingClientRect|\.scrollY|\.scrollTop|innerHeight|offsetTop/.test(
+          body,
+        )
+      );
+    });
+    expect(offenders).toEqual([]);
+  });
+
+  it("has a browser check that measures the painted result without scrolling", () => {
+    // The guards above read source. Source can be right while the thing a
+    // visitor actually receives is wrong — that is exactly what happened here:
+    // the branch was already CSS-only while the promoted deployment still
+    // served framer-motion's inline opacity: 0 on every route, so testing the
+    // canonical address reproduced a bug that no longer existed in the code.
+    // scripts/qa.mjs section 10 is the check that can tell those two apart, and
+    // these assertions keep it honest.
+    const qa = readFileSync("scripts/qa.mjs", "utf8");
+    const section = qa.slice(
+      qa.indexOf("// 10. Every route's content settles"),
+    );
+    expect(section.length).toBeGreaterThan(500);
+
+    // It must be pointable at a deployment, not just at localhost — otherwise
+    // there is no way to check what a given deployment serves.
+    expect(qa).toContain("process.env.QA_BASE");
+
+    // It must refuse to report success if the page moved during the check. A
+    // check that scrolls first would pass against a scroll-gated entrance.
+    expect(section).toContain("scrolls");
+    expect(section).toMatch(/scrollY !== 0/);
+
+    // And it must not itself scroll, click, hover or focus between load and
+    // the read. Comments are stripped so the prose describing the ban does not
+    // satisfy the ban.
+    const body = code(section);
+    for (const forbidden of [
+      "mouse.wheel",
+      "scrollIntoView",
+      "window.scrollTo",
+      ".click(",
+      ".hover(",
+      ".focus(",
+      "keyboard.press",
+    ]) {
+      expect(body).not.toContain(forbidden);
+    }
+  });
+
   it("animates only when motion is welcome, and ends fully settled", () => {
     const gate = css
       .slice(css.indexOf("@media (prefers-reduced-motion: no-preference)"))
