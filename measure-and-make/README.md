@@ -5,25 +5,24 @@ repository but is a separate application with its own `package.json`,
 dependencies, Tailwind config, and build. Nothing in the Living Water Network
 site or its `/yan` routes is imported or modified.
 
-Every route is served under `/measure-and-make` (`basePath` in
-`next.config.mjs`), matching where the site sits on the Living Water Network
-domain while it shares that infrastructure.
+Every route is served at the root of the site's own domain,
+[www.measureandmakegroup.com](https://www.measureandmakegroup.com).
 
 ## Routes
 
-| Route                           | What it is                                                                                            |
-| ------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `/measure-and-make`             | Landing page: hero, why, four capabilities, four-stage process, featured work, closing call to action |
-| `/measure-and-make/about`       | Company-led narrative: lead, origin, philosophy, company stage, brand meaning, LWN relationship       |
-| `/measure-and-make/work`        | All Public + Approved projects                                                                        |
-| `/measure-and-make/work/[slug]` | Case study, one per approved project (three)                                                          |
-| `/measure-and-make/services`    | The four capabilities in full, then the four-stage process                                            |
-| `/measure-and-make/start`       | The inquiry form — the only contact route on the site                                                 |
-| `/measure-and-make/privacy`     | Privacy Policy (complete; `noindex` pending legal approval)                                           |
-| `/measure-and-make/terms`       | Terms of Service (complete; `noindex` pending legal approval)                                         |
-| `/measure-and-make/sitemap.xml` | Static routes plus approved project slugs                                                             |
-| `/measure-and-make/robots.txt`  | Allow-all, pointing at the sitemap                                                                    |
-| 404                             | Any other path, including every unapproved project slug                                               |
+| Route          | What it is                                                                                            |
+| -------------- | ----------------------------------------------------------------------------------------------------- |
+| `/`            | Landing page: hero, why, four capabilities, four-stage process, featured work, closing call to action |
+| `/about`       | Company-led narrative: lead, origin, philosophy, company stage, brand meaning, LWN relationship       |
+| `/work`        | All Public + Approved projects                                                                        |
+| `/work/[slug]` | Case study, one per approved project (three)                                                          |
+| `/services`    | The four capabilities in full, then the four-stage process                                            |
+| `/start`       | The inquiry form — the only contact route on the site                                                 |
+| `/privacy`     | Privacy Policy (complete; `noindex` pending legal approval)                                           |
+| `/terms`       | Terms of Service (complete; `noindex` pending legal approval)                                         |
+| `/sitemap.xml` | Static routes plus approved project slugs                                                             |
+| `/robots.txt`  | Allow-all, pointing at the sitemap                                                                    |
+| 404            | Any other path, including every unapproved project slug                                               |
 
 ## Source of truth
 
@@ -144,7 +143,7 @@ inline opacity in the served HTML.
 
 ## Contact form
 
-`/measure-and-make/start` is the only contact route. The site publishes no email
+`/start` is the only contact route. The site publishes no email
 address, telephone number, or postal address, and does not route Measure & Make's
 commercial inquiries to Living Water Network's nonprofit inbox.
 `tests/no-public-contact-details.test.ts` fails the build if any of that is
@@ -152,7 +151,7 @@ reintroduced.
 
 Path of a submission:
 
-1. The client posts to `POST /measure-and-make/api/contact`.
+1. The client posts to `POST /api/contact`.
 2. The route rate-limits per IP, validates with Zod server-side
    (`src/lib/contact-schema.ts`) — client-side validation is never trusted — and
    rejects any submission whose honeypot field is filled.
@@ -170,7 +169,7 @@ written. Every other outcome states what actually happened.
 
 ```bash
 npm install
-npm run dev        # http://localhost:3000/measure-and-make
+npm run dev        # http://localhost:3000
 npm run verify     # format:check, lint, typecheck, test, build
 ```
 
@@ -184,32 +183,29 @@ the repository root. The root `tsconfig.json` excludes `measure-and-make` so the
 two type-check independently — without that exclusion, the root build resolves
 this app's `@/*` imports against the root `src/` and fails.
 
-## Hosting: how this reaches www.lwnetwork.org/measure-and-make
+## Hosting: www.measureandmakegroup.com
 
-Decided September 3 2026. This app stays a separate Vercel project
-(`measure-and-make`, root directory `measure-and-make`), and the root Living
-Water Network app rewrites the prefix to it. The whole integration is in the
-root `next.config.mjs`:
+This app is a separate Vercel project (`measure-and-make`, root directory
+`measure-and-make`) serving its own domain,
+[www.measureandmakegroup.com](https://www.measureandmakegroup.com), at the
+root. It has no `basePath`, and the Living Water Network app no longer proxies
+it.
 
-- `/measure-and-make` and `/measure-and-make/:path*` rewrite (`beforeFiles`) to
-  the Measure & Make deployment. That app's `basePath` means its pages, its API
-  route, and its `/_next` assets all already carry the prefix, so everything
-  passes through unchanged — verified route by route, including the sitemap,
-  `robots.txt`, the brand SVG byte-for-byte, and a withheld slug still 404ing.
-- `/measure&make`, `/measure&make/:path*`, and `/measure-make` redirect (307) to
-  the canonical `/measure-and-make`. `&` is legal in a path but breaks link
-  detection in messaging apps, analytics, and anything that reads a path as a
-  query string, so it forwards rather than serving the site.
+The site was previously served through `lwnetwork.org/measure-and-make`, so the
+root app's `next.config.mjs` keeps that address working as a set of permanent
+(308) redirects to the new domain: `/measure-and-make` and
+`/measure-and-make/:path*` forward path-for-path, and `/measure&make`,
+`/measure&make/:path*`, and `/measure-make` forward alongside them. `&` is legal
+in a path but breaks link detection in messaging apps, analytics, and anything
+that reads a path as a query string, which is why those spellings exist at all.
 
-No Living Water Network route, page, or data is touched, and nothing in that
-config runs for a path outside the prefix. The root app's own middleware is
-scoped to `/yan/admin`, `/api/yan/admin`, and `/discovery/dante`, so it never
-sees these requests.
+No Living Water Network route, page, or data is touched. The root app's own
+middleware is scoped to `/yan/admin`, `/api/yan/admin`, and `/discovery/dante`,
+so it never sees these requests.
 
-Two consequences worth remembering: the rewrite targets the Measure & Make
-project's **production** deployment, so a change is only public once it is
-promoted there; and the rewrite reaches the domain only once this branch is
-merged, because the root app deploys from `main`.
+Worth remembering: the two apps are separate Vercel projects with separate
+builds, so a change to one is only public once **that** project's deployment is
+promoted to production. Promoting one does not ship the other.
 
 ## Remaining production-launch requirements
 

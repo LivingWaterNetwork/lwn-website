@@ -1,6 +1,6 @@
 # Contact form: setup and post-configuration test
 
-The form at `/measure-and-make/start` writes to Airtable server-side. Until the
+The form at `/start` writes to Airtable server-side. Until the
 token below is installed the form saves nothing and says so; it never shows a
 success message it has not earned.
 
@@ -54,7 +54,7 @@ Run this once after the token is installed, in the environment that has it.
 
 **Test A — a real submission is saved.**
 
-1. Open `/measure-and-make/start`.
+1. Open `/start`.
 2. Fill in Name, Organization, Email, and Project details. Add a website, an
    organization type, a timeline, a budget range, and one or more interests.
 3. Submit.
@@ -82,10 +82,10 @@ Run this once after the token is installed, in the environment that has it.
 
 **Test D — the credential is not in the browser.**
 
-1. Load `/measure-and-make/start`, open DevTools, and search all loaded scripts
+1. Load `/start`, open DevTools, and search all loaded scripts
    for `AIRTABLE`, `airtable.com`, and the token's first characters.
 2. Expect: no match. The only network call the page makes on submit is to
-   `/measure-and-make/api/contact` on this site.
+   `/api/contact` on this site.
 
 **Test E — rate limiting holds.**
 

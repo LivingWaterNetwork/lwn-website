@@ -5,7 +5,7 @@ counsel; nothing in it is rendered to a visitor.
 
 ## Status
 
-`/measure-and-make/privacy` and `/measure-and-make/terms` are **complete
+`/privacy` and `/terms` are **complete
 prelaunch drafts**, not attorney-reviewed copy. Both are editorially and
 visually finished, carry an effective date of **September 2, 2026**, and are set
 to `noindex` (`robots: { index: false, follow: true }` in each page's metadata).

@@ -13,11 +13,8 @@ export const POSITIONING_STATEMENT = META_DESCRIPTION;
 
 export const CAPABILITY_LINE = "Strategy. Systems. Digital. Responsible AI.";
 
-/**
- * Temporary host path while the venture shares Living Water Network
- * infrastructure (01-BRAND-FOUNDATION.md §8). Used for canonical URLs.
- */
-export const SITE_URL = "https://www.lwnetwork.org/measure-and-make";
+/** The venture's own domain. Used for canonical URLs. */
+export const SITE_URL = "https://www.measureandmakegroup.com";
 
 export const NAV_LINKS = [
   { href: "/", label: "Home" },

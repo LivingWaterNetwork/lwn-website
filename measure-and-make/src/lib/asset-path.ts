@@ -1,11 +1,13 @@
 /**
- * Prefixes a path in /public with the configured basePath.
+ * Prefixes a path in /public with the site's base path.
  *
- * next/link and next/image do this automatically; a plain <img src> or a
- * metadata icon path does not. The brand lockups are served as supplied files
- * rather than through next/image, so they go through here.
+ * The site is served at the root of its own domain, so there is nothing to
+ * prepend and these are pass-throughs. They stay because next/link and
+ * next/image handle a basePath automatically while a plain <img src>, a
+ * metadata icon path, or a fetch does not — if the site is ever mounted under
+ * a prefix again, this is the one place that has to change.
  */
-export const BASE_PATH = "/measure-and-make";
+export const BASE_PATH = "";
 
 export function assetPath(path: string): string {
   return `${BASE_PATH}${path}`;

@@ -17,7 +17,8 @@ content package unless a task below requires a specific fact from it.
   without explicit approval.
 - The site is a **separate Next.js 14 App Router app** in `measure-and-make/`,
   with its own `package.json`, dependencies, Tailwind config, and build. It
-  serves under `basePath: "/measure-and-make"`.
+  serves at the root of its own domain, www.measureandmakegroup.com, with no
+  `basePath`.
 - The Living Water Network app in the repository root is untouched except for one
   line: `tsconfig.json` excludes `measure-and-make`, without which the root
   build type-checks this app and fails on `@/*` resolution. Do not remove it,
@@ -65,7 +66,7 @@ that way. Also confirm the root app still builds if you touch anything outside
    Never write "Radeen Events Planning"; the name is Radiant Events Planning.
 4. **No public contact details.** No email address, telephone number, or postal
    address anywhere, and never Living Water Network's nonprofit inbox. The form
-   at `/measure-and-make/start` is the only contact route. This is deliberate,
+   at `/start` is the only contact route. This is deliberate,
    not unfinished. `tests/no-public-contact-details.test.ts` enforces it.
 5. **The form never fakes success.** The thank-you renders only on a confirmed
    Airtable write. Every other outcome says what actually happened.
@@ -111,15 +112,11 @@ that way. Also confirm the root app still builds if you touch anything outside
    the owner and an attorney approve, remove `robots: { index: false }` from
    both pages and add the two paths to `src/app/sitemap.ts`. Do not remove the
    noindex before then.
-5. **Hosting decision, still open.** The site is meant to live at
-   `lwnetwork.org/measure-and-make`, but the Living Water Network Vercel project
-   builds only the repository root and does not serve these routes. Two options,
-   for the owner to choose: (a) deploy this app as its own Vercel project and
-   add a rewrite from `/measure-and-make/:path*` in the root app's
-   `next.config.mjs` — a small additive change, no LWN route touched; or (b)
-   move the app into the root Next app under `src/app/measure-and-make/`, which
-   means merging two dependency sets and is the more invasive option. Do not
-   pick one without the owner's decision.
+5. **Hosting, decided.** The site is its own Vercel project on its own domain,
+   www.measureandmakegroup.com, served at the root. It was briefly proxied
+   through `lwnetwork.org/measure-and-make`; the root app's `next.config.mjs`
+   now permanently redirects that path, and the `/measure&make` and
+   `/measure-make` spellings, to the new domain. No LWN route is touched.
 6. **Optional, only if asked:** the About page's origin narrative names Radiant
    Events Planning, because the owner's supplied copy does. No case-study
    record, detail page, metadata, or structured data for it exists. Remove the

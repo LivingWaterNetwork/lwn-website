@@ -20,9 +20,9 @@ import { chromium } from "playwright";
 // promoted deployment are different facts; section 10 in particular is the
 // check that tells them apart.
 //
-//   QA_BASE=https://measure-and-make-henna.vercel.app/measure-and-make \
+//   QA_BASE=https://www.measureandmakegroup.com \
 //     node scripts/qa.mjs
-const BASE = process.env.QA_BASE || "http://localhost:4330/measure-and-make";
+const BASE = process.env.QA_BASE || "http://localhost:4330";
 // /nope is the deliberate 404 check; its own 404 response is not a defect.
 const ROUTES = [
   "",
