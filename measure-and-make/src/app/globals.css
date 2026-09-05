@@ -1,0 +1,666 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    @apply bg-limestone text-forest font-sans;
+  }
+
+  ::selection {
+    @apply bg-brass/25;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-brass ring-offset-2 ring-offset-limestone;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply font-sans text-xs font-semibold uppercase tracking-eyebrow text-field;
+  }
+
+  .rule-brass {
+    @apply h-px w-12 bg-brass;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * First-load brand reveal — see src/components/BrandIntro.tsx.
+ *
+ * The whole sequence is CSS, on purpose. It finishes on its own even if the
+ * JavaScript never runs, so the overlay cannot get stuck over the page.
+ * JavaScript only decides whether to play it at all, holds scrolling while it
+ * does, and removes the node afterwards. Only opacity and transform are
+ * animated, and the overlay never takes pointer events, so it cannot block a
+ * click or a keystroke at any point in the sequence.
+ *
+ * Every colour below is an approved Concept 03.5 value: Deep Forest #12332D,
+ * Limestone #F2EEE4, Aged Brass #C7974D, Mineral Sage #A8BDAE. The supplied
+ * lockup is dark ink, so it is revealed on a Limestone plate rather than
+ * filtered or inverted into a reverse version that has not been supplied.
+ * ------------------------------------------------------------------------- */
+
+:root {
+  --mm-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --mm-ease-panel: cubic-bezier(0.76, 0, 0.24, 1);
+  /* Stage 5: the hero arrives as the field starts to retract. */
+  --mm-hero-delay: 1200ms;
+  --mm-hero-step: 55ms;
+  --mm-hero-dur: 400ms;
+}
+
+/* Played once per browsing session. The gate script in BrandIntro sets this
+   attribute before the overlay is parsed, so a repeat visit never flashes it. */
+:root[data-mm-intro="seen"] .mm-intro {
+  display: none;
+}
+
+.mm-intro {
+  /* The sequence, in one place. Seal in, seal out, the plate and name up into
+     position, the brass rule, the supporting line, then the field retracts —
+     every stage complete before the one after it fades. */
+  --mm-d-seal: 80ms;
+  --mm-t-seal: 380ms;
+  --mm-d-seal-out: 500ms;
+  --mm-t-seal-out: 120ms;
+  --mm-d-plate: 520ms;
+  --mm-t-plate: 340ms;
+  --mm-d-lockup: 600ms;
+  --mm-t-lockup: 280ms;
+  --mm-d-rule: 760ms;
+  --mm-t-rule: 220ms;
+  --mm-d-line: 800ms;
+  --mm-t-line: 220ms;
+  --mm-d-out: 1180ms;
+  --mm-t-out: 180ms;
+  --mm-d-panel: 1200ms;
+  --mm-t-panel: 420ms;
+  --mm-d-end: 1640ms;
+
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  /* Never intercepts input, at any point in the sequence. */
+  pointer-events: none;
+  animation: mm-intro-end 1ms linear var(--mm-d-end) forwards;
+}
+
+/* Stage 1 and Stage 4: one Deep Forest field, in two panels that retract along
+   the axis the Maker's Seal's two forms meet on. The 1px overlap keeps a seam
+   from showing at the meeting line on fractional viewport heights. */
+.mm-intro__panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: calc(50% + 1px);
+  background: #12332d;
+}
+
+.mm-intro__panel--top {
+  top: 0;
+  animation: mm-panel-up var(--mm-t-panel) var(--mm-ease-panel)
+    var(--mm-d-panel) both;
+}
+
+.mm-intro__panel--bottom {
+  bottom: 0;
+  animation: mm-panel-down var(--mm-t-panel) var(--mm-ease-panel)
+    var(--mm-d-panel) both;
+}
+
+.mm-intro__stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: calc(env(safe-area-inset-top, 0px) + 2rem)
+    calc(env(safe-area-inset-right, 0px) + 1.75rem)
+    calc(env(safe-area-inset-bottom, 0px) + 2rem)
+    calc(env(safe-area-inset-left, 0px) + 1.75rem);
+  animation: mm-stage-out var(--mm-t-out) linear var(--mm-d-out) forwards;
+}
+
+/* Stages 2 and 3 share one optical centre: the seal settles there, then the
+   plate opens outward from behind it and the seal hands off to the full name.
+   The seal is never on screen alongside the lockup's own copy of it. */
+.mm-intro__mark {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+/* Stage 2. The Maker's Seal exactly as supplied — its own Deep Forest ground,
+   its own brass centre and corner marks. Nothing redraws it, nothing is
+   layered over it, and its internals are not staged separately, which would
+   mean editing the artwork. */
+.mm-intro__seal {
+  position: absolute;
+  z-index: 1;
+  width: 4.5rem;
+  height: 4.5rem;
+  opacity: 0;
+  animation:
+    mm-seal var(--mm-t-seal) var(--mm-ease) var(--mm-d-seal) both,
+    mm-seal-out var(--mm-t-seal-out) linear var(--mm-d-seal-out) forwards;
+}
+
+/* Stage 3. The full name, on the light ground the supplied artwork is drawn
+   for. The plate carries the lockup up into place — the two move together, so
+   the name is never half-drawn or clipped on its way in — and the seal has
+   dissolved before the name inks in. The seal never introduces the company on
+   its own, and no lockup ever flies across the screen. */
+.mm-intro__plate {
+  max-width: min(34rem, 82vw);
+  background: #f2eee4;
+  box-shadow: 0 0 0 1px rgba(199, 151, 77, 0.35);
+  padding: 1.5rem 2rem;
+  opacity: 0;
+  animation: mm-plate var(--mm-t-plate) var(--mm-ease) var(--mm-d-plate) both;
+}
+
+.mm-intro__lockup {
+  display: block;
+  width: min(26rem, 62vw);
+  height: auto;
+  opacity: 0;
+  animation: mm-lockup var(--mm-t-lockup) var(--mm-ease) var(--mm-d-lockup) both;
+}
+
+.mm-intro__rule {
+  display: block;
+  margin-top: 1.5rem;
+  width: 7.5rem;
+  height: 1px;
+  background: #c7974d;
+  transform: scaleX(0);
+  animation: mm-rule var(--mm-t-rule) var(--mm-ease) var(--mm-d-rule) both;
+}
+
+.mm-intro__line {
+  margin-top: 1rem;
+  font-family: var(--font-manrope), system-ui, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #a8bdae;
+  text-align: center;
+  opacity: 0;
+  animation: mm-line var(--mm-t-line) var(--mm-ease) var(--mm-d-line) both;
+}
+
+@keyframes mm-seal {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes mm-seal-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes mm-plate {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* The name settles a beat after the plate it sits on, so the sheet arrives and
+   the name inks onto it. The 14px of movement is the plate's, carrying it. */
+@keyframes mm-lockup {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes mm-rule {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes mm-line {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes mm-stage-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes mm-panel-up {
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes mm-panel-down {
+  to {
+    transform: translateY(100%);
+  }
+}
+
+/* The overlay's final state, reached by animation rather than by script, so it
+   is unreachable for the overlay to stay over the page. */
+@keyframes mm-intro-end {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* Stage 5: a restrained stagger, only on the visit that plays the reveal. */
+:root[data-mm-intro="play"] [data-mm-hero] > * {
+  animation: mm-hero-in var(--mm-hero-dur) var(--mm-ease) both;
+  animation-delay: calc(
+    var(--mm-hero-delay) + var(--mm-hero-step) * var(--mm-hero-index, 0)
+  );
+}
+
+:root[data-mm-intro="play"] [data-mm-hero] > *:nth-child(2) {
+  --mm-hero-index: 1;
+}
+:root[data-mm-intro="play"] [data-mm-hero] > *:nth-child(3) {
+  --mm-hero-index: 2;
+}
+:root[data-mm-intro="play"] [data-mm-hero] > *:nth-child(4) {
+  --mm-hero-index: 3;
+}
+:root[data-mm-intro="play"] [data-mm-hero] > *:nth-child(5) {
+  --mm-hero-index: 4;
+}
+:root[data-mm-intro="play"] [data-mm-hero] > *:nth-child(n + 6) {
+  --mm-hero-index: 5;
+}
+
+@keyframes mm-hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* A narrow screen gets its own, shorter composition: the whole sequence is
+   settled well inside 1.6s and the lockup never reaches the screen edges. */
+@media (max-width: 640px) {
+  :root {
+    --mm-hero-delay: 1020ms;
+    --mm-hero-step: 50ms;
+    --mm-hero-dur: 340ms;
+  }
+
+  .mm-intro {
+    --mm-d-seal: 70ms;
+    --mm-t-seal: 320ms;
+    --mm-d-seal-out: 430ms;
+    --mm-t-seal-out: 100ms;
+    --mm-d-plate: 450ms;
+    --mm-t-plate: 290ms;
+    --mm-d-lockup: 510ms;
+    --mm-t-lockup: 240ms;
+    --mm-d-rule: 650ms;
+    --mm-t-rule: 190ms;
+    --mm-d-line: 680ms;
+    --mm-t-line: 190ms;
+    --mm-d-out: 1000ms;
+    --mm-t-out: 160ms;
+    --mm-d-panel: 1020ms;
+    --mm-t-panel: 360ms;
+    --mm-d-end: 1400ms;
+  }
+
+  .mm-intro__seal {
+    width: 3.75rem;
+    height: 3.75rem;
+  }
+
+  .mm-intro__plate {
+    padding: 1.125rem 1.25rem;
+    max-width: min(22rem, 86vw);
+  }
+
+  .mm-intro__lockup {
+    width: min(17rem, 72vw);
+  }
+
+  .mm-intro__rule {
+    margin-top: 1.125rem;
+    width: 5.5rem;
+  }
+}
+
+/* A short viewport (a landscape phone) keeps the same order at a smaller
+   scale rather than pushing the composition off screen. */
+@media (max-height: 480px) {
+  .mm-intro__seal {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .mm-intro__plate {
+    padding: 0.875rem 1.125rem;
+  }
+
+  .mm-intro__lockup {
+    width: min(18rem, 54vw);
+  }
+
+  .mm-intro__rule {
+    margin-top: 1rem;
+  }
+
+  .mm-intro__line {
+    margin-top: 0.75rem;
+  }
+}
+
+/* Nobody is made to wait through the sequence. With reduced motion asked for,
+   there is no scaling, no panel separation and no stagger: every element is
+   already at its resting state and the block below it removes the overlay in
+   one step. */
+@media (prefers-reduced-motion: reduce) {
+  /* One short opacity step and the overlay is gone. Every delay is cleared
+     here on purpose: the block further down forces animation durations to
+     nothing, but it does not clear delays, and a delay left in place would
+     hold a Deep Forest field over the page for the length of the sequence. */
+  .mm-intro {
+    animation: mm-intro-fade 160ms linear both;
+  }
+
+  .mm-intro__panel,
+  .mm-intro__stage {
+    animation: none;
+  }
+
+  .mm-intro__lockup,
+  .mm-intro__line {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .mm-intro__seal {
+    animation: none;
+    opacity: 0;
+  }
+
+  .mm-intro__plate {
+    animation: none;
+    clip-path: none;
+  }
+
+  .mm-intro__rule {
+    animation: none;
+    transform: scaleX(1);
+  }
+
+  :root[data-mm-intro="play"] [data-mm-hero] > * {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes mm-intro-fade {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Reveal's entrance — see src/components/ui/Reveal.tsx.
+ *
+ * Two properties matter here, and both are the point of the rule rather than
+ * incidental to it:
+ *
+ * 1. The hidden state exists ONLY in the keyframes' `from` step, reached
+ *    through animation-fill-mode. There is no static rule anywhere that sets
+ *    opacity: 0 on this content, so if the animation cannot run — animations
+ *    unsupported, the stylesheet rule dropped, anything at all — the content
+ *    is visible rather than hidden. Never move the hidden state out of the
+ *    keyframes.
+ * 2. It is entirely CSS. No IntersectionObserver, no scroll listener, no
+ *    hydration, nothing that can fail to fire and strand a heading at zero.
+ *
+ * Content below the fold therefore settles on load rather than on scroll. That
+ * is the intended trade: a scroll-in flourish is not worth a page whose text
+ * can fail to appear. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    animation: mm-reveal-in 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--mm-reveal-delay, 0ms);
+  }
+}
+
+@keyframes mm-reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Composed type — see src/components/ui/SplitText.tsx.
+ *
+ * Each word rises out from behind its own mask, staggered, so a headline
+ * arrives as type being set rather than as a box being faded in. Same two
+ * invariants as Reveal, for the same reason: the hidden state exists only in
+ * the keyframes' `from` step, so a word whose animation cannot run is simply at
+ * its resting position; and there is no observer, listener or frame loop
+ * anywhere in it.
+ * ------------------------------------------------------------------------- */
+
+.mm-split__mask {
+  display: inline-block;
+  /* The mask has to clip the word's travel without clipping the word. Source
+     Serif's descenders (p, g, y) and its ascenders both overshoot the line box,
+     so the box is opened up and the extra pulled back out of the layout — the
+     heading's line height and rhythm are unchanged. */
+  padding: 0.12em 0 0.2em;
+  margin: -0.12em 0 -0.2em;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.mm-split__word {
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Below the hero: plays on load, once, wherever the heading sits on the
+     page. 34ms between words is enough to read as a stagger and short enough
+     that a six-word headline is fully set in well under a second. */
+  [data-mm-split="section"] .mm-split__word {
+    animation: mm-split-in 620ms var(--mm-ease) both;
+    animation-delay: calc(var(--mm-split-base, 0ms) + 34ms * var(--mm-word, 0));
+  }
+
+  /* The hero, gated on the first-load reveal actually playing — so a later
+     page view in the session, a reduced-motion visitor and a visitor with
+     JavaScript off all get the headline with no animation applied at all. It
+     starts with the hero block it sits in, so the block arrives and the name
+     of the thing sets itself as it lands. */
+  :root[data-mm-intro="play"] [data-mm-split="hero"] .mm-split__word {
+    animation: mm-split-in 560ms var(--mm-ease) both;
+    animation-delay: calc(var(--mm-hero-delay) + 30ms * var(--mm-word, 0));
+  }
+}
+
+@keyframes mm-split-in {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Paper grain.
+ *
+ * The palette is right but every surface was a flat fill, which is the
+ * difference between "warm, editorial" and "flat, corporate" at these exact
+ * values. This is one tiled SVG of fractal noise blended into the background
+ * only — background-blend-mode, not an overlay element — so it can never sit
+ * over type, never wash out contrast, never intercept a pointer, and adds no
+ * DOM. It is inert for anything that does not paint backgrounds.
+ *
+ * No colour is introduced: the noise is neutral and the blend is soft-light at
+ * low contrast, so the Concept 03.5 values underneath are unchanged.
+ * ------------------------------------------------------------------------- */
+
+:root {
+  --mm-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)' opacity='0.42'/%3E%3C/svg%3E");
+}
+
+.mm-grain {
+  background-image: var(--mm-grain);
+  background-repeat: repeat;
+  background-size: 160px 160px;
+  background-blend-mode: soft-light;
+}
+
+/* The Deep Forest field takes the grain harder than the light grounds do —
+   a dark flat fill is where flatness shows most. */
+.mm-grain-dark {
+  background-image: var(--mm-grain);
+  background-repeat: repeat;
+  background-size: 160px 160px;
+  background-blend-mode: overlay;
+}
+
+/* ---------------------------------------------------------------------------
+ * The signature interaction: a link's underline draws in from the left.
+ *
+ * One gesture, applied to every text link and every button on the site, is
+ * what reads as intentional — variety is what reads as decoration. It is a
+ * scaled pseudo-element, so it composites on the GPU and moves no layout.
+ *
+ * Focus is untouched: the :focus-visible ring in the base layer still does the
+ * accessibility work. This is a hover affordance sitting on top of it, never a
+ * replacement for it, and a keyboard visitor loses nothing by never hovering.
+ * ------------------------------------------------------------------------- */
+
+.mm-draw {
+  position: relative;
+}
+
+.mm-draw::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.15em;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 320ms var(--mm-ease);
+}
+
+.mm-draw:hover::after,
+.mm-draw:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* On a button the rule draws along the inside of the bottom edge instead, so
+   the same gesture reads on a bordered box as on a bare text link. */
+.mm-draw-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.mm-draw-button::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: #c7974d;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 320ms var(--mm-ease);
+}
+
+.mm-draw-button:hover::after,
+.mm-draw-button:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* A pointer that cannot hover gets no half-applied hover state. */
+@media (hover: none) {
+  .mm-draw::after,
+  .mm-draw-button::after {
+    display: none;
+  }
+}
+
+/* Motion is opt-in and quiet. Anyone who has asked their system for less of it
+   gets none of it. (01-BRAND-FOUNDATION.md §6: avoid excessive animation.) */
+@media (prefers-reduced-motion: reduce) {
+  /* Cleared explicitly rather than left to the durations below: those zero a
+     duration but not a delay, and a delay left in place on a `both`-filled
+     animation would hold a word at translateY(110%) — off its own line — for
+     the length of the stagger. */
+  [data-mm-split] .mm-split__word {
+    animation: none;
+    transform: none;
+  }
+
+  /* No underline animates in; it is simply there on hover, at once. */
+  .mm-draw::after,
+  .mm-draw-button::after {
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
