@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
-  <title id="title">Measure &amp; Make Maker's Seal</title>
-  <desc id="desc">Two structural forms align around a brass center.</desc>
-  <rect width="240" height="240" rx="18" fill="#12332D"/>
-  <path d="M42 93V42L120 108L198 42V93L120 158Z" fill="#F2EEE4"/>
-  <path d="M42 147V198L120 132L198 198V147L120 82Z" fill="#A8BDAE"/>
-  <rect x="107" y="107" width="26" height="26" transform="rotate(45 120 120)" fill="#C7974D"/>
-  <path d="M24 24H52M24 24V52M216 24H188M216 24V52M24 216H52M24 216V188M216 216H188M216 216V188" fill="none" stroke="#C7974D" stroke-width="4"/>
-</svg>
