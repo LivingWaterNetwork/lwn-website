@@ -1,10 +1,11 @@
 /** @type {import('next').NextConfig} */
 
-// The Measure & Make site is a separate Next application in measure-and-make/,
-// deployed as its own Vercel project, and now served on its own domain at
-// https://www.measureandmakegroup.com. It used to be proxied through this
-// domain at /measure-and-make; everything below exists so the addresses that
-// were published while that was true still land somewhere correct.
+// The Measure & Make site is a separate application, in its own repository
+// and deployed as its own Vercel project, served at
+// https://www.measureandmakegroup.com. It used to live in this repository and
+// be proxied through this domain at /measure-and-make; everything below exists
+// so the addresses that were published while that was true still land
+// somewhere correct.
 const MEASURE_AND_MAKE_SITE = "https://www.measureandmakegroup.com";
 
 const nextConfig = {
