@@ -241,6 +241,13 @@ box-shadow:0 1px 2px rgba(10,42,71,.06);transition:all .2s}
 footer{margin-top:48px;padding-top:24px;border-top:1px solid rgba(10,42,71,.1);text-align:center}
 footer .name{font-family:Newsreader,Georgia,serif;font-size:1rem;margin:0}
 footer .note{margin:6px auto 0;max-width:20rem;font-size:.75rem;line-height:1.6;color:var(--slate)}
+/* Language toggle: deliberately quiet and below the fold, so it never reads as
+   a fifth primary action. Still a 44px target. */
+.lang{display:inline-flex;align-items:center;justify-content:center;min-height:44px;
+margin-top:4px;padding:10px 14px;border-radius:10px;font-size:.75rem;color:var(--slate);
+text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(68,85,99,.35);
+transition:color .2s,text-decoration-color .2s}
+.lang:hover{color:var(--navy);text-decoration-color:var(--navy)}
 [hidden]{display:none!important}
 .backdrop{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center;
 background:rgba(10,42,71,.6);animation:fade .15s ease-out}
@@ -348,58 +355,62 @@ const js = `
 })();
 `;
 
-const html = `<!DOCTYPE html>
-<html lang="en">
+function renderPage(L) {
+  return `<!DOCTYPE html>
+<html lang="${L.lang}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(SOCIAL.title)}</title>
-<meta name="description" content="${esc(SOCIAL.description)}">
-<link rel="canonical" href="${esc(CANONICAL_URL)}">
+<title>${esc(L.social.title)}</title>
+<meta name="description" content="${esc(L.social.description)}">
+<link rel="canonical" href="${esc(L.pageUrl)}">
 <meta name="robots" content="noindex, follow">
 <meta property="og:type" content="profile">
-<meta property="og:title" content="${esc(SOCIAL.title)}">
-<meta property="og:description" content="${esc(SOCIAL.description)}">
-<meta property="og:url" content="${esc(CANONICAL_URL)}">
+<meta property="og:title" content="${esc(L.social.title)}">
+<meta property="og:description" content="${esc(L.social.description)}">
+<meta property="og:url" content="${esc(L.pageUrl)}">
 <meta property="og:image" content="${esc(CANONICAL_URL)}/assets/omar-headshot-social.jpg">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="${esc(SOCIAL.title)}">
-<meta name="twitter:description" content="${esc(SOCIAL.description)}">
+<meta name="twitter:title" content="${esc(L.social.title)}">
+<meta name="twitter:description" content="${esc(L.social.description)}">
 <meta name="twitter:image" content="${esc(CANONICAL_URL)}/assets/omar-headshot-social.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap">
 <style>${css}</style>
-<script type="application/ld+json">${JSON.stringify(personJsonLd)}</script>
+${L.alt ? `<link rel="alternate" hreflang="en" href="${esc(CANONICAL_URL)}">
+<link rel="alternate" hreflang="es" href="${esc(CANONICAL_URL)}/es">
+<link rel="alternate" hreflang="x-default" href="${esc(CANONICAL_URL)}">
+` : ""}<script type="application/ld+json">${JSON.stringify(personJsonLd)}</script>
 </head>
 <body>
 <main class="wrap">
 
   <header class="hero">
-    <img class="avatar" src="./assets/omar-headshot.jpg" width="128" height="128" alt="${esc(IDENTITY.headshotAlt)}" fetchpriority="high">
+    <img class="avatar" src="./assets/omar-headshot.jpg" width="128" height="128" alt="${esc(L.headshotAlt)}" fetchpriority="high">
     <h1>${esc(IDENTITY.name)}</h1>
-    <p class="identity">${esc(IDENTITY.identityLine)}</p>
-    <p class="location">${esc(IDENTITY.location)}</p>
+    <p class="identity">${esc(L.identityLine)}</p>
+    <p class="location">${esc(L.location)}</p>
   </header>
 
   <section aria-label="Contact actions">
     <div class="actions">
-      <a class="tile primary" href="./${VCARD_FILENAME}" download="${VCARD_FILENAME}" aria-label="Save Omar Fandino's contact information">${ICONS.download}Save Contact</a>
-      <a class="tile" href="${esc(CONTACT.emailHref)}" aria-label="Email Omar Fandino">${ICONS.mail}Email Omar</a>
-      <a class="tile" href="${esc(CONTACT.phoneHref)}" aria-label="Call Omar Fandino">${ICONS.phone}Call</a>
-      <button class="tile" type="button" id="share" aria-label="Share this contact card"><span id="share-icon">${ICONS.share}</span><span id="share-label">Share</span></button>
+      <a class="tile primary" href="./${VCARD_FILENAME}" download="${VCARD_FILENAME}" aria-label="${esc(L.a11y.save)}">${ICONS.download}${esc(L.actions.save)}</a>
+      <a class="tile" href="${esc(CONTACT.emailHref)}" aria-label="${esc(L.a11y.email)}">${ICONS.mail}${esc(L.actions.email)}</a>
+      <a class="tile" href="${esc(CONTACT.phoneHref)}" aria-label="${esc(L.a11y.call)}">${ICONS.phone}${esc(L.actions.call)}</a>
+      <button class="tile" type="button" id="share" aria-label="${esc(L.a11y.share)}"><span id="share-icon">${ICONS.share}</span><span id="share-label">${esc(L.actions.share)}</span></button>
     </div>
     <p class="sr-only" aria-live="polite" id="live"></p>
-    <button class="qr-trigger" type="button" id="qr-trigger" aria-haspopup="dialog" aria-expanded="false" aria-label="Open QR code to save this contact card">${ICONS.qr}Show My QR</button>
+    <button class="qr-trigger" type="button" id="qr-trigger" aria-haspopup="dialog" aria-expanded="false" aria-label="${esc(L.a11y.qrOpen)}">${ICONS.qr}${esc(L.actions.qr)}</button>
   </section>
 
   <section class="orgs" aria-label="Organizations">
-    <h2 class="eyebrow">Where I serve</h2>
+    <h2 class="eyebrow">${esc(L.eyebrow)}</h2>
 
     <article class="org org-lwn">
       <div class="org-logo"><img src="./assets/lwn-logo.png" width="140" height="140" alt="${esc(LWN.logoAlt)}"></div>
-      <p>${esc(LWN.descriptor)}</p>
-      <a class="org-cta cta-lwn" href="${esc(LWN.url)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(LWN.ctaAriaLabel)}">${esc(LWN.cta)}${ICONS.arrow}</a>
+      <p>${esc(L.lwn.descriptor)}</p>
+      <a class="org-cta cta-lwn" href="${esc(LWN.url)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(L.lwn.ctaAriaLabel)}">${esc(L.lwn.cta)}${ICONS.arrow}</a>
     </article>
 
     <!-- The approved horizontal lockup, unmodified. Dark ink by design, so it
@@ -407,33 +418,34 @@ const html = `<!DOCTYPE html>
          the name is never abbreviated. -->
     <article class="org org-mm">
       <div class="org-logo"><img src="./assets/measure-make-horizontal.svg" width="220" height="44" alt="${esc(MM.logoAlt)}"></div>
-      <p>${esc(MM.descriptor)}</p>
-      <a class="org-cta cta-mm" href="${esc(MM.url)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(MM.ctaAriaLabel)}">${esc(MM.cta)}${ICONS.arrow}</a>
+      <p>${esc(L.mm.descriptor)}</p>
+      <a class="org-cta cta-mm" href="${esc(MM.url)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(L.mm.ctaAriaLabel)}">${esc(L.mm.cta)}${ICONS.arrow}</a>
     </article>
   </section>
 
-  <a class="linkedin" href="${esc(CONTACT.linkedin)}" target="_blank" rel="noopener noreferrer" aria-label="View Omar Fandino's LinkedIn profile">${ICONS.linkedin}Connect on LinkedIn</a>
+  <a class="linkedin" href="${esc(CONTACT.linkedin)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(L.a11y.linkedin)}">${ICONS.linkedin}${esc(L.actions.linkedin)}</a>
 
   <footer>
     <p class="name">${esc(IDENTITY.name)}</p>
-    <p class="note">${esc(FOOTER_NOTE)}</p>
-  </footer>
+    <p class="note">${esc(L.footerNote)}</p>
+${L.alt ? `    <a class="lang" href="${L.alt.href}" hreflang="${L.alt.lang}" lang="${L.alt.lang}">${esc(L.alt.label)}</a>
+` : ""}  </footer>
 </main>
 
 <div class="backdrop" id="qr-sheet" hidden>
   <div class="sheet" id="qr-panel" role="dialog" aria-modal="true" aria-labelledby="qr-h" aria-describedby="qr-s">
     <div class="sheet-head">
       <div>
-        <h2 id="qr-h">${esc(QR_COPY.heading)}</h2>
-        <p class="sub" id="qr-s">${esc(QR_COPY.supporting)}</p>
+        <h2 id="qr-h">${esc(L.qr.heading)}</h2>
+        <p class="sub" id="qr-s">${esc(L.qr.supporting)}</p>
       </div>
-      <button class="sheet-close" type="button" id="qr-close" aria-label="Close QR code">${ICONS.close}</button>
+      <button class="sheet-close" type="button" id="qr-close" aria-label="${esc(L.a11y.qrClose)}">${ICONS.close}</button>
     </div>
     <div class="qr-frame">${qrSvg}</div>
     <a class="qr-url" href="${esc(CANONICAL_URL)}">${esc(CANONICAL_URL)}</a>
     <div class="qr-dl">
-      <a class="dl-png" href="./${QR_FILENAME_BASE}.png" download="${QR_FILENAME_BASE}.png" aria-label="Download QR code image as PNG">${ICONS.download}PNG</a>
-      <a class="dl-svg" href="./${QR_FILENAME_BASE}.svg" download="${QR_FILENAME_BASE}.svg" aria-label="Download QR code image as SVG">${ICONS.download}SVG</a>
+      <a class="dl-png" href="./${QR_FILENAME_BASE}.png" download="${QR_FILENAME_BASE}.png" aria-label="${esc(L.a11y.qrPng)}">${ICONS.download}PNG</a>
+      <a class="dl-svg" href="./${QR_FILENAME_BASE}.svg" download="${QR_FILENAME_BASE}.svg" aria-label="${esc(L.a11y.qrSvg)}">${ICONS.download}SVG</a>
     </div>
   </div>
 </div>
@@ -442,8 +454,58 @@ const html = `<!DOCTYPE html>
 </body>
 </html>
 `;
+}
 
-writeFileSync(join(DIST, "index.html"), html, "utf8");
+/**
+ * Locale bundles. Everything language-independent — phone, email, both
+ * organization URLs, the vCard, the QR payload — stays in omar.ts and is shared
+ * by every locale; only the visible copy varies here.
+ *
+ * `en` is the approved English copy from 01-approved-content.md, unchanged.
+ */
+const EN = {
+  lang: "en",
+  pageUrl: CANONICAL_URL,
+  identityLine: IDENTITY.identityLine,
+  location: IDENTITY.location,
+  headshotAlt: IDENTITY.headshotAlt,
+  eyebrow: "Where I serve",
+  social: SOCIAL,
+  qr: QR_COPY,
+  footerNote: FOOTER_NOTE,
+  actions: {
+    save: "Save Contact",
+    email: "Email Omar",
+    call: "Call",
+    share: "Share",
+    qr: "Show My QR",
+    linkedin: "Connect on LinkedIn",
+  },
+  a11y: {
+    save: "Save Omar Fandino's contact information",
+    email: "Email Omar Fandino",
+    call: "Call Omar Fandino",
+    share: "Share this contact card",
+    qrOpen: "Open QR code to save this contact card",
+    qrClose: "Close QR code",
+    qrPng: "Download QR code image as PNG",
+    qrSvg: "Download QR code image as SVG",
+    linkedin: "View Omar Fandino's LinkedIn profile",
+  },
+  lwn: { descriptor: LWN.descriptor, cta: LWN.cta, ctaAriaLabel: LWN.ctaAriaLabel },
+  mm: { descriptor: MM.descriptor, cta: MM.cta, ctaAriaLabel: MM.ctaAriaLabel },
+  // Counterpart locale for the language toggle, or null when none exists.
+  //
+  // NULL DELIBERATELY. The Spanish card is not built: its approved copy
+  // (omar-digital-card-handoff/10-spanish-version-addendum.md) has not been
+  // supplied, and the strings must not be improvised. Rendering a toggle to a
+  // /es that does not exist would put a broken link on a live card, so both the
+  // toggle and the hreflang tags stay out until the ES bundle below is filled
+  // in. Set this to ES_ALT once /es ships.
+  alt: null,
+};
+
+writeFileSync(join(DIST, "index.html"), renderPage(EN), "utf8");
 
 console.log(`Built standalone card -> ${DIST}`);
 console.log(`  canonical / QR payload: ${CANONICAL_URL}`);
