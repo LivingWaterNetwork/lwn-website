@@ -1,13 +1,11 @@
 import QRCode from "qrcode";
 
-import { CANONICAL_URL } from "./omar";
-
 /**
  * Deterministic, local QR generation for the digital business card.
  *
- * Runs on the server at build time (the /connect/omar page is statically
- * rendered), so the browser never calls a third-party QR image endpoint and the
- * modal has no network dependency once the page has loaded. The encoded payload
+ * Runs at build time in scripts/build-standalone-card.mjs, so the browser never
+ * calls a third-party QR image endpoint and the QR sheet has no network
+ * dependency once the page has loaded. The encoded payload
  * is the canonical URL and nothing else — never raw contact fields, never a
  * vCard- or meCard-encoded QR. The QR takes a scanner to the page; the page is
  * what offers the vCard download.
@@ -37,9 +35,12 @@ export type QrAssets = {
   encoded: string;
 };
 
-export async function generateQrAssets(
-  value: string = CANONICAL_URL,
-): Promise<QrAssets> {
+/**
+ * `value` is passed in rather than imported so this module stays free of
+ * cross-imports: it is loaded both by the Next build and by a plain Node
+ * script, and the two resolve extensionless specifiers differently.
+ */
+export async function generateQrAssets(value: string): Promise<QrAssets> {
   const [svg, pngDataUrl] = await Promise.all([
     QRCode.toString(value, { ...OPTIONS, type: "svg", width: 512 }),
     QRCode.toDataURL(value, { ...OPTIONS, width: 1024 }),

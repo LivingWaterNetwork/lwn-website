@@ -29,7 +29,6 @@ import {
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import QRCode from "qrcode";
 import sharp from "sharp";
 
 import {
@@ -45,17 +44,11 @@ import {
   VCARD_FILENAME,
   buildVCard,
 } from "../src/lib/connect/omar.ts";
+import { generateQrAssets } from "../src/lib/connect/qr.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "standalone-card", "dist");
 const [LWN, MM] = ORGANIZATIONS;
-
-/** The QR encodes the canonical URL only — never contact fields. */
-const QR_OPTIONS = {
-  errorCorrectionLevel: "M",
-  margin: 4,
-  color: { dark: "#0A2A47", light: "#FFFFFF" },
-};
 
 const esc = (s) =>
   String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -110,10 +103,14 @@ writeFileSync(join(DIST, VCARD_FILENAME), buildVCard(), "utf8");
 
 // QR: generated here at build time, so the page ships it as static markup and
 // the downloads work with no network round trip and no third-party endpoint.
-const qrSvg = await QRCode.toString(CANONICAL_URL, { ...QR_OPTIONS, type: "svg", width: 512 });
-const qrPng = await QRCode.toBuffer(CANONICAL_URL, { ...QR_OPTIONS, width: 1024 });
+// generateQrAssets is the module the unit tests decode against, so the QR this
+// build emits is the exact one those tests verify.
+const { svg: qrSvg, pngDataUrl } = await generateQrAssets(CANONICAL_URL);
 writeFileSync(join(DIST, `${QR_FILENAME_BASE}.svg`), qrSvg, "utf8");
-writeFileSync(join(DIST, `${QR_FILENAME_BASE}.png`), qrPng);
+writeFileSync(
+  join(DIST, `${QR_FILENAME_BASE}.png`),
+  Buffer.from(pngDataUrl.replace(/^data:image\/png;base64,/, ""), "base64"),
+);
 
 // Headers Vercel cannot infer from the file extension. text/vcard is the RFC
 // 6350 type (text/x-vcard is the deprecated pre-standard one), and attachment

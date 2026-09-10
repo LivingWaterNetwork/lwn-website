@@ -289,14 +289,3 @@
   }
 }
 
-/* Digital business card (/connect/omar) — QR sheet entrance. Both are used
-   only behind motion-safe:, so a reduced-motion preference skips them. */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes sheetUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
-}

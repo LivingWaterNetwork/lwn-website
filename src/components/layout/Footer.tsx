@@ -10,9 +10,6 @@ export function Footer() {
 
   // The YAN mini-site owns its own footer (see src/components/yan/layout/YanFooter.tsx).
   if (pathname?.startsWith("/yan")) return null;
-  // The digital business card is a standalone contact surface, not a site
-  // page — it carries no org nav, no donation CTA, and its own footer.
-  if (pathname?.startsWith("/connect")) return null;
 
   return (
     <footer className="bg-navy text-white">

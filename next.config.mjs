@@ -8,6 +8,13 @@
 // somewhere correct.
 const MEASURE_AND_MAKE_SITE = "https://www.measureandmakegroup.com";
 
+// Omar's digital business card lives at its own origin, served by the
+// `omar-fandino-connect` Vercel project. /connect/omar was the path this app
+// briefly used before that subdomain was live; the redirect keeps any link
+// published in the meantime working, and stops the card existing at two
+// addresses.
+const CONNECT_CARD_SITE = "https://connect.lwnetwork.org";
+
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -47,6 +54,16 @@ const nextConfig = {
       {
         source: "/measure-make",
         destination: MEASURE_AND_MAKE_SITE,
+        permanent: true,
+      },
+      {
+        source: "/connect/omar",
+        destination: CONNECT_CARD_SITE,
+        permanent: true,
+      },
+      {
+        source: "/connect",
+        destination: CONNECT_CARD_SITE,
         permanent: true,
       },
     ];

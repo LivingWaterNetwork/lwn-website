@@ -112,16 +112,17 @@ changes pages:
 curl -H "Authorization: Bearer $CRON_SECRET" https://lwnetwork.org/api/cron/indexnow
 ```
 
-## Digital business card (`/connect/omar`)
+## Digital business card (connect.lwnetwork.org)
 
-Omar Fandino's personal contact card, opened from a printed or on-screen QR code.
-It is deliberately not a marketing page: no site nav, no site footer, no donation
-CTA, no form. `Navbar` and `Footer` self-hide on any `/connect` path, the same way
-they already do for `/yan`.
+Omar Fandino's personal contact card, opened from a printed or on-screen QR
+code. It is deliberately not a marketing page: no site nav, no site footer, no
+donation CTA, no form.
 
-`/connect` is excluded from `src/app/sitemap.ts` and the page sets
-`robots: { index: false }` — a personal contact card should not compete with the
-organization's own pages in search. It stays reachable by anyone with the link.
+It lives at **https://connect.lwnetwork.org**, served by its own Vercel project
+(`omar-fandino-connect`) via a Wix-managed CNAME — not by this app. This repo
+holds the card's source and builds it; `/connect` and `/connect/omar` here are
+308 redirects to that address, kept only so links published before the subdomain
+existed still work.
 
 ### Where to change things
 
@@ -131,7 +132,7 @@ Almost everything lives in one file: **`src/lib/connect/omar.ts`**.
 |---|---|
 | Name, identity line, location | `IDENTITY` |
 | Phone, email, LinkedIn | `CONTACT` (update the matching line in `VCARD_LINES` too) |
-| Organization names, descriptors, links, logos | `ORGANIZATIONS` |
+| Organization names, descriptors, links | `ORGANIZATIONS` |
 | Button labels, share text, "Link Copied" | `SHARE`, `ORGANIZATIONS[].cta` |
 | Open Graph / social preview copy | `SOCIAL` |
 | QR modal heading and helper text | `QR_COPY` |
@@ -139,78 +140,79 @@ Almost everything lives in one file: **`src/lib/connect/omar.ts`**.
 | vCard fields | `VCARD_LINES` |
 | Canonical URL (what the QR encodes) | `CANONICAL_URL` — see below |
 
-Layout and styling are in `src/app/connect/omar/page.tsx`,
-`src/components/connect/CardActions.tsx` (the four actions + QR trigger) and
-`src/components/connect/QrModal.tsx`.
+Layout, styling and behavior are all in `scripts/build-standalone-card.mjs`,
+which emits the whole site: plain HTML, CSS and ~40 lines of JS, no framework
+and no build step at deploy time.
+
+```bash
+npm run build:card      # -> standalone-card/dist/
+```
+
+`standalone-card/dist/` is gitignored — rebuild it rather than committing it.
 
 **Profile image.** Set `IDENTITY.headshot`. The current file,
 `public/images/omar-headshot-pro.jpg`, is byte-identical to
 `public/images/founder-headshot.jpg` — one asset saved twice; don't add a third
-copy. Replacing it needs no code change as long as the path stays the same.
+copy. The build resizes it (and the LWN logo) to what the layout actually
+renders and copies both into `dist/assets/`; it never hotlinks
+`www.lwnetwork.org/images/*`, which would break silently if those paths moved.
 
 **Measure & Make mark.** `public/images/brand/measure-make-03-5-horizontal.svg`,
 copied unmodified from the `LivingWaterNetwork/measure-and-make` repo's approved
 package. Do not redraw, recolor, invert, or filter it, and never abbreviate the
-name to "M&M" anywhere — including alt text. It is dark ink by design, so it only
-ever sits on a light ground. Measure & Make's palette lives under the `mm-*`
-Tailwind tokens, namespaced so it cannot collide with the LWN or YAN tokens.
+name to "M&M" anywhere — including alt text. It is dark ink by design, so it
+only ever sits on a light ground.
 
 ### vCard
 
-Served at `/connect/omar/Omar-Fandino.vcf` by
-`src/app/connect/omar/Omar-Fandino.vcf/route.ts`. The route segment is named for
-the file so the download keeps its filename on iOS Safari, which ignores
-`Content-Disposition`. Content comes from `VCARD_LINES`, joined with CRLF — RFC
-6350 requires it and several phone importers reject an LF-only file. Keep it as an
-array of lines; a template literal would silently reintroduce LF endings.
+`VCARD_LINES` joined with CRLF — RFC 6350 requires it and several phone
+importers reject an LF-only file. Keep it as an array of lines; a template
+literal would silently reintroduce LF endings. `dist/vercel.json` sets
+`Content-Type: text/vcard; charset=utf-8` and `Content-Disposition: attachment`,
+which Vercel cannot infer from the file extension.
 
 ### QR code
 
-Generated at build time by `src/lib/connect/qr.ts` using the local `qrcode`
-package — no third-party QR image endpoint, and no network dependency once the
-page has loaded. It encodes `CANONICAL_URL` and nothing else, never contact
-fields. Both downloads (`Omar-Fandino-QR.png`, `Omar-Fandino-QR.svg`) are produced
-in the browser from that build-time output.
+`src/lib/connect/qr.ts`, run at build time via the local `qrcode` package — no
+third-party QR image endpoint, and no network dependency once the page has
+loaded. It encodes `CANONICAL_URL` and nothing else, never contact fields. Both
+`Omar-Fandino-QR.png` and `.svg` ship as static files.
 
-> **⚠️ The QR encodes `CANONICAL_URL` verbatim.**
-> It is `https://connect.lwnetwork.org`, confirmed live on 2026-09-10. Changing
-> it invalidates every QR already printed or distributed, so change it only
-> together with reissuing the QR. A preview deploy can point its QR at itself
-> by setting `NEXT_PUBLIC_CONNECT_OMAR_URL` instead of editing source.
+> **The QR encodes `CANONICAL_URL` verbatim.** Changing that value invalidates
+> every QR already printed or distributed, so change it only together with
+> reissuing the QR.
 
-### Two builds, one source of truth
+### Deploying the card
 
-The card ships in two places, both reading their content from
-`src/lib/connect/omar.ts`:
+The `omar-fandino-connect` project is linked per-directory, so deploy from
+inside the build output — never from the repo root, where the CLI picks up this
+repo's git remote and resolves to `lwn-website` instead:
 
-| Build | Where | Built by |
-|---|---|---|
-| Next.js route | `lwnetwork.org/connect/omar`, inside this app | `npm run build` |
-| Standalone static site | `connect.lwnetwork.org`, its own Vercel project | `npm run build:card` |
+```bash
+npm run build:card
+cd standalone-card/dist
+npx vercel link --yes --scope living-water-network --project omar-fandino-connect
+npx vercel deploy --scope living-water-network          # preview
+npx vercel deploy --prod --scope living-water-network   # production
+```
 
-`connect.lwnetwork.org` is served by the separate `omar-fandino-connect` Vercel
-project (domain via a Wix-managed CNAME), so the card has to exist there at the
-root rather than as a route. `scripts/build-standalone-card.mjs` emits that
-version into `standalone-card/dist/` — plain HTML, CSS and ~40 lines of JS, no
-framework and no build step at deploy time. It imports the same content module,
-so editing `omar.ts` and re-running updates both builds. Only the CSS is
-specific to the standalone one.
+Expect an upload of roughly 170KB. If it reports tens of megabytes, it has
+picked up the wrong directory — stop and re-check the link. `npm run build:card`
+preserves `dist/.vercel`, so the link survives rebuilds.
 
-It also resizes the headshot and LWN logo (the sources are far larger than they
-render) and copies assets in rather than hotlinking `www.lwnetwork.org/images/*`
-— a card that depends on another site's paths breaks silently when they move.
-`standalone-card/dist/vercel.json` sets the vCard's `text/vcard` type and
-`attachment` disposition, which Vercel cannot infer from the extension.
+Verify after deploying:
 
-`standalone-card/dist/` is gitignored; rebuild it with `npm run build:card`.
+```bash
+curl -sI https://connect.lwnetwork.org/Omar-Fandino.vcf | grep -i content-
+```
 
 ### Tests
 
-`tests/unit/connect-omar.test.ts` covers the parts that fail silently and
-expensively: vCard CRLF endings and field content, and a programmatic decode of
-the generated QR asserting it matches `CANONICAL_URL` exactly. Run with
-`npm test`. If you change the canonical URL or any vCard field, these tests are
-what tell you the QR and the card still agree.
+`tests/unit/connect-omar.test.ts` covers what fails silently and expensively:
+the vCard's CRLF endings and field content, and a programmatic decode of the
+generated QR asserting it matches `CANONICAL_URL` exactly. It exercises the same
+`generateQrAssets` the build calls, so the QR shipped is the QR tested. Run with
+`npm test`.
 
 ## Deployment
 

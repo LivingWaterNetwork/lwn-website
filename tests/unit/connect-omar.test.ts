@@ -62,7 +62,7 @@ describe("vCard", () => {
 
 describe("QR code", () => {
   it("decodes to exactly the canonical URL, with no encoding artifacts", async () => {
-    const { pngDataUrl } = await generateQrAssets();
+    const { pngDataUrl } = await generateQrAssets(CANONICAL_URL);
     const png = PNG.sync.read(
       Buffer.from(pngDataUrl.replace(/^data:image\/png;base64,/, ""), "base64"),
     );
@@ -78,7 +78,7 @@ describe("QR code", () => {
   });
 
   it("encodes the URL only — never contact fields", async () => {
-    const { encoded } = await generateQrAssets();
+    const { encoded } = await generateQrAssets(CANONICAL_URL);
     expect(encoded).toBe(CANONICAL_URL);
     expect(encoded).not.toContain("BEGIN:VCARD");
     expect(encoded).not.toContain("MECARD");
@@ -86,8 +86,8 @@ describe("QR code", () => {
   });
 
   it("emits SVG with a quiet zone and renders deterministically", async () => {
-    const first = await generateQrAssets();
-    const second = await generateQrAssets();
+    const first = await generateQrAssets(CANONICAL_URL);
+    const second = await generateQrAssets(CANONICAL_URL);
 
     expect(first.svg).toBe(second.svg);
     expect(first.svg).toContain("<svg");

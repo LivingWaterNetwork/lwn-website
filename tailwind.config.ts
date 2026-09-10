@@ -49,31 +49,6 @@ const config: Config = {
           sage: "#5A755E",
           stone: "#E5E7EB",
         },
-        // Measure & Make — namespaced under `mm` so it cannot collide with the
-        // LWN or YAN tokens above. Values mirror the Measure & Make repo's own
-        // tailwind.config.ts (Concept 03.5, 01-BRAND-FOUNDATION.md §6).
-        //
-        // `forest`, `brass`, `limestone` and `sage` are the four approved brand
-        // colors, byte-for-byte. `field` and `brass-text` are NOT brand colors:
-        // they are the contrast-corrected UI tints that repo derived after
-        // measuring its own site — brand Field Gray #65756F reads 4.19:1 on
-        // Limestone and fails WCAG AA for body copy, as does #A87C39 at 3.46:1.
-        // Use `field`/`brass-text` for any normal-size text on a light ground;
-        // Aged Brass itself stays untouched and is only ever a rule, a border,
-        // or text on Deep Forest, where it is 5.18:1.
-        mm: {
-          forest: "#12332D",
-          "forest-deep": "#0C231F",
-          "forest-soft": "#1B453D",
-          brass: "#C7974D",
-          "brass-light": "#D8B375",
-          "brass-text": "#7E5D2B",
-          limestone: "#F2EEE4",
-          "limestone-light": "#F8F6EF",
-          "limestone-dark": "#E5DFD0",
-          sage: "#A8BDAE",
-          field: "#586661",
-        },
       },
       fontFamily: {
         serif: ["var(--font-newsreader)", "Georgia", "serif"],
