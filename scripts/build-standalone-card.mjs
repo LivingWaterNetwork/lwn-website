@@ -152,12 +152,12 @@ const ICONS = {
   close: icon('<path d="m6 6 12 12M18 6 6 18"/>'),
 };
 
-const personJsonLd = {
+const personJsonLdFor = (L) => ({
   "@context": "https://schema.org",
   "@type": "Person",
   name: IDENTITY.name,
   jobTitle: "Founder",
-  url: CANONICAL_URL,
+  url: L.pageUrl,
   image: `${CANONICAL_URL}/assets/omar-headshot-social.jpg`,
   email: CONTACT.email,
   telephone: "+14704759123",
@@ -167,7 +167,7 @@ const personJsonLd = {
     { "@type": "Organization", name: MM.name, url: MM.url },
   ],
   sameAs: [CONTACT.linkedin],
-};
+});
 
 /**
  * Palette notes, carried over from the Next.js build:
@@ -286,11 +286,11 @@ border-radius:12px;font:600 .875rem/1.2 inherit;text-decoration:none;transition:
 animation-iteration-count:1!important;transition-duration:.01ms!important}}
 `;
 
-const js = `
+const renderJs = (L) => `
 (function(){
   "use strict";
   var CANONICAL=${JSON.stringify(CANONICAL_URL)};
-  var SHARE_TITLE=${JSON.stringify(SHARE.title)},SHARE_TEXT=${JSON.stringify(SHARE.text)};
+  var SHARE_TITLE=${JSON.stringify(L.share.title)},SHARE_TEXT=${JSON.stringify(L.share.text)};
   var $=function(id){return document.getElementById(id)};
 
   // Share: the OS sheet is its own confirmation, so no toast on that path.
@@ -308,10 +308,10 @@ const js = `
   });
   function copyLink(){
     var done=function(){
-      shareLabel.textContent=${JSON.stringify(SHARE.copiedLabel)};
+      shareLabel.textContent=${JSON.stringify(L.share.copied)};
       shareIcon.classList.add("copied");
-      live.textContent=${JSON.stringify(SHARE.copiedLabel)};
-      setTimeout(function(){shareLabel.textContent="Share";shareIcon.classList.remove("copied");live.textContent=""},2000);
+      live.textContent=${JSON.stringify(L.share.copied)};
+      setTimeout(function(){shareLabel.textContent=${JSON.stringify(L.actions.share)};shareIcon.classList.remove("copied");live.textContent=""},2000);
     };
     if(navigator.clipboard&&navigator.clipboard.writeText){
       navigator.clipboard.writeText(CANONICAL).then(done,fallbackCopy);
@@ -321,7 +321,7 @@ const js = `
         var t=document.createElement("textarea");
         t.value=CANONICAL;t.setAttribute("readonly","");t.style.position="fixed";t.style.opacity="0";
         document.body.appendChild(t);t.select();document.execCommand("copy");t.remove();done();
-      }catch(err){live.textContent="Couldn't copy the link."}
+      }catch(err){live.textContent=${JSON.stringify(L.share.copyFailure)}}
     }
   }
 
@@ -381,13 +381,13 @@ function renderPage(L) {
 ${L.alt ? `<link rel="alternate" hreflang="en" href="${esc(CANONICAL_URL)}">
 <link rel="alternate" hreflang="es" href="${esc(CANONICAL_URL)}/es">
 <link rel="alternate" hreflang="x-default" href="${esc(CANONICAL_URL)}">
-` : ""}<script type="application/ld+json">${JSON.stringify(personJsonLd)}</script>
+` : ""}<script type="application/ld+json">${JSON.stringify(personJsonLdFor(L))}</script>
 </head>
 <body>
 <main class="wrap">
 
   <header class="hero">
-    <img class="avatar" src="./assets/omar-headshot.jpg" width="128" height="128" alt="${esc(L.headshotAlt)}" fetchpriority="high">
+    <img class="avatar" src="/assets/omar-headshot.jpg" width="128" height="128" alt="${esc(L.headshotAlt)}" fetchpriority="high">
     <h1>${esc(IDENTITY.name)}</h1>
     <p class="identity">${esc(L.identityLine)}</p>
     <p class="location">${esc(L.location)}</p>
@@ -395,7 +395,7 @@ ${L.alt ? `<link rel="alternate" hreflang="en" href="${esc(CANONICAL_URL)}">
 
   <section aria-label="Contact actions">
     <div class="actions">
-      <a class="tile primary" href="./${VCARD_FILENAME}" download="${VCARD_FILENAME}" aria-label="${esc(L.a11y.save)}">${ICONS.download}${esc(L.actions.save)}</a>
+      <a class="tile primary" href="/${VCARD_FILENAME}" download="${VCARD_FILENAME}" aria-label="${esc(L.a11y.save)}">${ICONS.download}${esc(L.actions.save)}</a>
       <a class="tile" href="${esc(CONTACT.emailHref)}" aria-label="${esc(L.a11y.email)}">${ICONS.mail}${esc(L.actions.email)}</a>
       <a class="tile" href="${esc(CONTACT.phoneHref)}" aria-label="${esc(L.a11y.call)}">${ICONS.phone}${esc(L.actions.call)}</a>
       <button class="tile" type="button" id="share" aria-label="${esc(L.a11y.share)}"><span id="share-icon">${ICONS.share}</span><span id="share-label">${esc(L.actions.share)}</span></button>
@@ -408,7 +408,7 @@ ${L.alt ? `<link rel="alternate" hreflang="en" href="${esc(CANONICAL_URL)}">
     <h2 class="eyebrow">${esc(L.eyebrow)}</h2>
 
     <article class="org org-lwn">
-      <div class="org-logo"><img src="./assets/lwn-logo.png" width="140" height="140" alt="${esc(LWN.logoAlt)}"></div>
+      <div class="org-logo"><img src="/assets/lwn-logo.png" width="140" height="140" alt="${esc(LWN.logoAlt)}"></div>
       <p>${esc(L.lwn.descriptor)}</p>
       <a class="org-cta cta-lwn" href="${esc(LWN.url)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(L.lwn.ctaAriaLabel)}">${esc(L.lwn.cta)}${ICONS.arrow}</a>
     </article>
@@ -417,7 +417,7 @@ ${L.alt ? `<link rel="alternate" hreflang="en" href="${esc(CANONICAL_URL)}">
          only ever sits on this light ground; never filtered or inverted, and
          the name is never abbreviated. -->
     <article class="org org-mm">
-      <div class="org-logo"><img src="./assets/measure-make-horizontal.svg" width="220" height="44" alt="${esc(MM.logoAlt)}"></div>
+      <div class="org-logo"><img src="/assets/measure-make-horizontal.svg" width="220" height="44" alt="${esc(MM.logoAlt)}"></div>
       <p>${esc(L.mm.descriptor)}</p>
       <a class="org-cta cta-mm" href="${esc(MM.url)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(L.mm.ctaAriaLabel)}">${esc(L.mm.cta)}${ICONS.arrow}</a>
     </article>
@@ -428,7 +428,7 @@ ${L.alt ? `<link rel="alternate" hreflang="en" href="${esc(CANONICAL_URL)}">
   <footer>
     <p class="name">${esc(IDENTITY.name)}</p>
     <p class="note">${esc(L.footerNote)}</p>
-${L.alt ? `    <a class="lang" href="${L.alt.href}" hreflang="${L.alt.lang}" lang="${L.alt.lang}">${esc(L.alt.label)}</a>
+${L.alt ? `    <a class="lang" href="${L.alt.href}" hreflang="${L.alt.lang}" lang="${L.alt.lang}" aria-label="${esc(L.alt.ariaLabel)}">${esc(L.alt.label)}</a>
 ` : ""}  </footer>
 </main>
 
@@ -444,13 +444,13 @@ ${L.alt ? `    <a class="lang" href="${L.alt.href}" hreflang="${L.alt.lang}" lan
     <div class="qr-frame">${qrSvg}</div>
     <a class="qr-url" href="${esc(CANONICAL_URL)}">${esc(CANONICAL_URL)}</a>
     <div class="qr-dl">
-      <a class="dl-png" href="./${QR_FILENAME_BASE}.png" download="${QR_FILENAME_BASE}.png" aria-label="${esc(L.a11y.qrPng)}">${ICONS.download}PNG</a>
-      <a class="dl-svg" href="./${QR_FILENAME_BASE}.svg" download="${QR_FILENAME_BASE}.svg" aria-label="${esc(L.a11y.qrSvg)}">${ICONS.download}SVG</a>
+      <a class="dl-png" href="/${QR_FILENAME_BASE}.png" download="${QR_FILENAME_BASE}.png" aria-label="${esc(L.a11y.qrPng)}">${ICONS.download}PNG</a>
+      <a class="dl-svg" href="/${QR_FILENAME_BASE}.svg" download="${QR_FILENAME_BASE}.svg" aria-label="${esc(L.a11y.qrSvg)}">${ICONS.download}SVG</a>
     </div>
   </div>
 </div>
 
-<script>${js}</script>
+<script>${renderJs(L)}</script>
 </body>
 </html>
 `;
@@ -472,6 +472,12 @@ const EN = {
   eyebrow: "Where I serve",
   social: SOCIAL,
   qr: QR_COPY,
+  share: {
+    title: SHARE.title,
+    text: SHARE.text,
+    copied: SHARE.copiedLabel,
+    copyFailure: "Couldn't copy the link.",
+  },
   footerNote: FOOTER_NOTE,
   actions: {
     save: "Save Contact",
@@ -494,18 +500,83 @@ const EN = {
   },
   lwn: { descriptor: LWN.descriptor, cta: LWN.cta, ctaAriaLabel: LWN.ctaAriaLabel },
   mm: { descriptor: MM.descriptor, cta: MM.cta, ctaAriaLabel: MM.ctaAriaLabel },
-  // Counterpart locale for the language toggle, or null when none exists.
-  //
-  // NULL DELIBERATELY. The Spanish card is not built: its approved copy
-  // (omar-digital-card-handoff/10-spanish-version-addendum.md) has not been
-  // supplied, and the strings must not be improvised. Rendering a toggle to a
-  // /es that does not exist would put a broken link on a live card, so both the
-  // toggle and the hreflang tags stay out until the ES bundle below is filled
-  // in. Set this to ES_ALT once /es ships.
-  alt: null,
+  alt: { lang: "es", href: "/es", label: "Español", ariaLabel: "Ver esta tarjeta en español" },
+};
+
+/**
+ * `es` is the approved Spanish copy from 10-spanish-version-addendum.md,
+ * verbatim. Per that addendum: the official names Living Water Network and
+ * Measure & Make are never translated or abbreviated, all contact data is
+ * unchanged, and the QR payload and visible fallback URL stay
+ * https://connect.lwnetwork.org on both languages — /es is never appended,
+ * so the printed code and the displayed URL keep matching.
+ *
+ * The one string the addendum does not cover is the headshot's alt text, so it
+ * stays on the approved English wording rather than being invented here. See
+ * the README note.
+ */
+const ES = {
+  lang: "es",
+  pageUrl: `${CANONICAL_URL}/es`,
+  identityLine: "Fundador, Living Water Network | Estrategia y Sistemas, Measure & Make",
+  location: "Atlanta, Georgia",
+  headshotAlt: IDENTITY.headshotAlt,
+  eyebrow: "Dónde sirvo",
+  social: {
+    title: "Omar Fandino | Living Water Network y Measure & Make",
+    description:
+      "Fundador de Living Water Network y parte de Measure & Make. Guarda mi contacto, conéctate en LinkedIn o comunícate directamente.",
+  },
+  qr: {
+    heading: "Escanea para guardar mi información",
+    supporting: "Apunta la cámara al código o toca el enlace de abajo.",
+  },
+  share: {
+    title: "Omar Fandino — Living Water Network y Measure & Make",
+    text: "Sigamos en contacto; aquí tienes mi tarjeta de contacto.",
+    copied: "Enlace copiado",
+    copyFailure: "No se pudo copiar el enlace.",
+  },
+  footerNote:
+    "Esta tarjeta comparte únicamente lo que ves aquí: sin rastreo y sin necesidad de crear una cuenta.",
+  actions: {
+    save: "Guardar contacto",
+    email: "Enviar correo",
+    call: "Llamar",
+    share: "Compartir",
+    qr: "Mostrar mi QR",
+    linkedin: "Conectar en LinkedIn",
+  },
+  a11y: {
+    save: "Guardar la información de contacto de Omar Fandino",
+    email: "Enviar un correo a Omar Fandino",
+    call: "Llamar a Omar Fandino",
+    share: "Compartir esta tarjeta de contacto",
+    qrOpen: "Abrir el código QR para guardar esta tarjeta de contacto",
+    qrClose: "Cerrar el código QR",
+    qrPng: "Descargar la imagen del código QR en formato PNG",
+    qrSvg: "Descargar la imagen del código QR en formato SVG",
+    linkedin: "Ver el perfil de Omar Fandino en LinkedIn",
+  },
+  lwn: {
+    descriptor: "Equipando a líderes del Reino para quebrantar las tinieblas y discipular naciones.",
+    cta: "Visitar Living Water Network",
+    ctaAriaLabel: "Visitar el sitio web de Living Water Network",
+  },
+  mm: {
+    descriptor:
+      "Estrategia, sistemas e infraestructura responsable de IA para organizaciones impulsadas por una misión.",
+    cta: "Visitar Measure & Make",
+    ctaAriaLabel: "Visitar el sitio web de Measure & Make",
+  },
+  alt: { lang: "en", href: "/", label: "English", ariaLabel: "View this card in English" },
 };
 
 writeFileSync(join(DIST, "index.html"), renderPage(EN), "utf8");
+
+// /es/index.html so the route resolves at /es directly and on refresh.
+mkdirSync(join(DIST, "es"), { recursive: true });
+writeFileSync(join(DIST, "es", "index.html"), renderPage(ES), "utf8");
 
 console.log(`Built standalone card -> ${DIST}`);
 console.log(`  canonical / QR payload: ${CANONICAL_URL}`);

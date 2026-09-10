@@ -182,6 +182,32 @@ loaded. It encodes `CANONICAL_URL` and nothing else, never contact fields. Both
 > every QR already printed or distributed, so change it only together with
 > reissuing the QR.
 
+### Spanish version (`/es`)
+
+The card ships in English at `/` and Spanish at `/es`, from one template. Copy
+for each lives in a locale bundle in `scripts/build-standalone-card.mjs` — `EN`
+(from `01-approved-content.md`) and `ES` (from
+`10-spanish-version-addendum.md`). Everything language-independent — phone,
+email, both organization URLs, the vCard, the QR payload — stays shared in
+`omar.ts`; only visible copy varies.
+
+A third locale is a third bundle plus one `writeFileSync`. The footer toggle
+and the `hreflang` tags render only when a bundle sets `alt`, so a locale that
+does not exist yet cannot produce a broken link.
+
+Fixed rules from the addendum, which the build enforces:
+
+- The QR payload and the visible fallback URL stay `https://connect.lwnetwork.org`
+  on **both** languages — `/es` is never appended, so the printed code, the
+  downloadable QR files and the displayed URL keep matching.
+- `Living Water Network` and `Measure & Make` are never translated or
+  abbreviated, in copy or in alt text.
+- The vCard is shared as-is and gets no `ORG:` field.
+
+One gap: the addendum does not give a Spanish headshot alt text, so `/es` uses
+the approved English wording ("Portrait of Omar Fandino"). Replace it in the
+`ES` bundle once approved copy exists.
+
 ### Deploying the card
 
 The `omar-fandino-connect` project is linked per-directory, so deploy from
