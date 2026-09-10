@@ -112,6 +112,82 @@ changes pages:
 curl -H "Authorization: Bearer $CRON_SECRET" https://lwnetwork.org/api/cron/indexnow
 ```
 
+## Digital business card (`/connect/omar`)
+
+Omar Fandino's personal contact card, opened from a printed or on-screen QR code.
+It is deliberately not a marketing page: no site nav, no site footer, no donation
+CTA, no form. `Navbar` and `Footer` self-hide on any `/connect` path, the same way
+they already do for `/yan`.
+
+`/connect` is excluded from `src/app/sitemap.ts` and the page sets
+`robots: { index: false }` — a personal contact card should not compete with the
+organization's own pages in search. It stays reachable by anyone with the link.
+
+### Where to change things
+
+Almost everything lives in one file: **`src/lib/connect/omar.ts`**.
+
+| To change | Edit |
+|---|---|
+| Name, identity line, location | `IDENTITY` |
+| Phone, email, LinkedIn | `CONTACT` (update the matching line in `VCARD_LINES` too) |
+| Organization names, descriptors, links, logos | `ORGANIZATIONS` |
+| Button labels, share text, "Link Copied" | `SHARE`, `ORGANIZATIONS[].cta` |
+| Open Graph / social preview copy | `SOCIAL` |
+| QR modal heading and helper text | `QR_COPY` |
+| Footer privacy note | `FOOTER_NOTE` |
+| vCard fields | `VCARD_LINES` |
+| Canonical URL (what the QR encodes) | `CANONICAL_URL` — see below |
+
+Layout and styling are in `src/app/connect/omar/page.tsx`,
+`src/components/connect/CardActions.tsx` (the four actions + QR trigger) and
+`src/components/connect/QrModal.tsx`.
+
+**Profile image.** Set `IDENTITY.headshot`. The current file,
+`public/images/omar-headshot-pro.jpg`, is byte-identical to
+`public/images/founder-headshot.jpg` — one asset saved twice; don't add a third
+copy. Replacing it needs no code change as long as the path stays the same.
+
+**Measure & Make mark.** `public/images/brand/measure-make-03-5-horizontal.svg`,
+copied unmodified from the `LivingWaterNetwork/measure-and-make` repo's approved
+package. Do not redraw, recolor, invert, or filter it, and never abbreviate the
+name to "M&M" anywhere — including alt text. It is dark ink by design, so it only
+ever sits on a light ground. Measure & Make's palette lives under the `mm-*`
+Tailwind tokens, namespaced so it cannot collide with the LWN or YAN tokens.
+
+### vCard
+
+Served at `/connect/omar/Omar-Fandino.vcf` by
+`src/app/connect/omar/Omar-Fandino.vcf/route.ts`. The route segment is named for
+the file so the download keeps its filename on iOS Safari, which ignores
+`Content-Disposition`. Content comes from `VCARD_LINES`, joined with CRLF — RFC
+6350 requires it and several phone importers reject an LF-only file. Keep it as an
+array of lines; a template literal would silently reintroduce LF endings.
+
+### QR code
+
+Generated at build time by `src/lib/connect/qr.ts` using the local `qrcode`
+package — no third-party QR image endpoint, and no network dependency once the
+page has loaded. It encodes `CANONICAL_URL` and nothing else, never contact
+fields. Both downloads (`Omar-Fandino-QR.png`, `Omar-Fandino-QR.svg`) are produced
+in the browser from that build-time output.
+
+> **⚠️ The canonical URL is still a placeholder.**
+> `CANONICAL_URL` defaults to `https://www.lwnetwork.org/connect/omar`, which has
+> not been confirmed live. **The QR encodes this exact string.** Before printing
+> the QR, putting it in an email signature, or distributing it in any form,
+> replace it with the real deployed URL and rebuild so the QR regenerates.
+> A preview deploy can point the QR at itself by setting
+> `NEXT_PUBLIC_CONNECT_OMAR_URL` instead of editing source.
+
+### Tests
+
+`tests/unit/connect-omar.test.ts` covers the parts that fail silently and
+expensively: vCard CRLF endings and field content, and a programmatic decode of
+the generated QR asserting it matches `CANONICAL_URL` exactly. Run with
+`npm test`. If you change the canonical URL or any vCard field, these tests are
+what tell you the QR and the card still agree.
+
 ## Deployment
 
 Deploys automatically to Vercel on push to `main`. Do not force-push or rewrite

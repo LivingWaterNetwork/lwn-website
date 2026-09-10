@@ -73,6 +73,9 @@ export function Navbar() {
   // so the main-site chrome doesn't stack on top of it under /yan. This check
   // runs after every hook above so hook order never changes between renders.
   if (pathname?.startsWith("/yan")) return null;
+  // The digital business card is a standalone contact surface, not a site
+  // page — it carries no org nav, no donation CTA, and its own footer.
+  if (pathname?.startsWith("/connect")) return null;
 
   return (
     <header
