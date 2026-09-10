@@ -11,7 +11,8 @@
     "db:studio": "prisma studio",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "build:card": "node --experimental-strip-types scripts/build-standalone-card.mjs"
   },
   "dependencies": {
     "@prisma/client": "^5.14.0",
@@ -44,6 +45,7 @@
     "pngjs": "^7.0.0",
     "postcss": "^8",
     "prisma": "^5.14.0",
+    "sharp": "^0.35.4",
     "tailwindcss": "^3.4.1",
     "typescript": "^5",
     "vitest": "^4.1.10"

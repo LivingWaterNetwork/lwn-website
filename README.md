@@ -172,13 +172,37 @@ page has loaded. It encodes `CANONICAL_URL` and nothing else, never contact
 fields. Both downloads (`Omar-Fandino-QR.png`, `Omar-Fandino-QR.svg`) are produced
 in the browser from that build-time output.
 
-> **⚠️ The canonical URL is still a placeholder.**
-> `CANONICAL_URL` defaults to `https://www.lwnetwork.org/connect/omar`, which has
-> not been confirmed live. **The QR encodes this exact string.** Before printing
-> the QR, putting it in an email signature, or distributing it in any form,
-> replace it with the real deployed URL and rebuild so the QR regenerates.
-> A preview deploy can point the QR at itself by setting
-> `NEXT_PUBLIC_CONNECT_OMAR_URL` instead of editing source.
+> **⚠️ The QR encodes `CANONICAL_URL` verbatim.**
+> It is `https://connect.lwnetwork.org`, confirmed live on 2026-09-10. Changing
+> it invalidates every QR already printed or distributed, so change it only
+> together with reissuing the QR. A preview deploy can point its QR at itself
+> by setting `NEXT_PUBLIC_CONNECT_OMAR_URL` instead of editing source.
+
+### Two builds, one source of truth
+
+The card ships in two places, both reading their content from
+`src/lib/connect/omar.ts`:
+
+| Build | Where | Built by |
+|---|---|---|
+| Next.js route | `lwnetwork.org/connect/omar`, inside this app | `npm run build` |
+| Standalone static site | `connect.lwnetwork.org`, its own Vercel project | `npm run build:card` |
+
+`connect.lwnetwork.org` is served by the separate `omar-fandino-connect` Vercel
+project (domain via a Wix-managed CNAME), so the card has to exist there at the
+root rather than as a route. `scripts/build-standalone-card.mjs` emits that
+version into `standalone-card/dist/` — plain HTML, CSS and ~40 lines of JS, no
+framework and no build step at deploy time. It imports the same content module,
+so editing `omar.ts` and re-running updates both builds. Only the CSS is
+specific to the standalone one.
+
+It also resizes the headshot and LWN logo (the sources are far larger than they
+render) and copies assets in rather than hotlinking `www.lwnetwork.org/images/*`
+— a card that depends on another site's paths breaks silently when they move.
+`standalone-card/dist/vercel.json` sets the vCard's `text/vcard` type and
+`attachment` disposition, which Vercel cannot infer from the extension.
+
+`standalone-card/dist/` is gitignored; rebuild it with `npm run build:card`.
 
 ### Tests
 

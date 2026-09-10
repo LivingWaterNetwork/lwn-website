@@ -11,22 +11,19 @@
  */
 
 /**
- * ⚠️ PLACEHOLDER — NOT YET CONFIRMED LIVE.
+ * The card's live canonical address. Confirmed in production on 2026-09-10,
+ * served by the `omar-fandino-connect` Vercel project via a Wix-managed CNAME.
  *
- * The QR code encodes this exact string. Before the QR is printed, embedded in
- * an email signature, or distributed in any form, this must be replaced with
- * the real, deployed, stable production URL and the QR regenerated. See the
- * "Deployment checklist" in the README.
+ * The QR encodes this exact string, so changing it invalidates every QR already
+ * printed or distributed. Do not change it without regenerating and reissuing
+ * the QR.
  *
  * Overridable via NEXT_PUBLIC_CONNECT_OMAR_URL so a preview deployment can
- * point the QR at itself without editing source.
+ * point its QR at itself instead of at production.
  */
 export const CANONICAL_URL =
-  process.env.NEXT_PUBLIC_CONNECT_OMAR_URL ?? "https://www.lwnetwork.org/connect/omar";
+  process.env.NEXT_PUBLIC_CONNECT_OMAR_URL ?? "https://connect.lwnetwork.org";
 
-/** True while the card is still running against the unconfirmed placeholder. */
-export const CANONICAL_URL_IS_PLACEHOLDER =
-  !process.env.NEXT_PUBLIC_CONNECT_OMAR_URL;
 
 export const IDENTITY = {
   name: "Omar Fandino",
