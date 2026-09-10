@@ -19,7 +19,13 @@
  * Output:    standalone-card/dist/
  */
 
-import { mkdirSync, copyFileSync, writeFileSync, rmSync } from "node:fs";
+import {
+  copyFileSync,
+  mkdirSync,
+  readdirSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -56,7 +62,15 @@ const esc = (s) =>
 
 // ---------------------------------------------------------------------------
 
-rmSync(DIST, { recursive: true, force: true });
+// Clear generated output, but preserve a `.vercel` link directory if one is
+// present: the deploy target is linked per-directory, and wiping it on every
+// rebuild would silently re-expose the project to git auto-detection — which
+// resolves to `lwn-website`, not `omar-fandino-connect`.
+mkdirSync(DIST, { recursive: true });
+for (const entry of readdirSync(DIST, { withFileTypes: true })) {
+  if (entry.name === ".vercel") continue;
+  rmSync(join(DIST, entry.name), { recursive: true, force: true });
+}
 mkdirSync(join(DIST, "assets"), { recursive: true });
 
 // Assets are copied in, not hotlinked from www.lwnetwork.org: a card that
