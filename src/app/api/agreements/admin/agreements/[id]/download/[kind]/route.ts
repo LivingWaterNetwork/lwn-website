@@ -1,0 +1,39 @@
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import {
+  generateAgreementPdfBuffer,
+  generateAndStoreAgreementPdf,
+  getLatestAgreementDocument,
+  type AgreementPdfKind,
+} from "@/lib/pdf/agreements/generateAgreementPdf";
+
+const VALID_KINDS: AgreementPdfKind[] = ["draft", "participant_signed", "executed"];
+
+export async function GET(_req: NextRequest, { params }: { params: { id: string; kind: string } }) {
+  const agreement = await prisma.agreement.findUnique({ where: { id: params.id } });
+  if (!agreement) return NextResponse.json({ error: "Not found." }, { status: 404 });
+
+  const kind = params.kind as AgreementPdfKind;
+  if (!VALID_KINDS.includes(kind)) {
+    return NextResponse.json({ error: "Unknown document kind." }, { status: 400 });
+  }
+  if (!agreement.renderedBody) {
+    return NextResponse.json({ error: "This agreement hasn't been finalized yet." }, { status: 409 });
+  }
+
+  let bytes: Buffer;
+  if (kind === "draft") {
+    bytes = await generateAgreementPdfBuffer(agreement.id, "draft");
+  } else {
+    const cached = await getLatestAgreementDocument(agreement.id, kind);
+    bytes = cached ? Buffer.from(cached.bytes) : Buffer.from((await generateAndStoreAgreementPdf(agreement.id, kind)).bytes);
+  }
+
+  return new NextResponse(new Blob([Uint8Array.from(bytes)]), {
+    headers: {
+      "Content-Type": "application/pdf",
+      "Content-Disposition": `attachment; filename="${agreement.slug}-${kind}.pdf"`,
+      "Cache-Control": "private, no-store",
+    },
+  });
+}

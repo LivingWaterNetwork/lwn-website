@@ -74,6 +74,9 @@ export function Navbar() {
   // runs after every hook above so hook order never changes between renders.
   if (pathname?.startsWith("/yan")) return null;
 
+  // The agreements portal is a focused, distraction-free signing flow — no site chrome.
+  if (pathname?.startsWith("/agreements")) return null;
+
   return (
     <header
       className={`sticky top-0 z-50 border-b border-mist bg-white/95 backdrop-blur transition-shadow duration-300 ${

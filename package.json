@@ -11,7 +11,9 @@
     "db:studio": "prisma studio",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "agreement:new": "tsx scripts/agreement-new.ts",
+    "agreement:seed-templates": "tsx scripts/seed-agreement-templates.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.14.0",
@@ -20,6 +22,7 @@
     "docx": "^9.7.1",
     "framer-motion": "^13.1.0",
     "gray-matter": "^4.0.3",
+    "marked": "^12.0.2",
     "next": "14.2.5",
     "next-mdx-remote": "^6.0.0",
     "react": "^18",
@@ -40,6 +43,7 @@
     "postcss": "^8",
     "prisma": "^5.14.0",
     "tailwindcss": "^3.4.1",
+    "tsx": "^4.19.2",
     "typescript": "^5",
     "vitest": "^4.1.10"
   }

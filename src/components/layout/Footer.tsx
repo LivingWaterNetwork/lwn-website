@@ -11,6 +11,9 @@ export function Footer() {
   // The YAN mini-site owns its own footer (see src/components/yan/layout/YanFooter.tsx).
   if (pathname?.startsWith("/yan")) return null;
 
+  // The agreements portal is a focused, distraction-free signing flow — no site chrome.
+  if (pathname?.startsWith("/agreements")) return null;
+
   return (
     <footer className="bg-navy text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
