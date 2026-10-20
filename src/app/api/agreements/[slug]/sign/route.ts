@@ -6,6 +6,7 @@ import { signSchema, firstIssueMessage } from "@/lib/agreements/validation";
 import { namesMatch } from "@/lib/agreements/names";
 import { sendAgreementsNotificationEmail, sendAgreementSignerEmail } from "@/lib/email";
 import { generateAndStoreAgreementPdf } from "@/lib/pdf/agreements/generateAgreementPdf";
+import { finalizeExecution } from "@/lib/agreements/finalize";
 
 export async function POST(req: NextRequest, { params }: { params: { slug: string } }) {
   const resolved = await requireAgreementSession(req, params.slug);
@@ -67,28 +68,37 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
   const nextStatus = allSigned ? "executed" : "partially_signed";
   await prisma.agreement.update({ where: { id: agreement.id }, data: { status: nextStatus } });
 
-  // PDF generation/email are best-effort side effects — a failure here must
-  // never undo the signature that was just recorded.
-  try {
-    await generateAndStoreAgreementPdf(agreement.id, "participant_signed");
-  } catch (err) {
-    console.error("[agreements/sign] PDF generation failed:", err);
-  }
-
-  if (!agreement.isTest) {
-    sendAgreementsNotificationEmail({
-      subject: "Agreement signed by participant",
-      text: `${participant.name} signed an agreement.\n\nAgreement: ${agreement.slug}\nStatus: ${nextStatus}`,
-    }).catch((err) => console.error("[agreements/sign] notify failed:", err));
-
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.lwnetwork.org";
-    sendAgreementSignerEmail({
-      to: participant.email,
-      subject: "Your signed copy — Living Water Network",
-      text: `Thank you for signing, ${participant.name}.\n\nYou can view and download your copy any time at:\n${siteUrl}/agreements/${agreement.slug}\n\n(You'll need your access code.)\n\nLWN will countersign shortly, and you'll be able to download the fully executed copy from the same link.`,
-    }).catch((err) => console.error("[agreements/sign] signer email failed:", err));
+  // LWN/MMG may have already signed before the participant ever opened the
+  // link ("presigned") — in that case her signature is the one that
+  // completes execution, so this route (not the countersign route) is the
+  // one that needs to generate the executed PDF and send the "fully
+  // executed" notifications. Otherwise, this is a normal in-progress
+  // signature: generate the participant-signed snapshot and let her know
+  // LWN will countersign next.
+  if (allSigned) {
+    await finalizeExecution(agreement, participant);
   } else {
-    console.log(`[agreements/sign] test record — skipping notification/signer email (no recipient) for ${agreement.slug}`);
+    try {
+      await generateAndStoreAgreementPdf(agreement.id, "participant_signed");
+    } catch (err) {
+      console.error("[agreements/sign] PDF generation failed:", err);
+    }
+
+    if (!agreement.isTest) {
+      sendAgreementsNotificationEmail({
+        subject: "Agreement signed by participant",
+        text: `${participant.name} signed an agreement.\n\nAgreement: ${agreement.slug}\nStatus: ${nextStatus}`,
+      }).catch((err) => console.error("[agreements/sign] notify failed:", err));
+
+      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.lwnetwork.org";
+      sendAgreementSignerEmail({
+        to: participant.email,
+        subject: "Your signed copy — Living Water Network",
+        text: `Thank you for signing, ${participant.name}.\n\nYou can view and download your copy any time at:\n${siteUrl}/agreements/${agreement.slug}\n\n(You'll need your access code.)\n\nLWN will countersign shortly, and you'll be able to download the fully executed copy from the same link.`,
+      }).catch((err) => console.error("[agreements/sign] signer email failed:", err));
+    } else {
+      console.log(`[agreements/sign] test record — skipping notification/signer email (no recipient) for ${agreement.slug}`);
+    }
   }
 
   return NextResponse.json({ success: true, status: nextStatus });

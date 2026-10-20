@@ -180,11 +180,11 @@ export default function AgreementAdminDetailPage({ params }: { params: { id: str
             </>
           )}
 
-          {organization && organization.status !== "signed" && participant?.status === "signed" && (
+          {organization && organization.status !== "signed" && !["draft", "voided"].includes(agreement.status) && (
             <SignActionButton
-              label="Countersign as LWN"
+              label={participant?.status === "signed" ? "Countersign as LWN" : "Sign as LWN (presign before she signs)"}
               disabled={busy}
-              onSubmit={(payload) => runAction("countersign", payload, "Countersigned.")}
+              onSubmit={(payload) => runAction("countersign", payload, "Signed as LWN.")}
             />
           )}
 

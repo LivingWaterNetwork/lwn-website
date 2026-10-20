@@ -14,12 +14,19 @@ export async function GET(req: NextRequest, { params }: { params: { id: string; 
   const agreement = await prisma.agreement.findUnique({ where: { id: params.id } });
   if (!agreement) return NextResponse.json({ error: "Not found." }, { status: 404 });
 
-  const kind = params.kind as AgreementPdfKind;
+  let kind = params.kind as AgreementPdfKind;
   if (!VALID_KINDS.includes(kind)) {
     return NextResponse.json({ error: "Unknown document kind." }, { status: 400 });
   }
   if (!agreement.renderedBody) {
     return NextResponse.json({ error: "This agreement hasn't been finalized yet." }, { status: 409 });
+  }
+
+  // See the signer-facing download route for why: a "participant_signed"
+  // snapshot never gets generated when LWN/MMG presigned before the
+  // participant, since it would misleadingly say "awaiting countersignature."
+  if (kind === "participant_signed" && agreement.status === "executed") {
+    kind = "executed";
   }
 
   let bytes: Buffer;

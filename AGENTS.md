@@ -50,7 +50,14 @@ PDF generator.
      independent — a role can sign first but have its signature block appear
      last in the text (this is how the Delivery Partner Acceptance section
      works: MMG accepts before the participant is even sent the link, but its
-     signature block is the last thing in the document).
+     signature block is the last thing in the document). Signers can also
+     complete in any order relative to each other: LWN can countersign (and
+     MMG can accept) before the participant ever opens the link — "presigning"
+     — so her signature is the one that completes execution, or LWN can
+     countersign last, in the original order. Whichever route's signature
+     happens to be the last one calls `finalizeExecution`
+     (`src/lib/agreements/finalize.ts`) to generate the executed PDF and send
+     the "fully executed" notifications exactly once.
 5. For a variable declared in `variablesSchema.fields` with `type: "currency"`
    or `type: "date"`, the renderer automatically computes `${name}_display`
    (and `${name}_weekday_display` for dates) — use those in prose instead of

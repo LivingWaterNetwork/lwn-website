@@ -4,10 +4,17 @@ import { logAgreementEvent } from "@/lib/agreements/events";
 import { adminCountersignSchema, firstIssueMessage } from "@/lib/agreements/validation";
 import { getClientIp } from "@/lib/agreements/requestHelpers";
 import { CONSENT_VERSION } from "@/lib/agreements/consent";
-import { sendAgreementsNotificationEmail, sendAgreementSignerEmail } from "@/lib/email";
-import { generateAndStoreAgreementPdf } from "@/lib/pdf/agreements/generateAgreementPdf";
+import { finalizeExecution } from "@/lib/agreements/finalize";
 
-/** LWN's countersignature — the organization-role signer, using the same consent + typed/drawn signature flow as the participant. */
+/**
+ * LWN's countersignature — the organization-role signer, using the same
+ * consent + typed/drawn signature flow as the participant. This can happen
+ * before or after the participant signs: LWN (and MMG, via partner-accept)
+ * can "presign" their side so the participant's signature is the only one
+ * left and the agreement executes the moment she signs, or LWN can
+ * countersign last, in the original order. Either way, `finalizeExecution`
+ * is only ever run once — by whichever route happens to complete the set.
+ */
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   const agreement = await prisma.agreement.findUnique({
     where: { id: params.id },
@@ -24,9 +31,6 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
   }
 
   const participant = agreement.signers.find((s) => s.role === "participant");
-  if (participant && participant.status !== "signed") {
-    return NextResponse.json({ error: "Participant hasn't signed yet." }, { status: 409 });
-  }
 
   const body = await req.json().catch(() => null);
   const parsed = adminCountersignSchema.safeParse(body);
@@ -54,27 +58,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
 
   if (allSigned) {
     await prisma.agreement.update({ where: { id: agreement.id }, data: { status: "executed" } });
-    try {
-      await generateAndStoreAgreementPdf(agreement.id, "executed");
-    } catch (err) {
-      console.error("[agreements/countersign] PDF generation failed:", err);
-    }
-
-    if (!agreement.isTest && participant) {
-      sendAgreementsNotificationEmail({
-        subject: "Agreement fully executed",
-        text: `Agreement ${agreement.slug} is now fully executed.`,
-      }).catch((err) => console.error("[agreements/countersign] notify failed:", err));
-
-      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.lwnetwork.org";
-      sendAgreementSignerEmail({
-        to: participant.email,
-        subject: "Your agreement is fully executed — Living Water Network",
-        text: `Great news, ${participant.name} — your agreement with Living Water Network is now fully executed.\n\nYou can download the final copy any time at:\n${siteUrl}/agreements/${agreement.slug}\n\n(You'll need your access code.)`,
-      }).catch((err) => console.error("[agreements/countersign] signer email failed:", err));
-    } else {
-      console.log(`[agreements/countersign] test record — skipping notification/signer email (no recipient) for ${agreement.slug}`);
-    }
+    await finalizeExecution(agreement, participant ? { name: participant.name, email: participant.email } : undefined);
   }
 
   return NextResponse.json({ success: true, status: allSigned ? "executed" : agreement.status });

@@ -21,13 +21,22 @@ export async function GET(req: NextRequest, { params }: { params: { slug: string
   if ("error" in resolved) return resolved.error;
   const { agreement } = resolved;
 
-  const kind = params.kind as AgreementPdfKind;
+  let kind = params.kind as AgreementPdfKind;
   if (!VALID_KINDS.includes(kind)) {
     return NextResponse.json({ error: "Unknown document kind." }, { status: 400 });
   }
 
   if (!agreement.renderedBody) {
     return NextResponse.json({ error: "This agreement hasn't been finalized yet." }, { status: 409 });
+  }
+
+  // LWN/MMG can presign before the participant, so her signature can be the
+  // one that completes execution — a "participant_signed" snapshot never
+  // gets generated in that case (it would misleadingly say "awaiting
+  // countersignature" when nothing is actually awaiting). Serve the executed
+  // copy instead so an old link/button never 409s once it's done.
+  if (kind === "participant_signed" && agreement.status === "executed") {
+    kind = "executed";
   }
 
   const participant = agreement.signers.find((s) => s.role === "participant");

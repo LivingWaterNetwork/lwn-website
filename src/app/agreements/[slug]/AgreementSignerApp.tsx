@@ -616,19 +616,19 @@ function DoneScreen({ slug, state, onRefresh }: { slug: string; state: Agreement
       </p>
 
       <div className="flex flex-col gap-3">
-        <a
-          href={`/api/agreements/${slug}/download/participant_signed`}
-          className="inline-flex items-center justify-center rounded-lg bg-navy text-white px-4 py-3 text-sm font-semibold hover:bg-navy-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-lw-blue"
-        >
-          Download your signed copy
-        </a>
-
-        {executed && (
+        {executed ? (
           <a
             href={`/api/agreements/${slug}/download/executed`}
-            className="inline-flex items-center justify-center rounded-lg border border-navy text-navy px-4 py-3 text-sm font-semibold hover:bg-mist focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-lw-blue"
+            className="inline-flex items-center justify-center rounded-lg bg-navy text-white px-4 py-3 text-sm font-semibold hover:bg-navy-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-lw-blue"
           >
-            Download executed agreement
+            Download your fully executed agreement
+          </a>
+        ) : (
+          <a
+            href={`/api/agreements/${slug}/download/participant_signed`}
+            className="inline-flex items-center justify-center rounded-lg bg-navy text-white px-4 py-3 text-sm font-semibold hover:bg-navy-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-lw-blue"
+          >
+            Download your signed copy
           </a>
         )}
 
