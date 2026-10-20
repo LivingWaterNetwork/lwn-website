@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { requireAgreementSession } from "@/lib/agreements/requestHelpers";
 import { logAgreementEvent } from "@/lib/agreements/events";
 import { initialSchema, firstIssueMessage } from "@/lib/agreements/validation";
+import { computeInitials } from "@/lib/agreements/names";
 
 export async function POST(req: NextRequest, { params }: { params: { slug: string } }) {
   const resolved = await requireAgreementSession(req, params.slug);
@@ -41,7 +42,11 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
   }
 
   await prisma.agreementSigner.update({ where: { id: participant.id }, data: { initials } });
-  await logAgreementEvent(req, agreement.id, "initialed", { actorRole: "participant", detail: parsed.data.section });
+
+  const detail = parsed.data.initialed
+    ? `Section ${parsed.data.section} — ${computeInitials(participant.name)}`
+    : `Section ${parsed.data.section} — removed`;
+  await logAgreementEvent(req, agreement.id, "initialed", { actorRole: "participant", detail });
 
   return NextResponse.json({ success: true, initials });
 }

@@ -17,6 +17,14 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
     return NextResponse.json({ error: "This agreement has already been signed." }, { status: 409 });
   }
 
+  const identityConfirmed = await prisma.agreementEvent.findFirst({
+    where: { agreementId: agreement.id, type: "identity_confirmed" },
+    select: { id: true },
+  });
+  if (!identityConfirmed) {
+    return NextResponse.json({ error: "Please confirm your identity first." }, { status: 409 });
+  }
+
   // The server stamps the current disclosure version — the client never
   // gets to choose which version it "consented" to.
   await prisma.agreementSigner.update({

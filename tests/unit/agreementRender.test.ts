@@ -7,6 +7,8 @@ import {
   markdownToSafeHtml,
   formatCurrency,
   formatDateLong,
+  formatDateShort,
+  formatPaymentDueLabel,
 } from "@/lib/agreements/render";
 
 describe("formatCurrency / formatDateLong", () => {
@@ -17,6 +19,17 @@ describe("formatCurrency / formatDateLong", () => {
 
   it("formats an ISO date as a long date, UTC-safe", () => {
     expect(formatDateLong("2026-10-26")).toBe("October 26, 2026");
+  });
+
+  it("formats a short date with no year, for inline UI copy", () => {
+    expect(formatDateShort("2026-10-28")).toBe("Oct 28");
+  });
+});
+
+describe("formatPaymentDueLabel", () => {
+  it("builds the payment button label from an installment's own amount/date, not hardcoded text", () => {
+    expect(formatPaymentDueLabel({ amount: 1000, due: "2026-10-28" })).toBe("$1,000, due Oct 28");
+    expect(formatPaymentDueLabel({ amount: 2500, due: "2027-01-05" })).toBe("$2,500, due Jan 5");
   });
 });
 
@@ -117,5 +130,33 @@ describe("markdownToSafeHtml", () => {
   it("drops raw HTML instead of passing it through", () => {
     const html = markdownToSafeHtml("Hello <script>alert(1)</script> world");
     expect(html).not.toContain("<script>");
+  });
+
+  it("strips script, iframe, and on*-attribute markup from raw HTML in a template body", () => {
+    const html = markdownToSafeHtml(
+      '<script>alert(1)</script>\n\n<iframe src="javascript:alert(1)"></iframe>\n\n<img src=x onerror="alert(1)">\n\nHello <a href="javascript:alert(1)" onclick="alert(2)">link</a> world.'
+    );
+    expect(html).not.toContain("<script");
+    expect(html).not.toContain("<iframe");
+    expect(html).not.toContain("onerror");
+    expect(html).not.toContain("onclick");
+    expect(html).not.toContain("javascript:");
+    expect(html).toContain("Hello link world.");
+  });
+
+  it("drops a markdown link/image with a javascript: URL, keeping only the visible text", () => {
+    const linkHtml = markdownToSafeHtml("[click me](javascript:alert(1))");
+    expect(linkHtml).not.toContain("<a");
+    expect(linkHtml).not.toContain("javascript:");
+    expect(linkHtml).toContain("click me");
+
+    const imageHtml = markdownToSafeHtml("![img](javascript:alert(1))");
+    expect(imageHtml).not.toContain("<img");
+    expect(imageHtml).not.toContain("javascript:");
+  });
+
+  it("still allows http(s)/mailto links, which the real templates use", () => {
+    expect(markdownToSafeHtml("[site](https://lwnetwork.org)")).toContain('<a href="https://lwnetwork.org">');
+    expect(markdownToSafeHtml("[mail](mailto:info@lwnetwork.org)")).toContain('<a href="mailto:info@lwnetwork.org">');
   });
 });

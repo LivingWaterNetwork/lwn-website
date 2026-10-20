@@ -29,6 +29,18 @@ export function formatDateLong(isoDate: string): string {
   return d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" });
 }
 
+/** Short form for inline UI copy, e.g. "Oct 28" — no year, since these are always within the current agreement's own timeframe. */
+export function formatDateShort(isoDate: string): string {
+  const d = new Date(`${isoDate}T12:00:00Z`);
+  if (Number.isNaN(d.getTime())) return isoDate;
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
+}
+
+/** "$1,000, due Oct 28" — used for the payment button label, computed from the agreement's own variables rather than hardcoded. */
+export function formatPaymentDueLabel(installment: { amount: number; due: string }): string {
+  return `${formatCurrency(installment.amount)}, due ${formatDateShort(installment.due)}`;
+}
+
 export function formatDateLongWithWeekday(isoDate: string): string {
   const d = new Date(`${isoDate}T12:00:00Z`);
   if (Number.isNaN(d.getTime())) return isoDate;
@@ -170,11 +182,34 @@ export function computeContentHash(renderedBody: string): string {
   return sha256Hex(renderedBody);
 }
 
+const ALLOWED_LINK_PROTOCOLS = /^(https?:|mailto:|tel:)/i;
+
+/** True for a safe `href`/`src`: only http(s)/mailto/tel, nothing else (in particular, no `javascript:`). */
+function isSafeUrl(url: string): boolean {
+  const trimmed = url.trim();
+  // A bare fragment or relative path has no protocol to check and can't execute script.
+  if (trimmed.startsWith("#") || trimmed.startsWith("/")) return true;
+  return ALLOWED_LINK_PROTOCOLS.test(trimmed);
+}
+
 // Configured once: raw HTML in the source markdown is always dropped, never
-// passed through, so a template can never embed script tags or arbitrary
-// markup — the only way content reaches the page is as rendered markdown.
+// passed through (template `<script>`/`<iframe>`/`on*`-attribute markup never
+// reaches the page — the only way content reaches the page is as rendered
+// markdown), and markdown link/image syntax is restricted to safe protocols
+// so `[text](javascript:...)` can't slip through as a link `marked` itself
+// doesn't otherwise sanitize.
 const safeRenderer = new marked.Renderer();
 safeRenderer.html = () => "";
+safeRenderer.link = (href: string, title: string | null | undefined, text: string) => {
+  if (!href || !isSafeUrl(href)) return text;
+  const titleAttr = title ? ` title="${title}"` : "";
+  return `<a href="${href}"${titleAttr}>${text}</a>`;
+};
+safeRenderer.image = (href: string, title: string | null | undefined, text: string) => {
+  if (!href || !isSafeUrl(href)) return text;
+  const titleAttr = title ? ` title="${title}"` : "";
+  return `<img src="${href}" alt="${text}"${titleAttr}>`;
+};
 
 marked.setOptions({ gfm: true, breaks: false, renderer: safeRenderer });
 

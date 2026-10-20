@@ -3,6 +3,7 @@ import { Document, Page, View, Text, Image, StyleSheet } from "@react-pdf/render
 import fs from "fs";
 import path from "path";
 import { renderMarkdownToPdfBlocks } from "./markdownToPdf";
+import { computeInitials } from "@/lib/agreements/names";
 
 const NAVY = "#0A2A47";
 const COPPER = "#C05A12";
@@ -92,6 +93,8 @@ export type AgreementPdfSigner = {
   typedName?: string | null;
   signatureImage?: string | null;
   consentVersion?: string | null;
+  /** Section numbers this signer initialed (e.g. ["10", "12", "14"]) — same wording as the signer UI and audit log. */
+  initialedSections?: string[];
 };
 
 export type AgreementPdfEvent = {
@@ -208,6 +211,14 @@ export function AgreementPdf({
                     <Text style={styles.sigLabel}>Typed signature</Text>
                     <Text style={styles.sigValue}>{signer.typedName}</Text>
                   </View>
+                  {signer.initialedSections && signer.initialedSections.length > 0 && (
+                    <View style={styles.sigRow}>
+                      <Text style={styles.sigLabel}>Section initials</Text>
+                      <Text style={styles.sigValue}>
+                        {signer.initialedSections.map((s) => `${s}: ${computeInitials(signer.typedName ?? signer.name)}`).join("   ")}
+                      </Text>
+                    </View>
+                  )}
                   <View style={styles.sigRow}>
                     <Text style={styles.sigLabel}>Signed (UTC)</Text>
                     <Text style={styles.sigValue}>{formatUtc(signer.signedAt)}</Text>

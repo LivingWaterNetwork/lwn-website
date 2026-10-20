@@ -7,6 +7,7 @@ export type AgreementEventType =
   | "code_failed"
   | "locked_out"
   | "opened"
+  | "identity_confirmed"
   | "consented"
   | "initialed"
   | "signed"

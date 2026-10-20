@@ -32,20 +32,26 @@ export async function generateAgreementPdfBuffer(agreementId: string, kind: Agre
   });
 
   const signerRoles = agreement.template.signerRoles as Array<{ role: string; label: string }>;
+  const requiredInitials = agreement.template.requiredInitials as Array<{ section: string; label: string }>;
   const signers: AgreementPdfSigner[] = agreement.signers
     .slice()
     .sort((a, b) => a.order - b.order)
-    .map((s) => ({
-      role: s.role,
-      label: signerRoles.find((r) => r.role === s.role)?.label ?? s.role,
-      name: s.name,
-      title: s.title,
-      status: s.status,
-      signedAt: s.signedAt,
-      typedName: s.typedName,
-      signatureImage: s.signatureImage,
-      consentVersion: s.consentVersion,
-    }));
+    .map((s) => {
+      const initials = (s.initials as Record<string, boolean> | null) ?? {};
+      const initialedSections = requiredInitials.filter((r) => initials[r.section]).map((r) => r.section);
+      return {
+        role: s.role,
+        label: signerRoles.find((r) => r.role === s.role)?.label ?? s.role,
+        name: s.name,
+        title: s.title,
+        status: s.status,
+        signedAt: s.signedAt,
+        typedName: s.typedName,
+        signatureImage: s.signatureImage,
+        consentVersion: s.consentVersion,
+        initialedSections,
+      };
+    });
 
   const events: AgreementPdfEvent[] = agreement.events.map((e) => ({
     type: e.type,

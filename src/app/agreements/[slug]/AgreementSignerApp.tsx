@@ -2,17 +2,19 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { splitHtmlIntoSections } from "@/lib/agreements/htmlSections";
+import { computeInitials } from "@/lib/agreements/names";
 import { SignatureCanvas, type SignatureCanvasHandle } from "@/components/agreements/SignatureCanvas";
 
 type RequiredInitial = { section: string; label: string };
 
 type AgreementState = {
-  agreement: { status: string; expiresAt: string | null; paymentUrl: string | null };
+  agreement: { status: string; expiresAt: string | null; paymentUrl: string | null; firstPaymentLabel: string | null };
   template: { title: string };
   participant: {
     name: string;
     email: string;
     status: string;
+    identityConfirmed: boolean;
     consentVersion: string | null;
     initials: Record<string, boolean>;
     typedName: string | null;
@@ -41,7 +43,6 @@ export function AgreementSignerApp({ slug }: { slug: string }) {
   const [state, setState] = useState<AgreementState | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [needsCode, setNeedsCode] = useState(false);
-  const [confirmedIdentity, setConfirmedIdentity] = useState(false);
   const [loading, setLoading] = useState(true);
 
   async function load() {
@@ -76,7 +77,7 @@ export function AgreementSignerApp({ slug }: { slug: string }) {
     ? "loading"
     : state.participant.status === "signed"
     ? "done"
-    : !confirmedIdentity && !state.participant.consentVersion
+    : !state.participant.identityConfirmed
     ? "confirm"
     : !state.participant.consentVersion
     ? "consent"
@@ -111,11 +112,7 @@ export function AgreementSignerApp({ slug }: { slug: string }) {
   if (step === "confirm") {
     return (
       <Centered>
-        <ConfirmIdentityScreen
-          name={state.participant.name}
-          email={state.participant.email}
-          onConfirmed={() => setConfirmedIdentity(true)}
-        />
+        <ConfirmIdentityScreen slug={slug} name={state.participant.name} email={state.participant.email} onConfirmed={load} />
       </Centered>
     );
   }
@@ -256,24 +253,39 @@ function CodeEntryScreen({ slug, onSuccess }: { slug: string; onSuccess: () => v
 }
 
 function ConfirmIdentityScreen({
+  slug,
   name,
   email,
   onConfirmed,
 }: {
+  slug: string;
   name: string;
   email: string;
   onConfirmed: () => void;
 }) {
   const [confirmEmail, setConfirmEmail] = useState(email);
   const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (confirmEmail.trim().toLowerCase() !== email.trim().toLowerCase()) {
-      setError("That doesn't match the email we have on file. Please double-check, or reach out if something looks wrong.");
-      return;
+    setSubmitting(true);
+    setError(null);
+    try {
+      // This is a friendly check, not identity verification — the access
+      // code is what actually gates this agreement. The server records it
+      // and will not allow consent until it's done, so the check can't be
+      // skipped by reloading past this screen.
+      await api(`/api/agreements/${slug}/confirm-identity`, {
+        method: "POST",
+        body: JSON.stringify({ email: confirmEmail }),
+      });
+      onConfirmed();
+    } catch (err: unknown) {
+      setError((err as Error).message || "That doesn't match the email we have on file.");
+    } finally {
+      setSubmitting(false);
     }
-    onConfirmed();
   }
 
   return (
@@ -299,9 +311,10 @@ function ConfirmIdentityScreen({
         )}
         <button
           type="submit"
-          className="mt-5 w-full inline-flex items-center justify-center rounded-lg bg-navy text-white px-4 py-3 text-sm font-semibold hover:bg-navy-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-lw-blue"
+          disabled={submitting}
+          className="mt-5 w-full inline-flex items-center justify-center rounded-lg bg-navy text-white px-4 py-3 text-sm font-semibold hover:bg-navy-light disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-lw-blue"
         >
-          That&apos;s me — continue
+          {submitting ? "Checking…" : "That's me — continue"}
         </button>
       </form>
     </div>
@@ -383,6 +396,8 @@ function ReadAndSignScreen({
 }) {
   const sections = useMemo(() => splitHtmlIntoSections(state.html ?? ""), [state.html]);
   const [initials, setInitials] = useState<Record<string, boolean>>(state.participant.initials);
+  const [initialErrors, setInitialErrors] = useState<Record<string, string>>({});
+  const [initialSaving, setInitialSaving] = useState<Record<string, boolean>>({});
   const [typedName, setTypedName] = useState("");
   const [signatureHasDrawing, setSignatureHasDrawing] = useState(false);
   const [signing, setSigning] = useState(false);
@@ -396,16 +411,35 @@ function ReadAndSignScreen({
   const totalSteps = state.requiredInitials.length + 1;
   const doneSteps = state.requiredInitials.filter((r) => initials[r.section]).length;
 
+  // The server's response is the source of truth: on success, `initials`
+  // reflects exactly what got saved; on failure, the checkbox rolls back to
+  // its last known-good value rather than optimistically staying "checked,"
+  // which previously let someone think a section was initialed when it
+  // wasn't — and then hit a confusing error only once they tried to sign.
   async function toggleInitial(section: string, next: boolean) {
+    const previous = Boolean(initials[section]);
     setInitials((prev) => ({ ...prev, [section]: next }));
+    setInitialErrors((prev) => ({ ...prev, [section]: "" }));
+    setInitialSaving((prev) => ({ ...prev, [section]: true }));
     try {
-      await fetch(`/api/agreements/${slug}/initial`, {
+      const res = await fetch(`/api/agreements/${slug}/initial`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ section, initialed: next }),
       });
-    } catch {
-      // best-effort; the next sign attempt re-validates server-side anyway
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(data.error || "Couldn't save — please try again.");
+      }
+      if (data.initials) setInitials(data.initials);
+    } catch (err) {
+      setInitials((prev) => ({ ...prev, [section]: previous }));
+      setInitialErrors((prev) => ({
+        ...prev,
+        [section]: err instanceof Error ? err.message : "Couldn't save — please try again.",
+      }));
+    } finally {
+      setInitialSaving((prev) => ({ ...prev, [section]: false }));
     }
   }
 
@@ -473,15 +507,32 @@ function ReadAndSignScreen({
                       <input
                         type="checkbox"
                         checked={Boolean(initials[required.section])}
+                        disabled={initialSaving[required.section]}
                         onChange={(e) => toggleInitial(required.section, e.target.checked)}
-                        className="mt-0.5 h-5 w-5 rounded border-slate text-navy focus-visible:ring-2 focus-visible:ring-lw-blue"
+                        className="mt-0.5 h-5 w-5 rounded border-slate text-navy focus-visible:ring-2 focus-visible:ring-lw-blue disabled:opacity-50"
                       />
                       <span className="text-sm text-navy">
                         I have read and initial this section: <strong>{required.label}</strong>
                       </span>
                     </label>
                     {initials[required.section] && (
-                      <p className="mt-2 ml-8 font-serif italic text-navy">{state.participant.name}</p>
+                      <p className="mt-2 ml-8 font-serif italic text-navy" title={state.participant.name}>
+                        {computeInitials(state.participant.name)}
+                      </p>
+                    )}
+                    {initialErrors[required.section] && (
+                      <div className="mt-2 ml-8 flex items-center gap-3">
+                        <p role="alert" className="text-sm text-red-700">
+                          {initialErrors[required.section]}
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() => toggleInitial(required.section, true)}
+                          className="text-sm font-medium text-copper hover:text-copper-dark underline"
+                        >
+                          Retry
+                        </button>
+                      </div>
                     )}
                   </div>
                 )}
@@ -588,7 +639,7 @@ function DoneScreen({ slug, state, onRefresh }: { slug: string; state: Agreement
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center rounded-lg bg-copper text-white px-4 py-3 text-sm font-semibold hover:bg-copper-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-copper"
           >
-            Make your first payment
+            Make your first payment{state.agreement.firstPaymentLabel ? ` (${state.agreement.firstPaymentLabel})` : ""}
           </a>
         )}
 
