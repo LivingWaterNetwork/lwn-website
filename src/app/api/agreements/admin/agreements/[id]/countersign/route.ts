@@ -72,6 +72,8 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
         subject: "Your agreement is fully executed — Living Water Network",
         text: `Great news, ${participant.name} — your agreement with Living Water Network is now fully executed.\n\nYou can download the final copy any time at:\n${siteUrl}/agreements/${agreement.slug}\n\n(You'll need your access code.)`,
       }).catch((err) => console.error("[agreements/countersign] signer email failed:", err));
+    } else {
+      console.log(`[agreements/countersign] test record — skipping notification/signer email (no recipient) for ${agreement.slug}`);
     }
   }
 

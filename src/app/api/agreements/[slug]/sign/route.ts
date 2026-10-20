@@ -87,6 +87,8 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
       subject: "Your signed copy — Living Water Network",
       text: `Thank you for signing, ${participant.name}.\n\nYou can view and download your copy any time at:\n${siteUrl}/agreements/${agreement.slug}\n\n(You'll need your access code.)\n\nLWN will countersign shortly, and you'll be able to download the fully executed copy from the same link.`,
     }).catch((err) => console.error("[agreements/sign] signer email failed:", err));
+  } else {
+    console.log(`[agreements/sign] test record — skipping notification/signer email (no recipient) for ${agreement.slug}`);
   }
 
   return NextResponse.json({ success: true, status: nextStatus });

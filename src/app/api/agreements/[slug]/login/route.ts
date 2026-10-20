@@ -74,11 +74,15 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
     }
     await logAgreementEvent(req, agreement.id, "opened", { actorRole: "participant" });
 
-    if (firstOpen && !agreement.isTest) {
-      sendAgreementsNotificationEmail({
-        subject: "Agreement opened",
-        text: `An agreement was opened for the first time.\n\nSigner: ${agreement.slug}\nTime: ${new Date().toISOString()}`,
-      }).catch((err) => console.error("[agreements/login] notify failed:", err));
+    if (firstOpen) {
+      if (!agreement.isTest) {
+        sendAgreementsNotificationEmail({
+          subject: "Agreement opened",
+          text: `An agreement was opened for the first time.\n\nSigner: ${agreement.slug}\nTime: ${new Date().toISOString()}`,
+        }).catch((err) => console.error("[agreements/login] notify failed:", err));
+      } else {
+        console.log(`[agreements/login] test record — skipping "opened" notification email (no recipient) for ${agreement.slug}`);
+      }
     }
 
     return res;
@@ -99,6 +103,8 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
           text: `An agreement link has been locked out ${priorLockouts} times after repeated failed access codes.\n\nAgreement: ${agreement.slug}\nIP: ${getClientIp(req)}`,
         }).catch((err) => console.error("[agreements/login] notify failed:", err));
       }
+    } else {
+      console.log(`[agreements/login] test record — skipping lockout notification email (no recipient) for ${agreement.slug}`);
     }
 
     return NextResponse.json(
