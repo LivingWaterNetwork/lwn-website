@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { logAgreementEvent } from "@/lib/agreements/events";
 import {
   generateAgreementPdfBuffer,
   generateAndStoreAgreementPdf,
@@ -9,7 +10,7 @@ import {
 
 const VALID_KINDS: AgreementPdfKind[] = ["draft", "participant_signed", "executed"];
 
-export async function GET(_req: NextRequest, { params }: { params: { id: string; kind: string } }) {
+export async function GET(req: NextRequest, { params }: { params: { id: string; kind: string } }) {
   const agreement = await prisma.agreement.findUnique({ where: { id: params.id } });
   if (!agreement) return NextResponse.json({ error: "Not found." }, { status: 404 });
 
@@ -28,6 +29,8 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string;
     const cached = await getLatestAgreementDocument(agreement.id, kind);
     bytes = cached ? Buffer.from(cached.bytes) : Buffer.from((await generateAndStoreAgreementPdf(agreement.id, kind)).bytes);
   }
+
+  await logAgreementEvent(req, agreement.id, "downloaded", { actorRole: "admin", detail: kind });
 
   return new NextResponse(new Blob([Uint8Array.from(bytes)]), {
     headers: {
