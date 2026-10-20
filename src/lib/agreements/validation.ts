@@ -61,7 +61,9 @@ export const adminPartnerAcceptSchema = z.object({
 export const adminCountersignSchema = z.object({
   typedName: z.string().trim().min(1).max(200),
   signatureImage: dataUrlPng.optional(),
-  consentVersion: z.string().trim().min(1).max(40),
+  // No consentVersion field here: the server always stamps the current
+  // CONSENT_VERSION itself (see the countersign route), the same way the
+  // participant's own consent route does — the client never gets to choose.
 });
 
 export const adminVoidSchema = z.object({
