@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { AGREEMENT_SESSION_COOKIE, isValidAgreementSessionToken } from "./session";
+import { agreementSessionCookieName, isValidAgreementSessionToken } from "./session";
 
 /**
  * Resolves the agreement strictly from the route's own slug, then checks the
@@ -15,7 +15,7 @@ export async function requireAgreementSession(req: NextRequest, slug: string) {
     return { error: NextResponse.json({ error: "Not found." }, { status: 404 }) } as const;
   }
 
-  const token = req.cookies.get(AGREEMENT_SESSION_COOKIE)?.value;
+  const token = req.cookies.get(agreementSessionCookieName(agreement.slug))?.value;
   const valid = await isValidAgreementSessionToken(token, agreement.id).catch(() => false);
   if (!valid) {
     return { error: NextResponse.json({ error: "Unauthorized." }, { status: 401 }) } as const;

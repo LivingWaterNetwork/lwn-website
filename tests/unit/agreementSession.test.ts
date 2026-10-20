@@ -1,5 +1,5 @@
 import { describe, expect, it, beforeAll } from "vitest";
-import { createAgreementSessionToken, isValidAgreementSessionToken } from "@/lib/agreements/session";
+import { createAgreementSessionToken, isValidAgreementSessionToken, agreementSessionCookieName } from "@/lib/agreements/session";
 
 beforeAll(() => {
   process.env.AGREEMENTS_SESSION_SECRET = "test-secret-not-used-in-production";
@@ -33,6 +33,13 @@ describe("agreement session isolation", () => {
     expect(await isValidAgreementSessionToken(null, "agreement-a")).toBe(false);
     expect(await isValidAgreementSessionToken("garbage", "agreement-a")).toBe(false);
     expect(await isValidAgreementSessionToken("a.b", "agreement-a")).toBe(false);
+  });
+
+  it("gives different agreements different cookie names, so one browser can hold both sessions at once", () => {
+    // Without this, logging into agreement B in a second tab overwrites a
+    // single shared cookie and silently logs tab A out on its next reload.
+    expect(agreementSessionCookieName("agreement-a-slug")).not.toBe(agreementSessionCookieName("agreement-b-slug"));
+    expect(agreementSessionCookieName("amaya-frias-abc123")).toBe("agreement_session_amaya-frias-abc123");
   });
 
   it("rejects an expired token", async () => {

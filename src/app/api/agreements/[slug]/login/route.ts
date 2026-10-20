@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { verifySecret } from "@/lib/agreements/crypto";
 import { evaluateLoginAttempt } from "@/lib/agreements/access";
-import { createAgreementSessionToken, AGREEMENT_SESSION_COOKIE } from "@/lib/agreements/session";
+import { createAgreementSessionToken, agreementSessionCookieName } from "@/lib/agreements/session";
 import { loginSchema, firstIssueMessage } from "@/lib/agreements/validation";
 import { logAgreementEvent } from "@/lib/agreements/events";
 import { sendAgreementsNotificationEmail } from "@/lib/email";
@@ -60,7 +60,7 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
   if (outcome.outcome === "success") {
     const token = await createAgreementSessionToken(agreement.id);
     const res = NextResponse.json({ success: true });
-    res.cookies.set(AGREEMENT_SESSION_COOKIE, token, {
+    res.cookies.set(agreementSessionCookieName(agreement.slug), token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
