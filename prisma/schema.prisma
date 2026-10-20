@@ -310,6 +310,117 @@ model BusinessStewardshipDiscovery {
   @@map("business_stewardship_discoveries")
 }
 
+// ---------------------------------------------------------------------------
+// LWN Agreements — private, reusable e-signature portal (/agreements/<slug>).
+// Template-driven so every future LWN agreement reuses the same machinery:
+// a published AgreementTemplate version is immutable (contentSha256 pins it),
+// an Agreement is one rendered, frozen instance of a template for one person
+// or engagement, AgreementSigner rows track each party's signature, and
+// AgreementEvent is an append-only audit log. Signed PDFs live in Postgres
+// (AgreementDocument) through the existing DATABASE_URL — no new storage
+// service or ORM.
+// ---------------------------------------------------------------------------
+
+model AgreementTemplate {
+  id          String   @id @default(cuid())
+  key         String // e.g. "lwn-coaching-business-launch"
+  version     String // semver, e.g. "1.0.0"
+  title       String
+  body        String // markdown with {{variables}} and {{system:*}} tokens
+  variablesSchema Json // JSON schema describing expected variables
+  signerRoles Json // ordered list of { role, label, requiredBeforeSend? }
+  requiredInitials Json // list of section labels requiring an inline initial
+  contentSha256 String // sha256 of `body`, frozen once published — guards against editing a published version in place
+  status      String   @default("draft") // draft | published | retired
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  agreements  Agreement[]
+
+  @@unique([key, version])
+  @@map("agreement_templates")
+}
+
+model Agreement {
+  id             String   @id @default(uuid())
+  slug           String   @unique // "<name>-<8 random hex>", never derived in a reversible way
+  templateId     String
+  template       AgreementTemplate @relation(fields: [templateId], references: [id])
+  variables      Json // the filled-in {{variable}} values, including derived ones (e.g. rendered installment table)
+  renderedBody   String? // frozen markdown snapshot, set when status moves to "ready"
+  contentSha256  String? // sha256 of renderedBody, frozen alongside it
+  status         String   @default("draft")
+  // draft -> ready -> sent -> viewed -> partially_signed -> executed | voided | expired
+  accessCodeHash String? // scrypt hash of the 8-char access code; the code itself is never stored
+  codeAttempts   Int      @default(0)
+  lockedUntil    DateTime?
+  expiresAt      DateTime?
+  paymentUrl     String?
+  isTest         Boolean  @default(false)
+  voidedReason   String?
+  voidedAt       DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  signers    AgreementSigner[]
+  events     AgreementEvent[]
+  documents  AgreementDocument[]
+
+  @@map("agreements")
+}
+
+model AgreementSigner {
+  id              String   @id @default(cuid())
+  agreementId     String
+  agreement       Agreement @relation(fields: [agreementId], references: [id])
+  role            String // partner | participant | organization
+  order           Int
+  name            String
+  email           String
+  title           String?
+  status          String   @default("pending") // pending | signed
+  signedAt        DateTime?
+  typedName       String?
+  signatureImage  String? // data: PNG, optional drawn signature
+  initials        Json? // { [sectionLabel]: true }
+  ip              String?
+  userAgent       String?
+  consentVersion  String?
+
+  @@index([agreementId])
+  @@map("agreement_signers")
+}
+
+model AgreementEvent {
+  id          String   @id @default(cuid())
+  agreementId String
+  agreement   Agreement @relation(fields: [agreementId], references: [id])
+  type        String // created | sent | code_failed | opened | consented | initialed | signed | countersigned | downloaded | voided | regenerated_code | extended
+  actorRole   String? // partner | participant | organization | admin | system
+  detail      String?
+  ip          String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+
+  @@index([agreementId])
+  @@map("agreement_events")
+}
+
+model AgreementDocument {
+  id          String   @id @default(cuid())
+  agreementId String
+  agreement   Agreement @relation(fields: [agreementId], references: [id])
+  kind        String // draft | participant_signed | executed
+  version     Int      @default(1)
+  sha256      String
+  bytes       Bytes
+  createdAt   DateTime @default(now())
+
+  @@index([agreementId])
+  @@map("agreement_documents")
+}
+
 model GalaSponsorshipInquiry {
   id               String   @id @default(cuid())
   name             String

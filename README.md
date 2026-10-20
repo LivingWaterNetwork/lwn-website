@@ -74,10 +74,16 @@ src/
   components/sections/    Per-page client content components and shared forms.
   lib/                    prisma client, email (Resend + Graph), airtable, kit,
                            validation (Zod schemas), rateLimit, seo (breadcrumb JSON-LD).
+  lib/agreements/         LWN Agreements (/agreements) — template rendering, access
+                           control, PDF generation. See AGENTS.md for how to add a
+                           new agreement template or instance.
 prisma/schema.prisma      Lead, CohortApplication, Donation, ContactSubmission,
                            ProgramInquiry, PartnershipInquiry, MultiYearPledgeInquiry,
-                           GalaSponsorshipInquiry.
+                           GalaSponsorshipInquiry, AgreementTemplate, Agreement,
+                           AgreementSigner, AgreementEvent, AgreementDocument.
 content/blog/             MDX blog posts.
+content/agreements/       LWN Agreements templates (one markdown file per version)
+                           and per-instance variables files. See AGENTS.md.
 ```
 
 ## Forms & anti-abuse

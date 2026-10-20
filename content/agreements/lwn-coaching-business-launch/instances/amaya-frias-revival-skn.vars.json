@@ -1,0 +1,47 @@
+{
+  "_comment": "Confirmed by Omar Fandino, 2026-10-20. Legal and tax review done. Used with: npm run agreement:new -- --template lwn-coaching-business-launch --version 1.0.0 --name \"Amaya Frias\" --email amayaf1315@gmail.com --vars content/agreements/lwn-coaching-business-launch/instances/amaya-frias-revival-skn.vars.json",
+  "variables": {
+    "org_legal_name": "Living Water Network Inc.",
+    "org_ein": "93-1859873",
+    "org_street_address": "4150 Ashford Dunwoody Rd",
+    "org_city_state": "Atlanta, Georgia",
+    "org_postal_code": "30319",
+    "org_email": "info@lwnetwork.org",
+    "org_website": "lwnetwork.org",
+    "coach_name": "Omar Fandino",
+    "coach_title": "Founder",
+    "coach_email": "ofandino@lwnetwork.org",
+    "partner_name": "Measure and Make Group",
+    "partner_short": "MMG",
+    "partner_website": "measureandmakegroup.com",
+    "partner_signer_name": "Omar Fandino",
+    "partner_signer_title": "Founder",
+    "partner_signer_email": "omar@measureandmakegroup.com",
+    "participant_name": "Amaya Frias",
+    "participant_business": "Revival SKN",
+    "participant_email": "amayaf1315@gmail.com",
+    "journey_start": "2026-10-26",
+    "journey_end": "2026-12-24",
+    "session_count": 9,
+    "session_length_minutes": 60,
+    "total_commitment": 2000,
+    "installments": [
+      { "label": "First payment", "due": "2026-10-28", "amount": 1000 },
+      { "label": "Final payment", "due": "2026-11-27", "amount": 1000 }
+    ],
+    "mission_allocation": 1500,
+    "partner_allocation": 500,
+    "website_customary_value": 1000,
+    "website_max_pages": 5,
+    "revision_rounds": 3,
+    "post_launch_days": 30,
+    "reschedule_notice_hours": 24
+  },
+  "signers": [
+    { "role": "partner", "name": "Omar Fandino", "email": "omar@measureandmakegroup.com", "title": "Founder" },
+    { "role": "participant", "name": "Amaya Frias", "email": "amayaf1315@gmail.com" },
+    { "role": "organization", "name": "Omar Fandino", "email": "ofandino@lwnetwork.org", "title": "Founder" }
+  ],
+  "paymentUrl": "https://pay.bluevine.com/p/318a1de7f0044f1da14d5b5360663c67/pay/",
+  "expiresInDays": 30
+}

@@ -76,7 +76,13 @@ const sections = [
     ],
   },
   {
-    heading: "1.10 Contact Us",
+    heading: "1.10 Electronic Agreements",
+    body: [
+      "If LWN sends you a private link to review and sign an agreement electronically (for example, a coaching or program agreement), we collect your name, email address, electronic signature (typed and, if provided, drawn), IP address, device/browser information, and timestamps for each step you take (opening the link, consenting to sign electronically, initialing sections, and signing). We use this information solely to create, deliver, and keep an accurate record of that agreement, including an audit trail establishing who signed, when, and from where, consistent with the U.S. ESIGN Act and applicable state UETA law. This information is stored securely, is never sold or used for marketing, and is kept for as long as reasonably necessary for recordkeeping, tax, and legal purposes, consistent with LWN's internal Document Retention & Destruction Policy, or as otherwise described at the time of signing.",
+    ],
+  },
+  {
+    heading: "1.11 Contact Us",
     body: [
       "If you have questions about this Privacy Policy or how your information is handled, please contact us at ofandino@lwnetwork.org.",
     ],

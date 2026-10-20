@@ -86,6 +86,31 @@ export async function sendDiscoveryNotificationEmail({
   await deliver(DISCOVERY_NOTIFY_TO, subject, text);
 }
 
+// LWN Agreements — internal activity notifications (open/sign/lockout) route
+// to NOTIFY_EMAIL, same as the rest of the site's form notifications. Subject
+// lines never include agreement text, access codes, or the agreement slug —
+// only non-sensitive identifiers (the signer's display name/role).
+const AGREEMENTS_NOTIFY_TO = process.env.NOTIFY_EMAIL ?? "info@lwnetwork.org";
+
+export async function sendAgreementsNotificationEmail({ subject, text }: { subject: string; text: string }) {
+  await deliver(AGREEMENTS_NOTIFY_TO, subject, text);
+}
+
+/** Sends a signer their own copy of an agreement PDF after signing. Attachment-free by default (a download link is safer than an unencrypted attachment of a signed legal document). */
+export async function sendAgreementSignerEmail({
+  to,
+  subject,
+  text,
+  html,
+}: {
+  to: string;
+  subject: string;
+  text: string;
+  html?: string;
+}) {
+  await deliver(to, subject, text, html);
+}
+
 const SITE_URL = "https://www.lwnetwork.org";
 const NAVY = "#0A2A47";
 const COPPER = "#C05A12";
