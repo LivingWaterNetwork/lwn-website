@@ -161,11 +161,11 @@ export async function getEnrollmentForActor(actor: PortalActor, enrollmentId: st
   const enrollment = await prisma.portalEnrollment.findUnique({ where: { id: enrollmentId } });
   if (!enrollment) return null;
 
-  if (scope.kind === "coach" || scope.kind === "partner") {
-    // A staff/system write could in principle move coachPersonId/grants out
-    // from under a stale scope snapshot mid-request — re-check directly.
-    if (scope.kind === "coach" && enrollment.coachPersonId !== actor.personId) return null;
-  }
+  // A staff write could in principle move coachPersonId out from under a
+  // stale scope snapshot mid-request (scope was built from a findMany just
+  // above) — re-check the coach relationship directly against the fetched
+  // row rather than trusting scope.enrollmentIds alone.
+  if (scope.kind === "coach" && enrollment.coachPersonId !== actor.personId) return null;
 
   if (isPrivilegedView(scope.kind)) {
     await logPortalEvent({

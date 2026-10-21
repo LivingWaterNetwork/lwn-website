@@ -217,3 +217,37 @@ voided one.
   test-flagged survives. In Preview, real emails only ever go to
   `ofandino@lwnetwork.org` regardless of `is_test` — every other recipient
   is silently skipped and logged while QA is underway.
+
+### Known limitations (Phase 1)
+
+- **Step reordering has no drag UI yet.** `PATCH /api/portal/admin/steps/[id]`
+  accepts an `order` field and `createStepForStaff`/`updateStepForStaff`
+  support it, but the admin Steps tab only creates steps — there's no
+  drag-and-drop or manual reorder control in the UI yet.
+- **Admin "linked agreement" is a raw ID paste**, not a picker. The
+  enrollment overview's "Linked agreement ID" field doesn't validate that
+  the ID exists, isn't voided, or belongs to the right participant — admin
+  "pick from Agreements by participant email" (as the original spec
+  describes) isn't built; staff must copy the ID from `/agreements/admin`
+  themselves. `createDraftEnrollmentFromTemplate`'s own auto-link (used by
+  both the CLI and "Create member") *does* match by participant email and
+  refuses to guess when zero or multiple agreements match.
+- **No calendar sync.** Session times are set by hand in the admin; nothing
+  pushes to or pulls from Zoom/Google Calendar/Outlook.
+- **Payment status is manual.** There's no Bluevine (or any payment
+  processor) webhook — marking an installment paid/adjusted/waived is
+  always a deliberate admin action from the Payments tab.
+- **No in-app messaging.** `messages` is a Phase 3 module name only; there
+  is no thread/message UI anywhere yet.
+- **Document magic-byte detection can't fully distinguish DOCX from any
+  other zip file** (both start `PK\x03\x04`) — acceptable for Phase 1 since
+  uploads are staff-only, never member-supplied, and still bounded by the
+  10 MB cap and the four-type allowlist.
+- **No automated browser/E2E test of the login flow or isolation
+  guarantees** — `tests/unit/` covers the pure logic and the Prisma-mocked
+  policy/scoping functions, but there's no Playwright run exercising the
+  real `/portal/login` → code → session cookie path end to end, or a live
+  two-browser-context isolation check. That has to happen as a manual
+  preview walkthrough with `test-*` records (see the release checklist),
+  since it needs the real shared Preview+Production database and real
+  email delivery.
