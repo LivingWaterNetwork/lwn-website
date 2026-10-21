@@ -1,0 +1,16 @@
+{
+  "key": "lwn-groundwork-cohort",
+  "version": "1.0.0",
+  "title": "Groundwork Cohort",
+  "status": "draft",
+  "lengthDays": 270,
+  "phases": [
+    { "key": "see", "title": "See", "weekRange": "Months 1–2", "summary": "Draft — needs Phase 3 cohort/group-meeting support before publishing." },
+    { "key": "sit", "title": "Sit", "weekRange": "Months 3–7", "summary": "Draft — needs Phase 3 cohort/group-meeting support before publishing." },
+    { "key": "send", "title": "Send", "weekRange": "Months 8–9", "summary": "Draft — needs Phase 3 cohort/group-meeting support before publishing." }
+  ],
+  "expectedSessions": { "count": 9, "durationMin": 90 },
+  "defaultSteps": [],
+  "defaultLibraryDocuments": [],
+  "modules": ["cohort"]
+}

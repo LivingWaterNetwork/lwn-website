@@ -82,7 +82,13 @@ const sections = [
     ],
   },
   {
-    heading: "1.11 Contact Us",
+    heading: "1.11 Member Portal",
+    body: [
+      "If you're part of an LWN program, you can sign in to a private member space with a code we email you. It holds your journey plan, session recaps, action steps, documents, payment schedule, and anything you choose to write there. Only you, your LWN coach, and LWN administrators can see it. Our branding and website partner sees only the brand and website items you approve, and you can withdraw that at any time. We keep a record of sign-ins and changes to protect your account. We keep your member information while you're active and for up to 3 years after your program ends, and signed agreements for 7 years. You can download your data or ask us to delete it by emailing info@lwnetwork.org.",
+    ],
+  },
+  {
+    heading: "1.12 Contact Us",
     body: [
       "If you have questions about this Privacy Policy or how your information is handled, please contact us at ofandino@lwnetwork.org.",
     ],

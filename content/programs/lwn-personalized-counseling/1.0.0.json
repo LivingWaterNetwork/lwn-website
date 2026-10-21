@@ -1,0 +1,16 @@
+{
+  "key": "lwn-personalized-counseling",
+  "version": "1.0.0",
+  "title": "Personalized Counseling",
+  "status": "draft",
+  "lengthDays": 90,
+  "phases": [
+    { "key": "see", "title": "See", "weekRange": "Weeks 1–2", "summary": "Draft — phases to be confirmed before publishing." },
+    { "key": "sit", "title": "Sit", "weekRange": "Weeks 3–10", "summary": "Draft — phases to be confirmed before publishing." },
+    { "key": "send", "title": "Send", "weekRange": "Weeks 11–12", "summary": "Draft — phases to be confirmed before publishing." }
+  ],
+  "expectedSessions": { "count": 10, "durationMin": 50 },
+  "defaultSteps": [],
+  "defaultLibraryDocuments": [],
+  "modules": []
+}

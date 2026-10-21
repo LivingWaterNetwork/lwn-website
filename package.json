@@ -13,12 +13,20 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "agreement:new": "tsx scripts/agreement-new.ts",
-    "agreement:seed-templates": "tsx scripts/seed-agreement-templates.ts"
+    "agreement:seed-templates": "tsx scripts/seed-agreement-templates.ts",
+    "portal:migrate": "tsx scripts/portal-migrate.ts",
+    "portal:migrate:002": "tsx scripts/portal-migrate-002-hide-progress.ts",
+    "portal:seed-templates": "tsx scripts/portal-seed-templates.ts",
+    "portal:seed-staff": "tsx scripts/portal-seed-staff.ts",
+    "portal:enroll": "tsx scripts/portal-enroll.ts",
+    "portal:test-login": "tsx scripts/portal-test-login.ts",
+    "portal:cleanup-test": "tsx scripts/portal-cleanup-test.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.14.0",
     "@react-pdf/renderer": "^4.5.1",
     "@stripe/stripe-js": "^4.1.0",
+    "archiver": "^7.0.1",
     "docx": "^9.7.1",
     "framer-motion": "^13.1.0",
     "gray-matter": "^4.0.3",
@@ -34,6 +42,7 @@
   "devDependencies": {
     "@playwright/test": "^1.62.1",
     "@tailwindcss/typography": "^0.5.13",
+    "@types/archiver": "^7.0.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

@@ -111,6 +111,26 @@ export async function sendAgreementSignerEmail({
   await deliver(to, subject, text, html);
 }
 
+/** Sends a member-facing portal email (a login code, a magic link). Callers gate is_test/@example.com/preview-allowlist themselves, same convention as Agreements. */
+export async function sendPortalEmail({
+  to,
+  subject,
+  text,
+  html,
+}: {
+  to: string;
+  subject: string;
+  text: string;
+  html?: string;
+}) {
+  await deliver(to, subject, text, html);
+}
+
+/** Internal notification for repeated portal login lockouts — never includes a code or member data. */
+export async function sendPortalNotificationEmail({ subject, text }: { subject: string; text: string }) {
+  await deliver(NOTIFY_TO, subject, text);
+}
+
 const SITE_URL = "https://www.lwnetwork.org";
 const NAVY = "#0A2A47";
 const COPPER = "#C05A12";

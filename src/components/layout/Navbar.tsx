@@ -77,9 +77,12 @@ export function Navbar() {
   // The agreements portal is a focused, distraction-free signing flow — no site chrome.
   if (pathname?.startsWith("/agreements")) return null;
 
+  // The member portal is its own private, authenticated space — no public nav/donate chrome.
+  if (pathname?.startsWith("/portal")) return null;
+
   return (
     <header
-      className={`sticky top-0 z-50 border-b border-mist bg-white/95 backdrop-blur transition-shadow duration-300 ${
+      className={`print:hidden sticky top-0 z-50 border-b border-mist bg-white/95 backdrop-blur transition-shadow duration-300 ${
         scrolled ? "shadow-md backdrop-blur-md" : "shadow-sm"
       }`}
     >

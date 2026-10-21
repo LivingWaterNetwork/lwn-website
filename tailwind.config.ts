@@ -59,6 +59,16 @@ const config: Config = {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
       },
+      keyframes: {
+        "celebrate-pop": {
+          "0%": { opacity: "0", transform: "scale(0.5) translateY(4px)" },
+          "30%": { opacity: "1", transform: "scale(1.3) translateY(-6px)" },
+          "100%": { opacity: "0", transform: "scale(1) translateY(-18px)" },
+        },
+      },
+      animation: {
+        "celebrate-pop": "celebrate-pop 900ms ease-out forwards",
+      },
     },
   },
   plugins: [require("@tailwindcss/typography")],

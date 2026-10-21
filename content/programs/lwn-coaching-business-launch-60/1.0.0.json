@@ -1,0 +1,28 @@
+{
+  "key": "lwn-coaching-business-launch-60",
+  "version": "1.0.0",
+  "title": "60-Day Coaching & Business Launch",
+  "status": "published",
+  "lengthDays": 60,
+  "phases": [
+    { "key": "see", "title": "See", "weekRange": "Weeks 1–2", "summary": "We look honestly at where things stand — your finances, your priorities, and what a season of real change will take." },
+    { "key": "sit", "title": "Sit", "weekRange": "Weeks 3–6", "summary": "We build the plan: a budget you can live with, a launch checklist, and a brand direction worth standing behind." },
+    { "key": "send", "title": "Send", "weekRange": "Weeks 7–9", "summary": "We finish strong — your website goes live, and we set your next season up to keep moving." }
+  ],
+  "expectedSessions": { "count": 9, "durationMin": 60 },
+  "defaultSteps": [
+    { "title": "Share your financial information for review", "phaseKey": "see", "dayOffset": 3, "tags": ["stewardship"] },
+    { "title": "Agree on your journey priorities together", "phaseKey": "see", "dayOffset": 5, "tags": ["journey"] },
+    { "title": "Set your recurring call day", "phaseKey": "see", "dayOffset": 7, "tags": ["journey"] },
+    { "title": "Complete a debt inventory", "phaseKey": "see", "dayOffset": 10, "tags": ["stewardship"] },
+    { "title": "Build your 60-day spending and savings plan", "phaseKey": "sit", "dayOffset": 21, "tags": ["stewardship"] },
+    { "title": "Set your personal and business budget", "phaseKey": "sit", "dayOffset": 28, "tags": ["stewardship", "business_launch"] },
+    { "title": "Review the Section 5 launch checklist", "phaseKey": "sit", "dayOffset": 35, "tags": ["business_launch"] },
+    { "title": "Approve your brand direction", "phaseKey": "sit", "dayOffset": 42, "tags": ["business_launch", "brand_website"] },
+    { "title": "Approve your website content", "phaseKey": "send", "dayOffset": 49, "tags": ["business_launch", "brand_website"] },
+    { "title": "Closing review and next-season plan", "phaseKey": "send", "dayOffset": 58, "tags": ["journey"] }
+  ],
+  "defaultLibraryDocuments": [],
+  "modules": ["payments", "reflections", "stewardship", "business_launch"],
+  "agreementTemplateKey": "lwn-coaching-business-launch"
+}

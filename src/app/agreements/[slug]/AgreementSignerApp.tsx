@@ -602,6 +602,27 @@ function ReadAndSignScreen({
 
 function DoneScreen({ slug, state, onRefresh }: { slug: string; state: AgreementState; onRefresh: () => void }) {
   const executed = state.agreement.status === "executed";
+  const [portalLinked, setPortalLinked] = useState(false);
+  const [portalBusy, setPortalBusy] = useState(false);
+  const [portalError, setPortalError] = useState<string | null>(null);
+
+  useEffect(() => {
+    api(`/api/agreements/${slug}/portal-link`)
+      .then((data) => setPortalLinked(Boolean(data.linked)))
+      .catch(() => setPortalLinked(false));
+  }, [slug]);
+
+  async function continueToPortal() {
+    setPortalBusy(true);
+    setPortalError(null);
+    try {
+      const data = await api(`/api/agreements/${slug}/portal-login`, { method: "POST" });
+      window.location.href = `/portal/login/verify?email=${encodeURIComponent(data.email)}`;
+    } catch (err: unknown) {
+      setPortalError((err as { message?: string }).message || "Couldn't continue. Please try again.");
+      setPortalBusy(false);
+    }
+  }
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-mist p-6 sm:p-8 text-center">
@@ -641,6 +662,21 @@ function DoneScreen({ slug, state, onRefresh }: { slug: string; state: Agreement
           >
             Make your first payment{state.agreement.firstPaymentLabel ? ` (${state.agreement.firstPaymentLabel})` : ""}
           </a>
+        )}
+
+        {portalLinked && (
+          <button
+            onClick={continueToPortal}
+            disabled={portalBusy}
+            className="inline-flex items-center justify-center rounded-lg border border-navy text-navy px-4 py-3 text-sm font-semibold hover:bg-mist focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-lw-blue disabled:opacity-60"
+          >
+            {portalBusy ? "Sending your code…" : "Continue to your LWN space"}
+          </button>
+        )}
+        {portalError && (
+          <p role="alert" className="text-sm text-copper">
+            {portalError}
+          </p>
         )}
 
         {!executed && (

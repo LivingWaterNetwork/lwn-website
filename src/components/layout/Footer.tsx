@@ -14,8 +14,11 @@ export function Footer() {
   // The agreements portal is a focused, distraction-free signing flow — no site chrome.
   if (pathname?.startsWith("/agreements")) return null;
 
+  // The member portal is its own private, authenticated space — no public footer chrome.
+  if (pathname?.startsWith("/portal")) return null;
+
   return (
-    <footer className="bg-navy text-white">
+    <footer className="print:hidden bg-navy text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-10 mb-10 border-b border-white/10">
           <div>
