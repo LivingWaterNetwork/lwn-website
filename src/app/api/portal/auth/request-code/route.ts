@@ -30,12 +30,19 @@ export async function POST(req: NextRequest) {
 
   if (result.person) {
     const linkUrl = `${getPortalOrigin(req)}/portal/login/link?token=${encodeURIComponent(result.linkToken)}`;
-    sendPortalLoginEmail({
-      email: result.person.email,
-      isTest: result.person.isTest,
-      code: result.code,
-      linkUrl,
-    }).catch((err) => console.error("[portal/request-code] send failed:", err));
+    // Awaited deliberately: an unawaited send here can be cut off mid-flight
+    // once the response below is returned and the function's execution
+    // context is frozen, so the email may never actually go out at all.
+    try {
+      await sendPortalLoginEmail({
+        email: result.person.email,
+        isTest: result.person.isTest,
+        code: result.code,
+        linkUrl,
+      });
+    } catch (err) {
+      console.error("[portal/request-code] send failed:", err);
+    }
   }
 
   return NextResponse.json(GENERIC_RESPONSE);

@@ -1,14 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { computeStepsProgress } from "@/lib/portal/gamification";
-import ProgressBar from "../ProgressBar";
+import { bucketSteps } from "@/lib/portal/stepBuckets";
+import { computeStreakDays } from "@/lib/portal/gamification";
+import { useHideProgress } from "../ProgressGate";
 
 export interface StepItem {
   id: string;
   title: string;
   detail: string | null;
   dueOn: string | null; // ISO string
+  doneAt: string | null; // ISO string
   status: "open" | "done";
   memberNote: string | null;
 }
@@ -112,19 +114,42 @@ function StepRow({
   );
 }
 
-export default function StepsList({
-  initialSteps,
-  progress: initialProgress,
+function StepSection({
+  title,
+  steps,
+  emptyLabel,
+  celebratingId,
+  onToggle,
+  onNoteSave,
 }: {
-  initialSteps: StepItem[];
-  progress?: { done: number; total: number; percent: number };
+  title: string;
+  steps: StepItem[];
+  emptyLabel: string;
+  celebratingId: string | null;
+  onToggle: (id: string, done: boolean) => void;
+  onNoteSave: (id: string, note: string) => void;
 }) {
+  return (
+    <section>
+      <h2 className="font-serif text-lg text-navy">{title}</h2>
+      {steps.length === 0 ? (
+        <p className="mt-2 text-sm text-slate">{emptyLabel}</p>
+      ) : (
+        <ul className="mt-2 space-y-2">
+          {steps.map((s) => (
+            <StepRow key={s.id} step={s} celebrating={celebratingId === s.id} onToggle={onToggle} onNoteSave={onNoteSave} />
+          ))}
+        </ul>
+      )}
+    </section>
+  );
+}
+
+export default function StepsList({ initialSteps }: { initialSteps: StepItem[] }) {
   const [steps, setSteps] = useState(initialSteps);
   const [error, setError] = useState<string | null>(null);
   const [celebratingId, setCelebratingId] = useState<string | null>(null);
-
-  const progress = initialProgress ?? computeStepsProgress(steps);
-  const livePercent = computeStepsProgress(steps).percent;
+  const [hideProgress] = useHideProgress();
 
   async function update(id: string, patch: { status?: "open" | "done"; memberNote?: string }) {
     const previous = steps;
@@ -153,27 +178,32 @@ export default function StepsList({
     }
   }
 
-  const now = steps.filter((s) => s.status === "open" && (!s.dueOn || new Date(s.dueOn).getTime() <= Date.now() + 7 * 86400000));
-  const comingUp = steps.filter((s) => s.status === "open" && s.dueOn && new Date(s.dueOn).getTime() > Date.now() + 7 * 86400000);
-  const done = steps.filter((s) => s.status === "done");
-  const allDone = progress.total > 0 && done.length === progress.total;
+  const buckets = bucketSteps(steps);
+  const total = steps.length;
+  const allDone = total > 0 && buckets.done.length === total;
+  // Computed client-side so "today" uses this member's own local timezone,
+  // not the server's.
+  const streak = computeStreakDays(steps.map((s) => (s.doneAt ? new Date(s.doneAt) : null)));
+
+  const onToggle = (id: string, checked: boolean) => update(id, { status: checked ? "done" : "open" });
+  const onNoteSave = (id: string, note: string) => update(id, { memberNote: note });
 
   return (
     <div className="space-y-8">
-      {progress.total > 0 && (
+      {!hideProgress && total > 0 && (
         <div>
-          <div className="flex items-center justify-between text-xs font-medium text-slate">
-            <span>
-              {done.length} of {progress.total} steps complete
-            </span>
-            <span>{livePercent}%</span>
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-medium text-slate">
+              {buckets.done.length} of {total} steps done
+            </p>
+            {streak > 0 && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-copper/10 px-3 py-1 text-xs font-semibold text-copper">
+                <span aria-hidden="true">🔥</span>
+                {streak}-day streak
+              </span>
+            )}
           </div>
-          <div className="mt-1.5">
-            <ProgressBar percent={livePercent} label="Steps progress" />
-          </div>
-          {allDone && (
-            <p className="mt-2 text-sm font-medium text-copper">Every step done — amazing work! 🎉</p>
-          )}
+          {allDone && <p className="mt-1 text-sm font-medium text-copper">Every step done — amazing work! 🎉</p>}
         </div>
       )}
 
@@ -186,62 +216,52 @@ export default function StepsList({
         </div>
       )}
 
-      <section>
-        <h2 className="font-serif text-lg text-navy">Now</h2>
-        {now.length === 0 ? (
-          <p className="mt-2 text-sm text-slate">Nothing due right now.</p>
-        ) : (
-          <ul className="mt-2 space-y-2">
-            {now.map((s) => (
-              <StepRow
-                key={s.id}
-                step={s}
-                celebrating={celebratingId === s.id}
-                onToggle={(id, checked) => update(id, { status: checked ? "done" : "open" })}
-                onNoteSave={(id, note) => update(id, { memberNote: note })}
-              />
-            ))}
-          </ul>
-        )}
-      </section>
+      <StepSection
+        title="Overdue"
+        steps={buckets.overdue}
+        emptyLabel="Nothing overdue."
+        celebratingId={celebratingId}
+        onToggle={onToggle}
+        onNoteSave={onNoteSave}
+      />
 
-      <section>
-        <h2 className="font-serif text-lg text-navy">Coming up</h2>
-        {comingUp.length === 0 ? (
-          <p className="mt-2 text-sm text-slate">Nothing further out yet.</p>
-        ) : (
-          <ul className="mt-2 space-y-2">
-            {comingUp.map((s) => (
-              <StepRow
-                key={s.id}
-                step={s}
-                celebrating={celebratingId === s.id}
-                onToggle={(id, checked) => update(id, { status: checked ? "done" : "open" })}
-                onNoteSave={(id, note) => update(id, { memberNote: note })}
-              />
-            ))}
-          </ul>
-        )}
-      </section>
+      <StepSection
+        title="This week"
+        steps={buckets.thisWeek}
+        emptyLabel="Nothing due this week."
+        celebratingId={celebratingId}
+        onToggle={onToggle}
+        onNoteSave={onNoteSave}
+      />
 
-      <section>
-        <h2 className="font-serif text-lg text-navy">Done</h2>
-        {done.length === 0 ? (
-          <p className="mt-2 text-sm text-slate">Nothing marked done yet.</p>
-        ) : (
-          <ul className="mt-2 space-y-2">
-            {done.map((s) => (
-              <StepRow
-                key={s.id}
-                step={s}
-                celebrating={celebratingId === s.id}
-                onToggle={(id, checked) => update(id, { status: checked ? "done" : "open" })}
-                onNoteSave={(id, note) => update(id, { memberNote: note })}
-              />
-            ))}
-          </ul>
-        )}
-      </section>
+      <StepSection
+        title="Later"
+        steps={buckets.later}
+        emptyLabel="Nothing further out yet."
+        celebratingId={celebratingId}
+        onToggle={onToggle}
+        onNoteSave={onNoteSave}
+      />
+
+      {buckets.noDate.length > 0 && (
+        <StepSection
+          title="No due date"
+          steps={buckets.noDate}
+          emptyLabel=""
+          celebratingId={celebratingId}
+          onToggle={onToggle}
+          onNoteSave={onNoteSave}
+        />
+      )}
+
+      <StepSection
+        title="Done"
+        steps={buckets.done}
+        emptyLabel="Nothing marked done yet."
+        celebratingId={celebratingId}
+        onToggle={onToggle}
+        onNoteSave={onNoteSave}
+      />
     </div>
   );
 }

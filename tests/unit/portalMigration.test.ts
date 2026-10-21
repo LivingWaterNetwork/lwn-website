@@ -1,11 +1,44 @@
 import { describe, expect, it } from "vitest";
-import { assertStatementIsSafe, STATEMENTS } from "../../src/lib/portal/migrationStatements";
+import { assertStatementIsSafe, STATEMENTS, STATEMENTS_002_HIDE_PROGRESS } from "../../src/lib/portal/migrationStatements";
 
 describe("portal migration safety allowlist", () => {
   it("accepts every statement actually shipped in the migration", () => {
     for (const stmt of STATEMENTS) {
       expect(() => assertStatementIsSafe(stmt)).not.toThrow();
     }
+  });
+
+  it("accepts migration 002's ADD COLUMN statement", () => {
+    for (const stmt of STATEMENTS_002_HIDE_PROGRESS) {
+      expect(() => assertStatementIsSafe(stmt)).not.toThrow();
+    }
+  });
+
+  it("refuses ADD COLUMN with no DEFAULT (would need a backfill UPDATE)", () => {
+    expect(() =>
+      assertStatementIsSafe({
+        description: "no default",
+        sql: `ALTER TABLE "portal_persons" ADD COLUMN "nickname" TEXT`,
+      })
+    ).toThrow(/not a recognized/);
+  });
+
+  it("refuses ADD COLUMN on a table this file doesn't create", () => {
+    expect(() =>
+      assertStatementIsSafe({
+        description: "rogue table",
+        sql: `ALTER TABLE "portal_rogue" ADD COLUMN "x" BOOLEAN NOT NULL DEFAULT false`,
+      })
+    ).toThrow(/this file does not create/);
+  });
+
+  it("refuses ADD COLUMN on a non-portal table", () => {
+    expect(() =>
+      assertStatementIsSafe({
+        description: "agreements",
+        sql: `ALTER TABLE "agreements" ADD COLUMN "x" BOOLEAN NOT NULL DEFAULT false`,
+      })
+    ).toThrow();
   });
 
   it("refuses DROP anywhere in a statement", () => {

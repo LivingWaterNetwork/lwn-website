@@ -71,32 +71,3 @@ export async function revokeStaffRoleForAdmin(actor: PortalActor, staffRoleId: s
 
   return role;
 }
-
-/**
- * Ungated bootstrap seed — no actor, by design: this is how the very first
- * admin gets a role at all, same purpose as scripts/portal-seed-staff.ts,
- * just reachable from an operator-only, non-actor context instead of the
- * CLI. Idempotent. Never call this from anywhere an ordinary actor request
- * could reach.
- */
-export async function bootstrapStaffRole(input: {
-  email: string;
-  firstName: string;
-  lastName: string;
-  role: StaffRole;
-}): Promise<{ person: { id: string; email: string }; granted: boolean }> {
-  const email = normalizeEmail(input.email);
-  const person = await prisma.portalPerson.upsert({
-    where: { email },
-    create: { email, firstName: input.firstName, lastName: input.lastName, isTest: false },
-    update: {},
-  });
-
-  const existing = await prisma.portalStaffRole.findFirst({
-    where: { personId: person.id, role: input.role, revokedAt: null },
-  });
-  if (existing) return { person: { id: person.id, email: person.email }, granted: false };
-
-  await prisma.portalStaffRole.create({ data: { personId: person.id, role: input.role, grantedBy: person.id } });
-  return { person: { id: person.id, email: person.email }, granted: true };
-}

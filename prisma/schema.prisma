@@ -449,6 +449,16 @@ model PortalPerson {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 
+  // NOTE: a `hideProgress` column (member's own opt-out of the progress/streak
+  // UI) is prepared in src/lib/portal/migrationStatements.ts
+  // (STATEMENTS_002_HIDE_PROGRESS) but NOT yet applied to the live database
+  // and deliberately NOT added as a Prisma field here yet — adding it to this
+  // model before the column exists would make every portalPerson query
+  // (including the one on every portal page load) fail in production. Add
+  // the field here in the same change that confirms migration 002 has been
+  // applied (`npm run portal:migrate:002 -- --apply`). Until then the app
+  // uses a device-local (localStorage) opt-out — see ProgressGate.tsx.
+
   @@map("portal_persons")
 }
 

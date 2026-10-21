@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import PortalWordmark from "../PortalWordmark";
 
 export default function PortalLoginPage() {
   const router = useRouter();
@@ -35,7 +36,9 @@ export default function PortalLoginPage() {
   }
 
   return (
-    <main className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-4 py-16">
+    <>
+      <PortalWordmark />
+      <main className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-4 py-16">
       <div className="rounded-2xl bg-mist p-8 shadow-sm">
         <h1 className="font-serif text-2xl text-navy">Welcome back.</h1>
         <p className="mt-2 text-sm text-slate">
@@ -74,6 +77,7 @@ export default function PortalLoginPage() {
           </button>
         </form>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function ContinueButton({ token }: { token: string }) {
@@ -34,9 +35,12 @@ export default function ContinueButton({ token }: { token: string }) {
   return (
     <div className="mt-6 space-y-3">
       {error && (
-        <p role="alert" className="text-sm text-copper">
-          {error}
-        </p>
+        <div role="alert" className="space-y-2">
+          <p className="text-sm text-copper">{error}</p>
+          <Link href="/portal/login" className="inline-block min-h-[44px] text-sm font-medium text-lw-blue underline">
+            Get a new sign-in code
+          </Link>
+        </div>
       )}
       <button
         type="button"

@@ -15,6 +15,7 @@
     "agreement:new": "tsx scripts/agreement-new.ts",
     "agreement:seed-templates": "tsx scripts/seed-agreement-templates.ts",
     "portal:migrate": "tsx scripts/portal-migrate.ts",
+    "portal:migrate:002": "tsx scripts/portal-migrate-002-hide-progress.ts",
     "portal:seed-templates": "tsx scripts/portal-seed-templates.ts",
     "portal:seed-staff": "tsx scripts/portal-seed-staff.ts",
     "portal:enroll": "tsx scripts/portal-enroll.ts",

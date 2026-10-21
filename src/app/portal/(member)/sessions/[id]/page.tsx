@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getPortalActor } from "@/lib/portal/auth";
 import { getMeetingForActor } from "@/lib/portal/data/meetings";
 import { listStepsForMeeting } from "@/lib/portal/data/steps";
+import LocalDateTime from "../../LocalDateTime";
 
 export const metadata: Metadata = {
   title: "Session",
@@ -19,15 +20,14 @@ export default async function SessionDetailPage({ params }: { params: { id: stri
   return (
     <main className="mx-auto max-w-2xl px-4 py-12">
       <h1 className="font-serif text-3xl text-navy">
-        {meeting.scheduledAt
-          ? new Date(meeting.scheduledAt).toLocaleString("en-US", {
-              weekday: "long",
-              month: "long",
-              day: "numeric",
-              hour: "numeric",
-              minute: "2-digit",
-            })
-          : "Time to be set"}
+        {meeting.scheduledAt ? (
+          <LocalDateTime
+            iso={meeting.scheduledAt.toISOString()}
+            fallback={meeting.scheduledAt.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}
+          />
+        ) : (
+          "Time to be set"
+        )}
       </h1>
       <p className="mt-1 text-sm capitalize text-slate">{meeting.status.replace(/_/g, " ")}</p>
 

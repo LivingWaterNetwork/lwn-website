@@ -259,3 +259,32 @@ voided one.
   preview walkthrough with `test-*` records (see the release checklist),
   since it needs the real shared Preview+Production database and real
   email delivery.
+- **A staff member who is also personally enrolled (e.g. a coach who is
+  also a member) always sees their privileged view, never a "plain
+  member" view of their own enrollment.** `getEnrollmentScope` resolves
+  one scope per actor in strict precedence (admin > coach > partner >
+  member) and returns on the first match — there is currently no way to
+  view your own enrollment the way a member would see it. Noted as a real
+  risk to test, not yet fixed; a "view as member" mode (narrowing only,
+  never widening access) is deferred past Release 1.
+- **Progress/streak opt-out is device-local (`localStorage`) for now, not
+  a durable per-account preference.** `portal_persons.hideProgress` is
+  prepared as migration 002
+  (`src/lib/portal/migrationStatements.ts`'s `STATEMENTS_002_HIDE_PROGRESS`,
+  run via `npm run portal:migrate:002`) but deliberately not yet applied
+  or added to `schema.prisma` — doing either before the column exists in
+  the live database would break every portal page load. Once migration
+  002 is applied, add `hideProgress` to the `PortalPerson` model, thread it
+  through `PortalActor`, and replace the `localStorage` toggle
+  (`ProgressGate.tsx`) with the durable one.
+- **Preview login email delivery is unreliable right now.** Likely causes
+  (see PR history): Resend's `onboarding@resend.dev` sandbox sender only
+  delivers to the Resend account's own registered owner email until a
+  real sending domain is verified (`RESEND_FROM_EMAIL` needs a verified
+  domain), and `graphMailConfigured()` only checks that the three
+  `MS_*` env vars are non-empty, not that Entra ID admin consent for
+  `Mail.Send` was actually granted. `request-code/route.ts` now `await`s
+  the send (previously fire-and-forget, which risked the function being
+  frozen mid-send) so a failure is at least logged, but the underlying
+  domain/consent configuration still needs to be verified outside the
+  app.

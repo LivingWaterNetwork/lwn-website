@@ -1,7 +1,9 @@
 "use client";
 
 import { Suspense, useState } from "react";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import PortalWordmark from "../../PortalWordmark";
 
 function VerifyForm() {
   const router = useRouter();
@@ -36,7 +38,9 @@ function VerifyForm() {
   }
 
   return (
-    <main className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-4 py-16">
+    <>
+      <PortalWordmark />
+      <main className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-4 py-16">
       <div className="rounded-2xl bg-mist p-8 shadow-sm">
         <h1 className="font-serif text-2xl text-navy">Check your email.</h1>
         <p className="mt-2 text-sm text-slate">
@@ -63,15 +67,20 @@ function VerifyForm() {
           </div>
 
           {error && (
-            <div role="alert" className="flex items-center justify-between gap-3 text-sm text-copper">
-              <span>{error}</span>
-              <button
-                type="button"
-                onClick={() => setError(null)}
-                className="shrink-0 rounded px-2 py-1 text-xs font-medium underline"
-              >
-                Retry
-              </button>
+            <div role="alert" className="space-y-1 text-sm text-copper">
+              <div className="flex items-center justify-between gap-3">
+                <span>{error}</span>
+                <button
+                  type="button"
+                  onClick={() => setError(null)}
+                  className="shrink-0 rounded px-2 py-1 text-xs font-medium underline"
+                >
+                  Retry
+                </button>
+              </div>
+              <Link href="/portal/login" className="inline-block min-h-[44px] text-xs font-medium underline">
+                Get a new code instead
+              </Link>
             </div>
           )}
 
@@ -84,7 +93,8 @@ function VerifyForm() {
           </button>
         </form>
       </div>
-    </main>
+      </main>
+    </>
   );
 }
 

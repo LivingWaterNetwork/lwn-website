@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { getPortalActor } from "@/lib/portal/auth";
 import { getViewedEnrollmentForActor } from "@/lib/portal/data/enrollments";
 import { listPhasesForActor } from "@/lib/portal/data/phases";
-import { computePhaseStates } from "@/lib/portal/gamification";
-import ProgressBar from "../ProgressBar";
+import { computePhaseStates, resolveCurrentPhaseKey } from "@/lib/portal/gamification";
 
 export const metadata: Metadata = {
   title: "Your journey",
@@ -25,15 +24,9 @@ export default async function JourneyPage() {
 
   const phases = (await listPhasesForActor(actor, enrollment.id)) ?? [];
 
-  const today = new Date();
-  const youAreHereKey =
-    enrollment.currentPhaseKey ??
-    phases.find((p) => p.startsOn && p.endsOn && p.startsOn <= today && today <= p.endsOn)?.key ??
-    phases[0]?.key;
-
-  const phaseStates = computePhaseStates(phases, youAreHereKey ?? null);
+  const youAreHereKey = resolveCurrentPhaseKey(phases, enrollment.currentPhaseKey);
+  const phaseStates = computePhaseStates(phases, youAreHereKey);
   const completedCount = phaseStates.filter((p) => p.state === "done").length;
-  const percent = phases.length === 0 ? 0 : Math.round((completedCount / phases.length) * 100);
 
   return (
     <main className="mx-auto max-w-2xl px-4 py-12 print:py-4">
@@ -45,17 +38,9 @@ export default async function JourneyPage() {
       </p>
 
       {phases.length > 0 && (
-        <div className="mt-4 print:hidden">
-          <div className="flex items-center justify-between text-xs font-medium text-slate">
-            <span>
-              {completedCount} of {phases.length} phases complete
-            </span>
-            <span>{percent}%</span>
-          </div>
-          <div className="mt-1.5">
-            <ProgressBar percent={percent} label="Journey progress" />
-          </div>
-        </div>
+        <p className="mt-4 text-sm font-medium text-slate print:hidden">
+          {completedCount} of {phases.length} phases complete
+        </p>
       )}
 
       <ol className="mt-8">

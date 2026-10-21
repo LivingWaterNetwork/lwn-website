@@ -395,6 +395,26 @@ export const STATEMENTS: Statement[] = [
   },
 ];
 
+/**
+ * Migration 002 — run separately from STATEMENTS above (which was already
+ * applied against the live shared Preview+Production database on
+ * 2026-10-21; re-running it as a blind replay would fail immediately on
+ * the first "already exists" CREATE TABLE). Each later increment belongs
+ * in its own named export here, run by its own small CLI script, exactly
+ * like a new Agreements/program template version file — never folded back
+ * into an already-applied batch.
+ *
+ * Adds `portal_persons.hideProgress`: a member's own opt-out of the
+ * progress/streak UI. Nullable-safe default (`DEFAULT false`), so every
+ * existing row gets the column with no backfill UPDATE needed.
+ */
+export const STATEMENTS_002_HIDE_PROGRESS: Statement[] = [
+  {
+    description: "add column portal_persons.hideProgress",
+    sql: `ALTER TABLE "portal_persons" ADD COLUMN "hideProgress" BOOLEAN NOT NULL DEFAULT false`,
+  },
+];
+
 // DROP/TRUNCATE/RENAME/GRANT/REVOKE are refused anywhere in a statement.
 // DELETE/UPDATE are refused only as the statement's own command (a FK's
 // "ON DELETE SET NULL ON UPDATE CASCADE" referential action is not a DML
@@ -405,6 +425,13 @@ const CREATE_TABLE_RE = /^CREATE TABLE "?(portal_[a-z_]+)"?\s*\(/i;
 const CREATE_INDEX_RE = /^CREATE (?:UNIQUE )?INDEX "?[A-Za-z0-9_]+"?\s+ON\s+"?(portal_[a-z_]+)"?\s*\(/i;
 const CREATE_TYPE_RE = /^CREATE TYPE "?(portal_[A-Za-z0-9_]+)"?\s+AS/i;
 const ALTER_ADD_CONSTRAINT_RE = /^ALTER TABLE "?(portal_[a-z_]+)"?\s+ADD CONSTRAINT/i;
+// Deliberately narrow: a column added this way must be nullable or carry a
+// DEFAULT (so it never requires a backfill UPDATE), and the column/type
+// portion is restricted to a short list of primitive SQL types — this is
+// for small, additive schema growth on a table this file already created,
+// never a way to smuggle arbitrary DDL past the allowlist.
+const ALTER_ADD_COLUMN_RE =
+  /^ALTER TABLE "?(portal_[a-z_]+)"?\s+ADD COLUMN "?[A-Za-z][A-Za-z0-9_]*"?\s+(BOOLEAN|TEXT|INTEGER|TIMESTAMP\(3\))\s*(NOT NULL\s+)?DEFAULT\s+\S.*$/i;
 
 export function assertStatementIsSafe(stmt: Statement): void {
   const sql = stmt.sql.trim();
@@ -419,11 +446,13 @@ export function assertStatementIsSafe(stmt: Statement): void {
   const createIndex = sql.match(CREATE_INDEX_RE);
   const createType = sql.match(CREATE_TYPE_RE);
   const alterAddConstraint = sql.match(ALTER_ADD_CONSTRAINT_RE);
+  const alterAddColumn = sql.match(ALTER_ADD_COLUMN_RE);
 
-  const match = createTable ?? createIndex ?? createType ?? alterAddConstraint;
+  const match = createTable ?? createIndex ?? createType ?? alterAddConstraint ?? alterAddColumn;
   if (!match) {
     throw new Error(
-      `Refusing migration: statement "${stmt.description}" is not a recognized CREATE TABLE / CREATE INDEX / CREATE TYPE / ALTER TABLE ... ADD CONSTRAINT on a portal_* table.`
+      `Refusing migration: statement "${stmt.description}" is not a recognized CREATE TABLE / CREATE INDEX / CREATE TYPE / ` +
+        `ALTER TABLE ... ADD CONSTRAINT / ALTER TABLE ... ADD COLUMN (nullable or defaulted) on a portal_* table.`
     );
   }
 
@@ -438,7 +467,10 @@ export function assertStatementIsSafe(stmt: Statement): void {
     );
   }
 
-  if ((createIndex || alterAddConstraint) && !CREATED_TABLES.includes(table as (typeof CREATED_TABLES)[number])) {
+  if (
+    (createIndex || alterAddConstraint || alterAddColumn) &&
+    !CREATED_TABLES.includes(table as (typeof CREATED_TABLES)[number])
+  ) {
     throw new Error(
       `Refusing migration: statement "${stmt.description}" targets "${table}", which this file does not create.`
     );

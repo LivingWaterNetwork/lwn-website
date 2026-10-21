@@ -3,21 +3,15 @@ import Link from "next/link";
 import { getPortalActor } from "@/lib/portal/auth";
 import { getViewedEnrollmentForActor } from "@/lib/portal/data/enrollments";
 import { listMeetingsForActor } from "@/lib/portal/data/meetings";
+import LocalDateTime from "../LocalDateTime";
 
 export const metadata: Metadata = {
   title: "Your sessions",
   robots: { index: false, follow: false },
 };
 
-function formatWhen(scheduledAt: Date | null): string {
-  if (!scheduledAt) return "Time to be set";
-  return new Date(scheduledAt).toLocaleString("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  });
+function fallbackWhen(scheduledAt: Date): string {
+  return scheduledAt.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
 }
 
 export default async function SessionsPage() {
@@ -42,7 +36,13 @@ export default async function SessionsPage() {
             {upcoming.map((m) => (
               <li key={m.id}>
                 <Link href={`/portal/sessions/${m.id}`} className="block rounded-xl bg-mist p-4 hover:bg-mist/70">
-                  <p className="text-sm font-medium text-navy">{formatWhen(m.scheduledAt)}</p>
+                  <p className="text-sm font-medium text-navy">
+                    {m.scheduledAt ? (
+                      <LocalDateTime iso={m.scheduledAt.toISOString()} fallback={fallbackWhen(m.scheduledAt)} />
+                    ) : (
+                      "Time to be set"
+                    )}
+                  </p>
                   <p className="text-xs text-slate capitalize">{m.status.replace(/_/g, " ")}</p>
                 </Link>
               </li>
@@ -60,7 +60,13 @@ export default async function SessionsPage() {
             {past.map((m) => (
               <li key={m.id}>
                 <Link href={`/portal/sessions/${m.id}`} className="block rounded-xl bg-mist p-4 hover:bg-mist/70">
-                  <p className="text-sm font-medium text-navy">{formatWhen(m.scheduledAt)}</p>
+                  <p className="text-sm font-medium text-navy">
+                    {m.scheduledAt ? (
+                      <LocalDateTime iso={m.scheduledAt.toISOString()} fallback={fallbackWhen(m.scheduledAt)} />
+                    ) : (
+                      "Time to be set"
+                    )}
+                  </p>
                   <p className="text-xs text-slate capitalize">{m.status.replace(/_/g, " ")}</p>
                 </Link>
               </li>
