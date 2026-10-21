@@ -102,6 +102,12 @@ export async function updateEnrollmentForStaff(actor: PortalActor, enrollmentId:
   const scope = await getEnrollmentScope(actor);
   if (scope.kind === "coach" && !scope.enrollmentIds.includes(enrollmentId)) return null;
 
+  if (input.agreementId) {
+    const agreement = await prisma.agreement.findUnique({ where: { id: input.agreementId } });
+    if (!agreement) throw new Error("That agreement no longer exists.");
+    if (agreement.status === "voided") throw new Error("That agreement has been voided — link the one that replaced it instead.");
+  }
+
   const updated = await prisma.portalEnrollment.update({ where: { id: enrollmentId }, data: input });
 
   await logPortalEvent({

@@ -5,9 +5,12 @@ import { getEnrollmentForActor } from "@/lib/portal/data/enrollments";
 import { listPhasesForActor } from "@/lib/portal/data/phases";
 import { listCoachesForStaff } from "@/lib/portal/data/templates";
 import { listPartnerOrgsForStaff, listPartnerGrantsForStaff } from "@/lib/portal/data/partners";
+import { getLinkedAgreementSummaryForStaff } from "@/lib/portal/data/agreementLinking";
+import { getPortalPersonForStaff } from "@/lib/portal/data/persons";
 import EnrollmentEditForm from "./EnrollmentEditForm";
 import { InviteButton, StatusActions } from "./EnrollmentActions";
 import PartnerGrants from "./PartnerGrants";
+import AgreementPicker from "./AgreementPicker";
 
 export const metadata: Metadata = {
   title: "Enrollment overview",
@@ -19,11 +22,15 @@ export default async function EnrollmentOverviewPage({ params }: { params: { id:
   const enrollment = await getEnrollmentForActor(actor, params.id);
   if (!enrollment) notFound();
 
-  const [phases, coaches, partnerOrgs, partnerGrants] = await Promise.all([
+  const [phases, coaches, partnerOrgs, partnerGrants, person, currentAgreement] = await Promise.all([
     listPhasesForActor(actor, params.id),
     listCoachesForStaff(actor),
     listPartnerOrgsForStaff(actor),
     listPartnerGrantsForStaff(actor, params.id),
+    getPortalPersonForStaff(actor, enrollment.personId),
+    enrollment.agreementId
+      ? getLinkedAgreementSummaryForStaff(actor, params.id, enrollment.agreementId)
+      : Promise.resolve(null),
   ]);
 
   const inviteDisabledReason = enrollment.isTest
@@ -45,11 +52,12 @@ export default async function EnrollmentOverviewPage({ params }: { params: { id:
         currentPhaseKey={enrollment.currentPhaseKey}
         modules={(enrollment.modules as Record<string, boolean>) ?? {}}
         paymentUrl={enrollment.paymentUrl}
-        agreementId={enrollment.agreementId}
         coaches={(coaches ?? []).map((c) => ({ id: c.id, firstName: c.firstName, lastName: c.lastName }))}
         coachPersonId={enrollment.coachPersonId}
         isAdmin={actor.isAdmin}
       />
+
+      <AgreementPicker enrollmentId={enrollment.id} defaultEmail={person?.email ?? ""} current={currentAgreement} />
 
       <PartnerGrants
         enrollmentId={enrollment.id}

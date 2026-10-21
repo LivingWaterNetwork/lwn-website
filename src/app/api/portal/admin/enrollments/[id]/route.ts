@@ -14,15 +14,20 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   const parsed = updateEnrollmentSchema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: firstIssueMessage(parsed.error) }, { status: 400 });
 
-  const updated = await updateEnrollmentForStaff(actor, params.id, {
-    coachPersonId: parsed.data.coachPersonId,
-    startDate: parsed.data.startDate !== undefined ? (parsed.data.startDate ? new Date(parsed.data.startDate) : null) : undefined,
-    endDate: parsed.data.endDate !== undefined ? (parsed.data.endDate ? new Date(parsed.data.endDate) : null) : undefined,
-    currentPhaseKey: parsed.data.currentPhaseKey,
-    modules: parsed.data.modules,
-    agreementId: parsed.data.agreementId,
-    paymentUrl: parsed.data.paymentUrl,
-  });
+  let updated;
+  try {
+    updated = await updateEnrollmentForStaff(actor, params.id, {
+      coachPersonId: parsed.data.coachPersonId,
+      startDate: parsed.data.startDate !== undefined ? (parsed.data.startDate ? new Date(parsed.data.startDate) : null) : undefined,
+      endDate: parsed.data.endDate !== undefined ? (parsed.data.endDate ? new Date(parsed.data.endDate) : null) : undefined,
+      currentPhaseKey: parsed.data.currentPhaseKey,
+      modules: parsed.data.modules,
+      agreementId: parsed.data.agreementId,
+      paymentUrl: parsed.data.paymentUrl,
+    });
+  } catch (err) {
+    return NextResponse.json({ error: err instanceof Error ? err.message : "Could not update the enrollment." }, { status: 400 });
+  }
 
   if (!updated) return NextResponse.json({ error: "Not found." }, { status: 404 });
   return NextResponse.json({ enrollment: updated });

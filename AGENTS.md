@@ -229,14 +229,17 @@ voided one.
   were chosen over drag-and-drop deliberately — fully keyboard-operable and
   44px touch targets with no extra library, matching the UX bar's "full
   keyboard use" requirement more directly than HTML5 drag-and-drop would.
-- **Admin "linked agreement" is a raw ID paste**, not a picker. The
-  enrollment overview's "Linked agreement ID" field doesn't validate that
-  the ID exists, isn't voided, or belongs to the right participant — admin
-  "pick from Agreements by participant email" (as the original spec
-  describes) isn't built; staff must copy the ID from `/agreements/admin`
-  themselves. `createDraftEnrollmentFromTemplate`'s own auto-link (used by
-  both the CLI and "Create member") *does* match by participant email and
-  refuses to guess when zero or multiple agreements match.
+- **Admin agreement picker searches by participant email only.** The
+  enrollment overview's "Linked agreement" section
+  (`AgreementPicker.tsx` → `searchAgreementsForLinking` in
+  `lib/portal/data/agreementLinking.ts`) defaults the search to the
+  enrolled member's own email, lets staff override it, and never lists a
+  voided agreement. `updateEnrollmentForStaff` also refuses server-side to
+  link a nonexistent or voided agreement id, so a direct API call can't
+  bypass the picker's guarantee either. It doesn't do fuzzy name search or
+  list every Agreement across all participants — that's a reasonable
+  Phase 1 scope given agreements are usually looked up by the one email a
+  staff member already has in front of them.
 - **No calendar sync.** Session times are set by hand in the admin; nothing
   pushes to or pulls from Zoom/Google Calendar/Outlook.
 - **Payment status is manual.** There's no Bluevine (or any payment

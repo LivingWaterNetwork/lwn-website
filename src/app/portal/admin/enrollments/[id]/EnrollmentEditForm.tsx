@@ -10,7 +10,6 @@ export default function EnrollmentEditForm({
   currentPhaseKey,
   modules,
   paymentUrl,
-  agreementId,
   coaches,
   coachPersonId,
   isAdmin,
@@ -20,7 +19,6 @@ export default function EnrollmentEditForm({
   currentPhaseKey: string | null;
   modules: Record<string, boolean>;
   paymentUrl: string | null;
-  agreementId: string | null;
   coaches: { id: string; firstName: string; lastName: string }[];
   coachPersonId: string | null;
   isAdmin: boolean;
@@ -29,7 +27,6 @@ export default function EnrollmentEditForm({
   const [form, setForm] = useState({
     currentPhaseKey: currentPhaseKey ?? "",
     paymentUrl: paymentUrl ?? "",
-    agreementId: agreementId ?? "",
     coachPersonId: coachPersonId ?? "",
     modules: { ...modules },
   });
@@ -49,7 +46,6 @@ export default function EnrollmentEditForm({
         body: JSON.stringify({
           currentPhaseKey: form.currentPhaseKey || null,
           paymentUrl: form.paymentUrl || null,
-          agreementId: form.agreementId || null,
           coachPersonId: isAdmin ? form.coachPersonId || null : undefined,
           modules: form.modules,
         }),
@@ -109,19 +105,6 @@ export default function EnrollmentEditForm({
           </select>
         </div>
       )}
-
-      <div>
-        <label htmlFor="agreementId" className="block text-sm font-medium text-navy">
-          Linked agreement ID
-        </label>
-        <input
-          id="agreementId"
-          value={form.agreementId}
-          onChange={(e) => setForm({ ...form, agreementId: e.target.value })}
-          placeholder="Paste an Agreement id from /agreements/admin"
-          className="mt-1 block min-h-[44px] w-full rounded-lg border border-slate/30 px-3 py-2"
-        />
-      </div>
 
       <div>
         <label htmlFor="paymentUrl" className="block text-sm font-medium text-navy">
