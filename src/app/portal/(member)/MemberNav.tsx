@@ -15,10 +15,16 @@ const CORE_LINKS = [
 ];
 const PAYMENTS_LINK = { href: "/portal/payments", label: "Payments" };
 const ACCOUNT_LINK = { href: "/portal/account", label: "Account" };
+const ADMIN_LINK = { href: "/portal/admin", label: "Coach/Admin dashboard" };
 
-export default function MemberNav({ showPayments }: { showPayments: boolean }) {
+export default function MemberNav({ showPayments, isStaff }: { showPayments: boolean; isStaff: boolean }) {
   const pathname = usePathname();
-  const links = [...CORE_LINKS, ...(showPayments ? [PAYMENTS_LINK] : []), ACCOUNT_LINK];
+  const links = [
+    ...CORE_LINKS,
+    ...(showPayments ? [PAYMENTS_LINK] : []),
+    ACCOUNT_LINK,
+    ...(isStaff ? [ADMIN_LINK] : []),
+  ];
 
   return (
     <nav aria-label="Your LWN space" className="border-b border-slate/20 bg-white print:hidden">
