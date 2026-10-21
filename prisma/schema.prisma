@@ -488,6 +488,7 @@ model PortalPartnerUser {
 model PortalLoginChallenge {
   id             String    @id @default(cuid())
   emailHash      String // HMAC-SHA256(PORTAL_SESSION_SECRET, lowercased email)
+  personId       String? // set at creation if the email matched an account; null for an unknown email (challenge is still created so timing/shape can't reveal account existence)
   codeHash       String // HMAC-SHA256(PORTAL_SESSION_SECRET, 6-digit code)
   linkTokenHash  String // HMAC-SHA256(PORTAL_SESSION_SECRET, magic-link token)
   expiresAt      DateTime

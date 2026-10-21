@@ -127,6 +127,7 @@ const STATEMENTS: Statement[] = [
     sql: `CREATE TABLE "portal_login_challenges" (
       "id" TEXT PRIMARY KEY,
       "emailHash" TEXT NOT NULL,
+      "personId" TEXT,
       "codeHash" TEXT NOT NULL,
       "linkTokenHash" TEXT NOT NULL,
       "expiresAt" TIMESTAMP(3) NOT NULL,
