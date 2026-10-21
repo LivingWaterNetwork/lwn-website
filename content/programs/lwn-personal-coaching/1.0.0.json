@@ -1,0 +1,21 @@
+{
+  "key": "lwn-personal-coaching",
+  "version": "1.0.0",
+  "title": "Personal Coaching",
+  "status": "published",
+  "lengthDays": 90,
+  "phases": [
+    { "key": "see", "title": "See", "weekRange": "Weeks 1–3", "summary": "We get a clear, honest picture of where you are and what you're carrying." },
+    { "key": "sit", "title": "Sit", "weekRange": "Weeks 4–9", "summary": "We work the plan together — one conversation, one step at a time." },
+    { "key": "send", "title": "Send", "weekRange": "Weeks 10–12", "summary": "We close the season well and set up what comes next." }
+  ],
+  "expectedSessions": { "count": 12, "durationMin": 60 },
+  "defaultSteps": [
+    { "title": "Agree on your journey priorities together", "phaseKey": "see", "dayOffset": 5, "tags": ["journey"] },
+    { "title": "Set your recurring call day", "phaseKey": "see", "dayOffset": 7, "tags": ["journey"] },
+    { "title": "Mid-season check-in", "phaseKey": "sit", "dayOffset": 45, "tags": ["journey"] },
+    { "title": "Closing review and next-season plan", "phaseKey": "send", "dayOffset": 85, "tags": ["journey"] }
+  ],
+  "defaultLibraryDocuments": [],
+  "modules": ["reflections"]
+}

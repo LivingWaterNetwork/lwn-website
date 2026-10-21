@@ -1,0 +1,16 @@
+{
+  "key": "lwn-strategic-mentorship",
+  "version": "1.0.0",
+  "title": "Strategic Mentorship",
+  "status": "draft",
+  "lengthDays": 180,
+  "phases": [
+    { "key": "see", "title": "See", "weekRange": "Weeks 1–4", "summary": "Draft — phases to be confirmed before publishing." },
+    { "key": "sit", "title": "Sit", "weekRange": "Weeks 5–20", "summary": "Draft — phases to be confirmed before publishing." },
+    { "key": "send", "title": "Send", "weekRange": "Weeks 21–26", "summary": "Draft — phases to be confirmed before publishing." }
+  ],
+  "expectedSessions": { "count": 12, "durationMin": 60 },
+  "defaultSteps": [],
+  "defaultLibraryDocuments": [],
+  "modules": []
+}
