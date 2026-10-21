@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getPortalActor } from "@/lib/portal/auth";
 import { getViewedEnrollmentForActor } from "@/lib/portal/data/enrollments";
 import { listMeetingsForActor } from "@/lib/portal/data/meetings";
-import LocalDateTime from "../LocalDateTime";
+import LocalDateTime from "../../LocalDateTime";
 
 export const metadata: Metadata = {
   title: "Your sessions",

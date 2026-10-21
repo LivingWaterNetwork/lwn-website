@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getPortalActor } from "@/lib/portal/auth";
 import { listMeetingsForActor } from "@/lib/portal/data/meetings";
 import NewSessionButton from "./NewSessionButton";
+import LocalDateTime from "../../../../LocalDateTime";
 
 export const metadata: Metadata = {
   title: "Sessions",
@@ -27,7 +28,11 @@ export default async function AdminSessionsPage({ params }: { params: { id: stri
               className="block rounded-xl bg-mist p-4 hover:bg-mist/70"
             >
               <p className="text-sm font-medium text-navy">
-                {m.scheduledAt ? new Date(m.scheduledAt).toLocaleString() : "Time to be set"}
+                {m.scheduledAt ? (
+                  <LocalDateTime iso={m.scheduledAt.toISOString()} fallback={m.scheduledAt.toLocaleDateString()} />
+                ) : (
+                  "Time to be set"
+                )}
               </p>
               <p className="text-xs capitalize text-slate">{m.status.replace(/_/g, " ")}</p>
             </Link>

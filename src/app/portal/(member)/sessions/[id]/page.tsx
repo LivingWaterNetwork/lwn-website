@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { getPortalActor } from "@/lib/portal/auth";
 import { getMeetingForActor } from "@/lib/portal/data/meetings";
 import { listStepsForMeeting } from "@/lib/portal/data/steps";
-import LocalDateTime from "../../LocalDateTime";
+import LocalDateTime from "../../../LocalDateTime";
 
 export const metadata: Metadata = {
   title: "Session",

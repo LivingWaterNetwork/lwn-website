@@ -9,7 +9,7 @@ import { resolveCurrentPhaseKey } from "@/lib/portal/gamification";
 import { bucketSteps } from "@/lib/portal/stepBuckets";
 import SignOutButton from "./SignOutButton";
 import HomeProgressCard from "./HomeProgressCard";
-import LocalDateTime from "./LocalDateTime";
+import LocalDateTime from "../LocalDateTime";
 
 export const metadata: Metadata = {
   title: "Your LWN space",

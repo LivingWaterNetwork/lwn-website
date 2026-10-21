@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getPortalActor } from "@/lib/portal/auth";
 import { listAuditEventsForAdmin } from "@/lib/portal/data/audit";
+import LocalDateTime from "../../LocalDateTime";
 
 export const metadata: Metadata = {
   title: "Audit log",
@@ -53,7 +54,9 @@ export default async function AuditPage({ searchParams }: { searchParams: { acti
             <span className="text-navy">
               {e.action} <span className="text-slate">— {e.actorRole} · {e.subjectType}</span>
             </span>
-            <span className="text-xs text-slate">{new Date(e.at).toLocaleString()}</span>
+            <span className="text-xs text-slate">
+              <LocalDateTime iso={e.at.toISOString()} fallback={e.at.toLocaleDateString()} />
+            </span>
           </li>
         ))}
         {events.length === 0 && <p className="text-sm text-slate">No matching events.</p>}
