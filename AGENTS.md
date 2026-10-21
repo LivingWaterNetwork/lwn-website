@@ -117,3 +117,103 @@ guarantee this depends on.
   any slug starting with `test-`) never send email and are excluded from the
   admin dashboard by default (`?includeTest=1` to see them). Do all QA on
   `test-*` records and delete them from the DB afterward.
+
+## Member Portal (LWN Portal)
+
+`/portal` is a private, template-driven space (coaching/mentoring/counseling
+members, later cohorts) layered on top of the same database. It is a
+**separate product area from Agreements** — its own `portal_*` tables, its
+own login-code auth (`portal_sessions`, not `agreement_signers`), its own
+session secret (`PORTAL_SESSION_SECRET`) — deliberately not an extension of
+the Agreements signer system, because a portal member, coach, admin, or
+partner is not necessarily an agreement signer at all. The only two places
+the two systems touch are a scalar (non-Prisma-relation) FK from
+`portal_enrollments.agreementId` into `agreements.id`, and a similar one from
+`portal_documents.agreementDocumentId` into `agreement_documents.id` — both
+read-only references; `AgreementTemplate`/`Agreement`/`AgreementDocument`
+and their behavior are never modified for the portal's sake.
+
+### The one rule that is not `prisma db push` for this feature
+
+Every other table in this repo reached production via Omar manually running
+`npx prisma db push` from `schema.prisma`. The portal's `portal_*` tables are
+the one deliberate exception: `scripts/portal-migrate.ts` is a hand-written,
+allowlist-checked, additive-only DDL runner (`CREATE TABLE` / `CREATE INDEX`
+/ `CREATE TYPE` / `ALTER TABLE ... ADD CONSTRAINT` on a `portal_*` table the
+same file creates — nothing else, ever). It's dry-run by default; `--apply`
+is required, and applying it against the shared Preview+Production database
+is a production change that needs sign-off first. Prisma models for the
+portal still live in `schema.prisma` as normal and `npx prisma generate`
+still runs for client types — only the schema-sync-against-the-real-database
+step is replaced. See `tests/unit/portalMigration.test.ts` for the refusal
+cases this is tested against.
+
+### The policy module — no `portal_*` query outside `lib/portal/data`
+
+`lib/portal/auth.ts` turns the `lwn_portal` session cookie into a
+`PortalActor` (member / coach / admin / partner-org user — a person can hold
+more than one of these). `lib/portal/policy.ts` resolves what enrollments
+that actor may touch (`getEnrollmentScope`) and, for a partner, which
+narrow `PARTNER_GRANTABLE_MODULES` they're allowed (Phase 1: `brand_website`
+only — a completely separate list from `MODULES_AVAILABLE`, the member/coach
+enrollment modules; don't conflate the two, that bug shipped once already).
+`lib/portal/data/*` is the **only** code allowed to query a `portal_*`
+Prisma model — every function there takes the actor, builds the scope into
+its own `where`, and returns `null` for anything out of scope (never a
+thrown 403), so a route turns that into a flat 404 and an id can never be
+distinguished from "not yours." `tests/unit/portalNoDirectQueries.test.ts`
+fails the build the moment any file under `src/app` queries a `portal_*`
+model directly instead of going through `lib/portal/data`.
+
+`portal_meeting_private_notes` is its own table, never joined by any
+member- or partner-facing query, so a private coach note can never leak
+through a shared code path by accident.
+
+### Adding a program template version
+
+Same shape as Agreements: a file at
+`content/programs/<key>/<version>.json` whose `key`/`version` must match its
+directory/filename (enforced at load time,
+`src/lib/portal/programTemplates.ts`), and a published version is immutable
+— ship a new version file rather than editing one already published
+(`ProgramTemplateImmutabilityError`). `npm run portal:seed-templates` loads
+every file into `portal_program_templates`.
+
+A template's `modules` array may list a module the app doesn't render yet
+(e.g. a Phase 3 `cohort` draft) — `unknownModules()` surfaces that instead
+of silently dropping it. Only modules in `MODULES_AVAILABLE`
+(`lib/portal/constants.ts`) actually gate anything today; `core` (journey,
+sessions, steps, documents) is always on and isn't in that list.
+
+### Enrolling a member
+
+`npm run portal:enroll -- --template <key> --email <email> --name "Full
+Name" --coach-email <coach> --start <date> [--end <date>] [--version X.Y.Z]
+[--payment-url <url>] [--test]` always creates a **draft** enrollment —
+never invites, never emails. It copies the template into
+`templateSnapshot`, creates phases/placeholder sessions/default steps from
+it, and auto-links an `Agreement` by matching the participant's email —
+only when exactly one match exists; zero or multiple matches leave it
+unlinked with a warning, since an agreement is void-and-recreate rather than
+edit-in-place and a naive 1:1 link could otherwise silently point at a
+voided one.
+
+### Test guards
+
+- `tests/unit/portalMigration.test.ts` — the migration allowlist refusals.
+- `tests/unit/portalNoDirectQueries.test.ts` — no `src/app` file queries a
+  `portal_*` model directly.
+- `tests/unit/portalPolicy.test.ts` — scope isolation for member/coach/
+  admin/partner, including the partner-module allowlist.
+- `tests/unit/portalAccess.test.ts`, `portalCrypto.test.ts` — the login
+  throttle/lockout state machine and the keyed-HMAC hashing that makes
+  rotating `PORTAL_SESSION_SECRET` actually invalidate every session at
+  once (not just future tokens).
+- `tests/unit/portalProgramTemplates.test.ts` — template load errors and
+  immutability.
+- `is_test: true` portal persons/enrollments never send email (gated in
+  `lib/portal/notify.ts`, same convention as Agreements) and are cleaned up
+  with `npm run portal:cleanup-test`, which fails loudly if anything
+  test-flagged survives. In Preview, real emails only ever go to
+  `ofandino@lwnetwork.org` regardless of `is_test` — every other recipient
+  is silently skipped and logged while QA is underway.
