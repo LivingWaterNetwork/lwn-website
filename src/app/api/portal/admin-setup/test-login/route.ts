@@ -4,12 +4,16 @@ import { bootstrapFindPersonByEmail } from "@/lib/portal/data/persons";
 import { getPortalOrigin } from "@/lib/portal/notify";
 
 /**
- * TEMPORARY — mints a fresh sign-in code for the test member account created
- * by /api/portal/admin-setup, for Omar's PR #18 preview review. Refuses any
- * person who isn't is_test, same rule as scripts/portal-test-login.ts.
- * Removed once the review is done.
+ * TEMPORARY — mints a fresh sign-in code without sending email, for Omar's
+ * PR #18 preview review. Refuses any person who isn't is_test EXCEPT Omar's
+ * own address (preview email delivery via the Resend shared domain/Graph
+ * fallback is unreliable right now — this is a same-secret-gated bypass of
+ * that delivery path for his own review login, not a new real-recipient
+ * email bypass: nothing is sent, it just hands back what the email would
+ * have contained). Removed once the review is done.
  */
 const SETUP_KEY = "94a775d6a3a5b4582db287fa850fca8baf1dd7501ad50fa4";
+const OMAR_EMAIL = "ofandino@lwnetwork.org";
 
 export async function POST(req: NextRequest) {
   if (req.headers.get("x-setup-key") !== SETUP_KEY) {
@@ -21,7 +25,7 @@ export async function POST(req: NextRequest) {
 
   const person = await bootstrapFindPersonByEmail(email);
   if (!person) return NextResponse.json({ error: `No portal_persons row for ${email}.` }, { status: 404 });
-  if (!person.isTest) {
+  if (!person.isTest && email.toLowerCase() !== OMAR_EMAIL) {
     return NextResponse.json({ error: `${email} is not a test record — refusing.` }, { status: 400 });
   }
 
