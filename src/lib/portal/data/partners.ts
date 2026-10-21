@@ -6,6 +6,12 @@ import { getEnrollmentScope, scopeIncludesEnrollment } from "../policy";
 import type { PartnerGrantableModule } from "../constants";
 import { isPartnerGrantableModule } from "../constants";
 
+/** Any staff member — just the org list, for the "grant partner access" picker on an enrollment. */
+export async function listPartnerOrgsForStaff(actor: PortalActor) {
+  if (!actor.isCoach && !actor.isAdmin) return null;
+  return prisma.portalPartnerOrg.findMany({ orderBy: { name: "asc" } });
+}
+
 /** Admin-only: every partner org with its active users. */
 export async function listPartnerOrgsForAdmin(actor: PortalActor) {
   if (!actor.isAdmin) return null;
