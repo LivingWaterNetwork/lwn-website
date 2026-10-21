@@ -118,6 +118,12 @@ export function Navbar() {
               {label}
             </Link>
           ))}
+          <Link
+            href="/portal/login"
+            className="text-sm font-medium font-sans text-slate transition-colors hover:text-[#0A77BC]"
+          >
+            Sign In to Your Portal
+          </Link>
           <Link href="/donate" className="btn-copper ml-2">
             Donate
           </Link>
@@ -167,6 +173,13 @@ export function Navbar() {
               {label}
             </Link>
           ))}
+          <Link
+            href="/portal/login"
+            onClick={() => setMobileOpen(false)}
+            className="block px-3 py-2 rounded-md text-sm font-medium font-sans text-slate transition-colors hover:bg-mist hover:text-[#0A77BC]"
+          >
+            Sign In to Your Portal
+          </Link>
           <Link
             href="/donate"
             onClick={() => setMobileOpen(false)}
