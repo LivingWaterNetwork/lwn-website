@@ -421,6 +421,296 @@ model AgreementDocument {
   @@map("agreement_documents")
 }
 
+// ---------------------------------------------------------------------------
+// LWN Member Portal (/portal) — Phase 1. A private, template-driven space
+// where members see their journey/sessions/steps/documents/payments and
+// coaches run every program from one dashboard. All tables are prefixed
+// portal_ and created by the additive-only `scripts/portal-migrate.ts`
+// runner, never by `prisma db push` — see AGENTS.md "Member portal" section.
+//
+// portal_enrollments.agreementId and portal_documents.agreementDocumentId
+// are plain scalar foreign keys into the existing agreements /
+// agreement_documents tables (DB-level FK added by the migration script,
+// not a Prisma relation() here) — deliberately not touching the Agreement /
+// AgreementDocument models above. An agreement is immutable once ready and
+// voided-then-recreated rather than edited in place, so these links are
+// admin-set and re-linkable, never assumed to track a single agreement for
+// the life of an enrollment.
+// ---------------------------------------------------------------------------
+
+model PortalPerson {
+  id        String    @id @default(cuid())
+  email     String    @unique // always stored lowercased
+  firstName String
+  lastName  String
+  phone     String?
+  isTest    Boolean   @default(false)
+  status    String    @default("active") // active | archived
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("portal_persons")
+}
+
+model PortalStaffRole {
+  id         String    @id @default(cuid())
+  personId   String
+  role       String // coach | admin
+  grantedBy  String // personId of the admin who granted it
+  grantedAt  DateTime  @default(now())
+  revokedAt  DateTime?
+
+  @@index([personId])
+  @@map("portal_staff_roles")
+}
+
+model PortalPartnerOrg {
+  id        String   @id @default(cuid())
+  key       String   @unique // e.g. "mmg"
+  name      String
+  createdAt DateTime @default(now())
+
+  @@map("portal_partner_orgs")
+}
+
+model PortalPartnerUser {
+  id            String    @id @default(cuid())
+  personId      String
+  partnerOrgId  String
+  revokedAt     DateTime?
+  createdAt     DateTime  @default(now())
+
+  @@index([personId])
+  @@index([partnerOrgId])
+  @@map("portal_partner_users")
+}
+
+model PortalLoginChallenge {
+  id             String    @id @default(cuid())
+  emailHash      String // HMAC-SHA256(PORTAL_SESSION_SECRET, lowercased email)
+  codeHash       String // HMAC-SHA256(PORTAL_SESSION_SECRET, 6-digit code)
+  linkTokenHash  String // HMAC-SHA256(PORTAL_SESSION_SECRET, magic-link token)
+  expiresAt      DateTime
+  attempts       Int       @default(0)
+  usedAt         DateTime?
+  ip             String?
+  userAgent      String?
+  createdAt      DateTime  @default(now())
+
+  @@index([emailHash])
+  @@map("portal_login_challenges")
+}
+
+model PortalLoginThrottle {
+  id          String    @id @default(cuid())
+  key         String    @unique // emailHash or ip, scoped by caller
+  windowStart DateTime
+  count       Int       @default(0)
+  lockedUntil DateTime?
+
+  @@map("portal_login_throttle")
+}
+
+model PortalSession {
+  id                 String    @id @default(cuid())
+  tokenHash          String    @unique // HMAC-SHA256(PORTAL_SESSION_SECRET, raw token) — keyed so rotating the secret invalidates every row
+  personId           String
+  activeEnrollmentId String?
+  expiresAt          DateTime
+  lastSeenAt         DateTime  @default(now())
+  revokedAt          DateTime?
+  ip                 String?
+  userAgent          String?
+  createdAt          DateTime  @default(now())
+
+  @@index([personId])
+  @@map("portal_sessions")
+}
+
+model PortalProgramTemplate {
+  id          String    @id @default(cuid())
+  key         String // e.g. "lwn-coaching-business-launch-60"
+  version     String // semver
+  title       String
+  body        Json // phases, expected sessions, default steps/documents, module switches — see content/programs/<key>/<version>.json
+  status      String    @default("draft") // draft | published | retired
+  sha256      String // sha256 of `body`, frozen once published — immutability mirrors AgreementTemplate
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([key, version])
+  @@map("portal_program_templates")
+}
+
+model PortalEnrollment {
+  id               String    @id @default(cuid())
+  personId         String
+  templateId       String
+  templateSnapshot Json // copy of the template body at enrollment time
+  coachPersonId    String?
+  status           String    @default("draft") // draft | invited | active | paused | completed | archived
+  startDate        DateTime?
+  endDate          DateTime?
+  currentPhaseKey  String?
+  modules          Json // module switches for this enrollment, subset of MODULES_AVAILABLE
+  agreementId      String? // scalar FK into agreements.id — admin-set, re-linkable, not a Prisma relation (see note above)
+  paymentUrl       String?
+  invitedAt        DateTime?
+  archivedAt       DateTime?
+  isTest           Boolean   @default(false)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@index([personId])
+  @@index([coachPersonId])
+  @@map("portal_enrollments")
+}
+
+model PortalPhase {
+  id           String   @id @default(cuid())
+  enrollmentId String
+  key          String // e.g. "see" | "sit" | "send"
+  title        String
+  startsOn     DateTime?
+  endsOn       DateTime?
+  summary      String
+  order        Int
+
+  @@index([enrollmentId])
+  @@map("portal_phases")
+}
+
+model PortalMeeting {
+  id                 String    @id @default(cuid())
+  enrollmentId       String
+  scheduledAt        DateTime?
+  durationMin        Int       @default(60)
+  format             String    @default("zoom") // zoom | phone | in_person
+  status             String    @default("scheduled") // scheduled | held | rescheduled | canceled_by_coach | late_cancel | missed
+  countsTowardTotal  Boolean   @default(true)
+  sharedRecap        String? // markdown, member-visible
+  recapSharedAt      DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  @@index([enrollmentId])
+  @@map("portal_meetings")
+}
+
+// Deliberately its own table — never joined by any member or partner query —
+// so a private coach note can never leak through a shared code path.
+model PortalMeetingPrivateNote {
+  id             String   @id @default(cuid())
+  meetingId      String
+  enrollmentId   String
+  authorPersonId String
+  body           String
+  createdAt      DateTime @default(now())
+
+  @@index([meetingId])
+  @@index([enrollmentId])
+  @@map("portal_meeting_private_notes")
+}
+
+model PortalActionStep {
+  id           String    @id @default(cuid())
+  enrollmentId String
+  meetingId    String?
+  phaseKey     String?
+  title        String
+  detail       String?
+  dueOn        DateTime?
+  status       String    @default("open") // open | done
+  doneAt       DateTime?
+  memberNote   String? // plain text, ≤500 chars, enforced in code
+  tags         String[]  @default([])
+  order        Int       @default(0)
+  createdBy    String // personId
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([enrollmentId])
+  @@map("portal_action_steps")
+}
+
+model PortalDocument {
+  id                  String   @id @default(cuid())
+  enrollmentId        String? // null = program library (shared, not member-owned)
+  templateKey         String?
+  kind                String // agreement | worksheet | curriculum | brand_website | other
+  title               String
+  filename            String
+  mime                String
+  size                Int
+  sha256              String
+  agreementDocumentId String? // scalar FK into agreement_documents.id — see note above
+  uploadedBy          String // personId
+  visibleToMember     Boolean  @default(true)
+  createdAt           DateTime @default(now())
+
+  @@index([enrollmentId])
+  @@map("portal_documents")
+}
+
+model PortalDocumentBlob {
+  id         String @id @default(cuid())
+  documentId String @unique
+  bytes      Bytes
+
+  @@map("portal_document_blobs")
+}
+
+model PortalInstallment {
+  id           String    @id @default(cuid())
+  enrollmentId String
+  label        String
+  dueOn        DateTime
+  amountCents  Int
+  status       String    @default("due") // due | paid | adjusted | waived
+  paidOn       DateTime?
+  note         String?
+  markedBy     String? // personId
+
+  @@index([enrollmentId])
+  @@map("portal_installments")
+}
+
+model PortalPartnerGrant {
+  id               String    @id @default(cuid())
+  enrollmentId     String
+  partnerOrgId     String
+  modules          Json // Phase 1 allows only ["brand_website"]
+  grantedByPersonId String
+  grantedVia       String // member | coach_with_consent
+  grantedAt        DateTime  @default(now())
+  revokedAt        DateTime?
+
+  @@index([enrollmentId])
+  @@index([partnerOrgId])
+  @@map("portal_partner_grants")
+}
+
+// Append-only. meta never holds codes, tokens, notes, recaps, or financial
+// details — only enough to say what happened (mirrors AgreementEvent).
+model PortalEvent {
+  id            String   @id @default(cuid())
+  at            DateTime @default(now())
+  actorPersonId String?
+  actorRole     String // member | coach | admin | partner | system
+  action        String
+  subjectType   String
+  subjectId     String
+  enrollmentId  String?
+  ip            String?
+  userAgent     String?
+  meta          Json?
+
+  @@index([enrollmentId])
+  @@index([subjectType, subjectId])
+  @@map("portal_events")
+}
+
 model GalaSponsorshipInquiry {
   id               String   @id @default(cuid())
   name             String

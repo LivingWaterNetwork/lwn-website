@@ -13,7 +13,13 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "agreement:new": "tsx scripts/agreement-new.ts",
-    "agreement:seed-templates": "tsx scripts/seed-agreement-templates.ts"
+    "agreement:seed-templates": "tsx scripts/seed-agreement-templates.ts",
+    "portal:migrate": "tsx scripts/portal-migrate.ts",
+    "portal:seed-templates": "tsx scripts/portal-seed-templates.ts",
+    "portal:seed-staff": "tsx scripts/portal-seed-staff.ts",
+    "portal:enroll": "tsx scripts/portal-enroll.ts",
+    "portal:test-login": "tsx scripts/portal-test-login.ts",
+    "portal:cleanup-test": "tsx scripts/portal-cleanup-test.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.14.0",
