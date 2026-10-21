@@ -2,6 +2,152 @@ import { prisma } from "@/lib/prisma";
 import type { PortalActor } from "../auth";
 import { getEnrollmentScope, scopeIncludesEnrollment } from "../policy";
 import { logPortalEvent } from "./events";
+import { normalizeEmail } from "../crypto";
+import { programTemplateBodySchema } from "../programTemplates";
+
+function addDays(date: Date, days: number): Date {
+  const d = new Date(date);
+  d.setDate(d.getDate() + days);
+  return d;
+}
+
+export interface CreateDraftEnrollmentInput {
+  personEmail: string;
+  personFirstName: string;
+  personLastName: string;
+  isTest?: boolean;
+  templateKey: string;
+  templateVersion?: string; // defaults to the latest published version
+  coachPersonId?: string | null;
+  startDate: Date;
+  endDate?: Date | null;
+  paymentUrl?: string | null;
+}
+
+export type AgreementLinkResult = "linked" | "none" | "ambiguous";
+
+/**
+ * The one shared path for creating a draft enrollment — used by both the
+ * admin "Create a member" form and `scripts/portal-enroll.ts`, so the two
+ * never drift (same precedent as Agreements' createAgreementFromTemplate).
+ * Always creates `draft` status and never sends anything.
+ */
+export async function createDraftEnrollmentFromTemplate(
+  input: CreateDraftEnrollmentInput
+): Promise<{ enrollmentId: string; agreementLink: AgreementLinkResult }> {
+  const email = normalizeEmail(input.personEmail);
+  const isTest = input.isTest ?? false;
+
+  const templateRow = input.templateVersion
+    ? await prisma.portalProgramTemplate.findUnique({
+        where: { key_version: { key: input.templateKey, version: input.templateVersion } },
+      })
+    : await prisma.portalProgramTemplate.findFirst({
+        where: { key: input.templateKey, status: "published" },
+        orderBy: { version: "desc" },
+      });
+  if (!templateRow) {
+    throw new Error(
+      `No ${input.templateVersion ? "" : "published "}template found for ${input.templateKey}${
+        input.templateVersion ? "@" + input.templateVersion : ""
+      }.`
+    );
+  }
+  const template = programTemplateBodySchema.parse(templateRow.body);
+
+  const person = await prisma.portalPerson.upsert({
+    where: { email },
+    create: { email, firstName: input.personFirstName, lastName: input.personLastName, isTest },
+    update: {},
+  });
+
+  let agreementId: string | null = null;
+  let agreementLink: AgreementLinkResult = "none";
+  if (template.agreementTemplateKey) {
+    const signers = await prisma.agreementSigner.findMany({
+      where: { role: "participant", email },
+      select: { agreementId: true },
+    });
+    const uniqueAgreementIds = Array.from(new Set(signers.map((s) => s.agreementId)));
+    if (uniqueAgreementIds.length === 1) {
+      agreementId = uniqueAgreementIds[0];
+      agreementLink = "linked";
+    } else if (uniqueAgreementIds.length > 1) {
+      agreementLink = "ambiguous";
+    }
+  }
+
+  let installmentsFromAgreement: Array<{ label: string; due: string; amount: number }> = [];
+  if (agreementId) {
+    const agreement = await prisma.agreement.findUnique({ where: { id: agreementId } });
+    const raw = (agreement?.variables as Record<string, unknown> | undefined)?.installments;
+    if (Array.isArray(raw)) installmentsFromAgreement = raw as typeof installmentsFromAgreement;
+  }
+
+  const modules = Object.fromEntries(template.modules.map((m) => [m, true]));
+
+  const enrollment = await prisma.portalEnrollment.create({
+    data: {
+      personId: person.id,
+      templateId: templateRow.id,
+      templateSnapshot: templateRow.body as object,
+      coachPersonId: input.coachPersonId ?? null,
+      status: "draft",
+      startDate: input.startDate,
+      endDate: input.endDate ?? null,
+      currentPhaseKey: template.phases[0]?.key ?? null,
+      modules,
+      agreementId,
+      paymentUrl: input.paymentUrl ?? null,
+      isTest,
+    },
+  });
+
+  await prisma.portalPhase.createMany({
+    data: template.phases.map((phase, i) => ({
+      enrollmentId: enrollment.id,
+      key: phase.key,
+      title: phase.title,
+      summary: phase.summary,
+      order: i,
+    })),
+  });
+
+  await prisma.portalMeeting.createMany({
+    data: Array.from({ length: template.expectedSessions.count }, () => ({
+      enrollmentId: enrollment.id,
+      durationMin: template.expectedSessions.durationMin,
+      format: "zoom",
+      status: "scheduled",
+    })),
+  });
+
+  await prisma.portalActionStep.createMany({
+    data: template.defaultSteps.map((step, i) => ({
+      enrollmentId: enrollment.id,
+      phaseKey: step.phaseKey ?? null,
+      title: step.title,
+      detail: step.detail ?? null,
+      dueOn: addDays(input.startDate, step.dayOffset),
+      tags: step.tags,
+      order: i,
+      createdBy: person.id,
+    })),
+  });
+
+  if (modules.payments && installmentsFromAgreement.length > 0) {
+    await prisma.portalInstallment.createMany({
+      data: installmentsFromAgreement.map((inst) => ({
+        enrollmentId: enrollment.id,
+        label: inst.label,
+        dueOn: new Date(inst.due),
+        amountCents: Math.round(inst.amount * 100),
+      })),
+    });
+  }
+
+  return { enrollmentId: enrollment.id, agreementLink };
+}
 
 /**
  * Returns one enrollment, scoped to what `actor` may see — null (never a
