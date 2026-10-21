@@ -16,6 +16,17 @@ export async function listStepsForActor(actor: PortalActor, enrollmentId: string
   });
 }
 
+/** Steps created from a particular session, scoped — null if `actor` can't see the owning enrollment. */
+export async function listStepsForMeeting(actor: PortalActor, enrollmentId: string, meetingId: string) {
+  const scope = await getEnrollmentScope(actor);
+  if (!scopeIncludesEnrollment(scope, enrollmentId)) return null;
+
+  return prisma.portalActionStep.findMany({
+    where: { enrollmentId, meetingId },
+    orderBy: { order: "asc" },
+  });
+}
+
 /**
  * A member ticking/unticking their own step and optionally leaving a short
  * plain-text note. Staff use a separate, broader write path (assign/edit/

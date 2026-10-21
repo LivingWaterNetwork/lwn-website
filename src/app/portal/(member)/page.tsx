@@ -1,8 +1,9 @@
-import { redirect } from "next/navigation";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getPortalActor } from "@/lib/portal/auth";
-import { listEnrollmentsForActor } from "@/lib/portal/data/enrollments";
+import { getViewedEnrollmentForActor } from "@/lib/portal/data/enrollments";
 import { listStepsForActor } from "@/lib/portal/data/steps";
+import { listMeetingsForActor } from "@/lib/portal/data/meetings";
 import SignOutButton from "./SignOutButton";
 
 export const metadata: Metadata = {
@@ -11,13 +12,15 @@ export const metadata: Metadata = {
 };
 
 export default async function PortalHomePage() {
-  const actor = await getPortalActor();
-  if (!actor) redirect("/portal/login");
+  const actor = (await getPortalActor())!; // layout already redirects unauthenticated requests
 
-  const enrollments = await listEnrollmentsForActor(actor);
-  const enrollment = enrollments.find((e) => e.status === "active") ?? enrollments[0] ?? null;
+  const enrollment = await getViewedEnrollmentForActor(actor);
   const steps = enrollment ? await listStepsForActor(actor, enrollment.id) : null;
   const openStepsThisWeek = (steps ?? []).filter((s) => s.status === "open").slice(0, 5);
+  const meetings = enrollment ? await listMeetingsForActor(actor, enrollment.id) : null;
+  const nextSession = (meetings ?? [])
+    .filter((m) => m.status === "scheduled")
+    .sort((a, b) => (a.scheduledAt?.getTime() ?? Infinity) - (b.scheduledAt?.getTime() ?? Infinity))[0];
 
   return (
     <main className="mx-auto max-w-2xl px-4 py-12">
@@ -41,6 +44,24 @@ export default async function PortalHomePage() {
                 ? `You're in the ${enrollment.currentPhaseKey} phase.`
                 : "We'll mark where you are as soon as your journey starts."}
             </p>
+            <Link href="/portal/journey" className="mt-2 inline-block text-sm font-medium text-lw-blue underline">
+              See the full journey
+            </Link>
+          </section>
+
+          <section className="rounded-xl bg-mist p-6">
+            <h2 className="font-serif text-lg text-navy">Next session</h2>
+            <p className="mt-1 text-sm text-slate">
+              {nextSession?.scheduledAt
+                ? new Date(nextSession.scheduledAt).toLocaleString("en-US", {
+                    weekday: "long",
+                    month: "long",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit",
+                  })
+                : "We'll set a time together."}
+            </p>
           </section>
 
           <section className="rounded-xl bg-mist p-6">
@@ -56,6 +77,9 @@ export default async function PortalHomePage() {
                 ))}
               </ul>
             )}
+            <Link href="/portal/steps" className="mt-2 inline-block text-sm font-medium text-lw-blue underline">
+              See all your steps
+            </Link>
           </section>
         </div>
       )}

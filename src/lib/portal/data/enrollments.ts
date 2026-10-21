@@ -48,6 +48,36 @@ export async function listEnrollmentsForActor(actor: PortalActor) {
   });
 }
 
+/**
+ * Switches which enrollment the member's current session shows by default —
+ * always scoped to the actor's own personId, regardless of any staff role
+ * also held, since this is a member choosing "which of my own programs am
+ * I looking at," never a staff action on someone else's enrollment.
+ */
+export async function setActiveEnrollmentForActor(actor: PortalActor, enrollmentId: string): Promise<boolean> {
+  const enrollment = await prisma.portalEnrollment.findFirst({
+    where: { id: enrollmentId, personId: actor.personId },
+  });
+  if (!enrollment) return false;
+
+  await prisma.portalSession.update({
+    where: { id: actor.sessionId },
+    data: { activeEnrollmentId: enrollment.id },
+  });
+  return true;
+}
+
+/** The enrollment a member-facing page should show: their session's chosen program if set, else the active one, else whatever they have. */
+export async function getViewedEnrollmentForActor(actor: PortalActor) {
+  const enrollments = await listEnrollmentsForActor(actor);
+  if (enrollments.length === 0) return null;
+  if (actor.activeEnrollmentId) {
+    const chosen = enrollments.find((e) => e.id === actor.activeEnrollmentId);
+    if (chosen) return chosen;
+  }
+  return enrollments.find((e) => e.status === "active") ?? enrollments[0];
+}
+
 function isPrivilegedView(kind: string): boolean {
   return kind === "admin" || kind === "coach" || kind === "partner";
 }
