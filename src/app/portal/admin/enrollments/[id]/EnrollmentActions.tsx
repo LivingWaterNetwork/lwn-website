@@ -68,7 +68,17 @@ export function StatusActions({ enrollmentId, status }: { enrollmentId: string; 
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      {status !== "paused" && (
+      {(status === "draft" || status === "invited") && (
+        <button
+          type="button"
+          disabled={busy}
+          onClick={() => setStatus("active")}
+          className="min-h-[44px] rounded-lg bg-navy px-3 py-2 text-sm font-medium text-white hover:bg-deep-sea"
+        >
+          Activate
+        </button>
+      )}
+      {status === "active" && (
         <button
           type="button"
           disabled={busy}
