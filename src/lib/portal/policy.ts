@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import type { PortalActor } from "./auth";
 import { isPartner, isStaff } from "./auth";
-import { isModuleAvailable, type PortalModule } from "./constants";
+import { isPartnerGrantableModule, type PartnerGrantableModule } from "./constants";
 
 /**
  * The only thing every `lib/portal/data/*` function needs: which
@@ -21,7 +21,7 @@ export interface EnrollmentScope {
   /** Enrollment ids this actor may access. Only meaningful for "member" | "coach" | "partner" — admin and none ignore it. */
   enrollmentIds: string[];
   /** Per-enrollment allowed modules, partner only. Empty/absent means "not a partner view". */
-  partnerModulesByEnrollment: Map<string, PortalModule[]>;
+  partnerModulesByEnrollment: Map<string, PartnerGrantableModule[]>;
 }
 
 export async function getEnrollmentScope(actor: PortalActor): Promise<EnrollmentScope> {
@@ -42,10 +42,12 @@ export async function getEnrollmentScope(actor: PortalActor): Promise<Enrollment
       where: { partnerOrgId: { in: actor.partnerOrgIds }, revokedAt: null },
       select: { enrollmentId: true, modules: true },
     });
-    const partnerModulesByEnrollment = new Map<string, PortalModule[]>();
+    const partnerModulesByEnrollment = new Map<string, PartnerGrantableModule[]>();
     for (const grant of grants) {
       const modules = Array.isArray(grant.modules)
-        ? (grant.modules as unknown[]).filter((m): m is string => typeof m === "string").filter(isModuleAvailable)
+        ? (grant.modules as unknown[])
+            .filter((m): m is string => typeof m === "string")
+            .filter(isPartnerGrantableModule)
         : [];
       partnerModulesByEnrollment.set(grant.enrollmentId, modules);
     }
@@ -71,7 +73,11 @@ export function scopeIncludesEnrollment(scope: EnrollmentScope, enrollmentId: st
 }
 
 /** A partner's view is gated both by enrollment and by module — brand_website-tagged items only in Phase 1, never reflections/stewardship/payments/recaps/notes. */
-export function partnerCanSeeModule(scope: EnrollmentScope, enrollmentId: string, module: PortalModule): boolean {
+export function partnerCanSeeModule(
+  scope: EnrollmentScope,
+  enrollmentId: string,
+  module: PartnerGrantableModule
+): boolean {
   if (scope.kind !== "partner") return false;
   const modules = scope.partnerModulesByEnrollment.get(enrollmentId);
   return Boolean(modules?.includes(module));
