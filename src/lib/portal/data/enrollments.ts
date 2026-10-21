@@ -238,3 +238,21 @@ export async function isAgreementLinkedToAnEnrollment(agreementId: string): Prom
 function isPrivilegedView(kind: string): boolean {
   return kind === "admin" || kind === "coach" || kind === "partner";
 }
+
+/**
+ * Ungated bootstrap lookup — no actor, by design: used only to make seed
+ * scripts/one-time setup idempotent (don't create a second enrollment for
+ * an email that already has one). Never call this from anywhere an
+ * ordinary actor request could reach.
+ */
+export async function findFirstEnrollmentIdForEmail(email: string): Promise<string | null> {
+  const person = await prisma.portalPerson.findUnique({ where: { email }, select: { id: true } });
+  if (!person) return null;
+  const enrollment = await prisma.portalEnrollment.findFirst({ where: { personId: person.id }, select: { id: true } });
+  return enrollment?.id ?? null;
+}
+
+/** Ungated bootstrap status-set, paired with findFirstEnrollmentIdForEmail above — same caveat. */
+export async function bootstrapSetEnrollmentStatus(enrollmentId: string, status: string): Promise<void> {
+  await prisma.portalEnrollment.update({ where: { id: enrollmentId }, data: { status } });
+}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { assertStatementIsSafe, STATEMENTS } from "../../scripts/portal-migrate";
+import { assertStatementIsSafe, STATEMENTS } from "../../src/lib/portal/migrationStatements";
 
 describe("portal migration safety allowlist", () => {
   it("accepts every statement actually shipped in the migration", () => {
