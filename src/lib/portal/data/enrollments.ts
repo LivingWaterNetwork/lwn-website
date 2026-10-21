@@ -224,6 +224,17 @@ export async function getViewedEnrollmentForActor(actor: PortalActor) {
   return enrollments.find((e) => e.status === "active") ?? enrollments[0];
 }
 
+/**
+ * Used only by the Agreements "Continue to your LWN space" handoff — tells
+ * the signer-facing done screen whether this agreement is linked to a
+ * portal enrollment at all. No portal data beyond that boolean is ever
+ * exposed to the Agreements side.
+ */
+export async function isAgreementLinkedToAnEnrollment(agreementId: string): Promise<boolean> {
+  const enrollment = await prisma.portalEnrollment.findFirst({ where: { agreementId }, select: { id: true } });
+  return Boolean(enrollment);
+}
+
 function isPrivilegedView(kind: string): boolean {
   return kind === "admin" || kind === "coach" || kind === "partner";
 }
