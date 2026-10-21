@@ -181,15 +181,21 @@ export async function getEnrollmentForActor(actor: PortalActor, enrollmentId: st
   return enrollment;
 }
 
-/** Every enrollment `actor` may see, most recent first. */
+/**
+ * Every enrollment `actor` is personally enrolled in, as a MEMBER — always
+ * scoped to their own personId, regardless of any admin/coach/partner role
+ * also held. This is the (member)/ personal-space list (Home, Journey,
+ * Steps, the account program switcher, etc.), not a staff access-scope
+ * query — it must never return another person's enrollment just because
+ * the actor happens to be an admin who could administer it. (Confirmed as
+ * a real bug 2026-10-21: an admin with no personal enrollment of their own
+ * was shown an arbitrary *other* member's "active" enrollment — steps,
+ * progress and all — on their own Home page, because this used to fall
+ * through to "every enrollment in the system" for admin scope.)
+ */
 export async function listEnrollmentsForActor(actor: PortalActor) {
-  const scope = await getEnrollmentScope(actor);
-  if (scope.kind === "admin") {
-    return prisma.portalEnrollment.findMany({ orderBy: { createdAt: "desc" } });
-  }
-  if (scope.enrollmentIds.length === 0) return [];
   return prisma.portalEnrollment.findMany({
-    where: { id: { in: scope.enrollmentIds } },
+    where: { personId: actor.personId },
     orderBy: { createdAt: "desc" },
   });
 }
