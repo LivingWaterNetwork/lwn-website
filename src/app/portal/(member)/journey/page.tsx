@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { getPortalActor } from "@/lib/portal/auth";
 import { getViewedEnrollmentForActor } from "@/lib/portal/data/enrollments";
 import { listPhasesForActor } from "@/lib/portal/data/phases";
+import { computePhaseStates } from "@/lib/portal/gamification";
+import ProgressBar from "../ProgressBar";
 
 export const metadata: Metadata = {
   title: "Your journey",
@@ -29,6 +31,10 @@ export default async function JourneyPage() {
     phases.find((p) => p.startsOn && p.endsOn && p.startsOn <= today && today <= p.endsOn)?.key ??
     phases[0]?.key;
 
+  const phaseStates = computePhaseStates(phases, youAreHereKey ?? null);
+  const completedCount = phaseStates.filter((p) => p.state === "done").length;
+  const percent = phases.length === 0 ? 0 : Math.round((completedCount / phases.length) * 100);
+
   return (
     <main className="mx-auto max-w-2xl px-4 py-12 print:py-4">
       <h1 className="font-serif text-3xl text-navy">Your journey</h1>
@@ -38,25 +44,70 @@ export default async function JourneyPage() {
           : "Dates to be confirmed."}
       </p>
 
-      <ol className="mt-8 space-y-6">
-        {phases.map((phase) => {
-          const isHere = phase.key === youAreHereKey;
+      {phases.length > 0 && (
+        <div className="mt-4 print:hidden">
+          <div className="flex items-center justify-between text-xs font-medium text-slate">
+            <span>
+              {completedCount} of {phases.length} phases complete
+            </span>
+            <span>{percent}%</span>
+          </div>
+          <div className="mt-1.5">
+            <ProgressBar percent={percent} label="Journey progress" />
+          </div>
+        </div>
+      )}
+
+      <ol className="mt-8">
+        {phaseStates.map((phase, i) => {
+          const isLast = i === phaseStates.length - 1;
           return (
-            <li
-              key={phase.id}
-              className={`rounded-xl p-6 print:rounded-none print:border print:bg-white print:p-4 ${
-                isHere ? "bg-navy text-white print:border-2 print:border-navy print:text-navy" : "bg-mist text-navy print:border-slate/30"
-              }`}
-            >
-              <div className="flex items-center justify-between">
-                <h2 className="font-serif text-xl">{phase.title}</h2>
-                {isHere && (
-                  <span className="rounded-full bg-copper px-3 py-1 text-xs font-medium text-white print:border print:border-copper print:bg-white print:text-copper">
-                    You are here
-                  </span>
-                )}
+            <li key={phase.id} className="relative pl-12 print:pl-0">
+              {!isLast && (
+                <span
+                  aria-hidden="true"
+                  className={`absolute left-[15px] top-8 h-[calc(100%-0.5rem)] w-0.5 print:hidden ${
+                    phase.state === "done" ? "bg-copper" : "bg-navy/15"
+                  }`}
+                />
+              )}
+              <span
+                aria-hidden="true"
+                className={`absolute left-0 top-0 flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold print:hidden ${
+                  phase.state === "done"
+                    ? "bg-copper text-white"
+                    : phase.state === "current"
+                      ? "bg-navy text-white ring-4 ring-navy/20"
+                      : "bg-navy/10 text-slate"
+                }`}
+              >
+                {phase.state === "done" ? "✓" : i + 1}
+              </span>
+
+              <div
+                className={`mb-6 rounded-xl p-6 print:rounded-none print:border print:bg-white print:p-4 ${
+                  phase.state === "current"
+                    ? "bg-navy text-white print:border-2 print:border-navy print:text-navy"
+                    : "bg-mist text-navy print:border-slate/30"
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <h2 className="font-serif text-xl">{phase.title}</h2>
+                  {phase.state === "current" && (
+                    <span className="rounded-full bg-copper px-3 py-1 text-xs font-medium text-white print:border print:border-copper print:bg-white print:text-copper">
+                      You are here
+                    </span>
+                  )}
+                  {phase.state === "done" && (
+                    <span className="rounded-full bg-copper/10 px-3 py-1 text-xs font-medium text-copper print:hidden">
+                      Complete
+                    </span>
+                  )}
+                </div>
+                <p className={`mt-2 text-sm print:text-slate ${phase.state === "current" ? "text-mist" : "text-slate"}`}>
+                  {phase.summary}
+                </p>
               </div>
-              <p className={`mt-2 text-sm print:text-slate ${isHere ? "text-mist" : "text-slate"}`}>{phase.summary}</p>
             </li>
           );
         })}

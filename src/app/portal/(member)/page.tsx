@@ -4,7 +4,9 @@ import { getPortalActor } from "@/lib/portal/auth";
 import { getViewedEnrollmentForActor } from "@/lib/portal/data/enrollments";
 import { listStepsForActor } from "@/lib/portal/data/steps";
 import { listMeetingsForActor } from "@/lib/portal/data/meetings";
+import { computeStepsProgress, computeStreakDays } from "@/lib/portal/gamification";
 import SignOutButton from "./SignOutButton";
+import ProgressBar from "./ProgressBar";
 
 export const metadata: Metadata = {
   title: "Your LWN space",
@@ -22,6 +24,9 @@ export default async function PortalHomePage() {
     .filter((m) => m.status === "scheduled")
     .sort((a, b) => (a.scheduledAt?.getTime() ?? Infinity) - (b.scheduledAt?.getTime() ?? Infinity))[0];
 
+  const progress = computeStepsProgress(steps ?? []);
+  const streak = computeStreakDays((steps ?? []).map((s) => s.doneAt));
+
   return (
     <main className="mx-auto max-w-2xl px-4 py-12">
       <div className="flex items-center justify-between">
@@ -37,6 +42,31 @@ export default async function PortalHomePage() {
 
       {enrollment && (
         <div className="mt-6 space-y-6">
+          <section className="rounded-xl bg-navy p-6 text-white">
+            <div className="flex items-center justify-between">
+              <h2 className="font-serif text-lg">Your progress</h2>
+              {streak > 0 && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-copper px-3 py-1 text-xs font-semibold">
+                  <span aria-hidden="true">🔥</span>
+                  {streak} day{streak === 1 ? "" : "s"} in a row
+                </span>
+              )}
+            </div>
+            <p className="mt-2 text-sm text-mist">
+              {progress.total === 0
+                ? "Your steps will show up here once your coach assigns them."
+                : `${progress.done} of ${progress.total} steps complete`}
+            </p>
+            <div className="mt-3">
+              <ProgressBar
+                percent={progress.percent}
+                label="Overall step progress"
+                trackClassName="bg-white/20"
+                fillClassName="bg-spring"
+              />
+            </div>
+          </section>
+
           <section className="rounded-xl bg-mist p-6">
             <h2 className="font-serif text-lg text-navy">Your journey</h2>
             <p className="mt-1 text-sm text-slate">
@@ -65,19 +95,31 @@ export default async function PortalHomePage() {
           </section>
 
           <section className="rounded-xl bg-mist p-6">
-            <h2 className="font-serif text-lg text-navy">This week</h2>
+            <div className="flex items-center justify-between">
+              <h2 className="font-serif text-lg text-navy">This week</h2>
+              {progress.total > 0 && (
+                <span className="rounded-full bg-copper/10 px-3 py-1 text-xs font-medium text-copper">
+                  {progress.done}/{progress.total} done
+                </span>
+              )}
+            </div>
             {openStepsThisWeek.length === 0 ? (
-              <p className="mt-1 text-sm text-slate">Nothing due this week — check back after your next session.</p>
+              <p className="mt-1 text-sm text-slate">
+                {progress.total > 0 && progress.done === progress.total
+                  ? "All caught up — nice work! 🎉"
+                  : "Nothing due this week — check back after your next session."}
+              </p>
             ) : (
               <ul className="mt-2 space-y-2">
                 {openStepsThisWeek.map((step) => (
-                  <li key={step.id} className="text-sm text-navy">
+                  <li key={step.id} className="flex items-center gap-2 text-sm text-navy">
+                    <span aria-hidden="true" className="inline-block h-1.5 w-1.5 rounded-full bg-copper" />
                     {step.title}
                   </li>
                 ))}
               </ul>
             )}
-            <Link href="/portal/steps" className="mt-2 inline-block text-sm font-medium text-lw-blue underline">
+            <Link href="/portal/steps" className="mt-3 inline-block text-sm font-medium text-lw-blue underline">
               See all your steps
             </Link>
           </section>

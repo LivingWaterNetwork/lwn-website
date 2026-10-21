@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { computeStepsProgress } from "@/lib/portal/gamification";
+import ProgressBar from "../ProgressBar";
 
 export interface StepItem {
   id: string;
@@ -11,6 +13,16 @@ export interface StepItem {
   memberNote: string | null;
 }
 
+const CELEBRATIONS = ["🎉", "✨", "🙌", "🔥", "⭐"];
+
+function Celebration() {
+  return (
+    <span aria-hidden="true" className="pointer-events-none absolute -right-1 -top-3 select-none text-lg animate-celebrate-pop">
+      {CELEBRATIONS[Math.floor(Math.random() * CELEBRATIONS.length)]}
+    </span>
+  );
+}
+
 function formatDue(dueOn: string | null): string {
   if (!dueOn) return "No due date";
   return new Date(dueOn).toLocaleDateString("en-US", { month: "short", day: "numeric" });
@@ -18,10 +30,12 @@ function formatDue(dueOn: string | null): string {
 
 function StepRow({
   step,
+  celebrating,
   onToggle,
   onNoteSave,
 }: {
   step: StepItem;
+  celebrating: boolean;
   onToggle: (id: string, done: boolean) => void;
   onNoteSave: (id: string, note: string) => void;
 }) {
@@ -29,7 +43,8 @@ function StepRow({
   const [editingNote, setEditingNote] = useState(false);
 
   return (
-    <li className="rounded-xl bg-mist p-4">
+    <li className="relative rounded-xl bg-mist p-4">
+      {celebrating && <Celebration />}
       <div className="flex items-start gap-3">
         <input
           type="checkbox"
@@ -97,14 +112,29 @@ function StepRow({
   );
 }
 
-export default function StepsList({ initialSteps }: { initialSteps: StepItem[] }) {
+export default function StepsList({
+  initialSteps,
+  progress: initialProgress,
+}: {
+  initialSteps: StepItem[];
+  progress?: { done: number; total: number; percent: number };
+}) {
   const [steps, setSteps] = useState(initialSteps);
   const [error, setError] = useState<string | null>(null);
+  const [celebratingId, setCelebratingId] = useState<string | null>(null);
+
+  const progress = initialProgress ?? computeStepsProgress(steps);
+  const livePercent = computeStepsProgress(steps).percent;
 
   async function update(id: string, patch: { status?: "open" | "done"; memberNote?: string }) {
     const previous = steps;
     setSteps((cur) => cur.map((s) => (s.id === id ? { ...s, ...patch } : s)));
     setError(null);
+
+    if (patch.status === "done") {
+      setCelebratingId(id);
+      setTimeout(() => setCelebratingId((cur) => (cur === id ? null : cur)), 900);
+    }
 
     try {
       const current = previous.find((s) => s.id === id)!;
@@ -126,9 +156,27 @@ export default function StepsList({ initialSteps }: { initialSteps: StepItem[] }
   const now = steps.filter((s) => s.status === "open" && (!s.dueOn || new Date(s.dueOn).getTime() <= Date.now() + 7 * 86400000));
   const comingUp = steps.filter((s) => s.status === "open" && s.dueOn && new Date(s.dueOn).getTime() > Date.now() + 7 * 86400000);
   const done = steps.filter((s) => s.status === "done");
+  const allDone = progress.total > 0 && done.length === progress.total;
 
   return (
     <div className="space-y-8">
+      {progress.total > 0 && (
+        <div>
+          <div className="flex items-center justify-between text-xs font-medium text-slate">
+            <span>
+              {done.length} of {progress.total} steps complete
+            </span>
+            <span>{livePercent}%</span>
+          </div>
+          <div className="mt-1.5">
+            <ProgressBar percent={livePercent} label="Steps progress" />
+          </div>
+          {allDone && (
+            <p className="mt-2 text-sm font-medium text-copper">Every step done — amazing work! 🎉</p>
+          )}
+        </div>
+      )}
+
       {error && (
         <div role="alert" className="flex items-center justify-between rounded-lg bg-copper/10 p-3 text-sm text-copper">
           <span>{error}</span>
@@ -148,6 +196,7 @@ export default function StepsList({ initialSteps }: { initialSteps: StepItem[] }
               <StepRow
                 key={s.id}
                 step={s}
+                celebrating={celebratingId === s.id}
                 onToggle={(id, checked) => update(id, { status: checked ? "done" : "open" })}
                 onNoteSave={(id, note) => update(id, { memberNote: note })}
               />
@@ -166,6 +215,7 @@ export default function StepsList({ initialSteps }: { initialSteps: StepItem[] }
               <StepRow
                 key={s.id}
                 step={s}
+                celebrating={celebratingId === s.id}
                 onToggle={(id, checked) => update(id, { status: checked ? "done" : "open" })}
                 onNoteSave={(id, note) => update(id, { memberNote: note })}
               />
@@ -184,6 +234,7 @@ export default function StepsList({ initialSteps }: { initialSteps: StepItem[] }
               <StepRow
                 key={s.id}
                 step={s}
+                celebrating={celebratingId === s.id}
                 onToggle={(id, checked) => update(id, { status: checked ? "done" : "open" })}
                 onNoteSave={(id, note) => update(id, { memberNote: note })}
               />
