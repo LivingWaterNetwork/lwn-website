@@ -485,9 +485,8 @@ async function main() {
   );
   console.log(
     `Note: the two foreign keys assume "agreements"."id" and "agreement_documents"."id" are TEXT columns (Prisma's ` +
-      `default mapping for String @default(uuid()/cuid()) without @db.Uuid). This has not been verified against the ` +
-      `live database from this environment — confirm the column type before applying, e.g. with:\n` +
-      `  psql "$DATABASE_URL" -c '\\d agreements' -c '\\d agreement_documents'\n` +
+      `default mapping for String @default(uuid()/cuid()) without @db.Uuid). Confirmed 2026-10-21 against the live ` +
+      `shared Preview+Production database (information_schema.columns reports both as "text") — see PR #18. ` +
       `No existing table is read, altered, or otherwise touched by this script either way.`
   );
 
