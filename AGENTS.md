@@ -220,10 +220,15 @@ voided one.
 
 ### Known limitations (Phase 1)
 
-- **Step reordering has no drag UI yet.** `PATCH /api/portal/admin/steps/[id]`
-  accepts an `order` field and `createStepForStaff`/`updateStepForStaff`
-  support it, but the admin Steps tab only creates steps — there's no
-  drag-and-drop or manual reorder control in the UI yet.
+- **Step reordering is up/down buttons, not drag-and-drop.** The admin Steps
+  tab (`StepsAdminList.tsx`) reorders via
+  `POST /api/portal/admin/enrollments/[id]/steps/reorder` →
+  `reorderStepsForStaff`, which refuses anything but a full, exact set of
+  that enrollment's own step ids (no partial reorder, no id from another
+  enrollment) and updates every step's `order` in one transaction. Buttons
+  were chosen over drag-and-drop deliberately — fully keyboard-operable and
+  44px touch targets with no extra library, matching the UX bar's "full
+  keyboard use" requirement more directly than HTML5 drag-and-drop would.
 - **Admin "linked agreement" is a raw ID paste**, not a picker. The
   enrollment overview's "Linked agreement ID" field doesn't validate that
   the ID exists, isn't voided, or belongs to the right participant — admin

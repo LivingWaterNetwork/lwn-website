@@ -135,3 +135,48 @@ export async function updateStepForStaff(actor: PortalActor, stepId: string, inp
 
   return updated;
 }
+
+/**
+ * Staff reordering an enrollment's steps. `orderedStepIds` must be exactly
+ * the set of step ids currently on this enrollment, in the new order —
+ * anything else (an id from a different enrollment, a partial list) is
+ * refused rather than silently reordering a subset. Each step's `order` is
+ * set to its index in the array, in one transaction.
+ */
+export async function reorderStepsForStaff(
+  actor: PortalActor,
+  enrollmentId: string,
+  orderedStepIds: string[]
+): Promise<boolean> {
+  if (!canWritePrivateNotes(actor)) return false;
+  const scope = await getEnrollmentScope(actor);
+  if (!scopeIncludesEnrollment(scope, enrollmentId)) return false;
+
+  const existing = await prisma.portalActionStep.findMany({
+    where: { enrollmentId },
+    select: { id: true },
+  });
+  const existingIds = new Set(existing.map((s) => s.id));
+  const requestedIds = new Set(orderedStepIds);
+
+  if (existingIds.size !== requestedIds.size || existing.some((s) => !requestedIds.has(s.id))) {
+    return false;
+  }
+
+  await prisma.$transaction(
+    orderedStepIds.map((id, index) =>
+      prisma.portalActionStep.update({ where: { id }, data: { order: index } })
+    )
+  );
+
+  await logPortalEvent({
+    actorPersonId: actor.personId,
+    actorRole: actor.isAdmin ? "admin" : "coach",
+    action: "steps_reordered",
+    subjectType: "portal_enrollment",
+    subjectId: enrollmentId,
+    enrollmentId,
+  });
+
+  return true;
+}
