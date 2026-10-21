@@ -42,14 +42,21 @@ export default async function JourneyPage() {
         {phases.map((phase) => {
           const isHere = phase.key === youAreHereKey;
           return (
-            <li key={phase.id} className={`rounded-xl p-6 ${isHere ? "bg-navy text-white" : "bg-mist text-navy"}`}>
+            <li
+              key={phase.id}
+              className={`rounded-xl p-6 print:rounded-none print:border print:bg-white print:p-4 ${
+                isHere ? "bg-navy text-white print:border-2 print:border-navy print:text-navy" : "bg-mist text-navy print:border-slate/30"
+              }`}
+            >
               <div className="flex items-center justify-between">
                 <h2 className="font-serif text-xl">{phase.title}</h2>
                 {isHere && (
-                  <span className="rounded-full bg-copper px-3 py-1 text-xs font-medium text-white">You are here</span>
+                  <span className="rounded-full bg-copper px-3 py-1 text-xs font-medium text-white print:border print:border-copper print:bg-white print:text-copper">
+                    You are here
+                  </span>
                 )}
               </div>
-              <p className={`mt-2 text-sm ${isHere ? "text-mist" : "text-slate"}`}>{phase.summary}</p>
+              <p className={`mt-2 text-sm print:text-slate ${isHere ? "text-mist" : "text-slate"}`}>{phase.summary}</p>
             </li>
           );
         })}

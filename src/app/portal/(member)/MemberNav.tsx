@@ -17,7 +17,7 @@ export default function MemberNav() {
   const pathname = usePathname();
 
   return (
-    <nav aria-label="Your LWN space" className="border-b border-slate/20 bg-white">
+    <nav aria-label="Your LWN space" className="border-b border-slate/20 bg-white print:hidden">
       <ul className="mx-auto flex max-w-2xl flex-wrap gap-1 px-4">
         {LINKS.map((link) => {
           const active = link.href === "/portal" ? pathname === "/portal" : pathname?.startsWith(link.href);

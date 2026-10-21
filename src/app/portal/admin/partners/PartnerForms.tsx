@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useId, useState } from "react";
 
 export function CreateOrgForm() {
   const router = useRouter();
@@ -60,6 +60,7 @@ export function AddPartnerUserForm({ partnerOrgId }: { partnerOrgId: string }) {
   const [form, setForm] = useState({ email: "", firstName: "", lastName: "" });
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const idPrefix = useId();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -85,28 +86,46 @@ export function AddPartnerUserForm({ partnerOrgId }: { partnerOrgId: string }) {
 
   return (
     <form onSubmit={handleSubmit} className="mt-2 flex flex-wrap items-end gap-2">
-      <input
-        type="email"
-        required
-        placeholder="Email"
-        value={form.email}
-        onChange={(e) => setForm({ ...form, email: e.target.value })}
-        className="min-h-[44px] rounded-lg border border-slate/30 px-2 py-1 text-xs"
-      />
-      <input
-        required
-        placeholder="First name"
-        value={form.firstName}
-        onChange={(e) => setForm({ ...form, firstName: e.target.value })}
-        className="min-h-[44px] rounded-lg border border-slate/30 px-2 py-1 text-xs"
-      />
-      <input
-        required
-        placeholder="Last name"
-        value={form.lastName}
-        onChange={(e) => setForm({ ...form, lastName: e.target.value })}
-        className="min-h-[44px] rounded-lg border border-slate/30 px-2 py-1 text-xs"
-      />
+      <div>
+        <label htmlFor={`${idPrefix}-email`} className="sr-only">
+          Email
+        </label>
+        <input
+          id={`${idPrefix}-email`}
+          type="email"
+          required
+          placeholder="Email"
+          value={form.email}
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
+          className="min-h-[44px] rounded-lg border border-slate/30 px-2 py-1 text-xs"
+        />
+      </div>
+      <div>
+        <label htmlFor={`${idPrefix}-first`} className="sr-only">
+          First name
+        </label>
+        <input
+          id={`${idPrefix}-first`}
+          required
+          placeholder="First name"
+          value={form.firstName}
+          onChange={(e) => setForm({ ...form, firstName: e.target.value })}
+          className="min-h-[44px] rounded-lg border border-slate/30 px-2 py-1 text-xs"
+        />
+      </div>
+      <div>
+        <label htmlFor={`${idPrefix}-last`} className="sr-only">
+          Last name
+        </label>
+        <input
+          id={`${idPrefix}-last`}
+          required
+          placeholder="Last name"
+          value={form.lastName}
+          onChange={(e) => setForm({ ...form, lastName: e.target.value })}
+          className="min-h-[44px] rounded-lg border border-slate/30 px-2 py-1 text-xs"
+        />
+      </div>
       {error && <p className="text-xs text-copper">{error}</p>}
       <button type="submit" disabled={saving} className="min-h-[44px] rounded-lg bg-navy px-3 py-1 text-xs font-medium text-white disabled:opacity-60">
         Add user

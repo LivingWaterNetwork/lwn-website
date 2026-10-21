@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useId, useState } from "react";
 
 export default function PartnerGrants({
   enrollmentId,
@@ -13,6 +13,7 @@ export default function PartnerGrants({
   grants: { id: string; partnerOrgId: string; grantedVia: string }[];
 }) {
   const router = useRouter();
+  const selectId = useId();
   const [partnerOrgId, setPartnerOrgId] = useState(orgs[0]?.id ?? "");
   const [consent, setConsent] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -73,7 +74,15 @@ export default function PartnerGrants({
 
       {orgs.length > 0 && (
         <form onSubmit={handleGrant} className="mt-3 space-y-2">
-          <select value={partnerOrgId} onChange={(e) => setPartnerOrgId(e.target.value)} className="min-h-[44px] rounded-lg border border-slate/30 px-3 py-2 text-sm">
+          <label htmlFor={selectId} className="sr-only">
+            Partner organization
+          </label>
+          <select
+            id={selectId}
+            value={partnerOrgId}
+            onChange={(e) => setPartnerOrgId(e.target.value)}
+            className="min-h-[44px] rounded-lg border border-slate/30 px-3 py-2 text-sm"
+          >
             {orgs.map((o) => (
               <option key={o.id} value={o.id}>
                 {o.name}

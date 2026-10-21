@@ -1,10 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useId, useState } from "react";
 
 export default function InstallmentActions({ installmentId }: { installmentId: string }) {
   const router = useRouter();
+  const idPrefix = useId();
   const [mode, setMode] = useState<"none" | "paid" | "adjust" | "waive">("none");
   const [paidOn, setPaidOn] = useState(new Date().toISOString().slice(0, 10));
   const [dueOn, setDueOn] = useState("");
@@ -59,19 +60,43 @@ export default function InstallmentActions({ installmentId }: { installmentId: s
     <div className="mt-2 space-y-2 rounded-lg border border-slate/20 p-3">
       {mode === "paid" && (
         <div>
-          <label className="block text-xs font-medium text-slate">Paid on</label>
-          <input type="date" value={paidOn} onChange={(e) => setPaidOn(e.target.value)} className="mt-1 min-h-[44px] rounded-lg border border-slate/30 px-2 py-1 text-sm" />
+          <label htmlFor={`${idPrefix}-paidOn`} className="block text-xs font-medium text-slate">
+            Paid on
+          </label>
+          <input
+            id={`${idPrefix}-paidOn`}
+            type="date"
+            value={paidOn}
+            onChange={(e) => setPaidOn(e.target.value)}
+            className="mt-1 min-h-[44px] rounded-lg border border-slate/30 px-2 py-1 text-sm"
+          />
         </div>
       )}
       {mode === "adjust" && (
         <div>
-          <label className="block text-xs font-medium text-slate">New due date</label>
-          <input type="date" value={dueOn} onChange={(e) => setDueOn(e.target.value)} className="mt-1 min-h-[44px] rounded-lg border border-slate/30 px-2 py-1 text-sm" />
+          <label htmlFor={`${idPrefix}-dueOn`} className="block text-xs font-medium text-slate">
+            New due date
+          </label>
+          <input
+            id={`${idPrefix}-dueOn`}
+            type="date"
+            value={dueOn}
+            onChange={(e) => setDueOn(e.target.value)}
+            className="mt-1 min-h-[44px] rounded-lg border border-slate/30 px-2 py-1 text-sm"
+          />
         </div>
       )}
       <div>
-        <label className="block text-xs font-medium text-slate">Note {mode !== "paid" && "(required)"}</label>
-        <input value={note} onChange={(e) => setNote(e.target.value)} placeholder="e.g. Bluevine" className="mt-1 min-h-[44px] w-full rounded-lg border border-slate/30 px-2 py-1 text-sm" />
+        <label htmlFor={`${idPrefix}-note`} className="block text-xs font-medium text-slate">
+          Note {mode !== "paid" && "(required)"}
+        </label>
+        <input
+          id={`${idPrefix}-note`}
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
+          placeholder="e.g. Bluevine"
+          className="mt-1 min-h-[44px] w-full rounded-lg border border-slate/30 px-2 py-1 text-sm"
+        />
       </div>
       {error && <p className="text-xs text-copper">{error}</p>}
       <div className="flex gap-2">

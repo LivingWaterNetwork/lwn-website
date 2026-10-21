@@ -33,7 +33,7 @@ export default async function PaymentsPage() {
       ) : (
         <ul className="mt-6 space-y-2">
           {installments.map((inst) => (
-            <li key={inst.id} className="flex items-center justify-between rounded-xl bg-mist p-4">
+            <li key={inst.id} className="flex items-center justify-between rounded-xl bg-mist p-4 print:rounded-none print:border print:border-slate/30 print:bg-white">
               <div>
                 <p className="text-sm font-medium text-navy">{inst.label}</p>
                 <p className="text-xs text-slate">Due {new Date(inst.dueOn).toLocaleDateString()}</p>
