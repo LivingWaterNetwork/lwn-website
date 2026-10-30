@@ -166,7 +166,7 @@ export function HomePageContent() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.2 }}
           >
-            <Link href="/inquire" className="btn-copper text-base px-8 py-3.5">
+            <Link href="/contact" className="btn-copper text-base px-8 py-3.5">
               Find Your Place
             </Link>
             <Link
