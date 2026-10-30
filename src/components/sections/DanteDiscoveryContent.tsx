@@ -190,7 +190,7 @@ export function DanteDiscoveryContent() {
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="card max-w-xl mx-auto text-center py-12 px-8"
         >
-          <div className="text-5xl mb-4">🙏</div>
+          <div className="text-sm font-semibold text-copper mb-4">Thank you</div>
           <h1 className="font-serif text-3xl font-semibold text-navy mb-4">Got it, Dante.</h1>
           <p className="text-slate font-sans text-sm leading-relaxed mb-4">
             Thanks for taking the time to walk through this.

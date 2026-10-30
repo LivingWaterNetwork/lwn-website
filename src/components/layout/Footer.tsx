@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+import { BrandLogo } from "@/components/brand/BrandLogo";
 import { usePathname } from "next/navigation";
 import { NewsletterSignup } from "@/components/sections/NewsletterSignup";
 
@@ -34,13 +34,7 @@ export function Footer() {
           {/* Brand */}
           <div>
             <div className="inline-flex items-center bg-white rounded-xl px-3 py-2 mb-4">
-              <Image
-                src="/images/logo-mark.png"
-                alt="Living Water Network"
-                width={48}
-                height={48}
-                className="h-10 w-auto object-contain"
-              />
+              <BrandLogo />
             </div>
             <p className="text-white/60 text-sm leading-relaxed font-sans">
               Equipping Kingdom leaders to disrupt darkness and disciple nations.

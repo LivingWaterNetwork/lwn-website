@@ -33,8 +33,8 @@ export function AboutContent() {
       <section className="relative bg-navy py-20 text-white text-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/images/omar-speaking-main-stage.jpg"
-            alt="Omar speaking at a leadership event"
+            src="/images/leadership-group-backstage.jpg"
+            alt="Leadership community gathered together"
             fill
             className="object-cover object-center opacity-20"
             priority
@@ -42,7 +42,7 @@ export function AboutContent() {
         </div>
         <div className="relative max-w-3xl mx-auto px-4">
           <FadeInSection>
-            <p className="section-label text-spring mb-3">Our Story</p>
+            <p className="section-label text-spring mb-3">Our Ministry</p>
           </FadeInSection>
           <h1 className="font-serif text-4xl md:text-5xl font-semibold leading-tight">
             <RevealText text="About Living Water Network" delay={0.1} />
@@ -50,75 +50,19 @@ export function AboutContent() {
         </div>
       </section>
 
-      {/* ── Founder story ── */}
       <section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
-          {/* Founder photo */}
-          <FadeInSection className="rounded-2xl overflow-hidden aspect-[3/4] relative shadow-lg">
-            <Image
-              src="/images/omar-headshot-pro.jpg"
-              alt="Omar Fandino, Founder of Living Water Network"
-              fill
-              className="object-cover object-top"
-            />
+          <FadeInSection className="rounded-2xl overflow-hidden aspect-[4/3] relative shadow-lg">
+            <Image src="/images/prayer-ministry.jpg" alt="Leaders praying together" fill className="object-cover" />
           </FadeInSection>
-
           <FadeInSection delay={0.15}>
-            <SectionHeading align="left" className="mb-1" label="Our Founder" heading="Omar Fandino" />
-            <p className="text-xs text-slate/60 font-sans mb-4 uppercase tracking-wide">Founder, Living Water Network</p>
-            <div className="space-y-4 text-slate leading-relaxed text-sm font-sans">
-              <p>
-                Omar Fandino was born in Colombia and raised in New York by a single mother who
-                gave him everything she had. His father was absent. The streets were not. By his
-                early years he was already making the wrong choices for the right-seeming reasons,
-                and those choices eventually led him to prison.
-              </p>
-              <p>
-                It was there, stripped of performance and pretense, that Jesus found him. What
-                happened next is what Living Water Network exists to replicate. Omar did not simply
-                convert; he was <em>formed</em>. Scripture became breath. The Holy Spirit became
-                teacher. And as Omar began to grow, he could not keep it to himself. He started
-                gathering men, talking about Jesus, studying together, praying. What began as a
-                small group inside a correctional facility grew into a congregation of over 100 men
-                meeting weekly, being discipled, counseled, and walked through the deep work of
-                becoming someone new.
-              </p>
-              <p>
-                Released in 2021 and back in Atlanta, Omar joined Victory Church as an
-                administrative assistant, choosing to serve with his hands before leading with his
-                voice. That humility opened doors: he grew into a Guest Experience Coordinator
-                role, then into work under Ken Joslin at Grow Stack Drive, where hands-on
-                mentorship in executive leadership and organizational strategy came through the
-                work itself, and alongside former NFL pro Quentin Gause at Rizewell, collaborating
-                on and being mentored through engagements that sharpened his accreditation and
-                professional development. Formation and strategic execution, Omar learned, are not
-                opposites &mdash; they are inseparable.
-              </p>
-              <p>
-                Shaped along the way by the writings of Dallas Willard, Pete Scazzero, John Mark
-                Comer, Dave Ferguson, William Gurnall, and Augustine &mdash; thinkers who taught him
-                that the goal of the Christian life is not greater performance but deeper formation
-                &mdash; that conviction became the foundation of Living Water Network, which he
-                founded in 2023.
-              </p>
-              <p>
-                Today, Omar is pursuing a Bachelor&apos;s degree in Leadership Development and
-                Nonprofit Management at Liberty University, is an active member of his local
-                church, and is building LWN into a movement grounded in one conviction: leaders
-                cannot sustainably take others where they have not gone themselves.
-              </p>
+            <SectionHeading align="left" className="mb-6" label="Who We Are" heading="Rooted in Christ. Formed in Community. Sent to Serve." />
+            <div className="space-y-4 text-slate leading-relaxed font-sans">
+              <p>Living Water Network is an Atlanta-based Christian nonprofit ministry that exists to educate, equip, and empower leaders through spiritual formation, intentional discipleship, and leadership development.</p>
+              <p>We serve people leading in churches, communities, and the marketplace. Our conviction is simple: healthy leadership grows from a life rooted in Jesus, shaped by Scripture, and supported by meaningful relationships.</p>
+              <p>Through formation cohorts, coaching, mentorship, ministry care, church advisory, and missions, we help leaders put faith into practice in the places God has called them to serve.</p>
+              <p>Founded in 2023, LWN brings that work together around a shared mission: helping leaders grow in Christ and equip others to do the same.</p>
             </div>
-            <a
-              href="https://www.linkedin.com/in/ofandino/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 mt-6 text-xs font-semibold font-sans text-[#0A77BC] hover:underline"
-            >
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-              </svg>
-              Connect on LinkedIn
-            </a>
           </FadeInSection>
         </div>
       </section>
@@ -139,7 +83,7 @@ export function AboutContent() {
       {/* ── Why we exist ── */}
       <section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading align="left" className="mb-6" label="Why We Exist" heading="A Movement Born from Conviction" />
+          <SectionHeading align="left" className="mb-6" label="Why We Exist" heading="Formation That Strengthens the Church" />
           <FadeInSection delay={0.1} className="space-y-4 text-slate leading-relaxed font-sans">
             <p>
               At Living Water Network, our mission is to impact 100,000 Kingdom leaders

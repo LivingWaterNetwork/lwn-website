@@ -11,22 +11,22 @@ import { CountUp } from "@/components/motion/CountUp";
 
 const practiceAreas = [
   {
-    icon: "🤝",
+    icon: "01",
     title: "Volunteer Recruitment & Engagement",
     desc: "Building an actual pipeline — recruitment, onboarding, and retention systems — instead of relying on the same fraction of the congregation to fill every slot. Barna's research on volunteering found that a personal, direct invitation is still the single most effective way to recruit — more than four in ten volunteers say a direct ask is what actually moved them to serve. Most churches never build a system around that fact.",
   },
   {
-    icon: "🌱",
+    icon: "02",
     title: "Young Adult Ministry",
     desc: "Strategy for reaching and keeping the generation that's re-engaging with church right now. Barna's tracking shows Gen Z and Millennials volunteering at higher rates than Gen X — the appetite to serve is there. The work is building a young adult ministry that gives that willingness somewhere to land once they walk through the door.",
   },
   {
-    icon: "👥",
+    icon: "03",
     title: "Small Group Leadership Development",
     desc: "Training and developing the leaders your group ministry actually depends on. Barna has found a wide gap between churchgoers who are in a small group and those who aren't when it comes to experiencing real, meaningful community — and Lifeway Research's discipleship-score studies show churchgoers in a group consistently score higher on markers of spiritual growth than those who only attend a service. Groups aren't a program add-on; they're where formation happens.",
   },
   {
-    icon: "🧭",
+    icon: "04",
     title: "Ministry Strategy",
     desc: "Organizational and staffing strategy for the season your church is actually in — not a generic growth playbook borrowed from a church three times your size.",
   },
@@ -200,20 +200,13 @@ export function ChurchAdvisoryContent() {
           <FadeInSection>
             <p className="text-slate font-sans text-base leading-relaxed">
               This isn&apos;t a generic church-growth playbook, and it isn&apos;t data for data&apos;s
-              sake. It&apos;s built from Omar Fandino&apos;s own years leading volunteer recruitment
+              sake. Our approach draws on practical ministry experience in volunteer recruitment
               and engagement, young adult ministry, and small groups — shaped further by what Barna
               and Lifeway&apos;s research consistently confirms about why people serve, stay, and
               grow. The goal is the same either way: a church where the people already there are
               seen, asked, and given somewhere to grow.
             </p>
-            <blockquote className="mt-8 font-serif text-xl md:text-2xl italic text-navy leading-relaxed border-l-4 border-copper pl-6 text-left max-w-xl mx-auto">
-              &ldquo;Every church I&apos;ve worked with already has the people it needs. What&apos;s
-              usually missing isn&apos;t willingness — it&apos;s a system that actually asks them,
-              trains them, and gives them somewhere to grow.&rdquo;
-              <cite className="block mt-3 text-sm not-italic text-slate/60 font-sans">
-                — Omar J. Fandino, Founder of Living Water Network
-              </cite>
-            </blockquote>
+            <p className="mt-8 text-slate font-sans leading-relaxed">We help churches build clear pathways for people to be welcomed, equipped, and supported as they serve.</p>
           </FadeInSection>
         </div>
       </section>
@@ -280,7 +273,7 @@ export function ChurchAdvisoryContent() {
               heading="Schedule a Discovery Call"
             />
             <p className="text-slate leading-relaxed text-sm font-sans mb-4">
-              Fill out the form and Omar will personally follow up to schedule a discovery call
+              Fill out the form and our team will follow up to schedule a discovery call
               with your leadership team.
             </p>
             <p className="text-slate leading-relaxed text-sm font-sans">
@@ -294,7 +287,7 @@ export function ChurchAdvisoryContent() {
             fields={fields}
             submitLabel="Request a Discovery Call"
             successTitle="Thank You"
-            successBody="Omar will personally review your inquiry and follow up to schedule your discovery call."
+            successBody="Our team will review your inquiry and follow up to schedule your discovery call."
           />
         </FadeInSection>
       </section>

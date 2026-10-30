@@ -12,37 +12,37 @@ const tiers = [
     amount: "$25",
     label: "Formation Seed",
     covers: "Curriculum materials for one participant for a week of formation",
-    icon: "🌱",
+    icon: "01",
   },
   {
     amount: "$50",
     label: "Session Sponsor",
     covers: "One full group formation session — facilitated by a seasoned leader",
-    icon: "🤝",
+    icon: "02",
   },
   {
     amount: "$100",
     label: "Monthly Sustainer",
     covers: "One full month of a leader's Groundwork journey — formation, coaching, and community",
-    icon: "📖",
+    icon: "03",
   },
   {
     amount: "$250",
     label: "Phase Builder",
     covers: "A meaningful contribution toward one of three formation phases — moving a leader deeper into their 9-month journey. Includes one ticket to our annual Black Tie Gala.",
-    icon: "🔥",
+    icon: "04",
   },
   {
     amount: "$500",
     label: "Missions Sender",
     covers: "Helps fund international missions trip costs for one participant — going where Jesus goes. Includes one ticket to our annual Black Tie Gala.",
-    icon: "✈️",
+    icon: "05",
   },
   {
     amount: "$1,000+",
     label: "Scholarship Partner",
     covers: "A major step toward a full Groundwork scholarship — the complete program is $3,000–$5,000 per leader for the full 9-month journey. Includes one ticket to our annual Black Tie Gala.",
-    icon: "👑",
+    icon: "06",
   },
 ];
 

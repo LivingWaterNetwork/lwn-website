@@ -72,7 +72,7 @@ const organizationJsonLd = {
   name: "Living Water Network",
   alternateName: "LWN",
   url: SITE_URL,
-  logo: `${SITE_URL}/images/logo.png`,
+  logo: `${SITE_URL}/images/brand/lwn-globe.webp`,
   description:
     "Living Water Network is a Christian leadership-development nonprofit equipping Kingdom leaders through discipleship-based mentorship, counseling, marketplace ministry, and the Groundwork cohort program.",
   slogan: "Rooted in truth. Sent to lead.",

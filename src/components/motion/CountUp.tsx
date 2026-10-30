@@ -61,9 +61,10 @@ export function CountUp({ value, className, duration = 1400 }: CountUpProps) {
 
   return (
     <span ref={ref} className={className}>
+      <span className="sr-only">{value}</span><span aria-hidden="true">
       {parsed.prefix}
       {display.toFixed(parsed.decimals)}
-      {parsed.suffix}
+      {parsed.suffix}</span>
     </span>
   );
 }

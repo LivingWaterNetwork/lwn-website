@@ -39,7 +39,7 @@ export function CohortForm() {
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         className="card text-center py-12"
       >
-        <div className="text-5xl mb-4">🌊</div>
+        <div className="text-sm font-semibold text-copper mb-4">Thank you</div>
         <h3 className="font-serif text-2xl font-semibold text-navy mb-2">Application Received!</h3>
         <p className="text-slate text-sm font-sans">
           Thank you for applying. We&apos;ll review your application and reach out within

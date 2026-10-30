@@ -44,7 +44,7 @@ const programs = [
     title: "Personal Coaching",
     tagline: "Formation, one-on-one.",
     body: `The same Six Spheres formation model behind Groundwork, built entirely around
-    you. One-on-one coaching with founder Omar Fandino pairs a personalized plan across
+    you. One-on-one support from our coaching team pairs a personalized plan across
     your spiritual, mental, emotional, physical, relational, and stewardship health with
     direct access between sessions — for leaders who need focused, honest formation on
     their own timeline, not a cohort calendar.`,
@@ -97,9 +97,8 @@ const programs = [
     imagePosition: "50% 40%",
     title: "LWN Church Advisory Services",
     tagline: "Strategy for the church itself, not just its leaders.",
-    body: `Built on Omar Fandino's own background in volunteer recruitment and engagement
-    management, young adult ministry, and small group leadership, LWN Church Advisory
-    Services works directly with church staff and leadership teams — not individuals — on
+    body: `LWN Church Advisory Services supports volunteer recruitment and engagement,
+    young adult ministry, and small group leadership. We work directly with church staff and leadership teams — not individuals — on
     the systems and strategy that determine whether a congregation actually functions:
     volunteer pipelines, young adult engagement, group leadership development, and overall
     ministry strategy.`,

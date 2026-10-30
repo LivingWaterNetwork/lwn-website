@@ -71,22 +71,22 @@ const assumptions = [
 
 const measures = [
   {
-    icon: "📊",
+    icon: "01",
     title: "Pre/post assessments",
     body: "Every participant is assessed across all 6 formation pillars at intake and again at graduation to measure real change, not self-reported satisfaction.",
   },
   {
-    icon: "📋",
+    icon: "02",
     title: "Cohort completion & placement data",
     body: "We track completion rates, local service hours, and where graduates land — in ministry, marketplace, or missions — as concrete evidence of activation.",
   },
   {
-    icon: "🤝",
+    icon: "03",
     title: "Alumni tracking",
     body: "Graduates are surveyed at 6 and 12 months post-cohort to measure whether formation held and multiplied into their own communities.",
   },
   {
-    icon: "💰",
+    icon: "04",
     title: "Financial transparency",
     body: "Program allocation and outcomes are reported to our board and partners annually, tying dollars invested to leaders formed.",
   },

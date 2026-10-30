@@ -9,10 +9,10 @@ import { RevealText } from "@/components/motion/RevealText";
 import { SectionHeading } from "@/components/motion/SectionHeading";
 
 const topics = [
-  { icon: "⚓", title: "Formation Before Activation", desc: "Why the leaders we're sending are burning out — and what it looks like to be formed before you're sent." },
-  { icon: "🕊️", title: "Spiritual Formation for Leaders", desc: "The six spheres of whole-person formation — spiritual, mental, emotional, physical, relational, stewardship." },
-  { icon: "💼", title: "Marketplace Ministry", desc: "Operating as a Kingdom agent in business and the marketplace — bridging the ministry/marketplace gap." },
-  { icon: "🔥", title: "From Prison to Purpose", desc: "Omar's own story of formation, restoration, and calling — a testimony-driven message for churches and retreats." },
+  { icon: "01", title: "Formation Before Activation", desc: "Why the leaders we're sending are burning out — and what it looks like to be formed before you're sent." },
+  { icon: "02", title: "Spiritual Formation for Leaders", desc: "The six spheres of whole-person formation — spiritual, mental, emotional, physical, relational, stewardship." },
+  { icon: "03", title: "Marketplace Ministry", desc: "Operating as a Kingdom agent in business and the marketplace — bridging the ministry/marketplace gap." },
+  { icon: "04", title: "Restoration and Calling", desc: "Biblical teaching on grace, restoration, and responding to God's call — for churches and retreats." },
 ];
 
 const steps = [
@@ -104,15 +104,7 @@ export function SpeakingContent() {
               we&apos;re invited into. If your organization is looking for a speaker who can bridge
               the ministry and marketplace gap, we&apos;d love to connect.
             </p>
-            <blockquote className="mt-8 font-serif text-xl md:text-2xl italic text-navy leading-relaxed border-l-4 border-copper pl-6 text-left max-w-xl mx-auto">
-              &ldquo;I don&apos;t get on a stage to perform a testimony. I get on a stage because
-              someone in that room is living through what I survived, and they need to know
-              it&apos;s survivable.&rdquo;
-              <cite className="block mt-3 text-sm not-italic text-slate/60 font-sans">
-                — Omar J. Fandino, Founder of Living Water Network{" "}
-                <span className="text-copper">· echoes 2 Corinthians 1:4</span>
-              </cite>
-            </blockquote>
+            <p className="mt-8 text-slate font-sans leading-relaxed">Our speaking ministry helps churches and communities connect biblical truth with everyday life, encouraging people to grow in Christ and serve others.</p>
           </FadeInSection>
         </div>
       </section>

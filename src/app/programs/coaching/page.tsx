@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/programs/coaching" },
-  title: "Personal Coaching with Omar Fandino",
+  title: "Personal Coaching",
   description:
     "One-on-one Christian leadership coaching built around Living Water Network's Six Spheres formation framework. Not performance coaching — formation, for leaders who can't afford to keep pouring from an empty well.",
   openGraph: {

@@ -11,13 +11,13 @@ const COPY: Record<string, { kicker: string; title: string; body: string }> = {
     kicker: "Thank You",
     title: "We're Honored You Reached Out",
     body:
-      "Your partnership inquiry means a lot to us — this isn't a form letter, and it isn't a form response either. Omar or a member of our team will personally follow up within 24-48 hours to continue the conversation.",
+      "Your partnership inquiry means a lot to us — this isn't a form letter, and it isn't a form response either. Our team will personally follow up within 24-48 hours to continue the conversation.",
   },
   pledge: {
     kicker: "Thank You",
     title: "This Is a Big Deal — We Don't Take It Lightly",
     body:
-      "A multi-year pledge is one of the most meaningful things a partner can offer us: the confidence to plan years ahead. We've received your information and Omar will personally reach out soon to talk through what this commitment could look like.",
+      "A multi-year pledge is one of the most meaningful things a partner can offer us: the confidence to plan years ahead. We've received your information and our team will reach out soon to talk through what this commitment could look like.",
   },
   gala: {
     kicker: "Thank You",

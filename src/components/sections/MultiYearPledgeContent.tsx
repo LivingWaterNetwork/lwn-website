@@ -56,7 +56,7 @@ export function MultiYearPledgeContent() {
             <p className="text-white/65 font-sans text-lg leading-relaxed max-w-2xl mx-auto">
               Very few people ever commit to something beyond a single budget cycle. When you pledge multiple
               years to Living Water Network, you&apos;re not just funding a program — you&apos;re giving us the
-              one thing every founder needs most and can never buy: the confidence to plan for the long term.
+              stability to plan for the long term and sustain the ministry work ahead.
               We take that seriously, and we want to honor it well.
             </p>
           </FadeInSection>
