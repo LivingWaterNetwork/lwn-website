@@ -137,7 +137,7 @@ export function HomePageContent() {
           </motion.p>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-semibold text-white leading-tight max-w-3xl mx-auto">
             <RevealText
-              text="Equipping Kingdom leaders to disrupt darkness and disciple nations."
+              text="A deeper faith. A shared table. A life of purpose."
               delay={0.15}
             />
           </h1>
@@ -147,8 +147,10 @@ export function HomePageContent() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.9 }}
           >
-            Spiritual formation, discipleship, and leadership development for
-            those called to lead — in ministry and the marketplace.
+            Grow in Christ alongside people committed to living His Word. Through
+            discipleship, meaningful community, and leadership development,
+            Living Water Network helps you put faith into practice wherever God
+            has placed you.
           </motion.p>
           <motion.p
             className="mt-4 font-serif italic text-spring text-xl md:text-2xl"
@@ -156,7 +158,7 @@ export function HomePageContent() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.05 }}
           >
-            Rooted in truth. Sent to lead.
+            Rooted in Scripture. Growing together. Living sent.
           </motion.p>
           <motion.div
             className="mt-10 flex flex-col sm:flex-row gap-4 justify-center"
@@ -164,14 +166,14 @@ export function HomePageContent() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.2 }}
           >
-            <Link href="/cohort" className="btn-copper text-base px-8 py-3.5">
-              Join the Network
+            <Link href="/inquire" className="btn-copper text-base px-8 py-3.5">
+              Find Your Place
             </Link>
             <Link
-              href="/about"
+              href="/programs"
               className="inline-flex items-center justify-center px-8 py-3.5 rounded-md border-2 border-white/40 text-white font-semibold font-sans text-base transition-colors hover:border-white hover:bg-white/10"
             >
-              Learn More
+              Explore Our Programs
             </Link>
           </motion.div>
         </div>
