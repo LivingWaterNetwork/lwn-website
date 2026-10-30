@@ -16,6 +16,7 @@ const nextConfig = {
     ],
   },
 
+  async rewrites() { return [{ source: "/images/:path*", destination: "https://lwn-website-rdp5einix-living-water-network.vercel.app/images/:path*" }]; },
   async redirects() {
     // The site has moved off this domain, so these are permanent: the old
     // path is not coming back, and search engines should transfer the address

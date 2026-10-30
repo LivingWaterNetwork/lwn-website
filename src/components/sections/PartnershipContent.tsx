@@ -37,7 +37,7 @@ const tiers = [
     color: "bg-navy text-white",
     accentColor: "text-spring",
     benefits: [
-      "Named co-founder recognition on all LWN publications and site",
+      "Founding partner recognition on LWN publications and site",
       "Dedicated speaking segment at the annual Gala — share your story, your why, and your ministry or business with 150 of Atlanta's top CEOs and executive pastors",
       "Reserved VIP table (8 seats) at the annual Black Tie Gala",
       "Quarterly impact meetings with the Executive Director",
@@ -311,9 +311,9 @@ export function PartnershipContent() {
           {/* Event specs */}
           <StaggerChildren className="grid sm:grid-cols-3 gap-4 mb-12">
             {[
-              { icon: "🏛️", label: "150 Guests", desc: "CEOs, executive pastors, and high-influence Kingdom leaders — curated, not open-access" },
-              { icon: "🎩", label: "Black Tie", desc: "Atlanta-area ballroom venue — Winter 2026, formal atmosphere, professional production" },
-              { icon: "🎯", label: "Vision Night", desc: "Part celebration, part launch — this is the annual moment LWN casts vision and invites partners in" },
+              { icon: "01", label: "150 Guests", desc: "CEOs, executive pastors, and high-influence Kingdom leaders — curated, not open-access" },
+              { icon: "02", label: "Black Tie", desc: "Atlanta-area ballroom venue — Winter 2026, formal atmosphere, professional production" },
+              { icon: "03", label: "Vision Night", desc: "Part celebration, part launch — this is the annual moment LWN casts vision and invites partners in" },
             ].map(({ icon, label, desc }) => (
               <StaggerItem key={label} className="bg-mist rounded-xl p-6 text-center">
                 <div className="text-3xl mb-3">{icon}</div>

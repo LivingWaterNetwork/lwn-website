@@ -53,7 +53,7 @@ export function ContactForm({
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         className="card text-center py-10"
       >
-        <div className="text-4xl mb-3">✉️</div>
+
         <h3 className="font-serif text-xl font-semibold text-navy mb-2">{successTitle}</h3>
         <p className="text-slate text-sm font-sans">{successBody}</p>
       </motion.div>

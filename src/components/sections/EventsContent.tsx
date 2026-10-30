@@ -141,17 +141,17 @@ export function EventsContent() {
           <StaggerChildren className="grid md:grid-cols-3 gap-6">
             {[
               {
-                icon: "🥂",
+                icon: "01",
                 title: "Celebration & Vision",
                 desc: "An evening of reflection on what God has done and vision-casting for the next season of Kingdom impact.",
               },
               {
-                icon: "🤝",
+                icon: "02",
                 title: "Partnership Circle",
                 desc: "Meet the leaders, donors, and allies who are funding and shaping this movement — and formally join them.",
               },
               {
-                icon: "🚀",
+                icon: "03",
                 title: "The Launch",
                 desc: "The official public launch of Living Water Network — including a preview of what's coming in 2027 and beyond.",
               },
@@ -196,7 +196,7 @@ export function EventsContent() {
 
           {status === "success" ? (
             <FadeInSection className="text-center py-12 bg-white/5 border border-white/10 rounded-2xl">
-              <p className="text-3xl mb-4">✉️</p>
+
               <h3 className="font-serif text-2xl text-white font-semibold mb-2">You&apos;re on the list.</h3>
               <p className="text-white/50 font-sans text-sm">
                 We&apos;ll reach out as event details are confirmed. Thank you for your interest.

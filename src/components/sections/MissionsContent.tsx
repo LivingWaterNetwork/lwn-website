@@ -28,10 +28,10 @@ const trip = [
 ];
 
 const practicals = [
-  { icon: "📍", label: "Destination", value: "Ecuador, in sustained partnership with FHC — our first deployment corridor." },
-  { icon: "👥", label: "Who Can Go", value: "Open to leaders across all three Groundwork tracks, and to those outside the cohort who feel the pull." },
-  { icon: "🗓️", label: "When", value: "Trips are scheduled around the Groundwork cohort calendar — inquire for the next date." },
-  { icon: "💛", label: "Cost", value: "Trip costs are shared with participants; missions fundraising training and support are part of preparation." },
+  { icon: "01", label: "Destination", value: "Ecuador, in sustained partnership with FHC — our first deployment corridor." },
+  { icon: "02", label: "Who Can Go", value: "Open to leaders across all three Groundwork tracks, and to those outside the cohort who feel the pull." },
+  { icon: "03", label: "When", value: "Trips are scheduled around the Groundwork cohort calendar — inquire for the next date." },
+  { icon: "04", label: "Cost", value: "Trip costs are shared with participants; missions fundraising training and support are part of preparation." },
 ];
 
 const missionPhotos = [
@@ -116,15 +116,7 @@ export function MissionsContent() {
               serving people whose lives depend on more than a Sunday habit, has a way of
               clarifying — or correcting — what you thought you believed about your own mandate.
             </p>
-            <blockquote className="mt-8 font-serif text-xl md:text-2xl italic text-navy leading-relaxed border-l-4 border-copper pl-6 text-left max-w-xl mx-auto">
-              &ldquo;Calling sounds spiritual until it costs you a plane ticket and a language you
-              don&apos;t speak. That&apos;s usually where I&apos;ve found out if I actually
-              believed it.&rdquo;
-              <cite className="block mt-3 text-sm not-italic text-slate/60 font-sans">
-                — Omar J. Fandino, Founder of Living Water Network{" "}
-                <span className="text-copper">· echoes Isaiah 6:8</span>
-              </cite>
-            </blockquote>
+            <p className="mt-8 text-slate font-sans leading-relaxed">Our missions ministry invites leaders to serve alongside others, listen across cultures, and put their faith into practice.</p>
           </FadeInSection>
         </div>
       </section>

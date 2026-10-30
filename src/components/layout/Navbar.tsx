@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+import { BrandLogo } from "@/components/brand/BrandLogo";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useMotionValueEvent, useScroll } from "framer-motion";
@@ -94,18 +94,11 @@ export function Navbar() {
       >
         {/* Logo */}
         <Link href="/" className="flex items-center shrink-0">
-          <Image
-            src="/images/logo.png"
-            alt="Living Water Network"
-            width={160}
-            height={70}
-            className="h-11 w-auto object-contain"
-            priority
-          />
+          <BrandLogo />
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden xl:flex items-center gap-6">
           {navLinks.map(({ href, label }) => (
             <Link
               key={href}
@@ -132,7 +125,7 @@ export function Navbar() {
         {/* Mobile hamburger */}
         <button
           ref={toggleRef}
-          className="md:hidden p-2 rounded-md text-slate hover:bg-mist transition-colors"
+          className="xl:hidden p-2 rounded-md text-slate hover:bg-mist transition-colors"
           onClick={() => setMobileOpen((open) => !open)}
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileOpen}
@@ -158,7 +151,7 @@ export function Navbar() {
           role="dialog"
           aria-modal="true"
           aria-label="Mobile navigation"
-          className="md:hidden border-t border-mist bg-white px-4 pb-4 pt-2 space-y-1"
+          className="xl:hidden border-t border-mist bg-white px-4 pb-4 pt-2 space-y-1"
         >
           {navLinks.map(({ href, label }) => (
             <Link

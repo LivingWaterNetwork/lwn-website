@@ -9,10 +9,10 @@ import { RevealText } from "@/components/motion/RevealText";
 import { SectionHeading } from "@/components/motion/SectionHeading";
 
 const focusAreas = [
-  { icon: "🧭", title: "Kingdom Vision Alignment", desc: "Clarifying the calling underneath the job title — what you're actually being formed to do." },
-  { icon: "🤝", title: "Accountability", desc: "A relationship, not a check-in — someone who has permission to ask the harder question." },
-  { icon: "📖", title: "Wisdom Transfer", desc: "Lessons that only come from someone who has already walked the season you're walking now." },
-  { icon: "🌱", title: "Growth in Community", desc: "Formation happens relationally, not just informationally — mentorship is where that plays out." },
+  { icon: "01", title: "Kingdom Vision Alignment", desc: "Clarifying the calling underneath the job title — what you're actually being formed to do." },
+  { icon: "02", title: "Accountability", desc: "A relationship, not a check-in — someone who has permission to ask the harder question." },
+  { icon: "03", title: "Wisdom Transfer", desc: "Lessons that only come from someone who has already walked the season you're walking now." },
+  { icon: "04", title: "Growth in Community", desc: "Formation happens relationally, not just informationally — mentorship is where that plays out." },
 ];
 
 const steps = [
@@ -121,14 +121,7 @@ export function MentorshipContent() {
               relationship — the same conviction behind Groundwork&apos;s formation model, lived
               out one relationship at a time.
             </p>
-            <blockquote className="mt-8 font-serif text-xl md:text-2xl italic text-navy leading-relaxed border-l-4 border-copper pl-6 text-left max-w-xl mx-auto">
-              &ldquo;I didn&apos;t just need someone to tell me what to do. I needed someone to
-              stay close enough, long enough, to watch what I actually did with it.&rdquo;
-              <cite className="block mt-3 text-sm not-italic text-slate/60 font-sans">
-                — Omar J. Fandino, Founder of Living Water Network{" "}
-                <span className="text-copper">· echoes Proverbs 27:17</span>
-              </cite>
-            </blockquote>
+            <p className="mt-8 text-slate font-sans leading-relaxed">We approach mentorship as a sustained relationship: walking alongside leaders as they practice faith, develop wisdom, and learn to serve others.</p>
           </FadeInSection>
         </div>
       </section>

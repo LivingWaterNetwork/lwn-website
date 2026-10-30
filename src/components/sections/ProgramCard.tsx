@@ -10,7 +10,7 @@ interface ProgramCardProps {
 export function ProgramCard({ title, description, icon, href }: ProgramCardProps) {
   const content = (
     <div className="card flex flex-col gap-4 h-full group">
-      <div className="text-3xl group-hover:scale-110 transition-transform duration-300 origin-left">
+      <div aria-hidden="true" className="text-xs font-semibold tracking-widest text-copper">
         {icon}
       </div>
       <h3 className="font-serif font-semibold text-navy text-xl">{title}</h3>

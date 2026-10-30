@@ -24,7 +24,7 @@ const tracks = [
     id: "shepherd",
     name: "Shepherd Track",
     audience: "Ministry & Mission",
-    emoji: "🌿",
+    emoji: "01",
     headerBg: "bg-navy",
     labelColor: "text-spring",
     accentColor: "text-navy",
@@ -37,7 +37,7 @@ const tracks = [
     id: "builder",
     name: "Builder Track",
     audience: "Marketplace & Entrepreneurship",
-    emoji: "⚙️",
+    emoji: "02",
     headerBg: "bg-copper",
     labelColor: "text-white/80",
     accentColor: "text-copper",
@@ -50,7 +50,7 @@ const tracks = [
     id: "canvas",
     name: "Canvas Track",
     audience: "Creatives & Influencers",
-    emoji: "🎨",
+    emoji: "03",
     headerBg: "bg-deep-sea",
     labelColor: "text-spring",
     accentColor: "text-deep-sea",
@@ -150,22 +150,22 @@ const communityPhotos = [
 
 const programDetails = [
   {
-    icon: "📅",
+    icon: "01",
     label: "Cohort Dates",
     value: "Spring 2027 · Applications now open — reserve your spot today.",
   },
   {
-    icon: "📍",
+    icon: "02",
     label: "Format",
     value: "Virtual · accessible from anywhere in the world.",
   },
   {
-    icon: "👥",
+    icon: "03",
     label: "Cohort Size",
     value: "8–12 people per track group. Intentionally small. Deeply relational.",
   },
   {
-    icon: "💛",
+    icon: "04",
     label: "Investment",
     value: "Scholarship model. Program costs covered by LWN partners. Application fee required.",
   },
@@ -210,7 +210,7 @@ export function CohortContent() {
             </p>
           </FadeInSection>
           <StaggerChildren className="mt-6 flex flex-wrap justify-center gap-3 text-sm font-sans">
-            {["🌿 Shepherd Track", "⚙️ Builder Track", "🎨 Canvas Track"].map((t) => (
+            {["Shepherd Track", "Builder Track", "Canvas Track"].map((t) => (
               <StaggerItem
                 key={t}
                 className="bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-white/80"

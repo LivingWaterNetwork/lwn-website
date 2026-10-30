@@ -42,7 +42,7 @@ export function PartnershipInquireContent() {
               Whatever tier you&apos;re considering, a multi-year partnership with Living Water Network isn&apos;t
               a transaction — it&apos;s an investment in leaders who will go on to form other leaders, for
               generations. We&apos;d rather have a real conversation than rush you into a form. Tell us where
-              you are, and Omar or a member of our team will personally follow up within 24–48 hours.
+              you are, and our team will personally follow up within 24–48 hours.
             </p>
           </FadeInSection>
         </div>

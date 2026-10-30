@@ -78,10 +78,10 @@ export function ContactContent() {
                 If you&apos;re exploring a major gift, a multi-year commitment, foundation funding,
                 or a partnership between LWN and your church, business, or organization, this is
                 a different conversation than a general inquiry — and it deserves direct access
-                to our founder.
+                to our ministry leadership.
               </p>
               <p>
-                Reach out here and Omar Fandino, LWN&apos;s founder, will personally follow up to
+                Reach out here and our ministry team will follow up to
                 discuss vision, structure, and how your investment maps to our theory of change.
               </p>
             </div>
@@ -109,7 +109,7 @@ export function ContactContent() {
               messagePlaceholder="Tell us about your organization and what you're considering — a major gift, multi-year commitment, foundation funding, or institutional partnership."
               submitLabel="Send to Our Founder"
               successTitle="Thank You"
-              successBody="Omar will personally follow up within 1–2 business days to continue the conversation."
+              successBody="Our team will follow up within 1–2 business days to continue the conversation."
             />
           </FadeInSection>
         </div>

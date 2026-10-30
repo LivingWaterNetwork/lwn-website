@@ -23,7 +23,7 @@ const framework = [
     letter: "S",
     word: "See",
     subtitle: "Intake & Discovery Assessment",
-    desc: "Before any plan gets built, you see your six spheres honestly — where you actually are, not where you assume you are. Reviewed by Omar personally before session one.",
+    desc: "Before any plan gets built, you see your six spheres honestly — where you actually are, not where you assume you are. Reviewed by your coach before session one.",
   },
   {
     letter: "S",
@@ -44,25 +44,25 @@ const extendedSupport = [
     sphere: "Physical",
     title: "Training & Nutrition",
     desc: "A personal training plan and nutrition coaching built around your actual schedule and body, not a generic program.",
-    icon: "💪",
+    icon: "01",
   },
   {
     sphere: "Physical",
     title: "Hormone Therapy Referrals",
     desc: "For leaders whose energy and health issues go deeper than habits, referrals to trusted providers so the physical sphere gets real medical attention, not just encouragement.",
-    icon: "🩺",
+    icon: "02",
   },
   {
     sphere: "Stewardship",
     title: "Business Development",
     desc: "Strategy support for your business or ministry venture — stewarding what God has actually put in your hands, not just talking about calling in the abstract.",
-    icon: "📈",
+    icon: "03",
   },
   {
     sphere: "Stewardship",
     title: "Website Review & Edits",
     desc: "A practical audit and hands-on edits to your website or online presence — the same kind of build-and-fix work behind LWN's own site, applied to yours.",
-    icon: "🖥️",
+    icon: "04",
   },
 ];
 
@@ -70,7 +70,7 @@ const included = [
   {
     tag: "Step 1",
     title: "Intake & Discovery Assessment",
-    desc: "A guided assessment across all six spheres, reviewed by Omar before your first session — so session one starts with your real picture, not small talk.",
+    desc: "A guided assessment across all six spheres, reviewed by your coach before your first session — so session one starts with your real picture, not small talk.",
   },
   {
     tag: "Personalized",
@@ -80,7 +80,7 @@ const included = [
   {
     tag: "Access",
     title: "Direct Access Between Sessions",
-    desc: "Time-sensitive check-ins with Omar directly between sessions, within reasonable bounds — formation doesn't only happen on the call.",
+    desc: "Time-sensitive check-ins with your coach between sessions, within reasonable bounds — formation doesn't only happen on the call.",
   },
   {
     tag: "Format",
@@ -136,7 +136,7 @@ const fields: ProgramField[] = [
     id: "season",
     label: "What's prompting you to look into coaching now?",
     required: true,
-    placeholder: "Share honestly — this is what Omar reviews before your first session.",
+    placeholder: "Share honestly — this is what your coach reviews before your first session.",
     rows: 6,
   },
 ];
@@ -173,7 +173,7 @@ export function CoachingContent() {
           </h1>
           <FadeInSection delay={0.3}>
             <p className="text-white/70 text-lg font-sans max-w-xl mx-auto leading-relaxed">
-              Personal coaching with Omar Fandino — one-on-one formation for leaders who are done
+              Personal coaching with our coaching team — one-on-one formation for leaders who are done
               leading from empty, built around the same Six Spheres model behind Groundwork.
             </p>
             <div className="mt-9 flex flex-wrap justify-center gap-4">
@@ -357,8 +357,8 @@ export function CoachingContent() {
           <SectionHeading
             className="mb-12"
             label="By Conversation, Not Checkout"
-            heading="Three Ways to Work With Omar"
-            subheading="Every package is built around the same Six Spheres assessment — the difference is depth and duration. Because this is one-on-one with Omar directly, availability is limited. Investment is discussed after your Discovery Assessment, once we understand your situation; payment plans and a limited number of scholarship spots are available for clients referred by partner churches."
+            heading="Three Paths for Personal Formation"
+            subheading="Every package is built around the same Six Spheres assessment — the difference is depth and duration. Because this is one-on-one with your coach, availability is limited. Investment is discussed after your Discovery Assessment, once we understand your situation; payment plans and a limited number of scholarship spots are available for clients referred by partner churches."
             subheadingClassName="mt-3 text-slate font-sans text-sm max-w-2xl mx-auto"
           />
           <StaggerChildren className="grid md:grid-cols-3 gap-6">
@@ -422,7 +422,7 @@ export function CoachingContent() {
               heading="Request a Coaching Conversation"
             />
             <p className="text-slate leading-relaxed text-sm font-sans mb-4">
-              Fill out the form and Omar will personally follow up to talk through which package
+              Fill out the form and our team will follow up to talk through which package
               fits your season, answer questions, and — if it&apos;s a fit — schedule your Intake
               &amp; Discovery Assessment.
             </p>
@@ -438,7 +438,7 @@ export function CoachingContent() {
             fields={fields}
             submitLabel="Request Coaching Info"
             successTitle="Thank You"
-            successBody="Omar will personally review your inquiry and follow up to talk through the right next step."
+            successBody="Our team will review your inquiry and follow up to talk through the right next step."
           />
         </FadeInSection>
       </section>

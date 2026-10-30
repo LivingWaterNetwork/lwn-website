@@ -29,7 +29,7 @@ export function BlogContent({ posts }: BlogContentProps) {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {posts.length === 0 ? (
             <FadeInSection className="text-center py-20">
-              <p className="text-4xl mb-4">✍️</p>
+
               <h2 className="font-serif text-2xl font-semibold text-navy mb-3">Posts Coming Soon</h2>
               <p className="text-slate text-sm font-sans">
                 We&apos;re preparing articles on spiritual formation and Kingdom leadership.

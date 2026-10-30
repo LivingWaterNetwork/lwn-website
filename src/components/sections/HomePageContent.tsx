@@ -9,6 +9,7 @@ import { FadeInSection } from "@/components/motion/FadeInSection";
 import { StaggerChildren, StaggerItem } from "@/components/motion/StaggerChildren";
 import { ParallaxLayer } from "@/components/motion/ParallaxLayer";
 import { RevealText } from "@/components/motion/RevealText";
+import { NetworkWelcome } from "@/components/sections/NetworkWelcome";
 import { CountUp } from "@/components/motion/CountUp";
 import { SectionHeading } from "@/components/motion/SectionHeading";
 import { TiltCard } from "@/components/motion/TiltCard";
@@ -19,49 +20,49 @@ const programs = [
     title: "Immersive Cohorts",
     description:
       "A 9-month formation journey in spiritual formation, discipleship, and leadership — walked out alongside other leaders, not alone.",
-    icon: "🌊",
+    icon: "01",
     href: "/cohort",
   },
   {
     title: "Personal Coaching",
     description:
       "One-on-one formation across all six spheres of your life — spiritual, mental, emotional, physical, relational, stewardship — with direct access between sessions.",
-    icon: "🎯",
+    icon: "02",
     href: "/programs/coaching",
   },
   {
     title: "Personalized Counseling",
     description:
-      "Sessions tailored to the spiritual, emotional, and relational dimensions of leadership — for the parts of the job that don't show up on a resume.",
-    icon: "🧭",
+      "Sessions tailored to the spiritual, emotional, and relational dimensions of leadership — with space for honest conversation, prayer, and support.",
+    icon: "03",
     href: "/programs/counseling",
   },
   {
     title: "Strategic Mentorships",
     description:
-      "Pairing emerging and seasoned leaders for intentional, Spirit-led mentorship — the Paul-and-Timothy relationship most leaders never had.",
-    icon: "🤝",
+      "Pairing emerging and seasoned leaders for intentional, Spirit-led mentorship — relationships grounded in Scripture, accountability, and shared growth.",
+    icon: "04",
     href: "/programs/mentorship",
   },
   {
     title: "Church Advisory Services",
     description:
       "Strategy and systems consulting for the church itself — volunteer engagement, young adult ministry, and small group leadership development.",
-    icon: "⛪",
+    icon: "05",
     href: "/programs/church-advisory",
   },
   {
     title: "Public Speaking",
     description:
-      "Dynamic engagements that equip congregations, conferences, and organizations with Kingdom vision and practical next steps.",
-    icon: "🎤",
+      "Biblical teaching for churches, conferences, and retreats, with practical steps for faithful leadership.",
+    icon: "06",
     href: "/programs/speaking",
   },
   {
     title: "Mission Trips",
     description:
-      "International experiences designed to broaden perspective and deepen your Kingdom mandate — formation tested against something real.",
-    icon: "✈️",
+      "Serve alongside ministry partners, learn across cultures, and put your faith into practice.",
+    icon: "07",
     href: "/programs/missions",
   },
 ];
@@ -108,6 +109,7 @@ export function HomePageContent() {
 
   return (
     <>
+      <NetworkWelcome />
       {/* ── Hero ── */}
       <section className="relative bg-navy overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-navy-dark via-navy to-deep-sea opacity-95" />
@@ -137,7 +139,7 @@ export function HomePageContent() {
           </motion.p>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-semibold text-white leading-tight max-w-3xl mx-auto">
             <RevealText
-              text="Equipping Kingdom leaders to disrupt darkness and disciple nations."
+              text="A deeper faith. A shared table. A life of purpose."
               delay={0.15}
             />
           </h1>
@@ -147,8 +149,10 @@ export function HomePageContent() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.9 }}
           >
-            Spiritual formation, discipleship, and leadership development for
-            those called to lead — in ministry and the marketplace.
+            Grow in Christ alongside people committed to living His Word. Through
+            discipleship, meaningful community, and leadership development,
+            Living Water Network helps you put faith into practice wherever God
+            has placed you.
           </motion.p>
           <motion.p
             className="mt-4 font-serif italic text-spring text-xl md:text-2xl"
@@ -156,7 +160,7 @@ export function HomePageContent() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.05 }}
           >
-            Rooted in truth. Sent to lead.
+            Rooted in Scripture. Growing together. Living sent.
           </motion.p>
           <motion.div
             className="mt-10 flex flex-col sm:flex-row gap-4 justify-center"
@@ -164,14 +168,14 @@ export function HomePageContent() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.2 }}
           >
-            <Link href="/cohort" className="btn-copper text-base px-8 py-3.5">
-              Join the Network
+            <Link href="/contact" className="btn-copper text-base px-8 py-3.5">
+              Find Your Place
             </Link>
             <Link
-              href="/about"
+              href="/programs"
               className="inline-flex items-center justify-center px-8 py-3.5 rounded-md border-2 border-white/40 text-white font-semibold font-sans text-base transition-colors hover:border-white hover:bg-white/10"
             >
-              Learn More
+              Explore Our Programs
             </Link>
           </motion.div>
         </div>
@@ -206,11 +210,32 @@ export function HomePageContent() {
         </div>
       </section>
 
+      <section id="find-your-path" className="bg-mist py-16 scroll-mt-24" aria-labelledby="path-heading">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="section-label mb-3">There is a place for you here</p>
+          <h2 id="path-heading" className="section-heading mb-8">Where would you like to begin?</h2>
+          <div className="grid md:grid-cols-3 gap-5">
+            {[
+              { title: "Grow as a leader", body: "Explore a formation cohort, personal coaching, or a mentoring relationship.", href: "/programs", cta: "Explore formation" },
+              { title: "Strengthen your church", body: "Connect with our ministry team about equipping leaders and supporting the people who serve.", href: "/programs/church-advisory", cta: "Explore church support" },
+              { title: "Partner in the mission", body: "Learn how your church, organization, or generosity can support the work ahead.", href: "/partnership", cta: "Explore partnership" },
+            ].map((path, index) => (
+              <Link key={path.href} href={path.href} className="group rounded-2xl border border-navy/10 bg-white p-7 transition-colors hover:border-copper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-copper">
+                <span className="text-copper text-xs font-sans tracking-widest" aria-hidden="true">0{index + 1}</span>
+                <h3 className="font-serif text-2xl text-navy mt-4 mb-3">{path.title}</h3>
+                <p className="text-slate text-sm leading-relaxed mb-6">{path.body}</p>
+                <span className="text-sm font-semibold text-navy">{path.cta} <span aria-hidden="true">→</span></span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── Mission ── */}
       <section className="py-20 bg-white">
         <FadeInSection className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="section-label mb-3">Our Mission</p>
-          <h2 className="section-heading mb-8">Impacting 100,000 Kingdom Leaders</h2>
+          <h2 className="section-heading mb-8">Healthy Leaders. Faithful Communities.</h2>
           <div className="prose prose-lg text-slate font-sans leading-relaxed mx-auto text-left space-y-4">
             <p>
               At Living Water Network, our mission is to impact 100,000 Kingdom leaders

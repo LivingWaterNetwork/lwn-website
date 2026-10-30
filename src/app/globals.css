@@ -288,3 +288,36 @@
     }
   }
 }
+
+/* Original LWN colors, with a readable wordmark and an independent motion identity. */
+.lwn-brand { display: inline-flex; align-items: center; gap: 8px; color: #007abb; }
+.lwn-brand-symbol { width: 48px; height: 48px; object-fit: contain; }
+.lwn-brand-type { display: flex; flex-direction: column; font-family: var(--font-hanken),sans-serif; text-transform: uppercase; font-weight: 800; line-height: 1.12; white-space: nowrap; }
+.lwn-brand-type > :first-child { font-size: 15px; letter-spacing: .015em; }
+.lwn-brand-type > :last-child { font-size: 10px; color: #092c40; letter-spacing: .33em; margin-top: 4px; }
+.lwn-brand-inverse, .lwn-brand-inverse .lwn-brand-type > :last-child { color: white; }
+.network-entry { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; background: radial-gradient(ellipse at 50% 60%,#104d68 0%,#092739 62%,#061d2e 100%); color: white; pointer-events: none; animation: network-entry-exit .6s 3.5s ease both; }
+.network-entry-orbit { position: absolute; width: min(80vw,580px); aspect-ratio: 1; border: 1px solid #47c6ef30; border-radius: 50%; animation: network-orbit 3.5s ease-out both; }
+.network-entry-identity { display: grid; justify-items: center; animation: network-identity-out .35s 2.05s ease both; }
+.network-entry-logo { width: clamp(170px,30vw,240px); aspect-ratio: 1; position: relative; filter: drop-shadow(0 12px 36px #00a6cf20); }
+.network-entry-logo > div { position: absolute; inset: 0; }
+.network-entry-logo img { width: 100%; height: 100%; object-fit: contain; }
+.network-logo-globe { clip-path: polygon(0 0,100% 0,100% 62%,0 62%); animation: network-globe-in .8s cubic-bezier(.22,1,.36,1) both; }
+.network-logo-water { clip-path: polygon(0 62%,100% 62%,100% 100%,0 100%); animation: network-water-in .9s .35s cubic-bezier(.22,1,.36,1) both; }
+.network-entry-wordmark { display: flex; flex-direction: column; text-align: center; font-family: var(--font-hanken),sans-serif; text-transform: uppercase; font-weight: 800; animation: network-type-in .6s .8s ease both; }
+.network-entry-wordmark > :first-child { font-size: clamp(22px,4vw,30px); letter-spacing: .045em; color: #67d3f5; }
+.network-entry-wordmark > :last-child { font-size: 12px; letter-spacing: .5em; padding-left: .5em; margin-top: 7px; }
+.network-entry-greeting { position: absolute; text-align: center; padding: 24px; animation: network-greeting .6s 2.25s both; }
+.network-entry-eyebrow { font-family: var(--font-hanken),sans-serif; text-transform: uppercase; letter-spacing: .25em; font-size: 11px; color: #67d3f5; margin-bottom: 24px; }
+.network-entry-title { font-family: var(--font-newsreader),serif; font-size: clamp(36px,6vw,76px); line-height: 1.08; max-width: 960px; }
+.network-entry-tagline { font-family: var(--font-newsreader),serif; font-style: italic; color: #91c4ce; font-size: 20px; margin-top: 24px; }
+.network-entry-skip { position: absolute; bottom: max(28px,env(safe-area-inset-bottom)); right: 28px; padding: 12px 16px; min-height: 44px; font-size: 12px; color: white; border: 1px solid #ffffff50; border-radius: 4px; pointer-events: auto; }
+.network-entry-skip:focus-visible { outline: 2px solid white; outline-offset: 5px; }
+@keyframes network-globe-in { from { opacity: 0; transform: translateY(14px) scale(.88); } to { opacity: 1; transform: none; } }
+@keyframes network-water-in { from { opacity: 0; transform: translateX(-28px); } to { opacity: 1; transform: none; } }
+@keyframes network-type-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes network-identity-out { to { opacity: 0; transform: scale(1.035); } }
+@keyframes network-greeting { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes network-orbit { from { opacity: 0; transform: scale(.65); } 40% { opacity: 1; } to { opacity: .2; transform: scale(1.3); } }
+@keyframes network-entry-exit { to { opacity: 0; visibility: hidden; } }
+@media (prefers-reduced-motion: reduce) { .network-entry { display: none; animation: none; } }
